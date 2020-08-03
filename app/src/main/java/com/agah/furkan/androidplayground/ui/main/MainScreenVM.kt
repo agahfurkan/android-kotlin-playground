@@ -1,28 +1,32 @@
 package com.agah.furkan.androidplayground.ui.main
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.data.repository.PokemonRepository
-import com.agah.furkan.androidplayground.data.web.model.PokemonResponse
+import com.agah.furkan.androidplayground.data.web.model.response.PokemonResponse
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainScreenVM @Inject constructor(private val pokemonRepository: PokemonRepository) :
     ViewModel() {
-    private val _pokemonList = MutableLiveData<PokemonResponse>()
-    val pokemonList: LiveData<PokemonResponse> get() = _pokemonList
+
+    val pokemonList = pokemonRepository.getPersistedPokemonList()
 
     init {
         viewModelScope.launch {
             try {
                 val data = pokemonRepository.getPokemonList(0, 50)
-                _pokemonList.postValue(data)
+                cachePokemonData(data)
             } catch (e: Exception) {
-                Log.d("mainScreen", e.localizedMessage.toString())
+                Log.d("mainScreen", e.message.toString())
             }
+        }
+    }
+
+    private fun cachePokemonData(pokemonResponse: PokemonResponse) {
+        viewModelScope.launch {
+            pokemonRepository.cachePokemonData(pokemonResponse)
         }
     }
 }

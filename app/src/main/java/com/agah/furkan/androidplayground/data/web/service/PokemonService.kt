@@ -1,6 +1,6 @@
 package com.agah.furkan.androidplayground.data.web.service
 
-import com.agah.furkan.androidplayground.data.web.model.PokemonResponse
+import com.agah.furkan.androidplayground.data.web.model.response.PokemonResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

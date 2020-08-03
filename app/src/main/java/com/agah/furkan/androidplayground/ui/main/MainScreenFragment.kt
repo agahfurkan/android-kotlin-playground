@@ -31,8 +31,8 @@ class MainScreenFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainScreenVM.pokemonList.observe(viewLifecycleOwner, Observer {
-            if (!it.results.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), it.results[0]!!.name.toString(), Toast.LENGTH_LONG)
+            if (!it.isNullOrEmpty()) {
+                Toast.makeText(requireContext(), it[0].name, Toast.LENGTH_LONG)
                     .show()
             }
         })

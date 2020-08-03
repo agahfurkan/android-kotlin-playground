@@ -10,8 +10,10 @@ buildscript {
         espressoVersion = "3.2.0"
         retrofitVersion = "2.5.0"
         retrofitMoshiConverterVersion = "2.9.0"
+        codegenVersion = "1.8.0"
         daggerVersion = "2.27"
         navVersion = "2.3.0"
+        roomVersion = "2.2.5"
     }
     repositories {
         google()
