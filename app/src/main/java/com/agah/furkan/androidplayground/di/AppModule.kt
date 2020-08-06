@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.agah.furkan.androidplayground.BuildConfig
 import com.agah.furkan.androidplayground.data.local.AppDatabase
 import com.agah.furkan.androidplayground.data.web.service.PokemonService
+import com.agah.furkan.androidplayground.util.CustomCallFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -19,6 +20,7 @@ class AppModule {
     fun provideRetrofitClient(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
+            .addCallAdapterFactory(CustomCallFactory())
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
