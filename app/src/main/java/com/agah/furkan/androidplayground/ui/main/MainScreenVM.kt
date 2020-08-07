@@ -1,5 +1,6 @@
 package com.agah.furkan.androidplayground.ui.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.data.repository.PokemonRepository
@@ -12,13 +13,22 @@ class MainScreenVM @Inject constructor(private val pokemonRepository: PokemonRep
     ViewModel() {
 
     val pokemonList = pokemonRepository.getPersistedPokemonList()
+    var pokemonListTotalCount: Int? = null
+    var isRequestActive = false
 
     init {
+        getPokemonDataFromNetwork(offset = 0)
+    }
+
+    fun getPokemonDataFromNetwork(offset: Int) {
         viewModelScope.launch {
-            val data = pokemonRepository.getPokemonList(0, 50)
+            isRequestActive = true
+            val data = pokemonRepository.getPokemonList(offset, 50)
             if (data is ApiSuccessResponse) {
+                pokemonListTotalCount = data.data.count
                 cachePokemonData(data.data)
             }
+            isRequestActive = false
         }
     }
 
