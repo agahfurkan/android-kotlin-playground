@@ -7,13 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.agah.furkan.androidplayground.data.local.model.PokemonCache
 import com.agah.furkan.androidplayground.databinding.FragmentMainScreenBinding
+import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
+import com.agah.furkan.androidplayground.util.ItemClickListener
 import javax.inject.Inject
 
-class MainScreenFragment : BaseFragment() {
+class MainScreenFragment : BaseFragment(), InjectableFragment, ItemClickListener<PokemonCache> {
     private var _binding: FragmentMainScreenBinding? = null
     private val binding get() = _binding!!
 
@@ -21,7 +25,7 @@ class MainScreenFragment : BaseFragment() {
     lateinit var factory: ViewModelProvider.Factory
     private val mainScreenVM: MainScreenVM by viewModels { factory }
     private val pokemonAdapter: MainScreenPokemonAdapter by lazy {
-        MainScreenPokemonAdapter()
+        MainScreenPokemonAdapter(this)
     }
     private val pokemonListLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(requireContext())
@@ -69,5 +73,9 @@ class MainScreenFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+    override fun onItemClicked(item: PokemonCache) {
+        findNavController().navigate(MainScreenFragmentDirections.actionMainScreenFragmentToPokemonDetailScreenFragment())
     }
 }
