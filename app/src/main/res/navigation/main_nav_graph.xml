@@ -18,5 +18,9 @@
         android:id="@+id/pokemonDetailScreenFragment"
         android:name="com.agah.furkan.androidplayground.ui.detail.PokemonDetailScreenFragment"
         android:label="PokemonDetailScreenFragment"
-        tools:layout="@layout/fragment_pokemon_detail_screen" />
+        tools:layout="@layout/fragment_pokemon_detail_screen">
+        <argument
+            android:name="pokemonName"
+            app:argType="string" />
+    </fragment>
 </navigation>

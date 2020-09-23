@@ -1,6 +1,5 @@
 package com.agah.furkan.androidplayground.ui.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.data.repository.PokemonRepository

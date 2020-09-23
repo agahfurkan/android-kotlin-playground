@@ -27,9 +27,7 @@ class MainScreenFragment : BaseFragment(), InjectableFragment, ItemClickListener
     private val pokemonAdapter: MainScreenPokemonAdapter by lazy {
         MainScreenPokemonAdapter(this)
     }
-    private val pokemonListLayoutManager: LinearLayoutManager by lazy {
-        LinearLayoutManager(requireContext())
-    }
+    private lateinit var pokemonListLayoutManager: LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +40,7 @@ class MainScreenFragment : BaseFragment(), InjectableFragment, ItemClickListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pokemonListLayoutManager = LinearLayoutManager(context)
         binding.mainScreenPokemonList.adapter = pokemonAdapter
         binding.mainScreenPokemonList.layoutManager = pokemonListLayoutManager
         mainScreenVM.pokemonList.observe(viewLifecycleOwner, Observer { pokemonList ->
@@ -76,6 +75,10 @@ class MainScreenFragment : BaseFragment(), InjectableFragment, ItemClickListener
     }
 
     override fun onItemClicked(item: PokemonCache) {
-        findNavController().navigate(MainScreenFragmentDirections.actionMainScreenFragmentToPokemonDetailScreenFragment())
+        findNavController().navigate(
+            MainScreenFragmentDirections.actionMainScreenFragmentToPokemonDetailScreenFragment(
+                item.name
+            )
+        )
     }
 }

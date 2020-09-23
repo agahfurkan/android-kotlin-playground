@@ -57,6 +57,8 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    compileOnly "com.squareup.inject:assisted-inject-annotations-dagger2:$assistedInjectVersion"
+    kapt "com.squareup.inject:assisted-inject-processor-dagger2:$assistedInjectVersion"
     //navigation component
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"

@@ -18,6 +18,10 @@ class PokemonRepository @Inject constructor(
         pokemonService.getPokemonList(offset, limit)
     }
 
+    suspend fun getPokemonDetail(pokemonName: String) = withContext(Dispatchers.IO) {
+        pokemonService.getPokemonDetail(pokemonName)
+    }
+
     suspend fun cachePokemonData(pokemonResponse: PokemonResponse) = withContext(Dispatchers.IO) {
         if (!pokemonResponse.results.isNullOrEmpty()) {
             val data = ArrayList<PokemonCache>()
