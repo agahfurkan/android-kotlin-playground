@@ -14,13 +14,18 @@ buildscript {
         daggerVersion = "2.27"
         navVersion = "2.3.0"
         roomVersion = "2.2.5"
-        assistedInjectVersion="0.6.0"
+        assistedInjectVersion = "0.6.0"
+        interceptorVersion = "4.7.2"
+        mockitoVersion = "2.25.0"
+        mockitoAndroidVersion = "2.25.0"
+        archCoreVersion="2.1.0"
     }
     repositories {
         google()
         jcenter()
     }
     dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
         classpath "com.android.tools.build:gradle:4.0.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion"

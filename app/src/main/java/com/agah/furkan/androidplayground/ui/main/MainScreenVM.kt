@@ -5,9 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.data.repository.PokemonRepository
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.response.PokemonResponse
+import com.agah.furkan.androidplayground.testing.OpenForTesting
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OpenForTesting
 class MainScreenVM @Inject constructor(private val pokemonRepository: PokemonRepository) :
     ViewModel() {
 
