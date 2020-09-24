@@ -6,12 +6,10 @@ on:
       - master
   push:
     branches:
-      - master
-	  
+      - master	  
 jobs:
   testing:
     name: Lint Check and Testing
-
     runs-on: ubuntu-latest
 
     steps:
