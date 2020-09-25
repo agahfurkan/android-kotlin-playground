@@ -1,8 +1,12 @@
 name: Testing Workflow
 
-on:[pull_request, push]
+on:
+ pull_request:
     branches:
-      - master	  
+      - master
+ push:
+     branches:
+         - master
 jobs:
   testing:
     name: Lint Check and Testing
