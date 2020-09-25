@@ -6,8 +6,9 @@ import com.agah.furkan.androidplayground.data.repository.PokemonRepository
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.response.PokemonResponse
 import com.agah.furkan.androidplayground.testing.OpenForTesting
-import kotlinx.coroutines.launch
+import com.agah.furkan.androidplayground.util.CountingIdlingResourceSingleton
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @OpenForTesting
 class MainScreenVM @Inject constructor(private val pokemonRepository: PokemonRepository) :
@@ -22,6 +23,7 @@ class MainScreenVM @Inject constructor(private val pokemonRepository: PokemonRep
     }
 
     fun getPokemonDataFromNetwork(offset: Int) {
+        CountingIdlingResourceSingleton.increment()
         viewModelScope.launch {
             isRequestActive = true
             val data = pokemonRepository.getPokemonList(offset, 50)
@@ -36,6 +38,7 @@ class MainScreenVM @Inject constructor(private val pokemonRepository: PokemonRep
     private fun cachePokemonData(pokemonResponse: PokemonResponse) {
         viewModelScope.launch {
             pokemonRepository.cachePokemonData(pokemonResponse)
+            CountingIdlingResourceSingleton.decrement()
         }
     }
 }

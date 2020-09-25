@@ -2,7 +2,6 @@ package com.agah.furkan.androidplayground.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
@@ -21,6 +20,5 @@ class ViewModelFactory @Inject constructor(
         } catch (e: Exception) {
             throw RuntimeException(e)
         }
-
     }
 }

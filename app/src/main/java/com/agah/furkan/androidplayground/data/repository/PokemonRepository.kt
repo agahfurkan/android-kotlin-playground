@@ -5,10 +5,10 @@ import com.agah.furkan.androidplayground.data.local.model.PokemonCache
 import com.agah.furkan.androidplayground.data.web.model.response.PokemonResponse
 import com.agah.furkan.androidplayground.data.web.service.PokemonService
 import com.agah.furkan.androidplayground.testing.OpenForTesting
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @OpenForTesting
 @Singleton

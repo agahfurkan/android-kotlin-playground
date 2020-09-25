@@ -9,7 +9,6 @@ import com.agah.furkan.androidplayground.databinding.ItemviewMainScreenPokemonLi
 import com.agah.furkan.androidplayground.util.GenericDiffUtil
 import com.agah.furkan.androidplayground.util.ItemClickListener
 
-
 class MainScreenPokemonAdapter(private val itemClickListener: ItemClickListener<PokemonCache>) :
     ListAdapter<PokemonCache, MainScreenPokemonAdapter.PokemonViewHolder>(GenericDiffUtil()) {
 

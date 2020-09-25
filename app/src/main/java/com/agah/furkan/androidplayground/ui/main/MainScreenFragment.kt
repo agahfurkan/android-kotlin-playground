@@ -20,6 +20,8 @@ import javax.inject.Inject
 class MainScreenFragment : BaseFragment(), InjectableFragment, ItemClickListener<PokemonCache> {
     private var _binding: FragmentMainScreenBinding? = null
     private val binding get() = _binding!!
+    private fun test() {
+    }
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory

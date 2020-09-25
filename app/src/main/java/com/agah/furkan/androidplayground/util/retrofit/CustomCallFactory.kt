@@ -1,10 +1,10 @@
-package com.agah.furkan.androidplayground.util
+package com.agah.furkan.androidplayground.util.retrofit
 
 import com.agah.furkan.androidplayground.data.web.model.ApiResponse
-import retrofit2.CallAdapter
-import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
+import retrofit2.CallAdapter
+import retrofit2.Retrofit
 
 class CustomCallFactory : CallAdapter.Factory() {
     override fun get(
@@ -15,9 +15,9 @@ class CustomCallFactory : CallAdapter.Factory() {
         check(returnType is ParameterizedType) {
             "return type must be parameterized"
         }
-        val callType = getParameterUpperBound(0, returnType)//call wrapper
+        val callType = getParameterUpperBound(0, returnType) // call wrapper
         val apiResponseType =
-            getParameterUpperBound(0, callType as ParameterizedType)//api response wrapper
+            getParameterUpperBound(0, callType as ParameterizedType) // api response wrapper
         if (getRawType(callType) != ApiResponse::class.java) {
             return null
         }

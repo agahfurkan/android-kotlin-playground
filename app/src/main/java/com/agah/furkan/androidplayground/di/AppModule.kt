@@ -6,16 +6,15 @@ import com.agah.furkan.androidplayground.BuildConfig
 import com.agah.furkan.androidplayground.data.local.AppDatabase
 import com.agah.furkan.androidplayground.data.web.RestConstants
 import com.agah.furkan.androidplayground.data.web.service.PokemonService
-import com.agah.furkan.androidplayground.util.CustomCallFactory
+import com.agah.furkan.androidplayground.util.retrofit.CustomCallFactory
 import dagger.Module
 import dagger.Provides
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
-
 
 @Module(includes = [ViewModelModule::class])
 class AppModule {
@@ -50,7 +49,7 @@ class AppModule {
     fun provideOkHttpClient(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
-       return OkHttpClient.Builder()
+        return OkHttpClient.Builder()
             .addInterceptor(interceptor)
             .readTimeout(RestConstants.READ_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(RestConstants.WRITE_TIMEOUT, TimeUnit.SECONDS)
