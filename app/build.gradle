@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'kotlin-allopen'
@@ -12,7 +11,7 @@ allOpen {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.0"
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.agah.furkan.androidplayground"
@@ -25,12 +24,13 @@ android {
 
     buildTypes {
         release {
-            buildConfigField("String", "BASE_URL", '"https://pokeapi.co/api/v2/"')
+            buildConfigField("String", "BASE_URL", '"https://localhost:5001/api/"')
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField("String", "BASE_URL", '"https://pokeapi.co/api/v2/"')
+            buildConfigField("String", "BASE_URL", '"https://localhost:5001/api/"')
+            minifyEnabled false
         }
     }
     compileOptions {
@@ -64,8 +64,6 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
-    compileOnly "com.squareup.inject:assisted-inject-annotations-dagger2:$assistedInjectVersion"
-    kapt "com.squareup.inject:assisted-inject-processor-dagger2:$assistedInjectVersion"
     //navigation component
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"

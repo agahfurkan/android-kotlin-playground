@@ -1,16 +1,19 @@
 package com.agah.furkan.androidplayground.di
 
-import com.agah.furkan.androidplayground.ui.detail.PokemonDetailScreenFragment
-import com.agah.furkan.androidplayground.ui.main.MainScreenFragment
+import com.agah.furkan.androidplayground.ui.login.LoginFragment
+import com.agah.furkan.androidplayground.ui.main.MainFragment
+import com.agah.furkan.androidplayground.ui.splash.SplashFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class FragmentBuildersModule {
+    @ContributesAndroidInjector
+    abstract fun contributeSplashFragment(): SplashFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeMainScreen(): MainScreenFragment
+    abstract fun contributeLoginFragment(): LoginFragment
 
     @ContributesAndroidInjector
-    abstract fun contributePokemonDetailScreenFragment(): PokemonDetailScreenFragment
+    abstract fun contributeMainFragment(): MainFragment
 }

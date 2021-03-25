@@ -2,10 +2,8 @@ package com.agah.furkan.androidplayground.di
 
 import android.app.Application
 import com.agah.furkan.androidplayground.MainApplication
-import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.BindsInstance
 import dagger.Component
-import dagger.Module
 import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
@@ -14,7 +12,8 @@ import javax.inject.Singleton
     modules = [
         AndroidInjectionModule::class,
         AppModule::class,
-        MainActivityModule::class, AssistedInjectModule::class]
+        MainActivityModule::class
+    ]
 )
 interface AppComponent {
 
@@ -25,9 +24,6 @@ interface AppComponent {
 
         fun build(): AppComponent
     }
+
     fun inject(mainApplication: MainApplication)
 }
-
-@AssistedModule
-@Module(includes = [AssistedInject_AssistedInjectModule::class])
-interface AssistedInjectModule

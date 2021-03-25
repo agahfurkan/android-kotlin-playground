@@ -3,24 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/mainScreenFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/mainScreenFragment"
-        android:name="com.agah.furkan.androidplayground.ui.main.MainScreenFragment"
-        android:label="MainScreenFragment"
-        tools:layout="@layout/fragment_main_screen" >
+        android:id="@+id/splashFragment"
+        android:name="com.agah.furkan.androidplayground.ui.splash.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_mainScreenFragment_to_pokemonDetailScreenFragment"
-            app:destination="@id/pokemonDetailScreenFragment" />
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
-        android:id="@+id/pokemonDetailScreenFragment"
-        android:name="com.agah.furkan.androidplayground.ui.detail.PokemonDetailScreenFragment"
-        android:label="PokemonDetailScreenFragment"
-        tools:layout="@layout/fragment_pokemon_detail_screen">
-        <argument
-            android:name="pokemonName"
-            app:argType="string" />
-    </fragment>
+        android:id="@+id/loginFragment"
+        android:name="com.agah.furkan.androidplayground.ui.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.agah.furkan.androidplayground.ui.main.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main" />
 </navigation>

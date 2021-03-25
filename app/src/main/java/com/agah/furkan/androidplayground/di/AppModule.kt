@@ -2,19 +2,20 @@ package com.agah.furkan.androidplayground.di
 
 import android.app.Application
 import androidx.room.Room
-import com.agah.furkan.androidplayground.BuildConfig
+import com.agah.furkan.androidplayground.BuildConfig.BASE_URL
 import com.agah.furkan.androidplayground.data.local.AppDatabase
+import com.agah.furkan.androidplayground.data.local.dao.DummyDao
 import com.agah.furkan.androidplayground.data.web.RestConstants
-import com.agah.furkan.androidplayground.data.web.service.PokemonService
+import com.agah.furkan.androidplayground.data.web.service.UserService
 import com.agah.furkan.androidplayground.util.retrofit.CustomCallFactory
 import dagger.Module
 import dagger.Provides
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module(includes = [ViewModelModule::class])
 class AppModule {
@@ -23,7 +24,7 @@ class AppModule {
     fun provideRetrofitClient(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(client)
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl(BASE_URL)
             .addCallAdapterFactory(CustomCallFactory())
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
@@ -31,8 +32,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providePokemonService(retrofit: Retrofit): PokemonService =
-        retrofit.create(PokemonService::class.java)
+    fun provideUserService(retrofit: Retrofit): UserService =
+        retrofit.create(UserService::class.java)
 
     @Singleton
     @Provides
@@ -40,7 +41,7 @@ class AppModule {
         return Room.databaseBuilder(
             application,
             AppDatabase::class.java,
-            "pokemonDB"
+            "playgroundDB"
         ).fallbackToDestructiveMigration().build()
     }
 
@@ -58,5 +59,5 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providePokemonDao(appDatabase: AppDatabase) = appDatabase.pokemonDao()
+    fun provideDummyDao(appDatabase: AppDatabase): DummyDao = appDatabase.dummyDao()
 }
