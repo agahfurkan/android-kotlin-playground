@@ -9,16 +9,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LoginRepository @Inject constructor(private val userService: UserService) {
-    suspend fun loginUser(userLoginBody: UserLoginBody) {
-        withContext(Dispatchers.IO) {
-            userService.loginUser(userLoginBody)
-        }
+class UserRepository @Inject constructor(private val userService: UserService) {
+    suspend fun loginUser(userLoginBody: UserLoginBody) = withContext(Dispatchers.IO) {
+        userService.loginUser(userLoginBody)
     }
 
-    suspend fun registerNewUser(userRegisterBody: UserRegisterBody) {
-        withContext(Dispatchers.IO) {
-            userService.registerNewUser(userRegisterBody)
-        }
+    suspend fun registerNewUser(userRegisterBody: UserRegisterBody) = withContext(Dispatchers.IO) {
+        userService.registerNewUser(userRegisterBody)
     }
 }

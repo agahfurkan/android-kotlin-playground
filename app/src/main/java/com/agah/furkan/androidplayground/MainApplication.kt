@@ -2,6 +2,7 @@ package com.agah.furkan.androidplayground
 
 import android.app.Application
 import com.agah.furkan.androidplayground.di.DaggerAppComponent
+import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -17,5 +18,6 @@ class MainApplication : Application(), HasAndroidInjector {
         super.onCreate()
         DaggerAppComponent.builder().application(this)
             .build().inject(this)
+        SharedPrefUtil.init(this)
     }
 }

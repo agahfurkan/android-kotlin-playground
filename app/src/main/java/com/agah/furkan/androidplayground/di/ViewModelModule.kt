@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.agah.furkan.androidplayground.ui.login.LoginFragmentVM
 import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
+import com.agah.furkan.androidplayground.ui.register.RegisterFragmentVM
 import com.agah.furkan.androidplayground.ui.splash.SplashFragmentVM
 import dagger.Binds
 import dagger.Module
@@ -16,12 +17,17 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(SplashFragmentVM::class)
-    abstract fun bindUserViewModel(splashFragmentVM: SplashFragmentVM): ViewModel
+    abstract fun bindSplashFragmentVM(splashFragmentVM: SplashFragmentVM): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(LoginFragmentVM::class)
     abstract fun bindLoginFragmentVM(loginFragmentVM: LoginFragmentVM): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RegisterFragmentVM::class)
+    abstract fun bindRegisterFragmentVM(registerFragmentVM: RegisterFragmentVM): ViewModel
 
     @Binds
     @IntoMap

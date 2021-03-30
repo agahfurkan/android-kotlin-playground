@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.databinding.FragmentSplashBinding
 import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
+import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import javax.inject.Inject
 
 class SplashFragment : BaseFragment(), InjectableFragment {
@@ -37,7 +39,12 @@ class SplashFragment : BaseFragment(), InjectableFragment {
     private fun initObservers() {
         splashFragmentVM.navigateEvent.observe(viewLifecycleOwner) {
             if (it) {
-                //
+                if (SharedPrefUtil.getToken() != null) {
+                    findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToMainFragment())
+                } else {
+                    findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment())
+                }
+
             }
         }
     }
