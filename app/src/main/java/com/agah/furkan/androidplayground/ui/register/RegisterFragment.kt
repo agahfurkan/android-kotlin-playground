@@ -11,14 +11,15 @@ import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.request.UserRegisterBody
-import com.agah.furkan.androidplayground.databinding.RegisterFragmentBinding
+import com.agah.furkan.androidplayground.databinding.FragmentRegisterBinding
 import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
+import com.agah.furkan.androidplayground.util.showLongToast
 import javax.inject.Inject
 
 class RegisterFragment : BaseFragment(), InjectableFragment {
-    private var _binding: RegisterFragmentBinding? = null
-    private val binding: RegisterFragmentBinding get() = _binding!!
+    private var _binding: FragmentRegisterBinding? = null
+    private val binding: FragmentRegisterBinding get() = _binding!!
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
@@ -29,7 +30,7 @@ class RegisterFragment : BaseFragment(), InjectableFragment {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = RegisterFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -53,7 +54,7 @@ class RegisterFragment : BaseFragment(), InjectableFragment {
                     findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                 }
                 is ApiErrorResponse -> {
-
+                    showLongToast(it.errorMessage)
                 }
             }
         }

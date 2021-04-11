@@ -13,17 +13,14 @@ import javax.inject.Inject
 
 class RegisterFragmentVM @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
+
     private val _registerUserResponse = MutableLiveData<ApiResponse<UserRegisterResponse>>()
     val registerUserResponse: LiveData<ApiResponse<UserRegisterResponse>> get() = _registerUserResponse
 
     fun registerNewUser(userRegisterBody: UserRegisterBody) {
         viewModelScope.launch {
-            try {
-                val response = userRepository.registerNewUser(userRegisterBody)
-                _registerUserResponse.postValue(response)
-            } catch (e: Exception) {
-                _registerUserResponse.postValue(ApiResponse.create(e))
-            }
+            val response = userRepository.registerNewUser(userRegisterBody)
+            _registerUserResponse.postValue(response)
         }
     }
 }

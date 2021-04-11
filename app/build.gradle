@@ -24,12 +24,12 @@ android {
 
     buildTypes {
         release {
-            buildConfigField("String", "BASE_URL", '"https://localhost:5001/api/"')
+            buildConfigField("String", "BASE_URL", '"http://10.0.2.2:19120/api/"')
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField("String", "BASE_URL", '"https://localhost:5001/api/"')
+            buildConfigField("String", "BASE_URL", '"http://10.0.2.2:19120/api/"')
             minifyEnabled false
         }
     }
@@ -51,6 +51,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "androidx.core:core-ktx:$ktxVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
     //layout
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     //retrofit

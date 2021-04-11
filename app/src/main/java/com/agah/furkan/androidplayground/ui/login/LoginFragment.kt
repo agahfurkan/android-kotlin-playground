@@ -6,11 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
+import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.request.UserLoginBody
 import com.agah.furkan.androidplayground.databinding.FragmentLoginBinding
 import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
+import com.agah.furkan.androidplayground.util.SharedPrefUtil
+import com.agah.furkan.androidplayground.util.showLongToast
 import javax.inject.Inject
 
 class LoginFragment : BaseFragment(), InjectableFragment, View.OnClickListener {
@@ -37,6 +42,25 @@ class LoginFragment : BaseFragment(), InjectableFragment, View.OnClickListener {
             binding.registerButton
         ).forEach {
             it.setOnClickListener(this)
+        }
+        initObservers()
+    }
+
+    private fun initObservers() {
+        loginFragmentVM.loginResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is ApiSuccessResponse -> {
+                    if (it.data.code == 1) {
+                        SharedPrefUtil.setToken(it.data.message.toString())
+                        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
+                    } else {
+                        showLongToast(it.data.message.toString())
+                    }
+                }
+                is ApiErrorResponse -> {
+                    showLongToast(it.errorMessage)
+                }
+            }
         }
     }
 
