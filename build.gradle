@@ -20,6 +20,7 @@ buildscript {
         mockitoVersion = "2.25.0"
         mockitoAndroidVersion = "3.3.3"
         archCoreVersion = "2.1.0"
+        glideVersion = "4.12.0"
     }
     repositories {
         google()

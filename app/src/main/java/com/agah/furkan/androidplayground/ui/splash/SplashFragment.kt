@@ -1,5 +1,6 @@
 package com.agah.furkan.androidplayground.ui.splash
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.databinding.FragmentSplashBinding
 import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.util.SharedPrefUtil
+import com.bumptech.glide.Glide
 import javax.inject.Inject
 
 class SplashFragment : BaseFragment(), InjectableFragment {
@@ -33,19 +34,32 @@ class SplashFragment : BaseFragment(), InjectableFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Glide.with(this)
+            .load(
+                Drawable.createFromStream(
+                    requireContext().assets.open("loading_image.gif"),
+                    null
+                )
+            )
+            .into(binding.splashImageview)
         initObservers()
     }
 
     private fun initObservers() {
-        splashFragmentVM.navigateEvent.observe(viewLifecycleOwner) {
-            if (it) {
-                if (SharedPrefUtil.getToken() != null) {
+        splashFragmentVM.isTokenValid.observe(viewLifecycleOwner) {
+            when (it) {
+                true -> {
                     findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToMainFragment())
-                } else {
+                }
+                false -> {
                     findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment())
                 }
-
             }
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

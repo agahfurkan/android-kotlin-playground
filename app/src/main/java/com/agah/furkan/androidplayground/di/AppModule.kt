@@ -6,6 +6,7 @@ import com.agah.furkan.androidplayground.BuildConfig.BASE_URL
 import com.agah.furkan.androidplayground.data.local.AppDatabase
 import com.agah.furkan.androidplayground.data.local.dao.DummyDao
 import com.agah.furkan.androidplayground.data.web.RestConstants
+import com.agah.furkan.androidplayground.data.web.service.CategoryService
 import com.agah.furkan.androidplayground.data.web.service.UserService
 import com.agah.furkan.androidplayground.util.retrofit.CustomCallFactory
 import dagger.Module
@@ -34,6 +35,11 @@ class AppModule {
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService =
         retrofit.create(UserService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideCategoryService(retrofit: Retrofit): CategoryService =
+        retrofit.create(CategoryService::class.java)
 
     @Singleton
     @Provides

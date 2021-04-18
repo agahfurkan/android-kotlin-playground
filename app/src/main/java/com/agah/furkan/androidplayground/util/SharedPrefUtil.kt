@@ -18,7 +18,7 @@ object SharedPrefUtil {
         )
     }
 
-    fun setToken(token: String) {
+    fun setToken(token: String?) {
         sharedPref?.edit()?.putString(TOKEN_KEY, token)?.apply()
     }
 

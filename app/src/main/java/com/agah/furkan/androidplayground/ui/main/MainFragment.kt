@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.databinding.FragmentMainBinding
 import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
@@ -33,10 +35,33 @@ class MainFragment : BaseFragment(), InjectableFragment {
             offscreenPageLimit = viewPagerAdapter!!.itemCount - 1
             adapter = viewPagerAdapter
         }
+
+        binding.mainBottomNavView.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.main_nav_discover_item -> {
+                    binding.mainViewPager.currentItem = 0
+                }
+                R.id.main_nav_cart_item -> {
+                    binding.mainViewPager.currentItem = 1
+                }
+                else -> binding.mainViewPager.currentItem = 0
+            }
+            true
+        }
+
+        binding.mainViewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                when (position) {
+                    0 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_discover_item
+                    1 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_cart_item
+                }
+            }
+        })
     }
 
     class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-
         override fun getItemCount(): Int {
             return 2
         }
