@@ -8,6 +8,7 @@ import com.agah.furkan.androidplayground.R
 object SharedPrefUtil {
     private var sharedPref: SharedPreferences? = null
     private const val TOKEN_KEY = "userToken"
+    private const val USERNAME = "username"
 
     fun init(application: Application) {
         sharedPref = application.getSharedPreferences(
@@ -23,4 +24,10 @@ object SharedPrefUtil {
     }
 
     fun getToken(): String? = sharedPref?.getString(TOKEN_KEY, null)
+
+    fun setUsername(username: String?) {
+        sharedPref?.edit()?.putString(USERNAME, username)?.apply()
+    }
+
+    fun getUsername(): String = sharedPref?.getString(USERNAME, null) ?: ""
 }
