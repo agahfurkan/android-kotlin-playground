@@ -18,7 +18,7 @@
         app:layout_constraintTop_toBottomOf="@id/activity_more_button"
         app:navGraph="@navigation/main_nav_graph" />
 
-    <ImageButton
+    <com.agah.furkan.androidplayground.view.CustomImageButton
         android:id="@+id/activity_more_button"
         android:layout_width="32dp"
         android:layout_height="32dp"

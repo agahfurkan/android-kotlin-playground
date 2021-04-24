@@ -2,9 +2,11 @@
     <string name="app_name">Android Playground</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="discover">Discover</string>
     <string name="cart">Cart</string>
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
+    <string name="add_to_cart">Add to Cart</string>
 </resources>

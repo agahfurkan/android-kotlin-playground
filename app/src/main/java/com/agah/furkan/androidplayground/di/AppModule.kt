@@ -6,7 +6,9 @@ import com.agah.furkan.androidplayground.BuildConfig.BASE_URL
 import com.agah.furkan.androidplayground.data.local.AppDatabase
 import com.agah.furkan.androidplayground.data.local.dao.DummyDao
 import com.agah.furkan.androidplayground.data.web.RestConstants
+import com.agah.furkan.androidplayground.data.web.service.CartService
 import com.agah.furkan.androidplayground.data.web.service.CategoryService
+import com.agah.furkan.androidplayground.data.web.service.ProductService
 import com.agah.furkan.androidplayground.data.web.service.UserService
 import com.agah.furkan.androidplayground.util.retrofit.CustomCallFactory
 import dagger.Module
@@ -40,6 +42,16 @@ class AppModule {
     @Provides
     fun provideCategoryService(retrofit: Retrofit): CategoryService =
         retrofit.create(CategoryService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideCartService(retrofit: Retrofit): CartService =
+        retrofit.create(CartService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideProductService(retrofit: Retrofit): ProductService =
+        retrofit.create(ProductService::class.java)
 
     @Singleton
     @Provides

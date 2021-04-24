@@ -8,6 +8,6 @@ import java.util.*
 
 interface CategoryService {
 
-    @GET("Category/getallcategories")
+    @GET("Category/GetAllCategories")
     suspend fun fetchCategories(@HeaderMap header: HashMap<String, String>): ApiResponse<List<CategoryResponse>>
 }

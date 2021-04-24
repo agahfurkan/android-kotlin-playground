@@ -4,6 +4,7 @@ import com.agah.furkan.androidplayground.ui.login.LoginFragment
 import com.agah.furkan.androidplayground.ui.main.MainFragment
 import com.agah.furkan.androidplayground.ui.main.child.CartFragment
 import com.agah.furkan.androidplayground.ui.main.child.DiscoverFragment
+import com.agah.furkan.androidplayground.ui.productlist.ProductListFragment
 import com.agah.furkan.androidplayground.ui.register.RegisterFragment
 import com.agah.furkan.androidplayground.ui.splash.SplashFragment
 import dagger.Module
@@ -28,4 +29,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeCartFragment(): CartFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeProductListFragment(): ProductListFragment
 }

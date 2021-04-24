@@ -13,17 +13,17 @@ import retrofit2.http.POST
 
 interface UserService {
 
-    @POST("login/login")
+    @POST("Login/Login")
     suspend fun loginUser(
         @Body userLoginBody: UserLoginBody
     ): ApiResponse<UserLoginResponse>
 
-    @POST("login/register")
+    @POST("Login/Register")
     suspend fun registerNewUser(
         @Body userRegisterBody: UserRegisterBody
     ): ApiResponse<UserRegisterResponse>
 
-    @POST("login/validatetoken")
+    @POST("Login/ValidateToken")
     suspend fun validateToken(
         @Body validateTokenBody: ValidateTokenBody
     ): ApiResponse<ValidateTokenResponse>

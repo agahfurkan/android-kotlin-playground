@@ -7,16 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
+import com.agah.furkan.androidplayground.callback.IListAdapterListener
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
+import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
 import com.agah.furkan.androidplayground.databinding.FragmentDiscoverBinding
 import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.adapter.recyclerview.MainCategoryListAdapter
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
+import com.agah.furkan.androidplayground.ui.main.MainFragmentDirections
 import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
 import javax.inject.Inject
 
-class DiscoverFragment : BaseFragment(), InjectableFragment {
+class DiscoverFragment : BaseFragment(), InjectableFragment,
+    IListAdapterListener<CategoryResponse> {
     private var _binding: FragmentDiscoverBinding? = null
     private val binding: FragmentDiscoverBinding get() = _binding!!
 
@@ -39,7 +44,7 @@ class DiscoverFragment : BaseFragment(), InjectableFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        categoryListAdapter = MainCategoryListAdapter()
+        categoryListAdapter = MainCategoryListAdapter(this)
         binding.discoverCategoryList.adapter = categoryListAdapter
         initObservers()
     }
@@ -55,5 +60,14 @@ class DiscoverFragment : BaseFragment(), InjectableFragment {
                 }
             }
         }
+    }
+
+    override fun listItemClicked(item: CategoryResponse) {
+        super.listItemClicked(item)
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToProductListFragment(
+                categoryId = item.categoryId
+            )
+        )
     }
 }

@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.agah.furkan.androidplayground.callback.IListAdapterListener
 import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
 import com.agah.furkan.androidplayground.databinding.ItemMainCategoryListBinding
 import com.agah.furkan.androidplayground.util.GenericDiffUtil
 
-class MainCategoryListAdapter :
+class MainCategoryListAdapter(private val iListAdapterListener: IListAdapterListener<CategoryResponse>) :
     ListAdapter<CategoryResponse, MainCategoryListAdapter.CategoryViewHolder>(GenericDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -16,14 +17,20 @@ class MainCategoryListAdapter :
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), iListAdapterListener)
     }
 
     class CategoryViewHolder(private val binding: ItemMainCategoryListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: CategoryResponse) {
+        fun bind(
+            item: CategoryResponse,
+            iListAdapterListener: IListAdapterListener<CategoryResponse>
+        ) {
             binding.itemMainCategoryName.text = item.categoryName
+            binding.root.setOnClickListener {
+                iListAdapterListener.listItemClicked(item)
+            }
         }
 
         companion object {

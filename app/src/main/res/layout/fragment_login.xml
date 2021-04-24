@@ -56,23 +56,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
-                android:text="Login"
-                android:textAllCaps="false"
+                android:text="@string/login"
                 app:layout_constraintBottom_toTopOf="@id/register_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_password_layout" />
+                app:layout_constraintTop_toBottomOf="@id/login_password_layout"
+                app:removeInsets="true" />
 
             <com.agah.furkan.androidplayground.view.CustomButton
                 android:id="@+id/register_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Register"
-                android:textAllCaps="false"
+                android:layout_marginTop="@dimen/margin8"
+                android:text="@string/register"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_button" />
+                app:layout_constraintTop_toBottomOf="@id/login_button"
+                app:removeInsets="true" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

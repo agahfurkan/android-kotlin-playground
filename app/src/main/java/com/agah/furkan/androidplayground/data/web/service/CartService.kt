@@ -1,5 +1,6 @@
 package com.agah.furkan.androidplayground.data.web.service
 
+import com.agah.furkan.androidplayground.data.web.model.ApiResponse
 import com.agah.furkan.androidplayground.data.web.model.request.CartBody
 import com.agah.furkan.androidplayground.data.web.model.response.CartResponse
 import retrofit2.http.Body
@@ -13,6 +14,6 @@ interface CartService {
     suspend fun getCart(
         @Body cartBody: CartBody,
         @HeaderMap header: HashMap<String, String>
-    ): List<CartResponse>
+    ): ApiResponse<List<CartResponse>>
 
 }

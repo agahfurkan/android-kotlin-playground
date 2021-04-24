@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.agah.furkan.androidplayground.view.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.agah.furkan.androidplayground.view.CustomTextView
             android:id="@+id/item_main_category_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -20,4 +20,4 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Category Name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+</com.agah.furkan.androidplayground.view.CustomCardView>
