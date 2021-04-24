@@ -21,7 +21,7 @@ import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
 import javax.inject.Inject
 
 class DiscoverFragment : BaseFragment(), InjectableFragment,
-    IListAdapterListener<CategoryResponse> {
+    IListAdapterListener<CategoryResponse.Category> {
     private var _binding: FragmentDiscoverBinding? = null
     private val binding: FragmentDiscoverBinding get() = _binding!!
 
@@ -53,7 +53,7 @@ class DiscoverFragment : BaseFragment(), InjectableFragment,
         mainFragmentVM.categoryList.observe(viewLifecycleOwner) {
             when (it) {
                 is ApiSuccessResponse -> {
-                    categoryListAdapter?.submitList(it.data)
+                    categoryListAdapter?.submitList(it.data.categoryList)
                 }
                 is ApiErrorResponse -> {
 
@@ -62,7 +62,7 @@ class DiscoverFragment : BaseFragment(), InjectableFragment,
         }
     }
 
-    override fun listItemClicked(item: CategoryResponse) {
+    override fun listItemClicked(item: CategoryResponse.Category) {
         super.listItemClicked(item)
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToProductListFragment(

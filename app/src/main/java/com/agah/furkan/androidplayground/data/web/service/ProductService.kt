@@ -13,6 +13,6 @@ interface ProductService {
     suspend fun getProductList(
         @Query(value = "categoryId") categoryId: Int,
         @HeaderMap header: HashMap<String, String>
-    ): ApiResponse<List<ProductResponse>>
+    ): ApiResponse<ProductResponse>
 
 }

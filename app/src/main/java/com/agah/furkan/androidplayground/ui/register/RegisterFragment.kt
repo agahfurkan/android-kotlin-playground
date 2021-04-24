@@ -48,13 +48,14 @@ class RegisterFragment : BaseFragment(), InjectableFragment {
     }
 
     private fun initObservers() {
-        registerFragmentVM.registerUserResponse.observe(viewLifecycleOwner) {
-            when (it) {
+        registerFragmentVM.registerUserResponse.observe(viewLifecycleOwner) { apiResponse ->
+            when (apiResponse) {
                 is ApiSuccessResponse -> {
+                    showLongToast(apiResponse.data.message.toString())
                     findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                 }
                 is ApiErrorResponse -> {
-                    showLongToast(it.errorMessage)
+                    showLongToast(apiResponse.errorMessage)
                 }
             }
         }

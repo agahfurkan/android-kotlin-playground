@@ -12,8 +12,9 @@ import javax.inject.Inject
 
 class ProductListFragmentVM @Inject constructor(private val productRepository: ProductRepository) :
     ViewModel() {
-    private var _productList = MutableLiveData<ApiResponse<List<ProductResponse>>>()
-    val productList: LiveData<ApiResponse<List<ProductResponse>>> get() = _productList
+
+    private var _productList = MutableLiveData<ApiResponse<ProductResponse>>()
+    val productList: LiveData<ApiResponse<ProductResponse>> get() = _productList
 
     fun getProducts(categoryId: Int) {
         viewModelScope.launch {

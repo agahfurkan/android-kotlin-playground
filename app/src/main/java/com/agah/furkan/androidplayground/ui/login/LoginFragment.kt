@@ -50,8 +50,9 @@ class LoginFragment : BaseFragment(), InjectableFragment, View.OnClickListener {
         loginFragmentVM.loginResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is ApiSuccessResponse -> {
-                    if (it.data.code == 1) {
-                        SharedPrefUtil.setToken(it.data.message.toString())
+                    if (it.data.isSuccess) {
+                        SharedPrefUtil.setToken(it.data.token!!)
+                        SharedPrefUtil.setUserid(it.data.userId!!)
                         findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
                     } else {
                         showLongToast(it.data.message.toString())

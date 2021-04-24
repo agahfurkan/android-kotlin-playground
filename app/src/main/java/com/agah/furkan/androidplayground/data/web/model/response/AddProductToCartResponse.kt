@@ -5,9 +5,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class UserLoginResponse(
-    @Json(name = "token")
-    val token: String?,
-    @Json(name = "userId")
-    val userId: Int?
-): GenericResponse()
+data class AddProductToCartResponse(
+    @Json(name = "code")
+    val code: Int?,
+    @Json(name = "message")
+    val message: String?
+)

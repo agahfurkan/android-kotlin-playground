@@ -7,16 +7,16 @@ import com.agah.furkan.androidplayground.data.web.model.response.ProductResponse
 class GenericDiffUtil<T> : DiffUtil.ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
         return when (oldItem) {
-            is CategoryResponse -> oldItem as CategoryResponse == newItem
-            is ProductResponse -> oldItem as ProductResponse == newItem
+            is CategoryResponse.Category -> oldItem as CategoryResponse.Category == newItem
+            is ProductResponse.Product -> oldItem as ProductResponse.Product == newItem
             else -> true
         }
     }
 
     override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
         return when (oldItem) {
-            is CategoryResponse -> oldItem as CategoryResponse == newItem
-            is ProductResponse -> oldItem as ProductResponse == newItem
+            is CategoryResponse.Category -> oldItem as CategoryResponse.Category == newItem
+            is ProductResponse.Product -> oldItem as ProductResponse.Product == newItem
             else -> true
         }
     }

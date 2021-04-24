@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.data.repository.CartRepository
 import com.agah.furkan.androidplayground.data.repository.CategoryRepository
 import com.agah.furkan.androidplayground.data.web.model.ApiResponse
-import com.agah.furkan.androidplayground.data.web.model.request.CartBody
 import com.agah.furkan.androidplayground.data.web.model.response.CartResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
@@ -19,11 +18,11 @@ class MainFragmentVM @Inject constructor(
     private val cartRepository: CartRepository
 ) :
     ViewModel() {
-    private val _categoryList = MutableLiveData<ApiResponse<List<CategoryResponse>>>()
-    val categoryList: LiveData<ApiResponse<List<CategoryResponse>>> get() = _categoryList
+    private val _categoryList = MutableLiveData<ApiResponse<CategoryResponse>>()
+    val categoryList: LiveData<ApiResponse<CategoryResponse>> get() = _categoryList
 
-    private val _cartResponse = MutableLiveData<ApiResponse<List<CartResponse>>>()
-    val cartResponse: LiveData<ApiResponse<List<CartResponse>>> get() = _cartResponse
+    private val _cartResponse = MutableLiveData<ApiResponse<CartResponse>>()
+    val cartResponse: LiveData<ApiResponse<CartResponse>> get() = _cartResponse
 
     init {
         fetchMainProductCategories()
@@ -39,7 +38,7 @@ class MainFragmentVM @Inject constructor(
 
     fun fetchCart() {
         viewModelScope.launch {
-            val response = cartRepository.getCart(CartBody(username = SharedPrefUtil.getUsername()))
+            val response = cartRepository.getCart(userId = SharedPrefUtil.getUserId())
         }
     }
 }

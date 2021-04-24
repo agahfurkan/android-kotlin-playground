@@ -4,19 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
+import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
+import com.agah.furkan.androidplayground.data.web.model.response.ProductResponse
 import com.agah.furkan.androidplayground.databinding.FragmentProductListBinding
 import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.adapter.recyclerview.ProductListAdapter
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import javax.inject.Inject
 
-class ProductListFragment : BaseFragment(), InjectableFragment {
+class ProductListFragment : BaseFragment(), InjectableFragment,
+    ProductListAdapter.ProductAdapterListener {
     private var _binding: FragmentProductListBinding? = null
     private val binding get() = _binding!!
 
@@ -25,6 +29,7 @@ class ProductListFragment : BaseFragment(), InjectableFragment {
     private val productListFragmentVM by viewModels<ProductListFragmentVM> { factory }
     private val args by navArgs<ProductListFragmentArgs>()
     private var productAdapter: ProductListAdapter? = null
+    private val sharedViewModel by activityViewModels<SharedViewModel> { factory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +42,7 @@ class ProductListFragment : BaseFragment(), InjectableFragment {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        productAdapter = ProductListAdapter()
+        productAdapter = ProductListAdapter(this)
         binding.productList.adapter = productAdapter
         initObservers()
     }
@@ -51,12 +56,20 @@ class ProductListFragment : BaseFragment(), InjectableFragment {
         productListFragmentVM.productList.observe(viewLifecycleOwner) { apiResponse ->
             when (apiResponse) {
                 is ApiSuccessResponse -> {
-                    productAdapter?.submitList(apiResponse.data)
+                    productAdapter?.submitList(apiResponse.data.productList)
                 }
                 is ApiErrorResponse -> {
 
                 }
             }
         }
+    }
+
+    override fun onProductItemClicked(item: ProductResponse.Product) {
+
+    }
+
+    override fun onAddToCartClicked(item: ProductResponse.Product) {
+
     }
 }

@@ -9,8 +9,10 @@ import com.agah.furkan.androidplayground.data.web.model.response.CategoryRespons
 import com.agah.furkan.androidplayground.databinding.ItemMainCategoryListBinding
 import com.agah.furkan.androidplayground.util.GenericDiffUtil
 
-class MainCategoryListAdapter(private val iListAdapterListener: IListAdapterListener<CategoryResponse>) :
-    ListAdapter<CategoryResponse, MainCategoryListAdapter.CategoryViewHolder>(GenericDiffUtil()) {
+class MainCategoryListAdapter(private val iListAdapterListener: IListAdapterListener<CategoryResponse.Category>) :
+    ListAdapter<CategoryResponse.Category, MainCategoryListAdapter.CategoryViewHolder>(
+        GenericDiffUtil()
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         return CategoryViewHolder.from(parent)
@@ -24,8 +26,8 @@ class MainCategoryListAdapter(private val iListAdapterListener: IListAdapterList
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            item: CategoryResponse,
-            iListAdapterListener: IListAdapterListener<CategoryResponse>
+            item: CategoryResponse.Category,
+            iListAdapterListener: IListAdapterListener<CategoryResponse.Category>
         ) {
             binding.itemMainCategoryName.text = item.categoryName
             binding.root.setOnClickListener {

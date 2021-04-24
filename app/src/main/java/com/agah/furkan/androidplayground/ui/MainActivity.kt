@@ -46,7 +46,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
                         }
                         R.id.main_menu_logout_action -> {
-                            SharedPrefUtil.setToken(null)
+                            SharedPrefUtil.clearAllData()
                             navController.navigate(LoginFragmentDirections.actionGlobalLoginFragment())
                         }
                     }

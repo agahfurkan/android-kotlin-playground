@@ -40,12 +40,23 @@
             app:layout_constraintTop_toBottomOf="@id/item_product_title"
             tools:text="999" />
 
+        <com.agah.furkan.androidplayground.view.CustomTextView
+            android:id="@+id/item_product_price_discounted"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_product_price"
+            tools:text="999" />
+
         <com.agah.furkan.androidplayground.view.CustomButton
-            style="@style/productAddButtonStyle"
+            android:id="@+id/item_product_add_to_cart_button"
+            style="@style/ProductAddButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_product_price" />
+            app:layout_constraintTop_toBottomOf="@id/item_product_price_discounted" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.agah.furkan.androidplayground.view.CustomCardView>
