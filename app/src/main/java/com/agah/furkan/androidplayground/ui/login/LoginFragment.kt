@@ -5,26 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.request.UserLoginBody
 import com.agah.furkan.androidplayground.databinding.FragmentLoginBinding
-import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import com.agah.furkan.androidplayground.util.showLongToast
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class LoginFragment : BaseFragment(), InjectableFragment, View.OnClickListener {
+@AndroidEntryPoint
+class LoginFragment : BaseFragment(), View.OnClickListener {
     private var _binding: FragmentLoginBinding? = null
     private val binding: FragmentLoginBinding get() = _binding!!
-
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
-    private val loginFragmentVM by viewModels<LoginFragmentVM> { factory }
+    private val loginFragmentVM by viewModels<LoginFragmentVM>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

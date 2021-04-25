@@ -6,22 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.databinding.FragmentSplashBinding
-import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.bumptech.glide.Glide
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class SplashFragment : BaseFragment(), InjectableFragment {
+@AndroidEntryPoint
+class SplashFragment : BaseFragment() {
     private var _binding: FragmentSplashBinding? = null
     private val binding: FragmentSplashBinding get() = _binding!!
-
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
-    private val splashFragmentVM by viewModels<SplashFragmentVM> { factory }
+    private val splashFragmentVM by viewModels<SplashFragmentVM>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

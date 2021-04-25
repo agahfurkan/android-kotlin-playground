@@ -7,9 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.data.repository.ProductRepository
 import com.agah.furkan.androidplayground.data.web.model.ApiResponse
 import com.agah.furkan.androidplayground.data.web.model.response.ProductDetailResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class ProductDetailFragmentVM @Inject constructor(private val productRepository: ProductRepository) :
     ViewModel() {
     private val _productDetail = MutableLiveData<ApiResponse<ProductDetailResponse>>()

@@ -10,9 +10,11 @@ import com.agah.furkan.androidplayground.data.web.model.ApiResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CartResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MainFragmentVM @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val cartRepository: CartRepository

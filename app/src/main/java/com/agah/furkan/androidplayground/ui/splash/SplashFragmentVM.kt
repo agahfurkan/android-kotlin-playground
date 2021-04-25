@@ -11,10 +11,12 @@ import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.request.ValidateTokenBody
 import com.agah.furkan.androidplayground.data.web.model.response.ValidateTokenResponse
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class SplashFragmentVM @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
     private val _isTokenValid = MutableLiveData<Boolean>()

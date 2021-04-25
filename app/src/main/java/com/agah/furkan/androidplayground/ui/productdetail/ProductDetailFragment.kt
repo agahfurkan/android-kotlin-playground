@@ -6,26 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.databinding.FragmentProductDetailBinding
-import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.showLongToast
 import com.bumptech.glide.Glide
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class ProductDetailFragment : BaseFragment(), InjectableFragment {
+@AndroidEntryPoint
+class ProductDetailFragment : BaseFragment() {
     private var _binding: FragmentProductDetailBinding? = null
     val binding get() = _binding!!
-
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
-    private val productDetailFragmentVM by viewModels<ProductDetailFragmentVM> { factory }
+    private val productDetailFragmentVM by viewModels<ProductDetailFragmentVM>()
     private val args by navArgs<ProductDetailFragmentArgs>()
 
     override fun onCreateView(

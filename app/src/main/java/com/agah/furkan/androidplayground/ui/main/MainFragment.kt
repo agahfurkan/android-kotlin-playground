@@ -9,12 +9,13 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.databinding.FragmentMainBinding
-import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.main.child.CartFragment
 import com.agah.furkan.androidplayground.ui.main.child.DiscoverFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainFragment : BaseFragment(), InjectableFragment {
+@AndroidEntryPoint
+class MainFragment : BaseFragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = _binding!!
     private var viewPagerAdapter: ViewPagerAdapter? = null

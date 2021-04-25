@@ -10,9 +10,11 @@ import com.agah.furkan.androidplayground.data.web.model.request.AddProductToCart
 import com.agah.furkan.androidplayground.data.web.model.response.AddProductToCartResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CartResponse
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class SharedViewModel @Inject constructor(private val cartRepository: CartRepository) :
     ViewModel() {
 

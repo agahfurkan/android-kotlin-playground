@@ -5,32 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.callback.IListAdapterListener
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
 import com.agah.furkan.androidplayground.databinding.FragmentDiscoverBinding
-import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.adapter.recyclerview.MainCategoryListAdapter
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.main.MainFragmentDirections
 import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class DiscoverFragment : BaseFragment(), InjectableFragment,
+@AndroidEntryPoint
+class DiscoverFragment : BaseFragment(),
     IListAdapterListener<CategoryResponse.Category> {
     private var _binding: FragmentDiscoverBinding? = null
     private val binding: FragmentDiscoverBinding get() = _binding!!
-
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
-
     private val mainFragmentVM by viewModels<MainFragmentVM>(
-        ownerProducer = { requireParentFragment() },
-        factoryProducer = { factory })
+        ownerProducer = { requireParentFragment() }
+    )
     private var categoryListAdapter: MainCategoryListAdapter? = null
 
     override fun onCreateView(

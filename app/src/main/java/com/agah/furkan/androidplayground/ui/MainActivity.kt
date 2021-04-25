@@ -10,7 +10,9 @@ import com.agah.furkan.androidplayground.databinding.ActivityMainBinding
 import com.agah.furkan.androidplayground.ui.base.BaseActivity
 import com.agah.furkan.androidplayground.ui.login.LoginFragmentDirections
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity(), View.OnClickListener {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!

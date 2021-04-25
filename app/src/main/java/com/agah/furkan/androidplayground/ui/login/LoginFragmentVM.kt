@@ -8,9 +8,11 @@ import com.agah.furkan.androidplayground.data.repository.UserRepository
 import com.agah.furkan.androidplayground.data.web.model.ApiResponse
 import com.agah.furkan.androidplayground.data.web.model.request.UserLoginBody
 import com.agah.furkan.androidplayground.data.web.model.response.UserLoginResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class LoginFragmentVM @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
 

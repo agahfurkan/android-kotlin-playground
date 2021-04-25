@@ -5,26 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.databinding.FragmentCartBinding
-import com.agah.furkan.androidplayground.di.InjectableFragment
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class CartFragment : BaseFragment(), InjectableFragment {
+@AndroidEntryPoint
+class CartFragment : BaseFragment() {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
-
-    @Inject
-    lateinit var factory: ViewModelProvider.Factory
-
     private val mainFragmentVM by viewModels<MainFragmentVM>(
-        ownerProducer = { requireParentFragment() },
-        factoryProducer = { factory })
+        ownerProducer = { requireParentFragment() }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -13,6 +13,8 @@ import com.agah.furkan.androidplayground.data.web.service.UserService
 import com.agah.furkan.androidplayground.util.retrofit.CustomCallFactory
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -20,7 +22,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-@Module(includes = [ViewModelModule::class])
+@Module
+@InstallIn(SingletonComponent::class)
 class AppModule {
     @Singleton
     @Provides
