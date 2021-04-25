@@ -53,7 +53,7 @@ class SplashFragmentVM @Inject constructor(private val userRepository: UserRepos
             _isTokenValid.postValue(false)
         } else {
             if (isTimerEnded && tempResponse != null) {
-                if (tempResponse is ApiErrorResponse || (tempResponse is ApiSuccessResponse && (tempResponse as ApiSuccessResponse).data.code == -1)) {
+                if (tempResponse is ApiErrorResponse || (tempResponse is ApiSuccessResponse && !(tempResponse as ApiSuccessResponse).data.isSuccess)) {
                     SharedPrefUtil.clearAllData()
                     _isTokenValid.postValue(false)
                 } else {

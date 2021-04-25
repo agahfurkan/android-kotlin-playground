@@ -13,8 +13,18 @@ data class CartResponse(
     @JsonClass(generateAdapter = true)
     data class Cart(
         @Json(name = "cartId")
-        val cartId: Int?,
+        val cartId: Int,
+        @Json(name = "discount")
+        val discount: Double,
+        @Json(name = "picture")
+        val picture: String,
+        @Json(name = "price")
+        val price: Double,
+        @Json(name = "productDescription")
+        val productDescription: String,
         @Json(name = "productId")
-        val productId: Int?
+        val productId: Int,
+        @Json(name = "productName")
+        val productName: String
     )
 }

@@ -8,5 +8,15 @@ data class AddProductToCartBody(
     @Json(name = "productId")
     val productId: Int,
     @Json(name = "userId")
-    val userId: Int
+    val userId: Int,
+    @Json(name = "discount")
+    val discount: Double,
+    @Json(name = "picture")
+    val picture: String,
+    @Json(name = "price")
+    val price: Double,
+    @Json(name = "productDescription")
+    val productDescription: String,
+    @Json(name = "productName")
+    val productName: String
 )

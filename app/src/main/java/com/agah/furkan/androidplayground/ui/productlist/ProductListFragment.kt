@@ -70,6 +70,6 @@ class ProductListFragment : BaseFragment(),
     }
 
     override fun onAddToCartClicked(item: ProductResponse.Product) {
-
+        sharedViewModel.addProductToCart(item)
     }
 }

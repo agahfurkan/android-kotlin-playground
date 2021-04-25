@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.agah.furkan.androidplayground.view.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin8"
+    app:contentPadding="@dimen/padding8">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.agah.furkan.androidplayground.view.CustomImageView
+            android:id="@+id/item_cart_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_round_home" />
+
+        <com.agah.furkan.androidplayground.view.CustomTextView
+            android:id="@+id/item_cart_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_cart_image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Product Title" />
+
+        <com.agah.furkan.androidplayground.view.CustomTextView
+            android:id="@+id/item_cart_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin4"
+            android:layout_marginEnd="@dimen/margin8"
+            app:layout_constraintEnd_toStartOf="@id/item_cart_remove_button"
+            app:layout_constraintStart_toEndOf="@id/item_cart_image"
+            app:layout_constraintTop_toBottomOf="@id/item_cart_title"
+            tools:text="999" />
+
+        <com.agah.furkan.androidplayground.view.CustomTextView
+            android:id="@+id/item_cart_price_discounted"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin4"
+            android:layout_marginEnd="@dimen/margin8"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/item_cart_remove_button"
+            app:layout_constraintStart_toEndOf="@id/item_cart_image"
+            app:layout_constraintTop_toBottomOf="@id/item_cart_price"
+            tools:text="999" />
+
+        <com.agah.furkan.androidplayground.view.CustomImageButton
+            android:id="@+id/item_cart_remove_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_cart_title"
+            app:srcCompat="@drawable/ic_delete"
+            app:tint="@color/black" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.agah.furkan.androidplayground.view.CustomCardView>

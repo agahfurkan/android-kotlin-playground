@@ -3,9 +3,11 @@ package com.agah.furkan.androidplayground.ui
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.widget.PopupMenu
 import androidx.navigation.findNavController
 import com.agah.furkan.androidplayground.R
+import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.databinding.ActivityMainBinding
 import com.agah.furkan.androidplayground.ui.base.BaseActivity
 import com.agah.furkan.androidplayground.ui.login.LoginFragmentDirections
@@ -19,6 +21,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private val navController by lazy {
         findNavController(R.id.nav_host_fragment)
     }
+    private val sharedViewModel by viewModels<SharedViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

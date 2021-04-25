@@ -2,8 +2,10 @@ package com.agah.furkan.androidplayground.data.web.service
 
 import com.agah.furkan.androidplayground.data.web.model.ApiResponse
 import com.agah.furkan.androidplayground.data.web.model.request.AddProductToCartBody
+import com.agah.furkan.androidplayground.data.web.model.request.RemoveProductFromCartBody
 import com.agah.furkan.androidplayground.data.web.model.response.AddProductToCartResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CartResponse
+import com.agah.furkan.androidplayground.data.web.model.response.RemoveProductFromCartResponse
 import retrofit2.http.Body
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
@@ -16,11 +18,17 @@ interface CartService {
     suspend fun getCart(
         @Query("userId") userId: Int,
         @HeaderMap header: HashMap<String, String>
-    ): ApiResponse<List<CartResponse>>
+    ): ApiResponse<CartResponse>
 
-    @POST("api/Cart/AddProductToCart")
+    @POST("Cart/AddProductToCart")
     suspend fun addProductToCart(
         @Body addProductToCartBody: AddProductToCartBody,
         @HeaderMap header: HashMap<String, String>
     ): ApiResponse<AddProductToCartResponse>
+
+    @POST("Cart/RemoveProductFromCart")
+    suspend fun removeProductFromCart(
+        @Body removeProductFromCartBody: RemoveProductFromCartBody,
+        @HeaderMap header: HashMap<String, String>
+    ): ApiResponse<RemoveProductFromCartResponse>
 }

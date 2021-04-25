@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.agah.furkan.androidplayground.R
+import com.agah.furkan.androidplayground.SharedViewModel
+import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
+import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.databinding.FragmentMainBinding
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.main.child.CartFragment
@@ -19,6 +23,7 @@ class MainFragment : BaseFragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding get() = _binding!!
     private var viewPagerAdapter: ViewPagerAdapter? = null
+    private val sharedViewModel by activityViewModels<SharedViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +36,7 @@ class MainFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initObservers()
         viewPagerAdapter = ViewPagerAdapter(this)
         binding.mainViewPager.apply {
             offscreenPageLimit = viewPagerAdapter!!.itemCount - 1
@@ -60,6 +66,31 @@ class MainFragment : BaseFragment() {
                 }
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.getUserCart()
+    }
+
+    private fun initObservers() {
+        sharedViewModel.userCartResponse.observe(viewLifecycleOwner) { apiResponse ->
+            when (apiResponse) {
+                is ApiSuccessResponse -> {
+                    val listSize = apiResponse.data.cartList?.size ?: 0
+                    val badge = binding.mainBottomNavView.getOrCreateBadge(R.id.main_nav_cart_item)
+                    if (listSize > 0) {
+                        badge.isVisible = true
+                        badge.number = listSize
+                    } else {
+                        badge.isVisible = false
+                    }
+                }
+                is ApiErrorResponse -> {
+
+                }
+            }
+        }
     }
 
     class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {

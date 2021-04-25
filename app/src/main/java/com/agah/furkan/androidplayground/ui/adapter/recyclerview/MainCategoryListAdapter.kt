@@ -4,12 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.agah.furkan.androidplayground.callback.IListAdapterListener
 import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
 import com.agah.furkan.androidplayground.databinding.ItemMainCategoryListBinding
 import com.agah.furkan.androidplayground.util.GenericDiffUtil
 
-class MainCategoryListAdapter(private val iListAdapterListener: IListAdapterListener<CategoryResponse.Category>) :
+class MainCategoryListAdapter(private val categoryListAdapterListener: CategoryListAdapterListener) :
     ListAdapter<CategoryResponse.Category, MainCategoryListAdapter.CategoryViewHolder>(
         GenericDiffUtil()
     ) {
@@ -19,7 +18,7 @@ class MainCategoryListAdapter(private val iListAdapterListener: IListAdapterList
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.bind(getItem(position), iListAdapterListener)
+        holder.bind(getItem(position), categoryListAdapterListener)
     }
 
     class CategoryViewHolder(private val binding: ItemMainCategoryListBinding) :
@@ -27,11 +26,11 @@ class MainCategoryListAdapter(private val iListAdapterListener: IListAdapterList
 
         fun bind(
             item: CategoryResponse.Category,
-            iListAdapterListener: IListAdapterListener<CategoryResponse.Category>
+            categoryListListener: CategoryListAdapterListener
         ) {
             binding.itemMainCategoryName.text = item.categoryName
             binding.root.setOnClickListener {
-                iListAdapterListener.listItemClicked(item)
+                categoryListListener.onItemClicked(item)
             }
         }
 
@@ -45,5 +44,9 @@ class MainCategoryListAdapter(private val iListAdapterListener: IListAdapterList
                 return CategoryViewHolder(binding)
             }
         }
+    }
+
+    interface CategoryListAdapterListener {
+        fun onItemClicked(item: CategoryResponse.Category)
     }
 }

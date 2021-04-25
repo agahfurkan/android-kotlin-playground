@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.agah.furkan.androidplayground.callback.IListAdapterListener
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
@@ -19,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DiscoverFragment : BaseFragment(),
-    IListAdapterListener<CategoryResponse.Category> {
+    MainCategoryListAdapter.CategoryListAdapterListener {
     private var _binding: FragmentDiscoverBinding? = null
     private val binding: FragmentDiscoverBinding get() = _binding!!
     private val mainFragmentVM by viewModels<MainFragmentVM>(
@@ -56,8 +55,7 @@ class DiscoverFragment : BaseFragment(),
         }
     }
 
-    override fun listItemClicked(item: CategoryResponse.Category) {
-        super.listItemClicked(item)
+    override fun onItemClicked(item: CategoryResponse.Category) {
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToProductListFragment(
                 categoryId = item.categoryId
