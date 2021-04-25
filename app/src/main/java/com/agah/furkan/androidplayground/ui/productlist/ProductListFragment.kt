@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
@@ -66,7 +67,11 @@ class ProductListFragment : BaseFragment(), InjectableFragment,
     }
 
     override fun onProductItemClicked(item: ProductResponse.Product) {
-
+        findNavController().navigate(
+            ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(
+                productId = item.productId
+            )
+        )
     }
 
     override fun onAddToCartClicked(item: ProductResponse.Product) {

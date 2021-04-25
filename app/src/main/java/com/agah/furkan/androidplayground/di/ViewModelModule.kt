@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.agah.furkan.androidplayground.ui.login.LoginFragmentVM
 import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
+import com.agah.furkan.androidplayground.ui.productdetail.ProductDetailFragmentVM
 import com.agah.furkan.androidplayground.ui.productlist.ProductListFragmentVM
 import com.agah.furkan.androidplayground.ui.register.RegisterFragmentVM
 import com.agah.furkan.androidplayground.ui.splash.SplashFragmentVM
@@ -39,6 +40,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProductListFragmentVM::class)
     abstract fun bindProductListFragmentVM(productListFragmentVM: ProductListFragmentVM): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProductDetailFragmentVM::class)
+    abstract fun bindProductDetailFragmentVM(productDetailFragmentVM: ProductDetailFragmentVM): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

@@ -5,13 +5,12 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class ProductResponse(
-    @Json(name = "productList")
-    val productList: List<Product>
-
+data class ProductDetailResponse(
+    @Json(name = "productDetail")
+    val productDetail: ProductDetail?
 ) : GenericResponse() {
     @JsonClass(generateAdapter = true)
-    data class Product(
+    data class ProductDetail(
         @Json(name = "categoryId")
         val categoryId: Int,
         @Json(name = "discount")

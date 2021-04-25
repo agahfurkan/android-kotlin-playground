@@ -16,4 +16,11 @@ class ProductRepository @Inject constructor(private val productService: ProductS
             header = RestConstants.getAuthHeader()
         )
     }
+
+    suspend fun getProductDetail(productId: Int) = withContext(Dispatchers.IO) {
+        productService.getProductDetail(
+            productId = productId,
+            header = RestConstants.getAuthHeader()
+        )
+    }
 }

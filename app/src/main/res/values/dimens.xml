@@ -4,5 +4,5 @@
     <dimen name="padding16">16dp</dimen>
 
     <dimen name="margin8">8dp</dimen>
-    <dimen name="margi16">16dp</dimen>
+    <dimen name="margin16">16dp</dimen>
 </resources>
