@@ -13,13 +13,14 @@ import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.response.ProductResponse
 import com.agah.furkan.androidplayground.databinding.FragmentProductListBinding
-import com.agah.furkan.androidplayground.ui.adapter.recyclerview.ProductListAdapter
+import com.agah.furkan.androidplayground.ui.adapter.recyclerview.GenericListAdapter
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
+import com.agah.furkan.androidplayground.util.ProductListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProductListFragment : BaseFragment(),
-    ProductListAdapter.ProductAdapterListener {
+    ProductListAdapter.ProductListListener {
     private var _binding: FragmentProductListBinding? = null
     private val binding get() = _binding!!
     private val productListFragmentVM by viewModels<ProductListFragmentVM>()
@@ -38,7 +39,9 @@ class ProductListFragment : BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        productAdapter = ProductListAdapter(this)
+        productAdapter = ProductListAdapter().apply {
+            mListAdapterListener = this@ProductListFragment
+        }
         binding.productList.adapter = productAdapter
         initObservers()
     }
@@ -61,7 +64,11 @@ class ProductListFragment : BaseFragment(),
         }
     }
 
-    override fun onProductItemClicked(item: ProductResponse.Product) {
+    override fun onItemClicked(
+        adapter: GenericListAdapter<ProductResponse.Product>,
+        item: ProductResponse.Product
+    ) {
+        super.onItemClicked(adapter, item)
         findNavController().navigate(
             ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(
                 productId = item.productId

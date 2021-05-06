@@ -10,21 +10,22 @@ import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
 import com.agah.furkan.androidplayground.databinding.FragmentDiscoverBinding
-import com.agah.furkan.androidplayground.ui.adapter.recyclerview.MainCategoryListAdapter
+import com.agah.furkan.androidplayground.ui.adapter.recyclerview.GenericListAdapter
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.main.MainFragmentDirections
 import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
+import com.agah.furkan.androidplayground.util.MainCategoryListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DiscoverFragment : BaseFragment(),
-    MainCategoryListAdapter.CategoryListAdapterListener {
+    GenericListAdapter.GenericListAdapterListener<CategoryResponse.Category> {
     private var _binding: FragmentDiscoverBinding? = null
     private val binding: FragmentDiscoverBinding get() = _binding!!
     private val mainFragmentVM by viewModels<MainFragmentVM>(
         ownerProducer = { requireParentFragment() }
     )
-    private var categoryListAdapter: MainCategoryListAdapter? = null
+    private lateinit var categoryListAdapter: MainCategoryListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +38,9 @@ class DiscoverFragment : BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        categoryListAdapter = MainCategoryListAdapter(this)
+        categoryListAdapter = MainCategoryListAdapter().apply {
+            mListAdapterListener = this@DiscoverFragment
+        }
         binding.discoverCategoryList.adapter = categoryListAdapter
         initObservers()
     }
@@ -46,7 +49,7 @@ class DiscoverFragment : BaseFragment(),
         mainFragmentVM.categoryList.observe(viewLifecycleOwner) {
             when (it) {
                 is ApiSuccessResponse -> {
-                    categoryListAdapter?.submitList(it.data.categoryList)
+                    categoryListAdapter.submitList(it.data.categoryList)
                 }
                 is ApiErrorResponse -> {
 
@@ -55,7 +58,10 @@ class DiscoverFragment : BaseFragment(),
         }
     }
 
-    override fun onItemClicked(item: CategoryResponse.Category) {
+    override fun onItemClicked(
+        adapter: GenericListAdapter<CategoryResponse.Category>,
+        item: CategoryResponse.Category
+    ) {
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToProductListFragment(
                 categoryId = item.categoryId

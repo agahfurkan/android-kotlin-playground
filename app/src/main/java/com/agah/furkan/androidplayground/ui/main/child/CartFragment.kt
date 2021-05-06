@@ -10,17 +10,19 @@ import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CartResponse
 import com.agah.furkan.androidplayground.databinding.FragmentCartBinding
-import com.agah.furkan.androidplayground.ui.adapter.recyclerview.CartListAdapter
+import com.agah.furkan.androidplayground.ui.adapter.recyclerview.GenericListAdapter
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
+import com.agah.furkan.androidplayground.util.CartListAdapter
 import com.agah.furkan.androidplayground.util.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CartFragment : BaseFragment(), CartListAdapter.CartListAdapterListener {
+class CartFragment : BaseFragment(),
+    GenericListAdapter.GenericListAdapterListener<CartResponse.Cart> {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
     private val sharedViewModel by activityViewModels<SharedViewModel>()
-    private var cartListAdapter: CartListAdapter? = null
+    private lateinit var cartListAdapter: CartListAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,7 +34,9 @@ class CartFragment : BaseFragment(), CartListAdapter.CartListAdapterListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        cartListAdapter = CartListAdapter(this)
+        cartListAdapter = CartListAdapter().apply {
+            mListAdapterListener = this@CartFragment
+        }
         binding.cartList.adapter = cartListAdapter
         initObservers()
     }
@@ -41,7 +45,7 @@ class CartFragment : BaseFragment(), CartListAdapter.CartListAdapterListener {
         sharedViewModel.userCartResponse.observe(viewLifecycleOwner) { apiResponse ->
             when (apiResponse) {
                 is ApiSuccessResponse -> {
-                    cartListAdapter?.submitList(apiResponse.data.cartList)
+                    cartListAdapter.submitList(apiResponse.data.cartList)
                 }
                 is ApiErrorResponse -> {
                 }
@@ -61,7 +65,11 @@ class CartFragment : BaseFragment(), CartListAdapter.CartListAdapterListener {
         }
     }
 
-    override fun onRemoveButtonClicked(item: CartResponse.Cart) {
+    override fun onItemRemoveClicked(
+        adapter: GenericListAdapter<CartResponse.Cart>,
+        item: CartResponse.Cart
+    ) {
+        super.onItemRemoveClicked(adapter, item)
         sharedViewModel.removeProductFromCart(item.productId)
     }
 }

@@ -11,7 +11,7 @@ class GenericDiffUtil<T> : DiffUtil.ItemCallback<T>() {
             is CategoryResponse.Category -> oldItem as CategoryResponse.Category == newItem
             is ProductResponse.Product -> oldItem as ProductResponse.Product == newItem
             is CartResponse.Cart -> oldItem as CartResponse.Cart == newItem
-            else -> true
+            else -> throw RuntimeException("err!")
         }
     }
 
@@ -20,7 +20,7 @@ class GenericDiffUtil<T> : DiffUtil.ItemCallback<T>() {
             is CategoryResponse.Category -> oldItem as CategoryResponse.Category == newItem
             is ProductResponse.Product -> oldItem as ProductResponse.Product == newItem
             is CartResponse.Cart -> oldItem as CartResponse.Cart == newItem
-            else -> true
+            else -> throw RuntimeException("err!")
         }
     }
 }
