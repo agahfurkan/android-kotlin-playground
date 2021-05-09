@@ -2,13 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
-apply plugin: 'kotlin-allopen'
 apply plugin: 'dagger.hilt.android.plugin'
-
-allOpen {
-    // allows mocking for classes w/o directly opening them for release builds
-    annotation 'com.agah.furkan.androidplayground.testing.OpenClass'
-}
 
 android {
     compileSdkVersion 30
@@ -20,7 +14,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.agah.furkan.androidplayground.CustomTestRunner"
     }
 
     buildTypes {
@@ -75,12 +69,9 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
     //testing
-    testImplementation "junit:junit:$jUnitVersion"
     androidTestImplementation "androidx.test.ext:junit:$jUnitXVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
-    androidTestImplementation "androidx.arch.core:core-testing:$archCoreVersion"
-    androidTestImplementation "org.mockito:mockito-android:$mockitoAndroidVersion"
-    androidTestImplementation "org.mockito:mockito-core:$mockitoAndroidVersion"
-    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
+    androidTestImplementation "com.google.truth:truth:$truthVersion"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hiltVersion"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hiltVersion"
 }
