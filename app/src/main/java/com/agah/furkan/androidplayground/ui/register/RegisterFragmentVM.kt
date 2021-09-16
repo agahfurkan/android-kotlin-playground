@@ -9,8 +9,8 @@ import com.agah.furkan.androidplayground.data.web.model.ApiResponse
 import com.agah.furkan.androidplayground.data.web.model.request.UserRegisterBody
 import com.agah.furkan.androidplayground.data.web.model.response.UserRegisterResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RegisterFragmentVM @Inject constructor(private val userRepository: UserRepository) :

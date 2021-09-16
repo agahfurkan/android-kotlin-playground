@@ -4,10 +4,10 @@ import com.agah.furkan.androidplayground.data.web.RestConstants
 import com.agah.furkan.androidplayground.data.web.model.request.AddProductToCartBody
 import com.agah.furkan.androidplayground.data.web.model.request.RemoveProductFromCartBody
 import com.agah.furkan.androidplayground.data.web.service.CartService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Singleton
 class CartRepository @Inject constructor(private val cartService: CartService) {

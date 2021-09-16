@@ -8,8 +8,8 @@ import com.agah.furkan.androidplayground.data.repository.CategoryRepository
 import com.agah.furkan.androidplayground.data.web.model.ApiResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainFragmentVM @Inject constructor(private val categoryRepository: CategoryRepository) :

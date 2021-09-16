@@ -6,11 +6,11 @@ import com.agah.furkan.androidplayground.data.web.model.request.RemoveProductFro
 import com.agah.furkan.androidplayground.data.web.model.response.AddProductToCartResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CartResponse
 import com.agah.furkan.androidplayground.data.web.model.response.RemoveProductFromCartResponse
+import java.util.*
 import retrofit2.http.Body
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
 import retrofit2.http.Query
-import java.util.*
 
 interface CartService {
 

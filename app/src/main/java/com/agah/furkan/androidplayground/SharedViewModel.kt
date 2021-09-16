@@ -14,8 +14,8 @@ import com.agah.furkan.androidplayground.data.web.model.response.ProductResponse
 import com.agah.furkan.androidplayground.data.web.model.response.RemoveProductFromCartResponse
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(private val cartRepository: CartRepository) :
