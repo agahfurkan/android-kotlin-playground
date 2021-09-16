@@ -19,6 +19,7 @@ class CustomCallAdapter<R : Any>(private val type: Type) : CallAdapter<R, Call<A
                         callback.onResponse(
                             responseCall,
                             Response.success(ApiResponse.create(t))
+                        //test
                         )
                     }
 
