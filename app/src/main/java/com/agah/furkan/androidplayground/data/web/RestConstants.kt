@@ -1,7 +1,6 @@
 package com.agah.furkan.androidplayground.data.web
 
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
-import java.util.*
 
 object RestConstants {
     const val READ_TIMEOUT = 30L
@@ -9,7 +8,7 @@ object RestConstants {
 
     fun getAuthHeader(): HashMap<String, String> {
         val temp = HashMap<String, String>()
-        temp["Authorization"] = "Bearer ${SharedPrefUtil.getToken().toString()}"
+        temp["Authorization"] = "Bearer ${SharedPrefUtil.getToken()}"
         return temp
     }
 }

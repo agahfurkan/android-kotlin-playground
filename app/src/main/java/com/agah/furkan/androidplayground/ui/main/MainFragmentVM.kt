@@ -27,5 +27,4 @@ class MainFragmentVM @Inject constructor(private val categoryRepository: Categor
             _categoryList.postValue(response)
         }
     }
-
 }

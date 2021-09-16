@@ -6,7 +6,6 @@ import com.agah.furkan.androidplayground.data.web.model.response.ProductResponse
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.Query
-import java.util.*
 
 interface ProductService {
     @GET("Product/GetProducts")

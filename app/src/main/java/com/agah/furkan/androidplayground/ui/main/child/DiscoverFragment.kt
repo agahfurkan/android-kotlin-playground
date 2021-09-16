@@ -18,7 +18,8 @@ import com.agah.furkan.androidplayground.util.MainCategoryListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DiscoverFragment : BaseFragment(),
+class DiscoverFragment :
+    BaseFragment(),
     GenericListAdapter.GenericListAdapterListener<CategoryResponse.Category> {
     private var _binding: FragmentDiscoverBinding? = null
     private val binding: FragmentDiscoverBinding get() = _binding!!
@@ -52,7 +53,6 @@ class DiscoverFragment : BaseFragment(),
                     categoryListAdapter.submitList(it.data.categoryList)
                 }
                 is ApiErrorResponse -> {
-
                 }
             }
         }

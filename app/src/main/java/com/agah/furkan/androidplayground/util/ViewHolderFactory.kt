@@ -62,7 +62,7 @@ object ViewHolderFactory {
             with(item) {
                 Glide.with(binding.root).load(R.drawable.dummy_product_image)
                     .placeholder(R.drawable.placeholder_image)
-                    .into(binding.itemCartImage)//assume image path comes from web service
+                    .into(binding.itemCartImage) // assume image path comes from web service
                 binding.itemCartPrice.text = price.toString()
                 if (discount != 0.0) {
                     binding.itemCartPrice.paintFlags =
@@ -91,7 +91,7 @@ object ViewHolderFactory {
                 binding.itemProductPrice.text = price.toString()
                 Glide.with(binding.root).load(R.drawable.dummy_product_image)
                     .placeholder(R.drawable.placeholder_image)
-                    .into(binding.itemProductImage)//assume image path comes from web service
+                    .into(binding.itemProductImage) // assume image path comes from web service
                 if (discount != 0.0) {
                     binding.itemProductPrice.paintFlags =
                         binding.itemProductPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG

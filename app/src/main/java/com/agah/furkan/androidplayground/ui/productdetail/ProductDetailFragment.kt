@@ -68,7 +68,6 @@ class ProductDetailFragment : BaseFragment() {
                     }
                 }
                 is ApiErrorResponse -> {
-
                 }
             }
         }

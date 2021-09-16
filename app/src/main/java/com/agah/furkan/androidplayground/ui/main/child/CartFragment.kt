@@ -17,7 +17,8 @@ import com.agah.furkan.androidplayground.util.showLongToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CartFragment : BaseFragment(),
+class CartFragment :
+    BaseFragment(),
     GenericListAdapter.GenericListAdapterListener<CartResponse.Cart> {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
@@ -59,7 +60,6 @@ class CartFragment : BaseFragment(),
                     }
                 }
                 is ApiErrorResponse -> {
-
                 }
             }
         }

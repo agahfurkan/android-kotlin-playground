@@ -48,7 +48,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 popup.setOnMenuItemClickListener { menuItem: MenuItem ->
                     when (menuItem.itemId) {
                         R.id.main_menu_profile_action -> {
-
                         }
                         R.id.main_menu_logout_action -> {
                             SharedPrefUtil.clearAllData()

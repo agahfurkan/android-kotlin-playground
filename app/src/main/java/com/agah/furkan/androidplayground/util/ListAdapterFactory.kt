@@ -1,6 +1,5 @@
 package com.agah.furkan.androidplayground.util
 
-
 import com.agah.furkan.androidplayground.data.web.model.response.CartResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
 import com.agah.furkan.androidplayground.data.web.model.response.ProductResponse

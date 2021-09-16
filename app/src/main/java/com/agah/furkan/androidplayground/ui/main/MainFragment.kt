@@ -57,15 +57,15 @@ class MainFragment : BaseFragment() {
         }
 
         binding.mainViewPager.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                when (position) {
-                    0 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_discover_item
-                    1 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_cart_item
+                ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    when (position) {
+                        0 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_discover_item
+                        1 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_cart_item
+                    }
                 }
-            }
-        })
+            })
     }
 
     override fun onResume() {
@@ -87,7 +87,6 @@ class MainFragment : BaseFragment() {
                     }
                 }
                 is ApiErrorResponse -> {
-
                 }
             }
         }

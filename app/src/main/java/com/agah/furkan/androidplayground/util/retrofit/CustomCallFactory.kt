@@ -1,10 +1,10 @@
 package com.agah.furkan.androidplayground.util.retrofit
 
 import com.agah.furkan.androidplayground.data.web.model.ApiResponse
-import java.lang.reflect.ParameterizedType
-import java.lang.reflect.Type
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 
 class CustomCallFactory : CallAdapter.Factory() {
     override fun get(

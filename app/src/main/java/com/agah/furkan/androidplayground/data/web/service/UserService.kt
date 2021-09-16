@@ -10,7 +10,6 @@ import com.agah.furkan.androidplayground.data.web.model.response.ValidateTokenRe
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-
 interface UserService {
 
     @POST("Login/Login")

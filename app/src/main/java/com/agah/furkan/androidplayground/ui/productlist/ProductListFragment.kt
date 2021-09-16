@@ -19,7 +19,8 @@ import com.agah.furkan.androidplayground.util.ProductListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductListFragment : BaseFragment(),
+class ProductListFragment :
+    BaseFragment(),
     ProductListAdapter.ProductListListener {
     private var _binding: FragmentProductListBinding? = null
     private val binding get() = _binding!!
@@ -58,7 +59,6 @@ class ProductListFragment : BaseFragment(),
                     productAdapter?.submitList(apiResponse.data.productList)
                 }
                 is ApiErrorResponse -> {
-
                 }
             }
         }
