@@ -16,15 +16,18 @@ jobs:
     steps:
       # Checkout the code as the first step.
       - checkout
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Run Android Ktlint
-        run: ./gradlew ktlintCheck
-      - name: Run Android Linter
-        run: ./gradlew lintDebug
-      - name: Run Unit Tests
-        run: ./gradlew testDebugUnitTest
-
+      - run: 
+          name: Grant execute permission for gradlew
+          command: chmod +x gradlew
+      - run:       
+          name: Run Android Ktlint
+          command: ./gradlew ktlintCheck
+      - run:       
+          name: Run Android Linter
+          command: ./gradlew lintDebug
+      - run:       
+          name: Run Unit Tests
+          command: ./gradlew testDebugUnitTest             
 workflows:
   # Below is the definition of your workflow.
   # Inside the workflow, you provide the jobs you want to run, e.g this workflow runs the build-and-test job above.
