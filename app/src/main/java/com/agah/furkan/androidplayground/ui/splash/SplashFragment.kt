@@ -8,19 +8,17 @@ import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.databinding.FragmentSplashBinding
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
+import com.agah.furkan.androidplayground.util.viewBinding
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SplashFragment : BaseFragment(R.layout.fragment_splash) {
-    private var _binding: FragmentSplashBinding? = null
-    private val binding: FragmentSplashBinding get() = _binding!!
+    private val binding by viewBinding(FragmentSplashBinding::bind)
     private val splashFragmentVM by viewModels<SplashFragmentVM>()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentSplashBinding.bind(view)
         Glide.with(this)
             .load(
                 Drawable.createFromStream(
@@ -44,10 +42,5 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
             }
             findNavController().navigate(navDirection)
         })
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 }

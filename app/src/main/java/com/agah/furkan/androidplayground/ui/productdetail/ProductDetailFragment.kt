@@ -2,9 +2,7 @@ package com.agah.furkan.androidplayground.ui.productdetail
 
 import android.graphics.Paint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.agah.furkan.androidplayground.R
@@ -13,24 +11,15 @@ import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.databinding.FragmentProductDetailBinding
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.showLongToast
+import com.agah.furkan.androidplayground.util.viewBinding
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductDetailFragment : BaseFragment() {
-    private var _binding: FragmentProductDetailBinding? = null
-    val binding get() = _binding!!
+class ProductDetailFragment : BaseFragment(R.layout.fragment_product_detail) {
+    private val binding by viewBinding(FragmentProductDetailBinding::bind)
     private val productDetailFragmentVM by viewModels<ProductDetailFragmentVM>()
     private val args by navArgs<ProductDetailFragmentArgs>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

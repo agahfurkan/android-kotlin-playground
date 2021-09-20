@@ -1,11 +1,10 @@
 package com.agah.furkan.androidplayground.ui.login
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.request.UserLoginBody
@@ -13,22 +12,13 @@ import com.agah.furkan.androidplayground.databinding.FragmentLoginBinding
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import com.agah.furkan.androidplayground.util.showLongToast
+import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment(), View.OnClickListener {
-    private var _binding: FragmentLoginBinding? = null
-    private val binding: FragmentLoginBinding get() = _binding!!
+class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListener {
+    private val binding by viewBinding(FragmentLoginBinding::bind)
     private val loginFragmentVM by viewModels<LoginFragmentVM>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,10 +64,5 @@ class LoginFragment : BaseFragment(), View.OnClickListener {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
             }
         }
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 }

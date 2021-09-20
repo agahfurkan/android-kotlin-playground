@@ -1,10 +1,9 @@
 package com.agah.furkan.androidplayground.ui.main.child
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
@@ -14,24 +13,15 @@ import com.agah.furkan.androidplayground.ui.adapter.recyclerview.GenericListAdap
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.CartListAdapter
 import com.agah.furkan.androidplayground.util.showLongToast
+import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CartFragment :
-    BaseFragment(),
+class CartFragment : BaseFragment(R.layout.fragment_cart),
     GenericListAdapter.GenericListAdapterListener<CartResponse.Cart> {
-    private var _binding: FragmentCartBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentCartBinding::bind)
     private val sharedViewModel by activityViewModels<SharedViewModel>()
     private lateinit var cartListAdapter: CartListAdapter
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentCartBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

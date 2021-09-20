@@ -1,9 +1,7 @@
 package com.agah.furkan.androidplayground.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -16,23 +14,14 @@ import com.agah.furkan.androidplayground.databinding.FragmentMainBinding
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.main.child.CartFragment
 import com.agah.furkan.androidplayground.ui.main.child.DiscoverFragment
+import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : BaseFragment() {
-    private var _binding: FragmentMainBinding? = null
-    private val binding: FragmentMainBinding get() = _binding!!
+class MainFragment : BaseFragment(R.layout.fragment_main) {
+    private val binding by viewBinding(FragmentMainBinding::bind)
     private var viewPagerAdapter: ViewPagerAdapter? = null
     private val sharedViewModel by activityViewModels<SharedViewModel>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,15 +46,15 @@ class MainFragment : BaseFragment() {
         }
 
         binding.mainViewPager.registerOnPageChangeCallback(object :
-                ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    when (position) {
-                        0 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_discover_item
-                        1 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_cart_item
-                    }
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                when (position) {
+                    0 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_discover_item
+                    1 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_cart_item
                 }
-            })
+            }
+        })
     }
 
     override fun onResume() {
