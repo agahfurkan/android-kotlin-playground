@@ -24,7 +24,7 @@ class SplashFragmentVM @Inject constructor(private val userRepository: UserRepos
     init {
         viewModelScope.launch {
             listOf(async {
-                delay(1)
+                delay(3000)
             }, async {
                 if (SharedPrefUtil.getToken() != null) {
                     val response = userRepository.validateToken(
