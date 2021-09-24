@@ -70,5 +70,3 @@ android {
         testImplementation(Dependencies.testLibraries)
     }
 }
-
-
