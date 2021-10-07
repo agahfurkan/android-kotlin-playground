@@ -8,12 +8,10 @@ import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
-import com.agah.furkan.androidplayground.data.web.model.request.UserLoginBody
 import com.agah.furkan.androidplayground.databinding.FragmentLoginBinding
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import com.agah.furkan.androidplayground.util.showLongToast
-import com.agah.furkan.androidplayground.util.textValue
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -25,8 +23,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = loginFragmentVM
         listOf(
-            binding.loginBtnLogin,
             binding.loginBtnRegister
         ).forEach {
             it.setOnClickListener(this)
@@ -57,14 +55,6 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.loginBtnLogin -> {
-                loginFragmentVM.login(
-                    UserLoginBody(
-                        username = binding.loginEtUsername.textValue,
-                        password = binding.loginEtPassword.textValue
-                    )
-                )
-            }
             binding.loginBtnRegister -> {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
             }

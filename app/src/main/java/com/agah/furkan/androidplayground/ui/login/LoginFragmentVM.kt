@@ -18,11 +18,21 @@ class LoginFragmentVM @Inject constructor(private val userRepository: UserReposi
 
     private val _loginResponse = MutableSharedFlow<ApiResponse<UserLoginResponse>>()
     val loginResponse: SharedFlow<ApiResponse<UserLoginResponse>> get() = _loginResponse
+    var username: String? = null
+    var password: String? = null
 
-    fun login(userLoginBody: UserLoginBody) {
+    private fun login(userLoginBody: UserLoginBody) {
         viewModelScope.launch {
             val response = userRepository.loginUser(userLoginBody)
             _loginResponse.emit(response)
         }
+    }
+
+    fun onLoginBtnClicked() {
+        if (username.isNullOrBlank())
+            return
+        if (password.isNullOrBlank())
+            return
+        login(UserLoginBody(username = username!!, password = password!!))
     }
 }
