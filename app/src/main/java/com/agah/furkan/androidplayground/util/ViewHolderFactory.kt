@@ -60,7 +60,7 @@ object ViewHolderFactory {
         GenericListAdapter.GenericViewHolder<CartResponse.Cart>(binding) {
         override fun bind(item: CartResponse.Cart) {
             with(item) {
-                Glide.with(binding.root).load(R.drawable.dummy_product_image)
+                Glide.with(binding.root).load(R.drawable.placeholder_image)
                     .placeholder(R.drawable.placeholder_image)
                     .into(binding.itemCartImage) // assume image path comes from web service
                 binding.itemCartPrice.text = price.toString()
@@ -89,7 +89,7 @@ object ViewHolderFactory {
             with(item) {
                 binding.itemProductTitle.text = productName
                 binding.itemProductPrice.text = price.toString()
-                Glide.with(binding.root).load(R.drawable.dummy_product_image)
+                Glide.with(binding.root).load(R.drawable.placeholder_image)
                     .placeholder(R.drawable.placeholder_image)
                     .into(binding.itemProductImage) // assume image path comes from web service
                 if (discount != 0.0) {

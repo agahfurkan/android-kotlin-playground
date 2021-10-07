@@ -1,6 +1,7 @@
 package com.agah.furkan.androidplayground.util
 
 import android.content.Context
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 
@@ -11,3 +12,6 @@ fun Context.showLongToast(message: String) {
 fun Fragment.showLongToast(message: String) {
     context?.showLongToast(message)
 }
+
+val EditText.textValue: String
+    get() = this.text.toString()

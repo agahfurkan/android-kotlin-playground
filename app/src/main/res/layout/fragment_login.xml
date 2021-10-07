@@ -8,71 +8,79 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:padding="@dimen/padding8">
+        android:padding="@dimen/padding16">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/login_username_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.agah.furkan.androidplayground.view.CustomImageView
+                android:id="@+id/login_iv_logo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/username"
-                app:layout_constraintBottom_toTopOf="@id/login_password_layout"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.25"
+                app:layout_constraintWidth_percent="0.75"
+                app:srcCompat="@drawable/placeholder_image" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/login_layout_username"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin8"
+                android:hint="@string/username"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/login_iv_logo"
                 app:layout_constraintVertical_chainStyle="packed">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/login_username"
+                    android:id="@+id/login_et_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/login_password_layout"
+                android:id="@+id/login_layout_password"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
                 android:hint="@string/password"
-                app:layout_constraintBottom_toTopOf="@id/login_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_username_layout">
+                app:layout_constraintTop_toBottomOf="@id/login_layout_username">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/login_password"
+                    android:id="@+id/login_et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.agah.furkan.androidplayground.view.CustomButton
-                android:id="@+id/login_button"
+                android:id="@+id/login_btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
                 android:text="@string/login"
-                app:layout_constraintBottom_toTopOf="@id/register_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_password_layout"
+                app:layout_constraintTop_toBottomOf="@id/login_layout_password"
                 app:removeInsets="true" />
 
             <com.agah.furkan.androidplayground.view.CustomButton
-                android:id="@+id/register_button"
+                android:id="@+id/login_btn_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin8"
                 android:text="@string/register"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_button"
+                app:layout_constraintTop_toBottomOf="@id/login_btn_login"
                 app:removeInsets="true" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

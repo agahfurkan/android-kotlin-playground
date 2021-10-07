@@ -13,6 +13,7 @@ import com.agah.furkan.androidplayground.databinding.FragmentLoginBinding
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import com.agah.furkan.androidplayground.util.showLongToast
+import com.agah.furkan.androidplayground.util.textValue
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -25,8 +26,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listOf(
-            binding.loginButton,
-            binding.registerButton
+            binding.loginBtnLogin,
+            binding.loginBtnRegister
         ).forEach {
             it.setOnClickListener(this)
         }
@@ -56,15 +57,15 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.loginButton -> {
+            binding.loginBtnLogin -> {
                 loginFragmentVM.login(
                     UserLoginBody(
-                        username = binding.loginUsername.text.toString(),
-                        password = binding.loginPassword.text.toString()
+                        username = binding.loginEtUsername.textValue,
+                        password = binding.loginEtPassword.textValue
                     )
                 )
             }
-            binding.registerButton -> {
+            binding.loginBtnRegister -> {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
             }
         }

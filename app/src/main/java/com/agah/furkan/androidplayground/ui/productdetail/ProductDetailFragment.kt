@@ -34,7 +34,7 @@ class ProductDetailFragment : BaseFragment(R.layout.fragment_product_detail) {
                     if (apiResponse.data.isSuccess) {
                         with(apiResponse.data.productDetail!!) {
                             Glide.with(this@ProductDetailFragment)
-                                .load(R.drawable.dummy_product_image)
+                                .load(R.drawable.placeholder_image)
                                 .placeholder(R.drawable.placeholder_image)
                                 .into(binding.productDetailImage)
                             binding.productDetailName.text = productName
