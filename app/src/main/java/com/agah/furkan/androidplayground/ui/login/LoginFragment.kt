@@ -3,6 +3,7 @@ package com.agah.furkan.androidplayground.ui.login
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
@@ -14,6 +15,7 @@ import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import com.agah.furkan.androidplayground.util.showLongToast
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListener {
@@ -32,19 +34,21 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     }
 
     private fun initObservers() {
-        loginFragmentVM.loginResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is ApiSuccessResponse -> {
-                    if (it.data.isSuccess) {
-                        SharedPrefUtil.setToken(it.data.token!!)
-                        SharedPrefUtil.setUserid(it.data.userId!!)
-                        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
-                    } else {
-                        showLongToast(it.data.message.toString())
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            loginFragmentVM.loginResponse.collect { response ->
+                when (response) {
+                    is ApiSuccessResponse -> {
+                        if (response.data.isSuccess) {
+                            SharedPrefUtil.setToken(response.data.token!!)
+                            SharedPrefUtil.setUserid(response.data.userId!!)
+                            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
+                        } else {
+                            showLongToast(response.data.message.toString())
+                        }
                     }
-                }
-                is ApiErrorResponse -> {
-                    showLongToast(it.errorMessage)
+                    is ApiErrorResponse -> {
+                        showLongToast(response.errorMessage)
+                    }
                 }
             }
         }

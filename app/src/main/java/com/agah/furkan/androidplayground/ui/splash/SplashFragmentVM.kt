@@ -1,7 +1,5 @@
 package com.agah.furkan.androidplayground.ui.splash
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.data.repository.UserRepository
@@ -13,13 +11,15 @@ import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SplashFragmentVM @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
-    private val _isTokenValid = MutableLiveData<Boolean>()
-    val isTokenValid: LiveData<Boolean> get() = _isTokenValid
+    private val _isTokenValid = MutableSharedFlow<Boolean>()
+    val isTokenValid: SharedFlow<Boolean> get() = _isTokenValid
 
     init {
         viewModelScope.launch {
@@ -37,7 +37,7 @@ class SplashFragmentVM @Inject constructor(private val userRepository: UserRepos
                     }
                 }
             }).awaitAll()
-            _isTokenValid.postValue(SharedPrefUtil.getToken() != null)
+            _isTokenValid.emit(SharedPrefUtil.getToken() != null)
         }
     }
 }
