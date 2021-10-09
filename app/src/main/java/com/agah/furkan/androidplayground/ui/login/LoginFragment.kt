@@ -23,6 +23,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        System.loadLibrary("api-keys")
+        val someApiKey = getAPIKey()
         binding.viewModel = loginFragmentVM
         listOf(
             binding.loginBtnRegister
@@ -60,4 +62,6 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
             }
         }
     }
+
+    external fun getAPIKey(): String
 }

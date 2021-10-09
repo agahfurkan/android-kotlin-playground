@@ -36,6 +36,11 @@ android {
             isMinifyEnabled = false
         }
     }
+    externalNativeBuild {
+        ndkBuild {
+            path("src/main/jni/Android.mk")
+        }
+    }
     flavorDimensions.add("default")
     productFlavors {
         create("dev") {
