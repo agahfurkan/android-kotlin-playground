@@ -8,7 +8,7 @@ import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
-import com.agah.furkan.androidplayground.databinding.FragmentDiscoverBinding
+import com.agah.furkan.androidplayground.databinding.FragmentCategoryBinding
 import com.agah.furkan.androidplayground.ui.adapter.recyclerview.GenericListAdapter
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.main.MainFragmentDirections
@@ -18,9 +18,9 @@ import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DiscoverFragment : BaseFragment(R.layout.fragment_discover),
+class CategoryFragment : BaseFragment(R.layout.fragment_category),
     GenericListAdapter.GenericListAdapterListener<CategoryResponse.Category> {
-    private val binding by viewBinding(FragmentDiscoverBinding::bind)
+    private val binding by viewBinding(FragmentCategoryBinding::bind)
     private val mainFragmentVM by viewModels<MainFragmentVM>(
         ownerProducer = { requireParentFragment() }
     )
@@ -28,7 +28,7 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         categoryListAdapter = MainCategoryListAdapter().apply {
-            mListAdapterListener = this@DiscoverFragment
+            mListAdapterListener = this@CategoryFragment
         }
         binding.discoverCategoryList.adapter = categoryListAdapter
         initObservers()

@@ -2,31 +2,26 @@ package com.agah.furkan.androidplayground.ui.main
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.databinding.FragmentMainBinding
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.ui.main.child.CartFragment
-import com.agah.furkan.androidplayground.ui.main.child.DiscoverFragment
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment(R.layout.fragment_main) {
     private val binding by viewBinding(FragmentMainBinding::bind)
-    private var viewPagerAdapter: ViewPagerAdapter? = null
+    private var viewPagerAdapter: MainFragmentViewPagerAdapter? = null
     private val sharedViewModel by activityViewModels<SharedViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObservers()
-        viewPagerAdapter = ViewPagerAdapter(this)
+        viewPagerAdapter = MainFragmentViewPagerAdapter(this)
         binding.mainViewPager.apply {
             offscreenPageLimit = viewPagerAdapter!!.itemCount - 1
             adapter = viewPagerAdapter
@@ -34,7 +29,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
         binding.mainBottomNavView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.main_nav_discover_item -> {
+                R.id.main_nav_home_item -> {
                     binding.mainViewPager.currentItem = 0
                 }
                 R.id.main_nav_cart_item -> {
@@ -44,17 +39,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             }
             true
         }
-
-        binding.mainViewPager.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                when (position) {
-                    0 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_discover_item
-                    1 -> binding.mainBottomNavView.selectedItemId = R.id.main_nav_cart_item
-                }
-            }
-        })
     }
 
     override fun onResume() {
@@ -77,20 +61,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 }
                 is ApiErrorResponse -> {
                 }
-            }
-        }
-    }
-
-    class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-        override fun getItemCount(): Int {
-            return 2
-        }
-
-        override fun createFragment(position: Int): Fragment {
-            return when (position) {
-                0 -> DiscoverFragment()
-                1 -> CartFragment()
-                else -> throw RuntimeException()
             }
         }
     }

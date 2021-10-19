@@ -47,8 +47,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 popup.menuInflater.inflate(R.menu.activity_more_menu, popup.menu)
                 popup.setOnMenuItemClickListener { menuItem: MenuItem ->
                     when (menuItem.itemId) {
-                        R.id.main_menu_profile_action -> {
-                        }
                         R.id.main_menu_logout_action -> {
                             SharedPrefUtil.clearAllData()
                             navController.navigate(LoginFragmentDirections.actionGlobalLoginFragment())

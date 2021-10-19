@@ -8,4 +8,7 @@
     <string name="profile">Profile</string>
     <string name="logout">Logout</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="home">Home</string>
+    <string name="categories">Categories</string>
+    <string name="second_module">Second Module</string>
 </resources>
