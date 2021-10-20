@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="defaultButtonStyle">@style/DefaultButtonStyle</item>
     </style>
 
     <style name="ProductAddButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
@@ -12,5 +13,10 @@
         <item name="strokeColor">@color/black</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:text">@string/add_to_cart</item>
+    </style>
+
+    <style name="DefaultButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">16dp</item>
+        <item name="backgroundTint">@color/polo_blue</item>
     </style>
 </resources>

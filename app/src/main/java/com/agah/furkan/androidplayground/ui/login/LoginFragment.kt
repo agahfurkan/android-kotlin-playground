@@ -58,7 +58,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     override fun onClick(v: View?) {
         when (v) {
             binding.loginBtnRegister -> {
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+                navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
             }
         }
     }

@@ -44,8 +44,7 @@
                     android:hint="@string/username"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/login_iv_logo"
-                    app:layout_constraintVertical_chainStyle="packed">
+                    app:layout_constraintTop_toBottomOf="@id/login_iv_logo">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/login_et_username"
@@ -74,9 +73,9 @@
 
                 <com.agah.furkan.androidplayground.view.CustomButton
                     android:id="@+id/login_btn_login"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin8"
+                    android:layout_marginTop="@dimen/margin42"
                     android:onClick="@{()->viewModel.onLoginBtnClicked()}"
                     android:text="@string/login"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -86,14 +85,20 @@
 
                 <com.agah.furkan.androidplayground.view.CustomButton
                     android:id="@+id/login_btn_register"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin8"
-                    android:text="@string/register"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:layout_marginBottom="@dimen/margin42"
+                    android:gravity="center"
+                    android:text="@string/click_here_to_register"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/login_btn_login"
-                    app:removeInsets="true" />
+                    app:layout_constraintVertical_bias="0"
+                    app:rippleColor="?attr/colorControlHighlight" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

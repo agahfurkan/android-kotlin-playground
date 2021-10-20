@@ -5,16 +5,31 @@ import android.util.AttributeSet
 import com.agah.furkan.androidplayground.R
 import com.google.android.material.button.MaterialButton
 
+private const val defButtonStyle = R.attr.defaultButtonStyle
+
 class CustomButton : MaterialButton {
-    constructor(context: Context) : super(context) {
+
+    constructor(context: Context) : super(
+        context,
+        null,
+        defButtonStyle
+    ) {
         initView(context, null)
     }
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(
+        context,
+        attrs,
+        defButtonStyle
+    ) {
         initView(context, attrs)
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int = 0) : super(
+    constructor(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyle: Int = defButtonStyle
+    ) : super(
         context,
         attrs,
         defStyle

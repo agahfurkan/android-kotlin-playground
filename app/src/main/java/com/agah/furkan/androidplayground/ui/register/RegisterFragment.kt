@@ -3,7 +3,6 @@ package com.agah.furkan.androidplayground.ui.register
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
@@ -11,6 +10,7 @@ import com.agah.furkan.androidplayground.data.web.model.request.UserRegisterBody
 import com.agah.furkan.androidplayground.databinding.FragmentRegisterBinding
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.showLongToast
+import com.agah.furkan.androidplayground.util.textValue
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,11 +22,11 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initObservers()
-        binding.registerSubmitButton.setOnClickListener {
+        binding.registerBtnRegister.setOnClickListener {
             registerFragmentVM.registerNewUser(
                 UserRegisterBody(
-                    username = binding.registerUsername.text.toString(),
-                    password = binding.registerPassword.text.toString()
+                    username = binding.registerEtUsername.textValue,
+                    password = binding.registerEtPassword.textValue
                 )
             )
         }
@@ -37,7 +37,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
             when (apiResponse) {
                 is ApiSuccessResponse -> {
                     showLongToast(apiResponse.data.message.toString())
-                    findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                    navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                 }
                 is ApiErrorResponse -> {
                     showLongToast(apiResponse.errorMessage)
