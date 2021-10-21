@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.ui.MainActivity
 
 abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
-    open val toolbarType: ToolbarType = ToolbarType.NONE
+    open val toolbarType: ToolbarType = ToolbarType.None
     fun navigate(navDirections: NavDirections) {
         val navBuilder = NavOptions.Builder()
         navBuilder.setEnterAnim(android.R.anim.fade_in).setExitAnim(android.R.anim.fade_out)
@@ -25,8 +25,12 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
         }
     }
 
-    enum class ToolbarType {
-        NONE,
-        BACK
+    sealed class ToolbarType {
+        object None : ToolbarType()
+        class WithActionButtons(val enabledButton: List<ToolbarButton>) : ToolbarType()
+        enum class ToolbarButton {
+            BACK,
+            DONE
+        }
     }
 }

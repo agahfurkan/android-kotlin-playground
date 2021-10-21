@@ -45,12 +45,24 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     fun confToolbar(toolbarType: BaseFragment.ToolbarType) {
         when (toolbarType) {
-            BaseFragment.ToolbarType.NONE -> hideToolbar()
-            BaseFragment.ToolbarType.BACK -> showToolbar()
+            is BaseFragment.ToolbarType.None -> hideToolbar()
+            is BaseFragment.ToolbarType.WithActionButtons -> showToolbar(toolbarType.enabledButton)
         }
     }
 
-    private fun showToolbar() {
+    private fun showToolbar(enabledButtons: List<BaseFragment.ToolbarType.ToolbarButton>) {
+        binding.layoutMainToolbar.mainToolbarBtnBack.hide()
+        binding.layoutMainToolbar.mainToolbarBtnDone.hide()
+        enabledButtons.forEach { toolbarButton ->
+            when (toolbarButton) {
+                BaseFragment.ToolbarType.ToolbarButton.BACK -> {
+                    binding.layoutMainToolbar.mainToolbarBtnBack.show()
+                }
+                BaseFragment.ToolbarType.ToolbarButton.DONE -> {
+                    binding.layoutMainToolbar.mainToolbarBtnDone.show()
+                }
+            }
+        }
         binding.layoutMainToolbar.layoutMainToolbar.beginFadeTransition(binding.mainActivityLayout)
         binding.layoutMainToolbar.layoutMainToolbar.show()
     }

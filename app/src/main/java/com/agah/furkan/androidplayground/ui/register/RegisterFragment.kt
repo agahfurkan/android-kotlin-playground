@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RegisterFragment : BaseFragment(R.layout.fragment_register) {
     override val toolbarType: ToolbarType
-        get() = ToolbarType.BACK
+        get() = ToolbarType.WithActionButtons(listOf(ToolbarType.ToolbarButton.BACK))
     private val binding by viewBinding(FragmentRegisterBinding::bind)
     private val registerFragmentVM by viewModels<RegisterFragmentVM>()
 
