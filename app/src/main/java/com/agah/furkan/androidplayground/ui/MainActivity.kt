@@ -8,6 +8,7 @@ import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.databinding.ActivityMainBinding
 import com.agah.furkan.androidplayground.ui.base.BaseActivity
+import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.beginFadeTransition
 import com.agah.furkan.androidplayground.util.hide
 import com.agah.furkan.androidplayground.util.show
@@ -26,12 +27,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.registerFragment -> showToolbar()
-                else -> hideToolbar()
-            }
-        }
         binding.layoutMainToolbar.mainToolbarBtnBack.setOnClickListener(this)
     }
 
@@ -46,6 +41,13 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
+    }
+
+    fun confToolbar(toolbarType: BaseFragment.ToolbarType) {
+        when (toolbarType) {
+            BaseFragment.ToolbarType.NONE -> hideToolbar()
+            BaseFragment.ToolbarType.BACK -> showToolbar()
+        }
     }
 
     private fun showToolbar() {
