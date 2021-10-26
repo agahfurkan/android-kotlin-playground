@@ -2,52 +2,56 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 
 object Dependencies {
     //core
-    const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinVersion}"
-    const val core = "androidx.core:core-ktx:${Versions.ktxVersion}"
-    const val appcompat = "androidx.appcompat:appcompat:${Versions.appCompatVersion}"
-    const val material = "com.google.android.material:material:${Versions.materialVersion}"
-    const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}"
-    const val livedataCommon =
+    private const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinVersion}"
+    private const val core = "androidx.core:core-ktx:${Versions.ktxVersion}"
+    private const val appcompat = "androidx.appcompat:appcompat:${Versions.appCompatVersion}"
+    private const val material = "com.google.android.material:material:${Versions.materialVersion}"
+    private const val livedata =
+        "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}"
+    private const val livedataCommon =
         "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycleVersion}"
 
     //layout
-    const val constraintlayout =
+    private const val constraintlayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayoutVersion}"
 
     //retrofit
-    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}"
-    const val retrofitMoshiConverter =
+    private const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}"
+    private const val retrofitMoshiConverter =
         "com.squareup.retrofit2:converter-moshi:${Versions.retrofitMoshiConverterVersion}"
-    const val moshiCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshiVersion}"
-    const val moshi = "com.squareup.moshi:moshi:${Versions.moshiVersion}"
-    const val okhttp3Logging =
+    private const val moshiCodegen =
+        "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshiVersion}"
+    private const val moshi = "com.squareup.moshi:moshi:${Versions.moshiVersion}"
+    private const val okhttp3Logging =
         "com.squareup.okhttp3:logging-interceptor:${Versions.interceptorVersion}"
 
     //hilt
-    const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
-    const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.hiltVersion}"
+    private const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
+    private const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.hiltVersion}"
 
     //navigation component
-    const val navigationFragmentKtx =
+    private const val navigationFragmentKtx =
         "androidx.navigation:navigation-fragment-ktx:${Versions.navVersion}"
-    const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:${Versions.navVersion}"
+    private const val navigationUiKtx =
+        "androidx.navigation:navigation-ui-ktx:${Versions.navVersion}"
 
     //room
-    const val roomRuntime = "androidx.room:room-runtime:${Versions.roomVersion}"
-    const val roomKtx = "androidx.room:room-ktx:${Versions.roomVersion}"
-    const val roomCompiler = "androidx.room:room-compiler:${Versions.roomVersion}"
+    private const val roomRuntime = "androidx.room:room-runtime:${Versions.roomVersion}"
+    private const val roomKtx = "androidx.room:room-ktx:${Versions.roomVersion}"
+    private const val roomCompiler = "androidx.room:room-compiler:${Versions.roomVersion}"
 
     //glide
-    const val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
-    const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glideVersion}"
+    private const val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
+    private const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glideVersion}"
 
     //testing
-    const val jUnit = "androidx.test.ext:junit:${Versions.jUnitXVersion}"
-    const val testRunner = "androidx.test:runner:${Versions.testRunnerVersion}"
-    const val truth = "com.google.truth:truth:${Versions.truthVersion}"
-    const val hiltTesting = "com.google.dagger:hilt-android-testing:${Versions.hiltVersion}"
-    const val hiltAndroidCompiler =
+    private const val jUnit = "androidx.test.ext:junit:${Versions.jUnitXVersion}"
+    private const val testRunner = "androidx.test:runner:${Versions.testRunnerVersion}"
+    private const val truth = "com.google.truth:truth:${Versions.truthVersion}"
+    private const val hiltTesting = "com.google.dagger:hilt-android-testing:${Versions.hiltVersion}"
+    private const val hiltAndroidCompiler =
         "com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}"
+    private const val lottie = "com.airbnb.android:lottie:${Versions.lottieVersion}"
 
     val implementationLibraries = arrayListOf<String>().apply {
         add(stdlib)
@@ -67,6 +71,7 @@ object Dependencies {
         add(roomRuntime)
         add(roomKtx)
         add(glide)
+        add(lottie)
     }
     val kaptLibraries = arrayListOf<String>().apply {
         add(moshiCodegen)
@@ -74,13 +79,13 @@ object Dependencies {
         add(roomCompiler)
         add(glideCompiler)
     }
-    val androidTestLibraries=arrayListOf<String>().apply {
+    val androidTestLibraries = arrayListOf<String>().apply {
         add(jUnit)
         add(truth)
         add(hiltTesting)
         add(hiltAndroidCompiler)
     }
-    val testLibraries=arrayListOf<String>().apply {
+    val testLibraries = arrayListOf<String>().apply {
         add(testRunner)
     }
 
