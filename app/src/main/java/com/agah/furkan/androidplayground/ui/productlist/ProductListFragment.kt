@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
@@ -59,7 +58,7 @@ class ProductListFragment : BaseFragment(R.layout.fragment_product_list),
         item: ProductResponse.Product
     ) {
         super.onItemClicked(adapter, item)
-        findNavController().navigate(
+        navigate(
             ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(
                 productId = item.productId
             )

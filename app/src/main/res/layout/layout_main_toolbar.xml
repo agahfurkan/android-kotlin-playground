@@ -37,6 +37,12 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_check_circle"
             tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/main_toolbar_action_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="main_toolbar_btn_back,main_toolbar_btn_done" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.appbar.MaterialToolbar>

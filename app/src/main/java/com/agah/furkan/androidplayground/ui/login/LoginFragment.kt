@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
@@ -42,7 +41,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
                         if (response.data.isSuccess) {
                             SharedPrefUtil.setToken(response.data.token!!)
                             SharedPrefUtil.setUserid(response.data.userId!!)
-                            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
+                            navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
                         } else {
                             showLongToast(response.data.message.toString())
                         }

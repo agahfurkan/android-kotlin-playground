@@ -3,7 +3,6 @@ package com.agah.furkan.androidplayground.ui.main.child
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
@@ -50,7 +49,7 @@ class CategoryFragment : BaseFragment(R.layout.fragment_category),
         adapter: GenericListAdapter<CategoryResponse.Category>,
         item: CategoryResponse.Category
     ) {
-        findNavController().navigate(
+        navigate(
             MainFragmentDirections.actionMainFragmentToProductListFragment(
                 categoryId = item.categoryId
             )
