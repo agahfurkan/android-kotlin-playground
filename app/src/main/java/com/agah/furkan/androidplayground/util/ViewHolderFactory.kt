@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.data.web.model.response.CartResponse
-import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
-import com.agah.furkan.androidplayground.data.web.model.response.ProductResponse
+import com.agah.furkan.androidplayground.base.ListModel
+import com.agah.furkan.androidplayground.data.domain.model.Cart
+import com.agah.furkan.androidplayground.data.domain.model.Category
+import com.agah.furkan.androidplayground.data.domain.model.Product
 import com.agah.furkan.androidplayground.databinding.ItemCartListBinding
 import com.agah.furkan.androidplayground.databinding.ItemMainCategoryListBinding
 import com.agah.furkan.androidplayground.databinding.ItemProductListBinding
@@ -16,7 +17,7 @@ import com.bumptech.glide.Glide
 
 object ViewHolderFactory {
     @Suppress("UNCHECKED_CAST")
-    fun <T> create(
+    fun <T : ListModel> create(
         parent: ViewGroup,
         viewHolderLayout: Class<*>,
         adapter: GenericListAdapter<T>
@@ -57,8 +58,8 @@ object ViewHolderFactory {
     }
 
     class CartViewHolder(private val binding: ItemCartListBinding) :
-        GenericListAdapter.GenericViewHolder<CartResponse.Cart>(binding) {
-        override fun bind(item: CartResponse.Cart) {
+        GenericListAdapter.GenericViewHolder<Cart>(binding) {
+        override fun bind(item: Cart) {
             with(item) {
                 Glide.with(binding.root).load(R.drawable.placeholder_image)
                     .placeholder(R.drawable.placeholder_image)
@@ -84,8 +85,8 @@ object ViewHolderFactory {
     }
 
     class ProductViewHolder(private val binding: ItemProductListBinding) :
-        GenericListAdapter.GenericViewHolder<ProductResponse.Product>(binding) {
-        override fun bind(item: ProductResponse.Product) {
+        GenericListAdapter.GenericViewHolder<Product>(binding) {
+        override fun bind(item: Product) {
             with(item) {
                 binding.itemProductTitle.text = productName
                 binding.itemProductPrice.text = price.toString()
@@ -116,7 +117,7 @@ object ViewHolderFactory {
     }
 
     class CategoryViewHolder(private val binding: ItemMainCategoryListBinding) :
-        GenericListAdapter.GenericViewHolder<CategoryResponse.Category>(binding) {
+        GenericListAdapter.GenericViewHolder<Category>(binding) {
         companion object {
             fun from(parent: ViewGroup): CategoryViewHolder {
                 val binding = ItemMainCategoryListBinding.inflate(
@@ -128,7 +129,7 @@ object ViewHolderFactory {
             }
         }
 
-        override fun bind(item: CategoryResponse.Category) {
+        override fun bind(item: Category) {
             binding.itemMainCategoryName.text = item.categoryName
             binding.root.setOnClickListener {
                 listAdapterListener?.onItemClicked(adapter, item)

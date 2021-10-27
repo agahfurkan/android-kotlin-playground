@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class RemoveProductFromCartBody(
     @Json(name = "productId")
-    val productId: Int,
+    val productId: Long,
     @Json(name = "userId")
-    val userId: Int
+    val userId: Long
 )

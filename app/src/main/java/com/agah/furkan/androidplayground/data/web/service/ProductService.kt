@@ -10,13 +10,13 @@ import retrofit2.http.Query
 interface ProductService {
     @GET("Product/GetProducts")
     suspend fun getProductList(
-        @Query(value = "categoryId") categoryId: Int,
+        @Query(value = "categoryId") categoryId: Long,
         @HeaderMap header: HashMap<String, String>
     ): ApiResponse<ProductResponse>
 
     @GET("Product/GetProductDetail")
     suspend fun getProductDetail(
-        @Query(value = "productId") productId: Int,
+        @Query(value = "productId") productId: Long,
         @HeaderMap header: HashMap<String, String>
     ): ApiResponse<ProductDetailResponse>
 }

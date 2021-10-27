@@ -32,11 +32,11 @@ object SharedPrefUtil {
 
     fun getUsername(): String = sharedPref?.getString(USERNAME_KEY, null) ?: ""
 
-    fun setUserid(userid: Int) {
-        sharedPref?.edit()?.putInt(USERID_KEY, userid)?.apply()
+    fun setUserid(userid: Long) {
+        sharedPref?.edit()?.putLong(USERID_KEY, userid)?.apply()
     }
 
-    fun getUserId(): Int = sharedPref?.getInt(USERID_KEY, -1) ?: -1
+    fun getUserId(): Long = sharedPref?.getLong(USERID_KEY, 0L) ?: 0L
 
     fun clearAllData() {
         sharedPref?.edit()?.clear()?.apply()

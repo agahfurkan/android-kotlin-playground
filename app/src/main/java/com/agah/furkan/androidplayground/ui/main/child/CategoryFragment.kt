@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
-import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
-import com.agah.furkan.androidplayground.data.web.model.response.CategoryResponse
+import com.agah.furkan.androidplayground.data.domain.model.Category
 import com.agah.furkan.androidplayground.databinding.FragmentCategoryBinding
 import com.agah.furkan.androidplayground.ui.adapter.recyclerview.GenericListAdapter
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
@@ -17,8 +15,9 @@ import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CategoryFragment : BaseFragment(R.layout.fragment_category),
-    GenericListAdapter.GenericListAdapterListener<CategoryResponse.Category> {
+class CategoryFragment :
+    BaseFragment(R.layout.fragment_category),
+    GenericListAdapter.GenericListAdapterListener<Category> {
     private val binding by viewBinding(FragmentCategoryBinding::bind)
     private val mainFragmentVM by viewModels<MainFragmentVM>(
         ownerProducer = { requireParentFragment() }
@@ -34,25 +33,23 @@ class CategoryFragment : BaseFragment(R.layout.fragment_category),
     }
 
     private fun initObservers() {
-        mainFragmentVM.categoryList.observe(viewLifecycleOwner) {
-            when (it) {
-                is ApiSuccessResponse -> {
-                    categoryListAdapter.submitList(it.data.categoryList)
-                }
-                is ApiErrorResponse -> {
-                }
-            }
+        mainFragmentVM.categoryList.observe(viewLifecycleOwner) { categoryList ->
+            categoryListAdapter.submitList(categoryList)
         }
     }
 
     override fun onItemClicked(
-        adapter: GenericListAdapter<CategoryResponse.Category>,
-        item: CategoryResponse.Category
+        adapter: GenericListAdapter<Category>,
+        item: Category
     ) {
         navigate(
             MainFragmentDirections.actionMainFragmentToProductListFragment(
                 categoryId = item.categoryId
             )
         )
+    }
+
+    companion object {
+        fun newInstance() = CategoryFragment()
     }
 }

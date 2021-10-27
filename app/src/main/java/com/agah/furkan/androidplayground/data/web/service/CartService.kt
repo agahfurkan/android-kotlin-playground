@@ -15,7 +15,7 @@ interface CartService {
 
     @POST("Cart/GetUserCart")
     suspend fun getCart(
-        @Query("userId") userId: Int,
+        @Query("userId") userId: Long,
         @HeaderMap header: HashMap<String, String>
     ): ApiResponse<CartResponse>
 

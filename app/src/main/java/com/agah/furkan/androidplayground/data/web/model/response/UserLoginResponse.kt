@@ -8,5 +8,5 @@ data class UserLoginResponse(
     @Json(name = "token")
     val token: String?,
     @Json(name = "userId")
-    val userId: Int?
+    val userId: Long?
 ) : GenericResponse()

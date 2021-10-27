@@ -4,10 +4,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.agah.furkan.androidplayground.base.ListModel
 import com.agah.furkan.androidplayground.util.GenericDiffUtil
 import com.agah.furkan.androidplayground.util.ViewHolderFactory
 
-abstract class GenericListAdapter<T>(private val viewHolderLayout: Class<*>) :
+abstract class GenericListAdapter<T : ListModel>(private val viewHolderLayout: Class<*>) :
     ListAdapter<T, GenericListAdapter.GenericViewHolder<T>>(GenericDiffUtil()) {
     var mListAdapterListener: GenericListAdapterListener<T>? = null
 
@@ -21,14 +22,14 @@ abstract class GenericListAdapter<T>(private val viewHolderLayout: Class<*>) :
         }
     }
 
-    abstract class GenericViewHolder<T>(binding: ViewBinding) :
+    abstract class GenericViewHolder<T : ListModel>(binding: ViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var listAdapterListener: GenericListAdapterListener<T>? = null
         lateinit var adapter: GenericListAdapter<T>
         abstract fun bind(item: T)
     }
 
-    interface GenericListAdapterListener<T> {
+    interface GenericListAdapterListener<T : ListModel> {
         fun onItemRemoveClicked(adapter: GenericListAdapter<T>, item: T) {}
         fun onItemClicked(adapter: GenericListAdapter<T>, item: T) {}
     }

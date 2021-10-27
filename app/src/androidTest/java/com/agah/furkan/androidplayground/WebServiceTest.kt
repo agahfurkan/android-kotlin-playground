@@ -11,13 +11,13 @@ import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import java.util.Date
-import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.Date
+import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
@@ -99,8 +99,8 @@ class WebServiceTest {
             val user =
                 userRepository.loginUser(UserLoginBody(username = "test", password = "test"))
             SharedPrefUtil.setToken((user as ApiSuccessResponse).data.token!!)
-            val category = categoryRepository.fetchMainProductCategories()
-            assertThat((category as ApiSuccessResponse).data.categoryList?.size).isGreaterThan(10)
+            val categoryList = categoryRepository.fetchMainProductCategories()
+            assertThat(categoryList.size).isGreaterThan(10)
         }
     }
 }

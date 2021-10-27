@@ -4,18 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.agah.furkan.androidplayground.data.domain.model.Cart
+import com.agah.furkan.androidplayground.data.domain.model.Product
 import com.agah.furkan.androidplayground.data.repository.CartRepository
 import com.agah.furkan.androidplayground.data.web.model.ApiResponse
 import com.agah.furkan.androidplayground.data.web.model.request.AddProductToCartBody
 import com.agah.furkan.androidplayground.data.web.model.request.RemoveProductFromCartBody
 import com.agah.furkan.androidplayground.data.web.model.response.AddProductToCartResponse
-import com.agah.furkan.androidplayground.data.web.model.response.CartResponse
-import com.agah.furkan.androidplayground.data.web.model.response.ProductResponse
 import com.agah.furkan.androidplayground.data.web.model.response.RemoveProductFromCartResponse
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(private val cartRepository: CartRepository) :
@@ -25,16 +25,16 @@ class SharedViewModel @Inject constructor(private val cartRepository: CartReposi
     val addProductToCartResponse: LiveData<ApiResponse<AddProductToCartResponse>>
         get() = _addProductToCartResponse
 
-    private val _userCartResponse = MutableLiveData<ApiResponse<CartResponse>>()
-    val userCartResponse: LiveData<ApiResponse<CartResponse>>
-        get() = _userCartResponse
+    private val _userCart = MutableLiveData<List<Cart>>()
+    val userCart: LiveData<List<Cart>>
+        get() = _userCart
 
     private val _removeProductFromCart =
         MutableLiveData<ApiResponse<RemoveProductFromCartResponse>>()
     val removeProductFromCart: LiveData<ApiResponse<RemoveProductFromCartResponse>>
         get() = _removeProductFromCart
 
-    fun addProductToCart(product: ProductResponse.Product) {
+    fun addProductToCart(product: Product) {
         viewModelScope.launch {
             val response = cartRepository.addProductToCart(
                 AddProductToCartBody(
@@ -55,11 +55,11 @@ class SharedViewModel @Inject constructor(private val cartRepository: CartReposi
     fun getUserCart() {
         viewModelScope.launch {
             val response = cartRepository.getCart(userId = SharedPrefUtil.getUserId())
-            _userCartResponse.postValue(response)
+            _userCart.postValue(response)
         }
     }
 
-    fun removeProductFromCart(productId: Int) {
+    fun removeProductFromCart(productId: Long) {
         viewModelScope.launch {
             val response = cartRepository.removeProductFromCart(
                 RemoveProductFromCartBody(

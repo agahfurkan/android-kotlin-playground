@@ -8,8 +8,8 @@ import com.agah.furkan.androidplayground.data.repository.ProductRepository
 import com.agah.furkan.androidplayground.data.web.model.ApiResponse
 import com.agah.furkan.androidplayground.data.web.model.response.ProductDetailResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailFragmentVM @Inject constructor(private val productRepository: ProductRepository) :
@@ -17,7 +17,7 @@ class ProductDetailFragmentVM @Inject constructor(private val productRepository:
     private val _productDetail = MutableLiveData<ApiResponse<ProductDetailResponse>>()
     val productDetail: LiveData<ApiResponse<ProductDetailResponse>> get() = _productDetail
 
-    fun getProductDetail(productId: Int) {
+    fun getProductDetail(productId: Long) {
         viewModelScope.launch {
             val response = productRepository.getProductDetail(productId)
             _productDetail.postValue(response)
