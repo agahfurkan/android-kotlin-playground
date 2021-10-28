@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.util
+package com.agah.furkan.androidplayground.ui.adapter.recyclerview
 
 import android.graphics.Paint
 import android.view.LayoutInflater
@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.base.ListModel
+import com.agah.furkan.androidplayground.data.domain.model.Announcement
 import com.agah.furkan.androidplayground.data.domain.model.Cart
 import com.agah.furkan.androidplayground.data.domain.model.Category
 import com.agah.furkan.androidplayground.data.domain.model.Product
+import com.agah.furkan.androidplayground.databinding.ItemAnnouncementListBinding
 import com.agah.furkan.androidplayground.databinding.ItemCartListBinding
 import com.agah.furkan.androidplayground.databinding.ItemMainCategoryListBinding
 import com.agah.furkan.androidplayground.databinding.ItemProductListBinding
-import com.agah.furkan.androidplayground.ui.adapter.recyclerview.GenericListAdapter
 import com.bumptech.glide.Glide
 
 object ViewHolderFactory {
@@ -43,6 +44,15 @@ object ViewHolderFactory {
             ItemProductListBinding::class.java -> {
                 ProductViewHolder(
                     ItemProductListBinding.inflate(
+                        layoutInflater,
+                        parent,
+                        false
+                    )
+                )
+            }
+            ItemAnnouncementListBinding::class.java -> {
+                AnnouncementViewHolder(
+                    ItemAnnouncementListBinding.inflate(
                         layoutInflater,
                         parent,
                         false
@@ -118,19 +128,17 @@ object ViewHolderFactory {
 
     class CategoryViewHolder(private val binding: ItemMainCategoryListBinding) :
         GenericListAdapter.GenericViewHolder<Category>(binding) {
-        companion object {
-            fun from(parent: ViewGroup): CategoryViewHolder {
-                val binding = ItemMainCategoryListBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-                return CategoryViewHolder(binding)
-            }
-        }
-
         override fun bind(item: Category) {
             binding.itemMainCategoryName.text = item.categoryName
+            binding.root.setOnClickListener {
+                listAdapterListener?.onItemClicked(adapter, item)
+            }
+        }
+    }
+
+    class AnnouncementViewHolder(private val binding: ItemAnnouncementListBinding) :
+        GenericListAdapter.GenericViewHolder<Announcement>(binding) {
+        override fun bind(item: Announcement) {
             binding.root.setOnClickListener {
                 listAdapterListener?.onItemClicked(adapter, item)
             }

@@ -9,9 +9,9 @@ import com.agah.furkan.androidplayground.data.domain.model.Cart
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
 import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.databinding.FragmentCartBinding
+import com.agah.furkan.androidplayground.ui.adapter.recyclerview.CartListAdapter
 import com.agah.furkan.androidplayground.ui.adapter.recyclerview.GenericListAdapter
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.util.CartListAdapter
 import com.agah.furkan.androidplayground.util.showLongToast
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint

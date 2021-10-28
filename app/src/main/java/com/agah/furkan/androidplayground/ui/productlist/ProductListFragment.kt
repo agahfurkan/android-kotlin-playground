@@ -10,8 +10,8 @@ import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.data.domain.model.Product
 import com.agah.furkan.androidplayground.databinding.FragmentProductListBinding
 import com.agah.furkan.androidplayground.ui.adapter.recyclerview.GenericListAdapter
+import com.agah.furkan.androidplayground.ui.adapter.recyclerview.ProductListAdapter
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.util.ProductListAdapter
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 

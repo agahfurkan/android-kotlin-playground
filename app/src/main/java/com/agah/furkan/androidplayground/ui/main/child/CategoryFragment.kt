@@ -7,10 +7,10 @@ import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.data.domain.model.Category
 import com.agah.furkan.androidplayground.databinding.FragmentCategoryBinding
 import com.agah.furkan.androidplayground.ui.adapter.recyclerview.GenericListAdapter
+import com.agah.furkan.androidplayground.ui.adapter.recyclerview.MainCategoryListAdapter
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.main.MainFragmentDirections
 import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
-import com.agah.furkan.androidplayground.util.MainCategoryListAdapter
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 

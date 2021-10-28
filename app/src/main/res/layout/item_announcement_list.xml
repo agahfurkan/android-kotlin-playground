@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.agah.furkan.androidplayground.view.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginHorizontal="@dimen/margin16"
+    android:layout_marginHorizontal="@dimen/margin8"
+    app:cardCornerRadius="@dimen/dimen8"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent">
 
@@ -15,21 +16,24 @@
         <com.agah.furkan.androidplayground.view.CustomImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@color/grey_300"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@color/black" />
+            app:srcCompat="@drawable/placeholder_image" />
 
         <com.agah.furkan.androidplayground.view.CustomTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="@tools:sample/lorem/random"
+            android:layout_margin="@dimen/margin16"
+            android:maxLines="3"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem/random" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.agah.furkan.androidplayground.view.CustomCardView>
 

@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.agah.furkan.androidplayground.base.ListModel
 import com.agah.furkan.androidplayground.util.GenericDiffUtil
-import com.agah.furkan.androidplayground.util.ViewHolderFactory
 
 abstract class GenericListAdapter<T : ListModel>(private val viewHolderLayout: Class<*>) :
     ListAdapter<T, GenericListAdapter.GenericViewHolder<T>>(GenericDiffUtil()) {

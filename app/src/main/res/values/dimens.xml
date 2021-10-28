@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="dimen8">8dp</dimen>
+    <dimen name="dimen16">16dp</dimen>
+
+    <dimen name="padding4">4dp</dimen>
     <dimen name="padding8">8dp</dimen>
     <dimen name="padding16">16dp</dimen>
+    <dimen name="padding48">48dp</dimen>
 
     <dimen name="margin4">4dp</dimen>
     <dimen name="margin8">8dp</dimen>
     <dimen name="margin16">16dp</dimen>
     <dimen name="margin42">42dp</dimen>
+
+    <dimen name="font8">8sp</dimen>
+    <dimen name="font10">10sp</dimen>
+    <dimen name="font12">12sp</dimen>
+    <dimen name="font14">14sp</dimen>
 </resources>
