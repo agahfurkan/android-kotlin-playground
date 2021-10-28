@@ -3,6 +3,9 @@
 version: 2.1
 docker:
      - image: circleci/openjdk:11-jdk
+branches:
+  only:
+    - master     
 # Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
 orbs:
   android: circleci/android@1.0.3
@@ -12,7 +15,6 @@ jobs:
     # These next lines define the Android machine image executor: https://circleci.com/docs/2.0/executor-types/
     executor:
       name: android/android-machine
-      
     steps:
       # Checkout the code as the first step.
       - checkout
