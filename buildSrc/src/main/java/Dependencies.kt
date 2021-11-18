@@ -10,6 +10,8 @@ object Dependencies {
         "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}"
     private const val livedataCommon =
         "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycleVersion}"
+    private const val lifecycleRuntimeKtx =
+        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleVersion}"
 
     //layout
     private const val constraintlayout =
@@ -52,6 +54,7 @@ object Dependencies {
     private const val hiltAndroidCompiler =
         "com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}"
     private const val lottie = "com.airbnb.android:lottie:${Versions.lottieVersion}"
+    private const val paging = "androidx.paging:paging-runtime:${Versions.pagingVersion}"
 
     val implementationLibraries = arrayListOf<String>().apply {
         add(stdlib)
@@ -60,6 +63,7 @@ object Dependencies {
         add(material)
         add(livedata)
         add(livedataCommon)
+        add(lifecycleRuntimeKtx)
         add(constraintlayout)
         add(retrofit)
         add(retrofitMoshiConverter)
@@ -72,6 +76,7 @@ object Dependencies {
         add(roomKtx)
         add(glide)
         add(lottie)
+        add(paging)
     }
     val kaptLibraries = arrayListOf<String>().apply {
         add(moshiCodegen)

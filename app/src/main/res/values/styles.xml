@@ -19,6 +19,6 @@
 
     <style name="DefaultButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">16dp</item>
-        <item name="backgroundTint">@color/grey_300</item>
+        <item name="backgroundTint">@color/indigo_300</item>
     </style>
 </resources>

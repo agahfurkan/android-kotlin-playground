@@ -3,6 +3,8 @@ package com.agah.furkan.androidplayground.ui.login
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
@@ -14,6 +16,7 @@ import com.agah.furkan.androidplayground.util.showLongToast
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListener {
@@ -34,8 +37,11 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     }
 
     private fun initObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            loginFragmentVM.loginResponse.collect { response ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            loginFragmentVM.loginResponse.flowWithLifecycle(
+                lifecycle = viewLifecycleOwner.lifecycle,
+                minActiveState = Lifecycle.State.STARTED
+            ).collect { response ->
                 when (response) {
                     is ApiSuccessResponse -> {
                         if (response.data.isSuccess) {

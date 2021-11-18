@@ -11,6 +11,8 @@ interface ProductService {
     @GET("Product/GetProducts")
     suspend fun getProductList(
         @Query(value = "categoryId") categoryId: Long,
+        @Query(value = "pageIndex") pageIndex: Int,
+        @Query(value = "pageLength") pageLength: Int,
         @HeaderMap header: HashMap<String, String>
     ): ApiResponse<ProductResponse>
 

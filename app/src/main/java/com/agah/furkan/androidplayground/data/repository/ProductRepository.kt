@@ -1,11 +1,13 @@
 package com.agah.furkan.androidplayground.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.agah.furkan.androidplayground.data.domain.model.Product
 import com.agah.furkan.androidplayground.data.web.RestConstants
-import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
-import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.web.service.ProductService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,20 +15,21 @@ import javax.inject.Singleton
 @Singleton
 class ProductRepository @Inject constructor(private val productService: ProductService) {
 
-    suspend fun getProductList(categoryId: Long): List<Product> = withContext(Dispatchers.IO) {
-        return@withContext when (
-            val response = productService.getProductList(
-                categoryId = categoryId,
-                header = RestConstants.getAuthHeader()
-            )
-        ) {
-            is ApiSuccessResponse -> {
-                response.data.productList.map { it.toDomainModel() }
+    fun getProductList(
+        categoryId: Long
+    ): Flow<PagingData<Product>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PRODUCT_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                ProductPagingSource(
+                    productService = productService,
+                    categoryId = categoryId
+                )
             }
-            is ApiErrorResponse -> {
-                listOf()
-            }
-        }
+        ).flow
     }
 
     suspend fun getProductDetail(productId: Long) = withContext(Dispatchers.IO) {

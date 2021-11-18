@@ -12,9 +12,10 @@ object Versions {
     const val interceptorVersion = "4.7.2"
     const val glideVersion = "4.12.0"
     const val hiltVersion = "2.38.1"
-    const val lifecycleVersion = "2.3.1"
+    const val lifecycleVersion = "2.4.0"
     const val jUnitXVersion = "1.1.2"
     const val testRunnerVersion = "1.3.0"
     const val truthVersion = "1.1.2"
-    const val lottieVersion="4.2.0"
+    const val lottieVersion = "4.2.0"
+    const val pagingVersion = "3.1.0"
 }
