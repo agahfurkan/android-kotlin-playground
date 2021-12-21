@@ -14,6 +14,7 @@ import com.agah.furkan.androidplayground.databinding.ItemAnnouncementListBinding
 import com.agah.furkan.androidplayground.databinding.ItemCartListBinding
 import com.agah.furkan.androidplayground.databinding.ItemMainCategoryListBinding
 import com.agah.furkan.androidplayground.databinding.ItemProductListBinding
+import com.agah.furkan.androidplayground.util.discount
 import com.bumptech.glide.Glide
 
 object ViewHolderFactory {
@@ -60,7 +61,7 @@ object ViewHolderFactory {
                 )
             }
             else -> {
-                throw RuntimeException("err!")
+                throw IllegalStateException("err!")
             }
         } as GenericListAdapter.GenericViewHolder<T>
         viewHolder.adapter = adapter
@@ -80,7 +81,7 @@ object ViewHolderFactory {
                         binding.itemCartPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     binding.itemCartPriceDiscounted.visibility = View.VISIBLE
                     binding.itemCartPriceDiscounted.text =
-                        price.minus(price.times(item.discount).div(100)).toString()
+                        price.discount(item.discount).toString()
                 } else {
                     binding.itemCartPrice.paintFlags =
                         binding.itemCartPrice.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
@@ -108,7 +109,7 @@ object ViewHolderFactory {
                         binding.itemProductPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     binding.itemProductPriceDiscounted.visibility = View.VISIBLE
                     binding.itemProductPriceDiscounted.text =
-                        price.minus(price.times(item.discount).div(100)).toString()
+                        price.discount(item.discount).toString()
                 } else {
                     binding.itemProductPrice.paintFlags =
                         binding.itemProductPrice.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()

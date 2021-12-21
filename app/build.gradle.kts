@@ -10,6 +10,8 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("org.jlleitschuh.gradle.ktlint")
     id("dagger.hilt.android.plugin")
+    id("io.gitlab.arturbosch.detekt") version Versions.detektVersion
+    id("com.diffplug.spotless") version Versions.spotlessVersion
 }
 
 android {
@@ -75,4 +77,37 @@ android {
         androidTestImplementation(Dependencies.androidTestLibraries)
         testImplementation(Dependencies.testLibraries)
     }
+}
+spotless {
+    java {
+        target("**/*.java")
+        googleJavaFormat().aosp()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+    kotlin {
+        target("**/*.kt")
+        ktlint()
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+    format("misc") {
+        target("**/*.gradle", "**/*.md", "**/.gitignore")
+        indentWithSpaces()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+
+    format("xml") {
+        target("**/*.xml")
+        indentWithSpaces()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+detekt {
+    config = files("$rootDir/config/detekt.yml")
 }

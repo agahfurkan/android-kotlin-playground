@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainFragment : BaseFragment(R.layout.fragment_main) {
     private val binding by viewBinding(FragmentMainBinding::bind)
-    private var viewPagerAdapter: MainFragmentViewPagerAdapter? = null
+    private lateinit var viewPagerAdapter: MainFragmentViewPagerAdapter
     private val sharedViewModel by activityViewModels<SharedViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,30 +30,31 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             addFragment(ProfileFragment.newInstance())
         }
         binding.mainViewPager.apply {
-            offscreenPageLimit = viewPagerAdapter!!.itemCount - 1
+            offscreenPageLimit = viewPagerAdapter.itemCount - 1
             adapter = viewPagerAdapter
             isUserInputEnabled = false
         }
 
         binding.mainBottomNavView.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
+            val fragmentClass = when (it.itemId) {
                 R.id.main_nav_home_item -> {
-                    binding.mainViewPager.currentItem = 0
+                    HomeFragment::class.java
                 }
                 R.id.main_nav_categories_item -> {
-                    binding.mainViewPager.currentItem = 1
+                    CategoryFragment::class.java
                 }
                 R.id.main_nav_cart_item -> {
-                    binding.mainViewPager.currentItem = 2
+                    CartFragment::class.java
                 }
                 R.id.main_nav_profile_item -> {
-                    binding.mainViewPager.currentItem = 3
+                    ProfileFragment::class.java
                 }
                 R.id.main_nav_second_module_item -> {
                     TODO()
                 }
-                else -> throw IllegalStateException()
+                else -> throw IllegalStateException("err")
             }
+            binding.mainViewPager.currentItem = viewPagerAdapter.positionOfFragment(fragmentClass)
             true
         }
     }

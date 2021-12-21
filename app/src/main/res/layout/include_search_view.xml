@@ -23,4 +23,3 @@
         app:layout_constraintTop_toTopOf="parent"
         app:strokeWidth="1dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-

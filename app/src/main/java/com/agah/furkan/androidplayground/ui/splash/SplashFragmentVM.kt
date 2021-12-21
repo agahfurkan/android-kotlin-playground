@@ -20,12 +20,13 @@ class SplashFragmentVM @Inject constructor(private val userRepository: UserRepos
     ViewModel() {
     private val _isTokenValid = MutableSharedFlow<Boolean>()
     val isTokenValid: SharedFlow<Boolean> get() = _isTokenValid
+    private val splashMinDelay = 3000L
 
     init {
         viewModelScope.launch {
             listOf(
                 async {
-                    delay(3000)
+                    delay(splashMinDelay)
                 },
                 async {
                     if (SharedPrefUtil.getToken() != null) {

@@ -17,6 +17,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private val announcementBinding by viewBinding(IncludeAnnouncementListBinding::bind)
     private var announcementAdapter: AnnouncementListAdapter? = null
+    private val listItemWidthPercentage = .75f
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,7 +26,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             adapter = announcementAdapter
             layoutManager = object : LinearLayoutManager(context, HORIZONTAL, false) {
                 override fun checkLayoutParams(lp: RecyclerView.LayoutParams): Boolean {
-                    lp.width = width.times(3).div(4)
+                    lp.width = width.times(listItemWidthPercentage).toInt()
                     return true
                 }
             }

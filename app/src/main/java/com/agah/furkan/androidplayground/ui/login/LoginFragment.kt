@@ -1,6 +1,7 @@
 package com.agah.furkan.androidplayground.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -27,6 +28,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
         super.onViewCreated(view, savedInstanceState)
         System.loadLibrary("api-keys")
         val someApiKey = getAPIKey()
+        Log.i(Companion.TAG, someApiKey)
         binding.viewModel = loginFragmentVM
         listOf(
             binding.loginBtnRegister
@@ -69,4 +71,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     }
 
     external fun getAPIKey(): String
+
+    companion object {
+        private const val TAG: String = "LoginFragment"
+    }
 }

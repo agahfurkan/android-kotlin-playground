@@ -34,3 +34,7 @@ fun View.beginFadeTransition(viewGroup: ViewGroup) {
     }
     TransitionManager.beginDelayedTransition(viewGroup, transition)
 }
+
+fun Double.discount(discountPercentage: Double): Double {
+    return this.minus(this.times(discountPercentage).div(100))
+}

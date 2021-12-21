@@ -36,5 +36,3 @@
             tools:text="@tools:sample/lorem/random" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.agah.furkan.androidplayground.view.CustomCardView>
-
-
