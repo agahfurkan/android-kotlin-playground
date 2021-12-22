@@ -25,4 +25,10 @@ allprojects {
 }
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
+    dependsOn(tasks.getByName("installGitHooks"))
+}
+
+tasks.register("installGitHooks", Copy::class) {
+    from("$rootDir/config/pre-commit")
+    into("$rootDir/.git/hooks")
 }
