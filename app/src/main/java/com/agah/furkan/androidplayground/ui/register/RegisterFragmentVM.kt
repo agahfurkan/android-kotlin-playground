@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.data.repository.UserRepository
-import com.agah.furkan.androidplayground.data.web.model.ApiResponse
-import com.agah.furkan.androidplayground.data.web.model.request.UserRegisterBody
-import com.agah.furkan.androidplayground.data.web.model.response.UserRegisterResponse
+import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.androidplayground.domain.model.request.UserRegisterParams
+import com.agah.furkan.androidplayground.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,12 +15,12 @@ import javax.inject.Inject
 class RegisterFragmentVM @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
 
-    private val _registerUserResponse = MutableLiveData<ApiResponse<UserRegisterResponse>>()
-    val registerUserResponse: LiveData<ApiResponse<UserRegisterResponse>> get() = _registerUserResponse
+    private val _registerUserResponse = MutableLiveData<Result<String>>()
+    val registerUserResponse: LiveData<Result<String>> get() = _registerUserResponse
 
-    fun registerNewUser(userRegisterBody: UserRegisterBody) {
+    fun registerNewUser(userRegisterParams: UserRegisterParams) {
         viewModelScope.launch {
-            val response = userRepository.registerNewUser(userRegisterBody)
+            val response = userRepository.registerNewUser(userRegisterParams)
             _registerUserResponse.postValue(response)
         }
     }

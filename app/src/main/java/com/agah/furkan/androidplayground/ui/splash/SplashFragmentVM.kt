@@ -2,9 +2,9 @@ package com.agah.furkan.androidplayground.ui.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.data.repository.UserRepository
-import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
-import com.agah.furkan.androidplayground.data.web.model.request.ValidateTokenBody
+import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.androidplayground.domain.model.request.ValidateTokenParams
+import com.agah.furkan.androidplayground.domain.repository.UserRepository
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -20,6 +20,7 @@ class SplashFragmentVM @Inject constructor(private val userRepository: UserRepos
     ViewModel() {
     private val _isTokenValid = MutableSharedFlow<Boolean>()
     val isTokenValid: SharedFlow<Boolean> get() = _isTokenValid
+
     private val splashMinDelay = 3000L
 
     init {
@@ -30,12 +31,10 @@ class SplashFragmentVM @Inject constructor(private val userRepository: UserRepos
                 },
                 async {
                     if (SharedPrefUtil.getToken() != null) {
-                        val response = userRepository.validateToken(
-                            ValidateTokenBody(
-                                token = SharedPrefUtil.getToken().toString()
-                            )
+                        val result = userRepository.validateToken(
+                            ValidateTokenParams(token = SharedPrefUtil.getToken().toString())
                         )
-                        if (((response is ApiSuccessResponse) && response.data.isSuccess).not()) {
+                        if (result is Result.Failure) {
                             SharedPrefUtil.clearAllData()
                         }
                     }

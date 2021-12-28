@@ -1,6 +1,6 @@
 package com.agah.furkan.androidplayground.util.retrofit
 
-import com.agah.furkan.androidplayground.data.web.model.ApiResponse
+import com.agah.furkan.androidplayground.data.remote.ApiResponse
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.Call

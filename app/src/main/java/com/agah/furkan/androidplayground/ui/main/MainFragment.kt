@@ -7,10 +7,10 @@ import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.databinding.FragmentMainBinding
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.ui.main.child.CartFragment
-import com.agah.furkan.androidplayground.ui.main.child.CategoryFragment
-import com.agah.furkan.androidplayground.ui.main.child.HomeFragment
-import com.agah.furkan.androidplayground.ui.main.child.ProfileFragment
+import com.agah.furkan.androidplayground.ui.cart.CartFragment
+import com.agah.furkan.androidplayground.ui.home.HomeFragment
+import com.agah.furkan.androidplayground.ui.productcategory.CategoryFragment
+import com.agah.furkan.androidplayground.ui.userprofile.ProfileFragment
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
-import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
-import com.agah.furkan.androidplayground.data.web.model.request.UserRegisterBody
 import com.agah.furkan.androidplayground.databinding.FragmentRegisterBinding
+import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.androidplayground.domain.model.request.UserRegisterParams
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.showLongToast
 import com.agah.furkan.androidplayground.util.textValue
@@ -26,7 +25,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
         initObservers()
         binding.registerBtnRegister.setOnClickListener {
             registerFragmentVM.registerNewUser(
-                UserRegisterBody(
+                UserRegisterParams(
                     username = binding.registerEtUsername.textValue,
                     password = binding.registerEtPassword.textValue
                 )
@@ -37,12 +36,12 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
     private fun initObservers() {
         registerFragmentVM.registerUserResponse.observe(viewLifecycleOwner) { apiResponse ->
             when (apiResponse) {
-                is ApiSuccessResponse -> {
-                    showLongToast(apiResponse.data.message.toString())
+                is Result.Success -> {
+                    showLongToast(apiResponse.data)
                     navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                 }
-                is ApiErrorResponse -> {
-                    showLongToast(apiResponse.errorMessage)
+                is Result.Failure -> {
+                    showLongToast(apiResponse.error.errorMessage)
                 }
             }
         }

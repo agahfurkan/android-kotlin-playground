@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.data.domain.model.Category
-import com.agah.furkan.androidplayground.data.repository.CategoryRepository
+import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.androidplayground.domain.model.result.Category
+import com.agah.furkan.androidplayground.domain.repository.CategoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,8 +23,10 @@ class MainFragmentVM @Inject constructor(private val categoryRepository: Categor
 
     private fun fetchMainProductCategories() {
         viewModelScope.launch {
-            val categoryList = categoryRepository.fetchMainProductCategories()
-            _categoryList.postValue(categoryList)
+            val result = categoryRepository.fetchMainProductCategories()
+            if (result is Result.Success) {
+                _categoryList.postValue(result.data)
+            }
         }
     }
 }

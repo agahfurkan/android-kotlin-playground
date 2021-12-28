@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.agah.furkan.androidplayground.view.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin8"
-    app:contentPadding="@dimen/padding16">
+<layout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <variable
+            name="callback"
+            type="com.agah.furkan.androidplayground.ui.productcategory.ProductCategoryListCallback" />
+
+        <variable
+            name="item"
+            type="com.agah.furkan.androidplayground.domain.model.result.Category" />
+    </data>
+
+    <com.agah.furkan.androidplayground.view.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin8"
+        android:onClick="@{(view)->callback.onItemClicked(item)}"
+        app:contentPadding="@dimen/padding16">
 
-        <com.agah.furkan.androidplayground.view.CustomTextView
-            android:id="@+id/item_main_category_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Category Name" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.agah.furkan.androidplayground.view.CustomCardView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.agah.furkan.androidplayground.view.CustomTextView
+                android:id="@+id/item_main_category_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{item.categoryName}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Category Name" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.agah.furkan.androidplayground.view.CustomCardView>
+</layout>

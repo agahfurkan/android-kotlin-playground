@@ -9,8 +9,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
-import com.agah.furkan.androidplayground.data.domain.model.Product
 import com.agah.furkan.androidplayground.databinding.FragmentProductListBinding
+import com.agah.furkan.androidplayground.domain.model.result.Product
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint

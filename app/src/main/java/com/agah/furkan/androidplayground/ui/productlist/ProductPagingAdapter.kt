@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.data.domain.model.Product
 import com.agah.furkan.androidplayground.databinding.ItemProductListBinding
+import com.agah.furkan.androidplayground.domain.model.result.Product
 import com.agah.furkan.androidplayground.util.GenericDiffUtil
 import com.bumptech.glide.Glide
 

@@ -5,11 +5,11 @@ import androidx.room.Room
 import com.agah.furkan.androidplayground.BuildConfig.BASE_URL
 import com.agah.furkan.androidplayground.data.local.AppDatabase
 import com.agah.furkan.androidplayground.data.local.dao.DummyDao
-import com.agah.furkan.androidplayground.data.web.RestConstants
-import com.agah.furkan.androidplayground.data.web.service.CartService
-import com.agah.furkan.androidplayground.data.web.service.CategoryService
-import com.agah.furkan.androidplayground.data.web.service.ProductService
-import com.agah.furkan.androidplayground.data.web.service.UserService
+import com.agah.furkan.androidplayground.data.remote.RestConstants
+import com.agah.furkan.androidplayground.data.remote.service.CartService
+import com.agah.furkan.androidplayground.data.remote.service.CategoryService
+import com.agah.furkan.androidplayground.data.remote.service.ProductService
+import com.agah.furkan.androidplayground.data.remote.service.UserService
 import com.agah.furkan.androidplayground.util.retrofit.CustomCallFactory
 import dagger.Module
 import dagger.Provides
@@ -24,7 +24,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+object AppModule {
     @Singleton
     @Provides
     fun provideRetrofitClient(client: OkHttpClient): Retrofit {

@@ -8,9 +8,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.data.web.model.ApiErrorResponse
-import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
 import com.agah.furkan.androidplayground.databinding.FragmentLoginBinding
+import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import com.agah.furkan.androidplayground.util.showLongToast
@@ -43,19 +42,15 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
             loginFragmentVM.loginResponse.flowWithLifecycle(
                 lifecycle = viewLifecycleOwner.lifecycle,
                 minActiveState = Lifecycle.State.STARTED
-            ).collect { response ->
-                when (response) {
-                    is ApiSuccessResponse -> {
-                        if (response.data.isSuccess) {
-                            SharedPrefUtil.setToken(response.data.token!!)
-                            SharedPrefUtil.setUserid(response.data.userId!!)
-                            navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
-                        } else {
-                            showLongToast(response.data.message.toString())
-                        }
+            ).collect { result ->
+                when (result) {
+                    is Result.Success -> {
+                        SharedPrefUtil.setToken(result.data.token)
+                        SharedPrefUtil.setUserid(result.data.userId)
+                        navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
                     }
-                    is ApiErrorResponse -> {
-                        showLongToast(response.errorMessage)
+                    is Result.Failure -> {
+                        showLongToast(result.error.errorMessage)
                     }
                 }
             }

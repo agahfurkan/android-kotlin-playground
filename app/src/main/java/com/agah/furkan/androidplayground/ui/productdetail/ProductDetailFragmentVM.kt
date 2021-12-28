@@ -4,23 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.data.repository.ProductRepository
-import com.agah.furkan.androidplayground.data.web.model.ApiResponse
-import com.agah.furkan.androidplayground.data.web.model.response.ProductDetailResponse
+import com.agah.furkan.androidplayground.data.repository.ProductRepositoryImpl
+import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductDetailFragmentVM @Inject constructor(private val productRepository: ProductRepository) :
+class ProductDetailFragmentVM @Inject constructor(private val productRepository: ProductRepositoryImpl) :
     ViewModel() {
-    private val _productDetail = MutableLiveData<ApiResponse<ProductDetailResponse>>()
-    val productDetail: LiveData<ApiResponse<ProductDetailResponse>> get() = _productDetail
+    private val _productDetail = MutableLiveData<Result<ProductDetail>>()
+    val productDetail: LiveData<Result<ProductDetail>> get() = _productDetail
 
     fun getProductDetail(productId: Long) {
         viewModelScope.launch {
-            val response = productRepository.getProductDetail(productId)
-            _productDetail.postValue(response)
+            val result = productRepository.getProductDetail(productId)
+            _productDetail.postValue(result)
         }
     }
 }

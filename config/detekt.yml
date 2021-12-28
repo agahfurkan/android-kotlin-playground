@@ -750,6 +750,7 @@ style:
     acceptableLength: 4
   UnnecessaryAbstractClass:
     active: true
+    ignoreAnnotated: ['Module']
   UnnecessaryAnnotationUseSiteTarget:
     active: false
   UnnecessaryApply:

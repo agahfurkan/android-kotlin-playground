@@ -6,14 +6,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.agah.furkan.androidplayground.data.domain.model.Product
-import com.agah.furkan.androidplayground.data.repository.ProductRepository
+import com.agah.furkan.androidplayground.data.repository.ProductRepositoryImpl
+import com.agah.furkan.androidplayground.domain.model.result.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductListFragmentVM @Inject constructor(
-    productRepository: ProductRepository,
+    productRepository: ProductRepositoryImpl,
     state: SavedStateHandle
 ) :
     ViewModel() {

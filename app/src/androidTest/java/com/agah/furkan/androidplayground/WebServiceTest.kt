@@ -2,11 +2,10 @@ package com.agah.furkan.androidplayground
 
 import android.app.Application
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.agah.furkan.androidplayground.data.repository.CategoryRepository
+import com.agah.furkan.androidplayground.data.remote.ApiSuccessResponse
+import com.agah.furkan.androidplayground.data.remote.model.request.UserLoginBody
+import com.agah.furkan.androidplayground.data.remote.model.request.UserRegisterBody
 import com.agah.furkan.androidplayground.data.repository.UserRepository
-import com.agah.furkan.androidplayground.data.web.model.ApiSuccessResponse
-import com.agah.furkan.androidplayground.data.web.model.request.UserLoginBody
-import com.agah.furkan.androidplayground.data.web.model.request.UserRegisterBody
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule

@@ -2,10 +2,10 @@ package com.agah.furkan.androidplayground.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.data.repository.UserRepository
-import com.agah.furkan.androidplayground.data.web.model.ApiResponse
-import com.agah.furkan.androidplayground.data.web.model.request.UserLoginBody
-import com.agah.furkan.androidplayground.data.web.model.response.UserLoginResponse
+import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.androidplayground.domain.model.request.UserLoginParams
+import com.agah.furkan.androidplayground.domain.model.result.LoginResult
+import com.agah.furkan.androidplayground.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -16,14 +16,14 @@ import javax.inject.Inject
 class LoginFragmentVM @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
 
-    private val _loginResponse = MutableSharedFlow<ApiResponse<UserLoginResponse>>()
-    val loginResponse: SharedFlow<ApiResponse<UserLoginResponse>> get() = _loginResponse
+    private val _loginResponse = MutableSharedFlow<Result<LoginResult>>()
+    val loginResponse: SharedFlow<Result<LoginResult>> get() = _loginResponse
     var username: String? = null
     var password: String? = null
 
-    private fun login(userLoginBody: UserLoginBody) {
+    private fun login(userLoginParams: UserLoginParams) {
         viewModelScope.launch {
-            val response = userRepository.loginUser(userLoginBody)
+            val response = userRepository.loginUser(userLoginParams)
             _loginResponse.emit(response)
         }
     }
@@ -33,6 +33,6 @@ class LoginFragmentVM @Inject constructor(private val userRepository: UserReposi
             return
         if (password.isNullOrBlank())
             return
-        login(UserLoginBody(username = username!!, password = password!!))
+        login(UserLoginParams(username = username!!, password = password!!))
     }
 }
