@@ -1,7 +1,6 @@
 package com.agah.furkan.androidplayground.data.repository
 
 import com.agah.furkan.androidplayground.data.mapper.toDomainModel
-import com.agah.furkan.androidplayground.data.remote.RestConstants
 import com.agah.furkan.androidplayground.data.remote.model.request.AddProductToCartBody
 import com.agah.furkan.androidplayground.data.remote.model.request.RemoveProductFromCartBody
 import com.agah.furkan.androidplayground.data.remote.service.CartService
@@ -27,10 +26,7 @@ class CartRepositoryImpl(
 
     override suspend fun fetchCart(userId: Long): Result<List<Cart>> =
         suspendCall(coroutineContext = coroutineContext, errorMapper = errorMapper, call = {
-            cartService.getCart(
-                userId,
-                RestConstants.getAuthHeader()
-            )
+            cartService.getCart(userId)
         }, map = { response -> response.cartList.map { it.toDomainModel() } })
 
     override suspend fun addProductToCart(addProductToCartBody: AddProductToCartBody): Result<String> =
@@ -38,19 +34,13 @@ class CartRepositoryImpl(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
             call = {
-                cartService.addProductToCart(
-                    addProductToCartBody,
-                    RestConstants.getAuthHeader()
-                )
+                cartService.addProductToCart(addProductToCartBody)
             },
             map = { it.message ?: "" }
         )
 
     override suspend fun removeProductFromCart(removeProductFromCartBody: RemoveProductFromCartBody): Result<String> =
         suspendCall(coroutineContext = coroutineContext, errorMapper = errorMapper, call = {
-            cartService.removeProductFromCart(
-                removeProductFromCartBody,
-                RestConstants.getAuthHeader()
-            )
+            cartService.removeProductFromCart(removeProductFromCartBody)
         }, map = { it.message ?: "" })
 }

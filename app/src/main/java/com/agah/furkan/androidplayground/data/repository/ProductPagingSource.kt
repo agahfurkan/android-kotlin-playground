@@ -3,7 +3,6 @@ package com.agah.furkan.androidplayground.data.repository
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.agah.furkan.androidplayground.data.mapper.toDomainModel
-import com.agah.furkan.androidplayground.data.remote.RestConstants
 import com.agah.furkan.androidplayground.data.remote.service.ProductService
 import com.agah.furkan.androidplayground.domain.ErrorMapper
 import com.agah.furkan.androidplayground.domain.Result
@@ -37,8 +36,7 @@ class ProductPagingSource(
                     productService.getProductList(
                         categoryId = categoryId,
                         pageIndex = pageIndex,
-                        pageLength = PRODUCT_PAGE_SIZE,
-                        header = RestConstants.getAuthHeader()
+                        pageLength = PRODUCT_PAGE_SIZE
                     )
                 }, map = { response -> response.productList.map { it.toDomainModel() } })
             val nextPageIndex =

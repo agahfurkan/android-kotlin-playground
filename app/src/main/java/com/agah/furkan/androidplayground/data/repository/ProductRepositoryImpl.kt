@@ -4,7 +4,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.agah.furkan.androidplayground.data.mapper.toDomainModel
-import com.agah.furkan.androidplayground.data.remote.RestConstants
 import com.agah.furkan.androidplayground.data.remote.service.ProductService
 import com.agah.furkan.androidplayground.domain.ErrorMapper
 import com.agah.furkan.androidplayground.domain.Result
@@ -51,10 +50,7 @@ class ProductRepositoryImpl(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
             call = {
-                productService.getProductDetail(
-                    productId = productId,
-                    header = RestConstants.getAuthHeader()
-                )
+                productService.getProductDetail(productId = productId)
             },
             map = { response -> response.productDetail.toDomainModel() }
         )

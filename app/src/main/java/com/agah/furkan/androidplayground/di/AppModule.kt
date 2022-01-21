@@ -10,6 +10,7 @@ import com.agah.furkan.androidplayground.data.remote.service.CartService
 import com.agah.furkan.androidplayground.data.remote.service.CategoryService
 import com.agah.furkan.androidplayground.data.remote.service.ProductService
 import com.agah.furkan.androidplayground.data.remote.service.UserService
+import com.agah.furkan.androidplayground.util.retrofit.AuthHeaderInterceptor
 import com.agah.furkan.androidplayground.util.retrofit.CustomCallFactory
 import dagger.Module
 import dagger.Provides
@@ -73,6 +74,7 @@ object AppModule {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
+            .addInterceptor(AuthHeaderInterceptor())
             .readTimeout(RestConstants.READ_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(RestConstants.WRITE_TIMEOUT, TimeUnit.SECONDS)
             .build()

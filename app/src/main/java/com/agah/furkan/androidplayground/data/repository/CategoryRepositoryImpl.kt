@@ -1,7 +1,6 @@
 package com.agah.furkan.androidplayground.data.repository
 
 import com.agah.furkan.androidplayground.data.mapper.toDomainModel
-import com.agah.furkan.androidplayground.data.remote.RestConstants
 import com.agah.furkan.androidplayground.data.remote.service.CategoryService
 import com.agah.furkan.androidplayground.domain.ErrorMapper
 import com.agah.furkan.androidplayground.domain.Result
@@ -27,7 +26,7 @@ class CategoryRepositoryImpl(
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
-            call = { categoryService.fetchCategories(RestConstants.getAuthHeader()) },
+            call = { categoryService.fetchCategories() },
             map = { response -> response.categoryList.map { it.toDomainModel() } }
         )
 }
