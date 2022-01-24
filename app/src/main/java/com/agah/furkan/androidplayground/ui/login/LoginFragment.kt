@@ -9,9 +9,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.databinding.FragmentLoginBinding
-import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import com.agah.furkan.androidplayground.util.showLongToast
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,19 +38,18 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
 
     private fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            loginFragmentVM.loginResponse.flowWithLifecycle(
+            loginFragmentVM.loginState.flowWithLifecycle(
                 lifecycle = viewLifecycleOwner.lifecycle,
                 minActiveState = Lifecycle.State.STARTED
-            ).collect { result ->
-                when (result) {
-                    is Result.Success -> {
-                        SharedPrefUtil.setToken(result.data.token)
-                        SharedPrefUtil.setUserid(result.data.userId)
+            ).collect { state ->
+                when (state) {
+                    is LoginUseCase.UiState.Success -> {
                         navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
                     }
-                    is Result.Failure -> {
-                        showLongToast(result.error.errorMessage)
+                    is LoginUseCase.UiState.Fail -> {
+                        showLongToast(state.failureMessage)
                     }
+                    LoginUseCase.UiState.Loading -> Log.i(TAG, "state-loading")
                 }
             }
         }

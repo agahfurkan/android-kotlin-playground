@@ -2,29 +2,31 @@ package com.agah.furkan.androidplayground.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.domain.model.request.UserLoginParams
-import com.agah.furkan.androidplayground.domain.model.result.LoginResult
-import com.agah.furkan.androidplayground.domain.repository.UserRepository
+import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginFragmentVM @Inject constructor(private val userRepository: UserRepository) :
+class LoginFragmentVM @Inject constructor(private val loginUseCase: LoginUseCase) :
     ViewModel() {
 
-    private val _loginResponse = MutableSharedFlow<Result<LoginResult>>()
-    val loginResponse: SharedFlow<Result<LoginResult>> get() = _loginResponse
+    private val _loginState = MutableSharedFlow<LoginUseCase.UiState>()
+    val loginState: SharedFlow<LoginUseCase.UiState> get() = _loginState
+
     var username: String? = null
     var password: String? = null
 
     private fun login(userLoginParams: UserLoginParams) {
         viewModelScope.launch {
-            val response = userRepository.loginUser(userLoginParams)
-            _loginResponse.emit(response)
+            val state = loginUseCase(userLoginParams)
+            state.collect {
+                _loginState.emit(it)
+            }
         }
     }
 
