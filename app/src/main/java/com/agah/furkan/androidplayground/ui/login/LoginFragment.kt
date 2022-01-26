@@ -1,7 +1,6 @@
 package com.agah.furkan.androidplayground.ui.login
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,6 +15,7 @@ import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListener {
@@ -26,7 +26,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
         super.onViewCreated(view, savedInstanceState)
         System.loadLibrary("api-keys")
         val someApiKey = getAPIKey()
-        Log.i(Companion.TAG, someApiKey)
+        Timber.i(someApiKey)
         binding.viewModel = loginFragmentVM
         listOf(
             binding.loginBtnRegister
@@ -46,10 +46,10 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
                     is LoginUseCase.UiState.Success -> {
                         navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
                     }
-                    is LoginUseCase.UiState.Fail -> {
+                    is LoginUseCase.UiState.Failure -> {
                         showLongToast(state.failureMessage)
                     }
-                    LoginUseCase.UiState.Loading -> Log.i(TAG, "state-loading")
+                    LoginUseCase.UiState.Loading -> Timber.i(state.toString())
                 }
             }
         }
@@ -64,8 +64,4 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     }
 
     external fun getAPIKey(): String
-
-    companion object {
-        private const val TAG: String = "LoginFragment"
-    }
 }

@@ -1,21 +1,22 @@
 package com.agah.furkan.androidplayground.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.domain.Result
-import com.agah.furkan.androidplayground.domain.model.result.Category
-import com.agah.furkan.androidplayground.domain.repository.CategoryRepository
+import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
+import com.agah.furkan.androidplayground.domain.usecase.GetMainProductCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainFragmentVM @Inject constructor(private val categoryRepository: CategoryRepository) :
+class MainFragmentVM @Inject constructor(private val getMainProductCategoryUseCase: GetMainProductCategoryUseCase) :
     ViewModel() {
-    private val _categoryList = MutableLiveData<List<Category>>()
-    val categoryList: LiveData<List<Category>> get() = _categoryList
+    private val _categoryList =
+        MutableStateFlow<GetMainProductCategoryUseCase.UiState>(GetMainProductCategoryUseCase.UiState.Loading)
+    val categoryList: StateFlow<GetMainProductCategoryUseCase.UiState> get() = _categoryList
 
     init {
         fetchMainProductCategories()
@@ -23,9 +24,8 @@ class MainFragmentVM @Inject constructor(private val categoryRepository: Categor
 
     private fun fetchMainProductCategories() {
         viewModelScope.launch {
-            val result = categoryRepository.fetchMainProductCategories()
-            if (result is Result.Success) {
-                _categoryList.postValue(result.data)
+            getMainProductCategoryUseCase(UseCaseParams.None).collect {
+                _categoryList.emit(it)
             }
         }
     }

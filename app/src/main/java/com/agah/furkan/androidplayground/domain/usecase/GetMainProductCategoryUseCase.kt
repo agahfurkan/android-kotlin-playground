@@ -2,22 +2,19 @@ package com.agah.furkan.androidplayground.domain.usecase
 
 import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
-import com.agah.furkan.androidplayground.domain.repository.UserRepository
-import com.agah.furkan.androidplayground.util.SharedPrefUtil
+import com.agah.furkan.androidplayground.domain.model.result.Category
+import com.agah.furkan.androidplayground.domain.repository.CategoryRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class LoginUseCase @Inject constructor(private val userRepository: UserRepository) :
-    BaseUseCase<UseCaseParams.UserLoginParams, LoginUseCase.UiState> {
-
-    override suspend fun invoke(params: UseCaseParams.UserLoginParams): Flow<UiState> = flow {
+class GetMainProductCategoryUseCase @Inject constructor(private val categoryRepository: CategoryRepository) :
+    BaseUseCase<UseCaseParams.None, GetMainProductCategoryUseCase.UiState> {
+    override suspend fun invoke(params: UseCaseParams.None): Flow<UiState> = flow {
         emit(UiState.Loading)
-        when (val result = userRepository.loginUser(params)) {
+        when (val result = categoryRepository.fetchMainProductCategories()) {
             is Result.Success -> {
-                SharedPrefUtil.setToken(result.data.token)
-                SharedPrefUtil.setUserid(result.data.userId)
-                emit(UiState.Success)
+                emit(UiState.Success(categoryList = result.data))
             }
             is Result.Failure -> {
                 emit(UiState.Failure(failureMessage = result.error.errorMessage))
@@ -26,7 +23,7 @@ class LoginUseCase @Inject constructor(private val userRepository: UserRepositor
     }
 
     sealed class UiState {
-        object Success : UiState()
+        data class Success(val categoryList: List<Category>) : UiState()
         object Loading : UiState()
         data class Failure(val failureMessage: String) : UiState()
     }

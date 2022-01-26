@@ -20,4 +20,5 @@ object Versions {
     const val pagingVersion = "3.1.0"
     const val detektVersion = "1.19.0"
     const val spotlessVersion = "6.0.5"
+    const val timberVersion = "5.0.1"
 }

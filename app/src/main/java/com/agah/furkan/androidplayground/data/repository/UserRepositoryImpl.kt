@@ -5,9 +5,7 @@ import com.agah.furkan.androidplayground.data.mapper.toRequestModel
 import com.agah.furkan.androidplayground.data.remote.service.UserService
 import com.agah.furkan.androidplayground.domain.ErrorMapper
 import com.agah.furkan.androidplayground.domain.Result
-import com.agah.furkan.androidplayground.domain.model.request.UserLoginParams
-import com.agah.furkan.androidplayground.domain.model.request.UserRegisterParams
-import com.agah.furkan.androidplayground.domain.model.request.ValidateTokenParams
+import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.domain.model.result.LoginResult
 import com.agah.furkan.androidplayground.domain.repository.UserRepository
 import com.agah.furkan.androidplayground.domain.util.suspendCall
@@ -26,7 +24,7 @@ class UserRepositoryImpl(
         errorMapper: ErrorMapper,
     ) : this(userService, errorMapper, Dispatchers.IO)
 
-    override suspend fun loginUser(userLoginParams: UserLoginParams): Result<LoginResult> =
+    override suspend fun loginUser(userLoginParams: UseCaseParams.UserLoginParams): Result<LoginResult> =
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
@@ -34,7 +32,7 @@ class UserRepositoryImpl(
             map = { it.toDomainModel() }
         )
 
-    override suspend fun registerNewUser(userRegisterParams: UserRegisterParams): Result<String> =
+    override suspend fun registerNewUser(userRegisterParams: UseCaseParams.UserRegisterParams): Result<String> =
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
@@ -42,7 +40,7 @@ class UserRepositoryImpl(
             map = { it.message ?: "" }
         )
 
-    override suspend fun validateToken(validateTokenParams: ValidateTokenParams): Result<String> =
+    override suspend fun validateToken(validateTokenParams: UseCaseParams.ValidateTokenParams): Result<String> =
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,

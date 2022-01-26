@@ -3,14 +3,20 @@ package com.agah.furkan.androidplayground.ui.productcategory
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.databinding.FragmentCategoryBinding
 import com.agah.furkan.androidplayground.domain.model.result.Category
+import com.agah.furkan.androidplayground.domain.usecase.GetMainProductCategoryUseCase
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.main.MainFragmentDirections
 import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class CategoryFragment : BaseFragment(R.layout.fragment_category), ProductCategoryListCallback {
@@ -27,8 +33,21 @@ class CategoryFragment : BaseFragment(R.layout.fragment_category), ProductCatego
     }
 
     private fun initObservers() {
-        mainFragmentVM.categoryList.observe(viewLifecycleOwner) { categoryList ->
-            categoryListAdapter.submitList(categoryList)
+        viewLifecycleOwner.lifecycleScope.launch {
+            mainFragmentVM.categoryList.flowWithLifecycle(lifecycle = viewLifecycleOwner.lifecycle)
+                .collect { state ->
+                    when (state) {
+                        is GetMainProductCategoryUseCase.UiState.Success -> {
+                            categoryListAdapter.submitList(state.categoryList)
+                        }
+                        is GetMainProductCategoryUseCase.UiState.Loading -> {
+                            Timber.i(state.toString())
+                        }
+                        is GetMainProductCategoryUseCase.UiState.Failure -> {
+                            Timber.i(state.toString())
+                        }
+                    }
+                }
         }
     }
 

@@ -3,7 +3,7 @@ package com.agah.furkan.androidplayground.ui.splash
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.domain.Result
-import com.agah.furkan.androidplayground.domain.model.request.ValidateTokenParams
+import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.domain.repository.UserRepository
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,7 +32,7 @@ class SplashFragmentVM @Inject constructor(private val userRepository: UserRepos
                 async {
                     if (SharedPrefUtil.getToken() != null) {
                         val result = userRepository.validateToken(
-                            ValidateTokenParams(token = SharedPrefUtil.getToken().toString())
+                            UseCaseParams.ValidateTokenParams(token = SharedPrefUtil.getToken().toString())
                         )
                         if (result is Result.Failure) {
                             SharedPrefUtil.clearAllData()

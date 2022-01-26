@@ -8,9 +8,7 @@ import com.agah.furkan.androidplayground.data.remote.model.response.CategoryResp
 import com.agah.furkan.androidplayground.data.remote.model.response.ProductDetailResponse
 import com.agah.furkan.androidplayground.data.remote.model.response.ProductResponse
 import com.agah.furkan.androidplayground.data.remote.model.response.UserLoginResponse
-import com.agah.furkan.androidplayground.domain.model.request.UserLoginParams
-import com.agah.furkan.androidplayground.domain.model.request.UserRegisterParams
-import com.agah.furkan.androidplayground.domain.model.request.ValidateTokenParams
+import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.domain.model.result.Cart
 import com.agah.furkan.androidplayground.domain.model.result.Category
 import com.agah.furkan.androidplayground.domain.model.result.LoginResult
@@ -64,14 +62,14 @@ fun UserLoginResponse.toDomainModel(): LoginResult {
     return LoginResult(token = token, userId = userId, message = message ?: "")
 }
 
-fun UserLoginParams.toRequestModel(): UserLoginBody {
+fun UseCaseParams.UserLoginParams.toRequestModel(): UserLoginBody {
     return UserLoginBody(password = password, username = username)
 }
 
-fun UserRegisterParams.toRequestModel(): UserRegisterBody {
+fun UseCaseParams.UserRegisterParams.toRequestModel(): UserRegisterBody {
     return UserRegisterBody(password = password, username = username)
 }
 
-fun ValidateTokenParams.toRequestModel(): ValidateTokenBody {
+fun UseCaseParams.ValidateTokenParams.toRequestModel(): ValidateTokenBody {
     return ValidateTokenBody(token = token)
 }

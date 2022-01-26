@@ -2,7 +2,7 @@ package com.agah.furkan.androidplayground.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.domain.model.request.UserLoginParams
+import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,7 +21,7 @@ class LoginFragmentVM @Inject constructor(private val loginUseCase: LoginUseCase
     var username: String? = null
     var password: String? = null
 
-    private fun login(userLoginParams: UserLoginParams) {
+    private fun login(userLoginParams: UseCaseParams.UserLoginParams) {
         viewModelScope.launch {
             val state = loginUseCase(userLoginParams)
             state.collect {
@@ -35,6 +35,6 @@ class LoginFragmentVM @Inject constructor(private val loginUseCase: LoginUseCase
             return
         if (password.isNullOrBlank())
             return
-        login(UserLoginParams(username = username!!, password = password!!))
+        login(UseCaseParams.UserLoginParams(username = username!!, password = password!!))
     }
 }

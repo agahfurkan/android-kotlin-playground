@@ -55,7 +55,7 @@ object Dependencies {
         "com.google.dagger:hilt-android-compiler:${Versions.hiltVersion}"
     private const val lottie = "com.airbnb.android:lottie:${Versions.lottieVersion}"
     private const val paging = "androidx.paging:paging-runtime:${Versions.pagingVersion}"
-
+    private const val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
     val implementationLibraries = arrayListOf<String>().apply {
         add(stdlib)
         add(core)
@@ -77,6 +77,7 @@ object Dependencies {
         add(glide)
         add(lottie)
         add(paging)
+        add(timber)
     }
     val kaptLibraries = arrayListOf<String>().apply {
         add(moshiCodegen)

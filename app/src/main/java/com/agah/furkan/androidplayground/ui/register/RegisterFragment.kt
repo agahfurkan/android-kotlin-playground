@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.databinding.FragmentRegisterBinding
 import com.agah.furkan.androidplayground.domain.Result
-import com.agah.furkan.androidplayground.domain.model.request.UserRegisterParams
+import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.showLongToast
 import com.agah.furkan.androidplayground.util.textValue
@@ -25,7 +25,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
         initObservers()
         binding.registerBtnRegister.setOnClickListener {
             registerFragmentVM.registerNewUser(
-                UserRegisterParams(
+                UseCaseParams.UserRegisterParams(
                     username = binding.registerEtUsername.textValue,
                     password = binding.registerEtPassword.textValue
                 )
