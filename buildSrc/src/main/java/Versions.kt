@@ -21,4 +21,5 @@ object Versions {
     const val detektVersion = "1.19.0"
     const val spotlessVersion = "6.0.5"
     const val timberVersion = "5.0.1"
+    const val dokkaVersion = "1.6.10"
 }

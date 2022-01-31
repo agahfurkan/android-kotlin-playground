@@ -12,8 +12,8 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("io.gitlab.arturbosch.detekt") version Versions.detektVersion
     id("com.diffplug.spotless") version Versions.spotlessVersion
+    id("org.jetbrains.dokka") version Versions.dokkaVersion
 }
-
 android {
     compileSdk = AppConfig.compileSdk
     buildToolsVersion = AppConfig.buildTools
@@ -110,4 +110,8 @@ spotless {
 }
 detekt {
     config = files("$rootDir/config/detekt.yml")
+}
+tasks.dokkaHtml.configure {
+    outputDirectory.set(file("../documentation/html"))
+    pluginsMapConfiguration.set(mapOf("org.jetbrains.dokka.base.DokkaBase" to """{ "separateInheritedMembers": true}"""))
 }
