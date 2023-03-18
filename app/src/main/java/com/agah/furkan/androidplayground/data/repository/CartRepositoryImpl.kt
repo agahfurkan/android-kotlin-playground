@@ -25,22 +25,29 @@ class CartRepositoryImpl(
     ) : this(cartService, errorMapper, Dispatchers.IO)
 
     override suspend fun fetchCart(userId: Long): Result<List<Cart>> =
-        suspendCall(coroutineContext = coroutineContext, errorMapper = errorMapper, call = {
+        suspendCall(
+            coroutineContext = coroutineContext,
+            errorMapper = errorMapper,
+            mapOnSuccess = { response -> response.cartList.map { it.toDomainModel() } }
+        ) {
             cartService.getCart(userId)
-        }, map = { response -> response.cartList.map { it.toDomainModel() } })
+        }
 
     override suspend fun addProductToCart(addProductToCartBody: AddProductToCartBody): Result<String> =
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
-            call = {
-                cartService.addProductToCart(addProductToCartBody)
-            },
-            map = { it.message ?: "" }
-        )
+            mapOnSuccess = { it.message ?: "" }
+        ) {
+            cartService.addProductToCart(addProductToCartBody)
+        }
 
     override suspend fun removeProductFromCart(removeProductFromCartBody: RemoveProductFromCartBody): Result<String> =
-        suspendCall(coroutineContext = coroutineContext, errorMapper = errorMapper, call = {
+        suspendCall(
+            coroutineContext = coroutineContext,
+            errorMapper = errorMapper,
+            mapOnSuccess = { it.message ?: "" }
+        ) {
             cartService.removeProductFromCart(removeProductFromCartBody)
-        }, map = { it.message ?: "" })
+        }
 }

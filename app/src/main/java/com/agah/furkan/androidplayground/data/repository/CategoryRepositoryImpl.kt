@@ -26,7 +26,6 @@ class CategoryRepositoryImpl(
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
-            call = { categoryService.fetchCategories() },
-            map = { response -> response.categoryList.map { it.toDomainModel() } }
-        )
+            mapOnSuccess = { response -> response.categoryList.map { it.toDomainModel() } }
+        ) { categoryService.fetchCategories() }
 }

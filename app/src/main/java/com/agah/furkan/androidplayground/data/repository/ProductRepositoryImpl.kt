@@ -49,9 +49,8 @@ class ProductRepositoryImpl(
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
-            call = {
-                productService.getProductDetail(productId = productId)
-            },
-            map = { response -> response.productDetail.toDomainModel() }
-        )
+            mapOnSuccess = { response -> response.productDetail.toDomainModel() }
+        ) {
+            productService.getProductDetail(productId = productId)
+        }
 }

@@ -15,8 +15,8 @@ plugins {
     id("org.jetbrains.dokka") version Versions.dokkaVersion
 }
 android {
+    ndkVersion = "24.0.8215888"
     compileSdk = AppConfig.compileSdk
-    buildToolsVersion = AppConfig.buildTools
 
     defaultConfig {
         applicationId = "com.agah.furkan.androidplayground"
@@ -48,14 +48,14 @@ android {
         create("dev") {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8099/api/\"")
+            buildConfigField("String", "BASE_URL", "\"https://192.168.1.22:5000/api/\"")
             resValue("string", "app_name", "DEV-Android Playground")
         }
 
         create("prod") {
             applicationIdSuffix = ".prod"
             versionNameSuffix = "-prod"
-            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8099/api/\"")
+            buildConfigField("String", "BASE_URL", "\"https://192.168.1.22:5000/api/\"")
             resValue("string", "app_name", "PROD-Android Playground")
         }
     }
