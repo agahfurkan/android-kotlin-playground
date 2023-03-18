@@ -10,8 +10,8 @@ import kotlin.coroutines.CoroutineContext
 suspend fun <DATA, DOMAIN> suspendCall(
     coroutineContext: CoroutineContext,
     errorMapper: ErrorMapper,
-    call: suspend () -> DATA?,
-    map: (data: DATA) -> DOMAIN
+    mapOnSuccess: (data: DATA) -> DOMAIN,
+    call: suspend () -> DATA?
 ): Result<DOMAIN> = withContext(coroutineContext) {
     return@withContext try {
         val result = call()
@@ -21,7 +21,7 @@ suspend fun <DATA, DOMAIN> suspendCall(
             if ((result is BaseResponse) && result.isSuccess.not()) {
                 Result.Failure(Error.NetworkError(result.message ?: Error.defaultMessage))
             } else {
-                Result.Success(map(result))
+                Result.Success(mapOnSuccess(result))
             }
         }
     } catch (expected: Exception) {

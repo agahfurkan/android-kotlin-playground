@@ -30,23 +30,20 @@ class UserRepositoryImpl(
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
-            call = { userService.loginUser(userLoginParams.toRequestModel()) },
-            map = { it.toDomainModel() }
-        )
+            mapOnSuccess = { it.toDomainModel() }
+        ) { userService.loginUser(userLoginParams.toRequestModel()) }
 
     override suspend fun registerNewUser(userRegisterParams: UserRegisterParams): Result<String> =
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
-            call = { userService.registerNewUser(userRegisterParams.toRequestModel()) },
-            map = { it.message ?: "" }
-        )
+            mapOnSuccess = { it.message ?: "" }
+        ) { userService.registerNewUser(userRegisterParams.toRequestModel()) }
 
     override suspend fun validateToken(validateTokenParams: ValidateTokenParams): Result<String> =
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
-            call = { userService.validateToken(validateTokenParams.toRequestModel()) },
-            map = { it.message ?: "" }
-        )
+            mapOnSuccess = { it.message ?: "" }
+        ) { userService.validateToken(validateTokenParams.toRequestModel()) }
 }

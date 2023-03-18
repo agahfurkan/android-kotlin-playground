@@ -32,13 +32,17 @@ class ProductPagingSource(
         val pageIndex = params.key ?: INITIAL_PAGE_INDEX
         return try {
             val response =
-                suspendCall(coroutineContext = Dispatchers.IO, errorMapper = errorMapper, call = {
+                suspendCall(
+                    coroutineContext = Dispatchers.IO,
+                    errorMapper = errorMapper,
+                    mapOnSuccess = { response -> response.productList.map { it.toDomainModel() } }
+                ) {
                     productService.getProductList(
                         categoryId = categoryId,
                         pageIndex = pageIndex,
                         pageLength = PRODUCT_PAGE_SIZE
                     )
-                }, map = { response -> response.productList.map { it.toDomainModel() } })
+                }
             val nextPageIndex =
                 if (response is Result.Success && response.data.isNotEmpty()) {
                     pageIndex + 1
