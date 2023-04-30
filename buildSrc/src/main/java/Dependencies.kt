@@ -56,6 +56,32 @@ object Dependencies {
     private const val lottie = "com.airbnb.android:lottie:${Versions.lottieVersion}"
     private const val paging = "androidx.paging:paging-runtime:${Versions.pagingVersion}"
     private const val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
+
+    //compose
+    private const val composeRuntime = "androidx.compose.runtime:runtime"
+    private const val composeUi = "androidx.compose.runtime:runtime"
+    private const val composeFoundation = "androidx.compose.runtime:runtime"
+    private const val composeFoundationLayout = "androidx.compose.runtime:runtime"
+    private const val composeMaterial = "androidx.compose.material:material"
+    private const val composeRuntimeLivedata = "androidx.compose.runtime:runtime-livedata"
+    private const val composeUiTooling = "androidx.compose.ui:ui-tooling"
+    private const val composeAccompanist =
+        "com.google.accompanist:accompanist-themeadapter-material:${Versions.accompanistVersion}"
+    private const val glideCompose =
+        "com.github.bumptech.glide:compose:${Versions.glideComposeVersion}"
+
+
+    private val composeLibraries = arrayListOf<String>(
+        composeRuntime,
+        composeUi,
+        composeFoundation,
+        composeFoundationLayout,
+        composeMaterial,
+        composeRuntimeLivedata,
+        composeUiTooling,
+        composeAccompanist,
+        glideCompose
+    )
     val implementationLibraries = arrayListOf<String>().apply {
         add(stdlib)
         add(core)
@@ -78,19 +104,23 @@ object Dependencies {
         add(lottie)
         add(paging)
         add(timber)
+        addAll(composeLibraries)
     }
+
     val kaptLibraries = arrayListOf<String>().apply {
         add(moshiCodegen)
         add(hiltCompiler)
         add(roomCompiler)
         add(glideCompiler)
     }
+
     val androidTestLibraries = arrayListOf<String>().apply {
         add(jUnit)
         add(truth)
         add(hiltTesting)
         add(hiltAndroidCompiler)
     }
+
     val testLibraries = arrayListOf<String>().apply {
         add(testRunner)
     }

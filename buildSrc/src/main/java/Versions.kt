@@ -1,7 +1,7 @@
 object Versions {
     const val appCompatVersion = "1.6.0"
     const val ktxVersion = "1.9.0"
-    const val kotlinVersion = "1.8.0"
+    const val kotlinVersion = "1.8.10"
     const val materialVersion = "1.9.0-alpha01"
     const val constraintLayoutVersion = "2.1.4"
     const val retrofitVersion = "2.5.0"
@@ -22,4 +22,6 @@ object Versions {
     const val spotlessVersion = "6.0.5"
     const val timberVersion = "5.0.1"
     const val dokkaVersion = "1.6.10"
+    const val accompanistVersion = "0.28.0"
+    const val glideComposeVersion = "1.0.0-alpha.1"
 }

@@ -1,5 +1,8 @@
 package com.agah.furkan.androidplayground.ui.login
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
@@ -7,7 +10,6 @@ import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,8 +20,8 @@ class LoginFragmentVM @Inject constructor(private val loginUseCase: LoginUseCase
     private val _loginState = MutableSharedFlow<LoginUseCase.UiState>()
     val loginState: SharedFlow<LoginUseCase.UiState> get() = _loginState
 
-    var username: String? = null
-    var password: String? = null
+    var username by mutableStateOf("")
+    var password by mutableStateOf("")
 
     private fun login(userLoginParams: UseCaseParams.UserLoginParams) {
         viewModelScope.launch {
@@ -30,11 +32,12 @@ class LoginFragmentVM @Inject constructor(private val loginUseCase: LoginUseCase
         }
     }
 
+
     fun onLoginBtnClicked() {
-        if (username.isNullOrBlank())
+        if (username.isBlank())
             return
-        if (password.isNullOrBlank())
+        if (password.isBlank())
             return
-        login(UseCaseParams.UserLoginParams(username = username!!, password = password!!))
+        login(UseCaseParams.UserLoginParams(username = username, password = password))
     }
 }
