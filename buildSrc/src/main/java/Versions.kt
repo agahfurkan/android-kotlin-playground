@@ -24,4 +24,6 @@ object Versions {
     const val dokkaVersion = "1.6.10"
     const val accompanistVersion = "0.28.0"
     const val glideComposeVersion = "1.0.0-alpha.1"
+    const val material3Version = "1.0.1"
+    const val composeActivityVersion = "1.6.1"
 }

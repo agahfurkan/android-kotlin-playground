@@ -60,7 +60,6 @@
 
         <com.agah.furkan.androidplayground.view.CustomButton
             android:id="@+id/product_detail_add_to_cart_button"
-            style="@style/ProductAddButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin16"

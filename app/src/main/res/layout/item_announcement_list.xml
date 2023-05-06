@@ -30,7 +30,6 @@
             <com.agah.furkan.androidplayground.view.CustomImageView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@color/grey_300"
                 app:imageSrc="@{item.description}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +42,6 @@
                 android:layout_margin="@dimen/margin16"
                 android:maxLines="3"
                 android:text="@{item.description}"
-                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

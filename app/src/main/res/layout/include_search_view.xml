@@ -10,7 +10,7 @@
         android:layout_marginHorizontal="@dimen/margin16"
         android:layout_marginVertical="@dimen/margin8"
         android:drawableStart="@drawable/ic_search"
-        android:drawableTint="@color/black"
+        android:drawableTint="@android:color/black"
         android:gravity="center_vertical"
         android:hint="@string/search"
         android:inputType="text"

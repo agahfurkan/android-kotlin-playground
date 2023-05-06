@@ -54,7 +54,6 @@
 
             <com.agah.furkan.androidplayground.view.CustomButton
                 android:id="@+id/item_product_add_to_cart_button"
-                style="@style/ProductAddButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"

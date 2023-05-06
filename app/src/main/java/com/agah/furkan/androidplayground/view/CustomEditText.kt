@@ -41,7 +41,7 @@ class CustomEditText : AppCompatEditText {
                 val shape = MaterialShapeDrawable(shapeApp).apply {
                     this.strokeWidth = strokeWidth.toFloat()
                     backgroundTintList =
-                        ColorStateList.valueOf(ContextCompat.getColor(context, R.color.white))
+                        ColorStateList.valueOf(ContextCompat.getColor(context, android.R.color.white))
                 }
                 background = shape
             } finally {

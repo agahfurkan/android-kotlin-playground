@@ -80,7 +80,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/item_cart_title"
                 app:srcCompat="@drawable/ic_delete"
-                app:tint="@color/black" />
+                app:tint="@android:color/black" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.agah.furkan.androidplayground.view.CustomCardView>
 </layout>

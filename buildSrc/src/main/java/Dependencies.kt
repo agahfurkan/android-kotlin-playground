@@ -5,7 +5,6 @@ object Dependencies {
     private const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinVersion}"
     private const val core = "androidx.core:core-ktx:${Versions.ktxVersion}"
     private const val appcompat = "androidx.appcompat:appcompat:${Versions.appCompatVersion}"
-    private const val material = "com.google.android.material:material:${Versions.materialVersion}"
     private const val livedata =
         "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}"
     private const val livedataCommon =
@@ -65,10 +64,16 @@ object Dependencies {
     private const val composeMaterial = "androidx.compose.material:material"
     private const val composeRuntimeLivedata = "androidx.compose.runtime:runtime-livedata"
     private const val composeUiTooling = "androidx.compose.ui:ui-tooling"
+    private const val composeActivity =
+        "androidx.activity:activity-compose:${Versions.composeActivityVersion}"
     private const val composeAccompanist =
         "com.google.accompanist:accompanist-themeadapter-material:${Versions.accompanistVersion}"
     private const val glideCompose =
         "com.github.bumptech.glide:compose:${Versions.glideComposeVersion}"
+    private const val material3 =
+        "androidx.compose.material3:material3:${Versions.material3Version}"
+    private const val material3WindowSize =
+        "androidx.compose.material3:material3-window-size-class:${Versions.material3Version}"
 
 
     private val composeLibraries = arrayListOf<String>(
@@ -80,13 +85,13 @@ object Dependencies {
         composeRuntimeLivedata,
         composeUiTooling,
         composeAccompanist,
-        glideCompose
+        glideCompose,
+        composeActivity
     )
     val implementationLibraries = arrayListOf<String>().apply {
         add(stdlib)
         add(core)
         add(appcompat)
-        add(material)
         add(livedata)
         add(livedataCommon)
         add(lifecycleRuntimeKtx)
@@ -104,6 +109,8 @@ object Dependencies {
         add(lottie)
         add(paging)
         add(timber)
+        add(material3)
+        add(material3WindowSize)
         addAll(composeLibraries)
     }
 

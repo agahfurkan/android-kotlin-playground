@@ -8,14 +8,16 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,6 +30,7 @@ import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.databinding.FragmentLoginBinding
 import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
+import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.util.showLongToast
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +38,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListener {
+class LoginFragment : BaseFragment(R.layout.fragment_login) {
     private val binding by viewBinding(FragmentLoginBinding::bind)
     private val viewModel by viewModels<LoginFragmentVM>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +47,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
         val someApiKey = getAPIKey()
         Timber.i(someApiKey)
         binding.composeView.setContent {
-            MaterialTheme {
+            AppTheme {
                 LoginScreen()
             }
         }
@@ -71,16 +74,9 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
         }
     }
 
-    override fun onClick(v: View?) {
-        when (v) {
-            /*binding.loginBtnRegister -> {
-                navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
-            }*/
-        }
-    }
-
     external fun getAPIKey(): String
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     @Preview
     fun LoginScreen() {
@@ -91,21 +87,21 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(all = 16.dp),
+                    .padding(all = 36.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
                     painterResource(id = R.drawable.placeholder_image),
                     "",
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .width(LocalConfiguration.current.screenWidthDp.dp / 2)
                         .aspectRatio(1f)
                 )
                 OutlinedTextField(value = username,
                     label = { Text(text = stringResource(id = R.string.username)) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 32.dp),
+                        .padding(top = 24.dp),
                     onValueChange = {
                         viewModel.username = it
                     })
@@ -113,16 +109,20 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
                     label = { Text(text = stringResource(id = R.string.password)) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp),
+                        .padding(top = 12.dp),
                     onValueChange = {
                         viewModel.password = it
                     })
-                Button(modifier = Modifier.fillMaxWidth().padding(top = 32.dp), onClick = {
+                Button(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 32.dp), onClick = {
                     viewModel.onLoginBtnClicked()
                 }) {
                     Text(stringResource(id = R.string.login))
                 }
-                Button(modifier = Modifier.fillMaxWidth().padding(top = 12.dp), onClick = {
+                Button(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 12.dp), onClick = {
                     navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
                 }) {
                     Text(stringResource(id = R.string.register))
