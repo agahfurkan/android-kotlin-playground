@@ -84,7 +84,6 @@ android {
         androidTestImplementation(composeBom)
         androidTestImplementation(Dependencies.androidTestLibraries)
         testImplementation(Dependencies.testLibraries)
-
     }
 }
 spotless {

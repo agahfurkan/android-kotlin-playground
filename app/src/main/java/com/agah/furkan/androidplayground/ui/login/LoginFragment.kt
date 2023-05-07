@@ -47,9 +47,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         val someApiKey = getAPIKey()
         Timber.i(someApiKey)
         binding.composeView.setContent {
-            AppTheme {
-                LoginScreen()
-            }
+            LoginScreen()
         }
         initObservers()
     }
@@ -78,56 +76,60 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    @Preview
-    fun LoginScreen() {
-        val username = viewModel.username
-        val password = viewModel.password
-
-        Surface {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(all = 36.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painterResource(id = R.drawable.placeholder_image),
-                    "",
+    fun LoginScreen(username: String = viewModel.username, password: String = viewModel.password) {
+        AppTheme {
+            Surface {
+                Column(
                     modifier = Modifier
-                        .width(LocalConfiguration.current.screenWidthDp.dp / 2)
-                        .aspectRatio(1f)
-                )
-                OutlinedTextField(value = username,
-                    label = { Text(text = stringResource(id = R.string.username)) },
-                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(all = 36.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painterResource(id = R.drawable.placeholder_image),
+                        "",
+                        modifier = Modifier
+                            .width(LocalConfiguration.current.screenWidthDp.dp / 2)
+                            .aspectRatio(1f)
+                    )
+                    OutlinedTextField(value = username,
+                        label = { Text(text = stringResource(id = R.string.username)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 24.dp),
+                        onValueChange = {
+                            viewModel.username = it
+                        })
+                    OutlinedTextField(value = password,
+                        label = { Text(text = stringResource(id = R.string.password)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 12.dp),
+                        onValueChange = {
+                            viewModel.password = it
+                        })
+                    Button(modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp),
-                    onValueChange = {
-                        viewModel.username = it
-                    })
-                OutlinedTextField(value = password,
-                    label = { Text(text = stringResource(id = R.string.password)) },
-                    modifier = Modifier
+                        .padding(top = 32.dp), onClick = {
+                        viewModel.onLoginBtnClicked()
+                    }) {
+                        Text(stringResource(id = R.string.login))
+                    }
+                    Button(modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 12.dp),
-                    onValueChange = {
-                        viewModel.password = it
-                    })
-                Button(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 32.dp), onClick = {
-                    viewModel.onLoginBtnClicked()
-                }) {
-                    Text(stringResource(id = R.string.login))
-                }
-                Button(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp), onClick = {
-                    navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
-                }) {
-                    Text(stringResource(id = R.string.register))
+                        .padding(top = 12.dp), onClick = {
+                        navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+                    }) {
+                        Text(stringResource(id = R.string.register))
+                    }
                 }
             }
         }
+    }
+
+    @Preview
+    @Composable
+    fun LoginScreenPreview() {
+        LoginScreen(username = "", password = "")
     }
 }

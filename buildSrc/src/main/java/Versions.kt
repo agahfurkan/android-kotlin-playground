@@ -11,7 +11,7 @@ object Versions {
     const val roomVersion = "2.4.3"
     const val interceptorVersion = "4.7.2"
     const val glideVersion = "4.12.0"
-    const val hiltVersion = "2.38.1"
+    const val hiltVersion = "2.44"
     const val lifecycleVersion = "2.4.0"
     const val jUnitXVersion = "1.1.2"
     const val testRunnerVersion = "1.3.0"
@@ -26,4 +26,5 @@ object Versions {
     const val glideComposeVersion = "1.0.0-alpha.1"
     const val material3Version = "1.0.1"
     const val composeActivityVersion = "1.6.1"
+    const val hiltComposeVersion = "1.1.0-alpha01"
 }

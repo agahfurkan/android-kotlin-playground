@@ -1,5 +1,8 @@
 package com.agah.furkan.androidplayground.ui.register
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,9 +21,16 @@ class RegisterFragmentVM @Inject constructor(private val userRepository: UserRep
     private val _registerUserResponse = MutableLiveData<Result<String>>()
     val registerUserResponse: LiveData<Result<String>> get() = _registerUserResponse
 
-    fun registerNewUser(userRegisterParams: UseCaseParams.UserRegisterParams) {
+    var username by mutableStateOf("")
+    var password by mutableStateOf("")
+    fun registerNewUser() {
         viewModelScope.launch {
-            val response = userRepository.registerNewUser(userRegisterParams)
+            val response = userRepository.registerNewUser(
+                UseCaseParams.UserRegisterParams(
+                    username = username,
+                    password = password
+                )
+            )
             _registerUserResponse.postValue(response)
         }
     }
