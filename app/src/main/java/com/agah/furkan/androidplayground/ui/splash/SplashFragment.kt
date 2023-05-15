@@ -1,40 +1,62 @@
 package com.agah.furkan.androidplayground.ui.splash
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.databinding.FragmentSplashBinding
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.util.viewBinding
+import com.agah.furkan.androidplayground.ui.theme.AppTheme
+import com.agah.furkan.androidplayground.util.launchAndCollectIn
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class SplashFragment : BaseFragment(R.layout.fragment_splash) {
-    private val binding by viewBinding(FragmentSplashBinding::bind)
+class SplashFragment : BaseFragment(null) {
     private val splashFragmentVM by viewModels<SplashFragmentVM>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         initObservers()
+        return ComposeView(requireContext()).apply {
+            setContent {
+                SplashScreen()
+            }
+        }
     }
 
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
-            splashFragmentVM.isTokenValid.collect {
-                val navDirection = when (it) {
-                    true -> {
-                        SplashFragmentDirections.actionSplashFragmentToMainFragment()
-                    }
-                    false -> {
-                        SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-                    }
+        splashFragmentVM.isTokenValid.launchAndCollectIn(viewLifecycleOwner) {
+            val navDirection = when (it) {
+                true -> {
+                    SplashFragmentDirections.actionSplashFragmentToMainFragment()
                 }
-                findNavController().navigate(navDirection)
+
+                false -> {
+                    SplashFragmentDirections.actionSplashFragmentToLoginFragment()
+                }
             }
+            findNavController().navigate(navDirection)
         }
+    }
+}
+
+@Composable
+@Preview
+fun SplashScreen() {
+    val lottieComposition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.splash_lottie))
+    AppTheme {
+        LottieAnimation(composition = lottieComposition)
     }
 }

@@ -6,8 +6,9 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import com.agah.furkan.androidplayground.ui.MainActivity
+import timber.log.Timber
 
-abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
+abstract class BaseFragment(@LayoutRes layoutRes: Int?) : Fragment() {
     open val toolbarType: ToolbarType = ToolbarType.None
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,4 +30,14 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
 
     fun navigateUp() =
         (activity as? BaseActivity)?.navigateUp()
+
+    override fun onDestroy() {
+        Timber.i("onDestroy:$this")
+        super.onDestroy()
+    }
+
+    override fun onDestroyView() {
+        Timber.i("onDestroyView:$this")
+        super.onDestroyView()
+    }
 }

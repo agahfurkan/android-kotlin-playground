@@ -76,6 +76,7 @@ object Dependencies {
         "androidx.compose.material3:material3-window-size-class:${Versions.material3Version}"
     private const val hiltCompose =
         "androidx.hilt:hilt-navigation-compose:${Versions.hiltComposeVersion}"
+    private const val lottieCompose = "com.airbnb.android:lottie-compose:${Versions.lottieVersion}"
 
 
     private val composeLibraries = arrayListOf<String>(
@@ -89,7 +90,8 @@ object Dependencies {
         composeAccompanist,
         glideCompose,
         composeActivity,
-        hiltCompose
+        hiltCompose,
+        lottieCompose
     )
     val implementationLibraries = arrayListOf<String>().apply {
         add(stdlib)

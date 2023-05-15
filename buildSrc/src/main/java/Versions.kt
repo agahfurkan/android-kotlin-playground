@@ -16,7 +16,7 @@ object Versions {
     const val jUnitXVersion = "1.1.2"
     const val testRunnerVersion = "1.3.0"
     const val truthVersion = "1.1.2"
-    const val lottieVersion = "4.2.0"
+    const val lottieVersion = "6.0.0"
     const val pagingVersion = "3.1.0"
     const val detektVersion = "1.19.0"
     const val spotlessVersion = "6.0.5"

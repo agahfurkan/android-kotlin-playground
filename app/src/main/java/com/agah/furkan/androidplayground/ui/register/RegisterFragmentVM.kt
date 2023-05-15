@@ -3,14 +3,14 @@ package com.agah.furkan.androidplayground.ui.register
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,8 +18,8 @@ import javax.inject.Inject
 class RegisterFragmentVM @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
 
-    private val _registerUserResponse = MutableLiveData<Result<String>>()
-    val registerUserResponse: LiveData<Result<String>> get() = _registerUserResponse
+    private val _registerUserResponse = MutableSharedFlow<Result<String>>()
+    val registerUserResponse = _registerUserResponse.asSharedFlow()
 
     var username by mutableStateOf("")
     var password by mutableStateOf("")
@@ -31,7 +31,7 @@ class RegisterFragmentVM @Inject constructor(private val userRepository: UserRep
                     password = password
                 )
             )
-            _registerUserResponse.postValue(response)
+            _registerUserResponse.emit(response)
         }
     }
 }
