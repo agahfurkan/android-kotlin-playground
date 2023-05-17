@@ -84,9 +84,8 @@ fun RegisterScreen() {
         },
         onPasswordChanged = {
             viewModel.password = it
-        }, onRegisterClick = {
-            viewModel.registerNewUser()
-        })
+        }, onRegisterClick = viewModel::registerNewUser
+    )
 }
 
 @Composable

@@ -105,12 +105,9 @@ fun LoginScreen(viewModel: LoginFragmentVM) {
         onPasswordChanged = {
             viewModel.password = it
         },
-        onLoginButtonChanged = {
-            viewModel.onLoginBtnClicked()
-        },
-        onRegisterButtonChanged = {
-            viewModel.onRegisterButtonClicked()
-        })
+        onLoginButtonChanged = viewModel::onLoginBtnClicked,
+        onRegisterButtonChanged = viewModel::onRegisterButtonClicked
+    )
 }
 
 @Composable
