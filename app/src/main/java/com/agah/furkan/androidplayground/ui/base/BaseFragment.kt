@@ -8,7 +8,9 @@ import androidx.navigation.NavDirections
 import com.agah.furkan.androidplayground.ui.MainActivity
 import timber.log.Timber
 
-abstract class BaseFragment(@LayoutRes layoutRes: Int?) : Fragment() {
+abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
+    constructor(@LayoutRes layoutRes: Int?) : this(0)
+
     open val toolbarType: ToolbarType = ToolbarType.None
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
