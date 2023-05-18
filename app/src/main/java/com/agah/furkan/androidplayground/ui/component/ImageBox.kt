@@ -17,11 +17,9 @@ import androidx.compose.ui.unit.dp
 import com.agah.furkan.androidplayground.R
 
 @Composable
-fun ImageBox(height: Int, width: Int) {
+fun ImageBox(modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier
-            .height(height.dp)
-            .width(width.dp)
+        modifier = modifier
             .clip(RoundedCornerShape(16.dp))
             .background(color = Color(0xFFE3E3E3)),
         contentAlignment = Alignment.Center
@@ -36,5 +34,7 @@ fun ImageBox(height: Int, width: Int) {
 @Composable
 @Preview
 fun ImageBoxPreview() {
-    ImageBox(height = 80, width = 128)
+    ImageBox(modifier = Modifier
+        .height(100.dp)
+        .width(100.dp))
 }
