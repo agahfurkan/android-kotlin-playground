@@ -16,6 +16,7 @@ import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.util.launchAndCollectIn
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,6 +58,9 @@ class SplashFragment : BaseFragment(null) {
 fun SplashScreen() {
     val lottieComposition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.splash_lottie))
     AppTheme {
-        LottieAnimation(composition = lottieComposition)
+        LottieAnimation(
+            composition = lottieComposition,
+            iterations = LottieConstants.IterateForever,
+        )
     }
 }
