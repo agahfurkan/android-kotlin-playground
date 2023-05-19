@@ -3,13 +3,9 @@ package com.agah.furkan.androidplayground.ui
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.navigation.NavDirections
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
-import com.agah.furkan.androidplayground.R
+import androidx.appcompat.app.AppCompatActivity
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.databinding.ActivityMainBinding
-import com.agah.furkan.androidplayground.ui.base.BaseActivity
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.util.beginFadeTransition
 import com.agah.furkan.androidplayground.util.hide
@@ -17,12 +13,9 @@ import com.agah.furkan.androidplayground.util.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    override val navController by lazy {
-        findNavController(R.id.nav_host_fragment)
-    }
 
     private val sharedViewModel by viewModels<SharedViewModel>()
 
@@ -36,7 +29,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v) {
             binding.layoutMainToolbar.mainToolbarBtnBack -> {
-                navigateUp()
+                onBackPressedDispatcher.onBackPressed()
             }
         }
     }
@@ -60,6 +53,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 BaseFragment.ToolbarType.ToolbarButton.BACK -> {
                     binding.layoutMainToolbar.mainToolbarBtnBack.show()
                 }
+
                 BaseFragment.ToolbarType.ToolbarButton.DONE -> {
                     binding.layoutMainToolbar.mainToolbarBtnDone.show()
                 }
@@ -72,16 +66,5 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private fun hideToolbar() {
         binding.layoutMainToolbar.layoutMainToolbar.beginFadeTransition(binding.mainActivityLayout)
         binding.layoutMainToolbar.layoutMainToolbar.hide()
-    }
-
-    override fun navigate(navDirections: NavDirections) {
-        val navBuilder = NavOptions.Builder()
-        navBuilder.setEnterAnim(android.R.anim.fade_in).setExitAnim(android.R.anim.fade_out)
-            .setPopEnterAnim(android.R.anim.fade_in).setPopExitAnim(android.R.anim.fade_out)
-        navController.navigate(navDirections, navBuilder.build())
-    }
-
-    override fun navigateUp() {
-        navController.navigateUp()
     }
 }

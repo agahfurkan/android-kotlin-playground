@@ -4,10 +4,12 @@ import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.base.BaseViewModel
 import com.agah.furkan.androidplayground.domain.repository.AnnouncementRepository
 import com.agah.furkan.androidplayground.ui.home.state.GetAnnouncementUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class HomeFragmentVM @Inject constructor(private val announcementRepository: AnnouncementRepository) :
     BaseViewModel() {
     private val _announcementList =

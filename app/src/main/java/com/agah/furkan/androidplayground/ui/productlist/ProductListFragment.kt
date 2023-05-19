@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.databinding.FragmentProductListBinding
@@ -52,7 +53,7 @@ class ProductListFragment :
     }
 
     override fun onItemClicked(item: Product) {
-        navigate(
+        findNavController().navigate(
             ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(
                 productId = item.productId
             )

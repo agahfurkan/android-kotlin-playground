@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.databinding.FragmentCategoryBinding
 import com.agah.furkan.androidplayground.domain.model.result.Category
@@ -56,7 +57,7 @@ class CategoryFragment : BaseFragment(R.layout.fragment_category), ProductCatego
     }
 
     override fun onItemClicked(item: Category) {
-        navigate(
+        findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToProductListFragment(
                 categoryId = item.categoryId
             )

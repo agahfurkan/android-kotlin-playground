@@ -29,9 +29,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
+import com.agah.furkan.androidplayground.ui.main.MainFragmentDirections
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.util.launchAndCollectIn
 import com.agah.furkan.androidplayground.util.showLongToast
@@ -68,7 +70,7 @@ class LoginFragment : BaseFragment(null) {
         viewModel.loginState.launchAndCollectIn(viewLifecycleOwner) { state ->
             when (state) {
                 is LoginUseCase.UiState.Success -> {
-                    navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
                 }
 
                 is LoginUseCase.UiState.Failure -> {
@@ -84,7 +86,7 @@ class LoginFragment : BaseFragment(null) {
         viewModel.uiEvent.launchAndCollectIn(viewLifecycleOwner) { event ->
             when (event) {
                 is LoginScreenEvent.NavigateToRegisterScreen -> {
-                    navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
                 }
             }
         }

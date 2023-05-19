@@ -27,12 +27,6 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
         }
     }
 
-    fun navigate(navDirections: NavDirections) =
-        (activity as? BaseActivity)?.navigate(navDirections)
-
-    fun navigateUp() =
-        (activity as? BaseActivity)?.navigateUp()
-
     override fun onDestroy() {
         Timber.i("onDestroy:$this")
         super.onDestroy()

@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
@@ -61,7 +62,7 @@ class RegisterFragment : BaseFragment(null) {
             when (apiResponse) {
                 is Result.Success -> {
                     showLongToast(apiResponse.data)
-                    navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                    findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                 }
 
                 is Result.Failure -> {
