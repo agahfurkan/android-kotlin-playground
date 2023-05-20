@@ -19,6 +19,8 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -40,6 +42,7 @@ import com.agah.furkan.androidplayground.ui.component.LoadingState
 import com.agah.furkan.androidplayground.ui.main.MainFragmentDirections
 import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
+import com.agah.furkan.androidplayground.ui.theme.seed
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -84,6 +87,10 @@ fun CategoryScreen(
 
     AppTheme {
         Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }, topBar = {
+            TopAppBar(
+                title = { },
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = seed)
+            )
         }) { padding ->
             Column(Modifier.padding(padding)) {
                 when (state) {

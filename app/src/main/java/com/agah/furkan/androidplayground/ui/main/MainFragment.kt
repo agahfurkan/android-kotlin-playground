@@ -11,6 +11,7 @@ import com.agah.furkan.androidplayground.ui.cart.CartFragment
 import com.agah.furkan.androidplayground.ui.home.HomeFragment
 import com.agah.furkan.androidplayground.ui.productcategory.CategoryFragment
 import com.agah.furkan.androidplayground.ui.userprofile.ProfileFragment
+import com.agah.furkan.androidplayground.util.launchAndCollectIn
 import com.agah.furkan.androidplayground.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,18 +41,23 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
                 R.id.main_nav_home_item -> {
                     HomeFragment::class.java
                 }
+
                 R.id.main_nav_categories_item -> {
                     CategoryFragment::class.java
                 }
+
                 R.id.main_nav_cart_item -> {
                     CartFragment::class.java
                 }
+
                 R.id.main_nav_profile_item -> {
                     ProfileFragment::class.java
                 }
+
                 R.id.main_nav_second_module_item -> {
                     TODO()
                 }
+
                 else -> throw IllegalStateException("err")
             }
             binding.mainViewPager.currentItem = viewPagerAdapter.positionOfFragment(fragmentClass)
@@ -65,7 +71,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     }
 
     private fun initObservers() {
-        sharedViewModel.userCart.observe(viewLifecycleOwner) { userCart ->
+        sharedViewModel.userCart.launchAndCollectIn(viewLifecycleOwner) { userCart ->
             val listSize = userCart.size
             val badge = binding.mainBottomNavView.getOrCreateBadge(R.id.main_nav_cart_item)
             if (listSize > 0) {

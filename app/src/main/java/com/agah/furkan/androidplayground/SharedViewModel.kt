@@ -12,6 +12,8 @@ import com.agah.furkan.androidplayground.domain.model.result.Product
 import com.agah.furkan.androidplayground.domain.repository.CartRepository
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,9 +21,8 @@ import javax.inject.Inject
 class SharedViewModel @Inject constructor(private val cartRepository: CartRepository) :
     BaseViewModel() {
 
-    private val _userCart = MutableLiveData<List<Cart>>()
-    val userCart: LiveData<List<Cart>>
-        get() = _userCart
+    private val _userCart = MutableStateFlow<List<Cart>>(listOf())
+    val userCart = _userCart.asStateFlow()
 
     private val _removeProductFromCart =
         MutableLiveData<Result<String>>()
@@ -51,7 +52,7 @@ class SharedViewModel @Inject constructor(private val cartRepository: CartReposi
         viewModelScope.launch {
             val result = cartRepository.fetchCart(userId = SharedPrefUtil.getUserId())
             if (result is Result.Success) {
-                _userCart.postValue(result.data)
+                _userCart.emit(result.data)
             }
         }
     }
