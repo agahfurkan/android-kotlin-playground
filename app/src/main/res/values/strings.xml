@@ -14,4 +14,6 @@
     <string name="click_here_to_register"><u>Click here to register</u></string>
     <string name="announcements">Announcements</string>
     <string name="search">Search</string>
+    <string name="offers">Offers</string>
+    <string name="recently_added_products">Recently Added Products</string>
 </resources>
