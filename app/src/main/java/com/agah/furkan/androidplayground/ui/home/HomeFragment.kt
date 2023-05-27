@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.ui.component.ImageBox
+import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.seed
 
@@ -72,7 +72,7 @@ fun HomeScreen() {
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         items(100) {
-                            ImageBox(
+                            PlaceHolderImage(
                                 Modifier
                                     .height(80.dp)
                                     .width(128.dp)
@@ -92,7 +92,7 @@ fun HomeScreen() {
                                 modifier = Modifier
                                     .width(96.dp)
                             ) {
-                                ImageBox(
+                                PlaceHolderImage(
                                     Modifier
                                         .height(96.dp)
                                         .width(96.dp)
@@ -127,7 +127,7 @@ fun HomeScreen() {
                                 modifier = Modifier
                                     .width(158.dp)
                             ) {
-                                ImageBox(
+                                PlaceHolderImage(
                                     Modifier
                                         .height(84.dp)
                                         .width(158.dp)
@@ -142,7 +142,7 @@ fun HomeScreen() {
                     Spacer(Modifier.height(16.dp))
                 }
                 items(100) {
-                    ImageBox(
+                    PlaceHolderImage(
                         Modifier
                             .fillMaxWidth()
                             .height(101.dp)

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.agah.furkan.androidplayground.R
 
 @Composable
-fun ImageBox(modifier: Modifier = Modifier) {
+fun PlaceHolderImage(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
@@ -34,7 +34,7 @@ fun ImageBox(modifier: Modifier = Modifier) {
 @Composable
 @Preview
 fun ImageBoxPreview() {
-    ImageBox(modifier = Modifier
+    PlaceHolderImage(modifier = Modifier
         .height(100.dp)
         .width(100.dp))
 }

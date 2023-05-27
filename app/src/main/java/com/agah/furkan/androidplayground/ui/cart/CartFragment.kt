@@ -50,7 +50,7 @@ import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.domain.model.result.Cart
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.ui.component.ImageBox
+import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.seed
 import com.agah.furkan.androidplayground.util.discount
@@ -157,7 +157,7 @@ fun CartItem(item: Cart, onCartItemRemoved: (Cart) -> Unit) {
     ) {
         val (img, text1, text2, text3, buttonRow, removeButton, price, newPrice) = createRefs()
 
-        ImageBox(
+        PlaceHolderImage(
             Modifier
                 .constrainAs(img) {
                     top.linkTo(parent.top)
@@ -309,7 +309,7 @@ fun OfferList() {
                             .border(1.dp, Color.Black, RoundedCornerShape(16.dp))
                             .padding(vertical = 6.dp, horizontal = 8.dp)
                     ) {
-                        ImageBox(modifier = Modifier.align(Alignment.Center))
+                        PlaceHolderImage(modifier = Modifier.align(Alignment.Center))
                     }
                 }
             })
@@ -331,7 +331,7 @@ fun RecentlyAddedProductItem(
     ) {
         val (img, text1, addToCardButton, price, newPrice) = createRefs()
 
-        ImageBox(
+        PlaceHolderImage(
             Modifier
                 .constrainAs(img) {
                     top.linkTo(parent.top)

@@ -37,7 +37,7 @@ import androidx.navigation.fragment.findNavController
 import com.agah.furkan.androidplayground.domain.model.result.Category
 import com.agah.furkan.androidplayground.domain.usecase.GetMainProductCategoryUseCase
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.ui.component.ImageBox
+import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.component.LoadingState
 import com.agah.furkan.androidplayground.ui.main.MainFragmentDirections
 import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
@@ -134,7 +134,7 @@ fun CategoryListSuccessState(
                             state.categoryList[it]
                         )
                     }) {
-                    ImageBox()
+                    PlaceHolderImage()
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = "Category $it",
