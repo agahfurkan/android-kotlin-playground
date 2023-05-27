@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -33,11 +36,15 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.findNavController
+import com.agah.furkan.androidplayground.MainGraphDirections
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
+import com.agah.furkan.androidplayground.ui.theme.divider
 import com.agah.furkan.androidplayground.ui.theme.gray
 import com.agah.furkan.androidplayground.ui.theme.seed
+import com.agah.furkan.androidplayground.util.SharedPrefUtil
 
 class ProfileFragment : BaseFragment(null) {
     override fun onCreateView(
@@ -47,7 +54,9 @@ class ProfileFragment : BaseFragment(null) {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ProfileScreen()
+                ProfileScreen {
+                    findNavController().navigate(MainGraphDirections.actionGlobalLoginFragment())
+                }
             }
         }
     }
@@ -58,7 +67,7 @@ class ProfileFragment : BaseFragment(null) {
 }
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(onLogoutButtonClicked: () -> Unit = {}) {
     Column(modifier = Modifier.fillMaxSize()) {
         ConstraintLayout(
             modifier = Modifier
@@ -99,7 +108,8 @@ fun ProfileScreen() {
                     top.linkTo(parent.top)
                 },
                 onClick = {
-
+                    SharedPrefUtil.clearAllData()
+                    onLogoutButtonClicked()
                 }) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_logout),
@@ -113,7 +123,7 @@ fun ProfileScreen() {
                     top.linkTo(parent.top)
                 },
                 onClick = {
-
+                    // TODO: navigate to notification list feature
                 }) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_bell_outline),
@@ -122,24 +132,28 @@ fun ProfileScreen() {
                 )
             }
         }
-        LazyColumn(content = {
+        LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp), content = {
             items(10) {
-                Row {
+                Row(modifier = Modifier.clickable {
+                    // TODO: add dynamic navigation
+                }, verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         modifier = Modifier
+                            .padding(start = 16.dp, top = 16.dp, bottom = 16.dp)
                             .height(24.dp)
-                            .width(24.dp)
-                            .padding(start = 16.dp),
+                            .width(24.dp),
                         painter = painterResource(id = R.drawable.placeholder_image),
                         contentDescription = ""
                     )
                     Text(modifier = Modifier.padding(start = 8.dp), text = "12345")
                     Spacer(modifier = Modifier.weight(1f))
                     Image(
+                        modifier = Modifier.padding(end = 16.dp),
                         painter = rememberVectorPainter(image = ImageVector.vectorResource(id = R.drawable.ic_arrow_right)),
                         contentDescription = ""
                     )
                 }
+                Divider(modifier = Modifier.padding(horizontal = 16.dp), color = divider)
             }
         })
     }
@@ -147,7 +161,7 @@ fun ProfileScreen() {
 }
 
 @Composable
-@Preview()
+@Preview(showBackground = true)
 fun ProfileScreenPreview() {
     ProfileScreen()
 }
