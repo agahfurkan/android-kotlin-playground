@@ -79,7 +79,8 @@ object Dependencies {
     private const val lottieCompose = "com.airbnb.android:lottie-compose:${Versions.lottieVersion}"
     private const val constraintLayoutCompose =
         "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintLayoutComposeVersion}"
-
+    private const val pagingCompose =
+        "androidx.paging:paging-compose:${Versions.pagingComposeVersion}"
 
     private val composeLibraries = arrayListOf<String>(
         composeRuntime,
@@ -94,7 +95,8 @@ object Dependencies {
         composeActivity,
         hiltCompose,
         lottieCompose,
-        constraintLayoutCompose
+        constraintLayoutCompose,
+        pagingCompose
     )
     val implementationLibraries = arrayListOf<String>().apply {
         add(stdlib)
