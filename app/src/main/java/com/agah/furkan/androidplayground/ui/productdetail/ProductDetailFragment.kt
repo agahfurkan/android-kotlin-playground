@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,15 +22,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,6 +51,8 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.fragment.app.viewModels
 import com.agah.furkan.androidplayground.R
+import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
 import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,185 +68,244 @@ class ProductDetailFragment : BaseFragment(null) {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                viewModel.productDetail.observeAsState()
-                ProductDetailScreen()
+                val product = viewModel.productDetail.observeAsState()
+                if (product.value is Result.Success) {
+                    ProductDetailScreen(product = (product.value as Result.Success).data)
+                }
+
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProductDetailScreen() {
+fun ProductDetailScreen(product: ProductDetail) {
     AppTheme {
-        Scaffold { padding ->
+        Surface {
             Box {
-                ConstraintLayout(
-                    Modifier
-                        .padding(padding)
-                        .fillMaxSize()
+                CompositionLocalProvider(
+                    LocalOverscrollConfiguration provides null
                 ) {
-                    val (imgColumn, backButton, favButton, shareButton, brandText, productNameText, reviewRow, actionButtonContainer) = createRefs()
-                    val pageCount = 10
-                    val pagerState = rememberPagerState()
-
-                    Column(modifier = Modifier.constrainAs(imgColumn) {
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }) {
-                        HorizontalPager(
-                            pageCount = pageCount,
-                            state = pagerState
-                        ) { page ->
-                            Image(
-                                painter = painterResource(id = R.drawable.placeholder_image),
-                                contentDescription = "",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(1f)
-                            )
-                        }
-                        LinearProgressIndicator(
-                            modifier = Modifier
-                                .fillMaxWidth(.5f)
-                                .align(Alignment.CenterHorizontally)
-                                .padding(top = 6.dp)
-                                .clip(RoundedCornerShape(16.dp)),
-                            progress = (pagerState.currentPage / pageCount.toFloat()) + .1f
-                        )
-                    }
-                    IconButton(modifier = Modifier.constrainAs(backButton) {
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                    }, onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = rememberVectorPainter(ImageVector.vectorResource(id = R.drawable.ic_left_arrow_outline)),
-                            contentDescription = "",
-                            tint = Color.Black
-                        )
-                    }
-                    IconButton(modifier = Modifier.constrainAs(favButton) {
-                        top.linkTo(parent.top)
-                        end.linkTo(parent.end)
-                    }, onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = rememberVectorPainter(ImageVector.vectorResource(id = R.drawable.ic_favorite)),
-                            contentDescription = "",
-                            tint = Color.Black
-                        )
-                    }
-
-                    IconButton(modifier = Modifier.constrainAs(shareButton) {
-                        top.linkTo(favButton.bottom)
-                        end.linkTo(parent.end)
-                    }, onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = rememberVectorPainter(ImageVector.vectorResource(id = R.drawable.ic_share)),
-                            contentDescription = "",
-                            tint = Color.Black
-                        )
-                    }
-                    Text(modifier = Modifier
-                        .constrainAs(brandText) {
-                            top.linkTo(imgColumn.bottom)
-                            start.linkTo(parent.start)
-                        }
-                        .padding(start = 16.dp), text = "Brand")
-                    Text(modifier = Modifier
-                        .constrainAs(productNameText) {
-                            top.linkTo(brandText.bottom)
-                            start.linkTo(parent.start)
-                        }
-                        .padding(start = 16.dp), text = "ProductName")
-                    Row(modifier = Modifier
-                        .constrainAs(reviewRow) {
-                            top.linkTo(productNameText.bottom)
-                            start.linkTo(parent.start)
-                        }
-                        .padding(start = 16.dp)) {
-                        Text(text = "4,4")
-                        Image(
-                            modifier = Modifier
-                                .height(12.dp)
-                                .width(12.dp)
-                                .align(Alignment.CenterVertically),
-                            painter = rememberVectorPainter(
-                                image = ImageVector.vectorResource(
-                                    id = R.drawable.ic_star_filled
-                                )
-                            ), contentDescription = ""
-                        )
-                        Text("All Reviews(999) >")
-                    }
-                    Column(modifier = Modifier
-                        .constrainAs(actionButtonContainer) {
-                            top.linkTo(reviewRow.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        }
-                        .padding(top = 16.dp)) {
-                        ProductDetailAction("Product Details") {
-
-                        }
-                        ProductDetailAction("Product Description") {
-
-                        }
-                        ProductDetailAction("Reviews") {
-
-                        }
+                    Column(
+                        Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        ProductImage(
+                            product = product,
+                            onBackButtonClicked = {},
+                            onFavButtonClicked = {},
+                            onShareButtonClicked = {})
+                        ProductHeader(product = product, onAllReviewsClicked = {})
+                        ProductActionButtonContainer(
+                            product = product,
+                            onProductDetailClicked = {},
+                            onProductDescriptionClicked = {},
+                            onReviewsClicked = {})
                     }
                 }
-                ConstraintLayout(
+                ProductFooter(onAddToCartClicked = {})
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun ProductImage(
+    product: ProductDetail,
+    onBackButtonClicked: () -> Unit,
+    onFavButtonClicked: () -> Unit,
+    onShareButtonClicked: () -> Unit
+) {
+    ConstraintLayout {
+        val (imgColumn, backButton, favButton, shareButton) = createRefs()
+        val pageCount = 10
+        val pagerState = rememberPagerState()
+
+        Column(modifier = Modifier.constrainAs(imgColumn) {
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+        }) {
+            HorizontalPager(
+                pageCount = pageCount,
+                state = pagerState
+            ) { page ->
+                Image(
+                    painter = painterResource(id = R.drawable.placeholder_image),
+                    contentDescription = "",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                        .border(1.dp, Color.Black)
-                ) {
-                    val (price, discountedPrice, addToCartButton) = createRefs()
-                    Text(
-                        modifier = Modifier
-                            .constrainAs(price) {
-                                start.linkTo(parent.start)
-                                top.linkTo(parent.top)
-                                bottom.linkTo(discountedPrice.top)
-                            }
-                            .padding(start = 8.dp),
-                        fontSize = 14.sp,
-                        maxLines = 1,
-                        textDecoration = TextDecoration.LineThrough,
-                        text = "Price"
-                    )
-                    Text(
-                        modifier = Modifier
-                            .constrainAs(discountedPrice) {
-                                start.linkTo(parent.start)
-                                top.linkTo(price.bottom)
-                                bottom.linkTo(parent.bottom)
-                            }
-                            .padding(start = 8.dp),
-                        fontSize = 16.sp,
-                        maxLines = 1,
-                        text = "Discounted Price"
-                    )
-                    createVerticalChain(price, discountedPrice, chainStyle = ChainStyle.Packed)
-                    Button(
-                        onClick = {
-
-                        },
-                        modifier = Modifier
-                            .constrainAs(addToCartButton) {
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                                end.linkTo(parent.end)
-                            }
-                            .padding(top = 19.dp, bottom = 19.dp, end = 8.dp)
-                    ) {
-                        Text("Add To Cart")
-                    }
-                }
+                        .aspectRatio(1f)
+                )
             }
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxWidth(.5f)
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 6.dp)
+                    .clip(RoundedCornerShape(16.dp)),
+                progress = (pagerState.currentPage / pageCount.toFloat()) + .1f
+            )
+        }
+        IconButton(modifier = Modifier.constrainAs(backButton) {
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+        }, onClick = { onBackButtonClicked() }) {
+            Icon(
+                painter = rememberVectorPainter(ImageVector.vectorResource(id = R.drawable.ic_left_arrow_outline)),
+                contentDescription = "",
+                tint = Color.Black
+            )
+        }
+        IconButton(modifier = Modifier.constrainAs(favButton) {
+            top.linkTo(parent.top)
+            end.linkTo(parent.end)
+        }, onClick = { onFavButtonClicked() }) {
+            Icon(
+                painter = rememberVectorPainter(ImageVector.vectorResource(id = R.drawable.ic_favorite)),
+                contentDescription = "",
+                tint = Color.Black
+            )
+        }
 
+        IconButton(modifier = Modifier.constrainAs(shareButton) {
+            top.linkTo(favButton.bottom)
+            end.linkTo(parent.end)
+        }, onClick = { onShareButtonClicked() }) {
+            Icon(
+                painter = rememberVectorPainter(ImageVector.vectorResource(id = R.drawable.ic_share)),
+                contentDescription = "",
+                tint = Color.Black
+            )
+        }
+    }
+}
+
+@Composable
+fun ProductHeader(product: ProductDetail, onAllReviewsClicked: () -> Unit) {
+    ConstraintLayout {
+        val (brandText, productNameText, reviewRow) = createRefs()
+
+        Text(
+            modifier = Modifier
+                .constrainAs(brandText) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                }
+                .padding(start = 16.dp),
+            text = "Brand"
+        )
+        Text(
+            modifier = Modifier
+                .constrainAs(productNameText) {
+                    top.linkTo(brandText.bottom)
+                    start.linkTo(parent.start)
+                }
+                .padding(start = 16.dp),
+            text = "ProductName"
+        )
+        Row(
+            modifier = Modifier
+                .constrainAs(reviewRow) {
+                    top.linkTo(productNameText.bottom)
+                    start.linkTo(parent.start)
+                }
+                .padding(start = 16.dp)
+                .clickable {
+                    onAllReviewsClicked()
+                }
+        ) {
+            Text(text = "4,4")
+            Image(
+                modifier = Modifier
+                    .height(12.dp)
+                    .width(12.dp)
+                    .padding(start = 2.dp)
+                    .align(Alignment.CenterVertically),
+                painter = rememberVectorPainter(
+                    image = ImageVector.vectorResource(
+                        id = R.drawable.ic_star_filled
+                    )
+                ),
+                contentDescription = ""
+            )
+            Text(modifier = Modifier.padding(start = 2.dp), text = "All Reviews(999) >")
+        }
+    }
+}
+
+@Composable
+fun ProductActionButtonContainer(
+    product: ProductDetail,
+    onProductDetailClicked: () -> Unit,
+    onProductDescriptionClicked: () -> Unit,
+    onReviewsClicked: () -> Unit
+) {
+    Column(modifier = Modifier.padding(top = 16.dp)) {
+        ProductDetailAction(actionText = "ProductDetail Details") {
+            onProductDetailClicked()
+        }
+        ProductDetailAction(actionText = "ProductDetail Description") {
+            onProductDescriptionClicked()
+        }
+        ProductDetailAction(modifier = Modifier.padding(bottom = 128.dp), actionText = "Reviews") {
+            onReviewsClicked()
+        }
+    }
+}
+
+@Composable
+fun BoxScope.ProductFooter(onAddToCartClicked: () -> Unit) {
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.BottomCenter)
+            .border(1.dp, Color.Black)
+    ) {
+        val (price, discountedPrice, addToCartButton) = createRefs()
+
+        Text(
+            modifier = Modifier
+                .constrainAs(price) {
+                    start.linkTo(parent.start)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(discountedPrice.top)
+                }
+                .padding(start = 8.dp),
+            fontSize = 14.sp,
+            maxLines = 1,
+            textDecoration = TextDecoration.LineThrough,
+            text = "Price"
+        )
+        Text(
+            modifier = Modifier
+                .constrainAs(discountedPrice) {
+                    start.linkTo(parent.start)
+                    top.linkTo(price.bottom)
+                    bottom.linkTo(parent.bottom)
+                }
+                .padding(start = 8.dp),
+            fontSize = 16.sp,
+            maxLines = 1,
+            text = "Discounted Price"
+        )
+        createVerticalChain(price, discountedPrice, chainStyle = ChainStyle.Packed)
+        Button(
+            onClick = {
+                onAddToCartClicked()
+            },
+            modifier = Modifier
+                .constrainAs(addToCartButton) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(parent.end)
+                }
+                .padding(top = 19.dp, bottom = 19.dp, end = 8.dp)
+        ) {
+            Text("Add To Cart")
         }
     }
 }
@@ -248,13 +313,27 @@ fun ProductDetailScreen() {
 @Preview
 @Composable
 fun ProductDetailPreview() {
-    ProductDetailScreen()
+    ProductDetailScreen(
+        product = ProductDetail(
+            categoryId = 7571,
+            discount = 8.9,
+            picture = "labores",
+            price = 10.11,
+            productDescription = "adversarium",
+            productId = 9671,
+            productName = "Tamera Palmer"
+        )
+    )
 }
 
 @Composable
-fun ProductDetailAction(modifier:Modifier=Modifier,actionText: String, onButtonClick: () -> Unit) {
+fun ProductDetailAction(
+    modifier: Modifier = Modifier,
+    actionText: String,
+    onButtonClick: () -> Unit
+) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable {
                 onButtonClick()
@@ -285,8 +364,8 @@ fun ProductDetailAction(modifier:Modifier=Modifier,actionText: String, onButtonC
 
 @Composable
 @Preview(showBackground = true)
-fun ProductDetailAction() {
-    ProductDetailAction("Product Details") {
+fun ProductDetailActionPreview() {
+    ProductDetailAction(actionText = "ProductDetail Details") {
 
     }
 }
