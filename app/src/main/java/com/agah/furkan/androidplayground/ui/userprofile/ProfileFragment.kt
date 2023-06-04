@@ -1,9 +1,5 @@
 package com.agah.furkan.androidplayground.ui.userprofile
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -30,44 +26,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.navigation.findNavController
-import com.agah.furkan.androidplayground.MainGraphDirections
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.theme.divider
 import com.agah.furkan.androidplayground.ui.theme.gray
 import com.agah.furkan.androidplayground.ui.theme.seed
 import com.agah.furkan.androidplayground.util.SharedPrefUtil
 
-class ProfileFragment : BaseFragment(null) {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply {
-            setContent {
-                ProfileScreen {
-                    findNavController().navigate(MainGraphDirections.actionGlobalLoginFragment())
-                }
-            }
-        }
-    }
-
-    companion object {
-        fun newInstance() = ProfileFragment()
-    }
-}
-
 @Composable
-fun ProfileScreen(onLogoutButtonClicked: () -> Unit = {}) {
+fun ProfileScreen(onLogoutButtonClicked: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
         ConstraintLayout(
             modifier = Modifier
@@ -163,5 +135,7 @@ fun ProfileScreen(onLogoutButtonClicked: () -> Unit = {}) {
 @Composable
 @Preview(showBackground = true)
 fun ProfileScreenPreview() {
-    ProfileScreen()
+    ProfileScreen {
+
+    }
 }

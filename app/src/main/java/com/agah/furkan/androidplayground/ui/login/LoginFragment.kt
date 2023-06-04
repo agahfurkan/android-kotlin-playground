@@ -1,9 +1,5 @@
 package com.agah.furkan.androidplayground.ui.login
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -19,85 +15,51 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
-import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.ui.main.MainFragmentDirections
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.util.launchAndCollectIn
-import com.agah.furkan.androidplayground.util.showLongToast
-import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
-@AndroidEntryPoint
-class LoginFragment : BaseFragment(null) {
-    private val viewModel by viewModels<LoginFragmentVM>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        System.loadLibrary("api-keys")
-        val someApiKey = getAPIKey()
-        Timber.i(someApiKey)
-        initObservers()
-        return ComposeView(requireContext()).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                LoginScreen(viewModel = viewModel)
-            }
-        }
-    }
-
-    private fun initObservers() {
-        initLoginObserver()
-        initRegisterObserver()
-    }
-
-    private fun initLoginObserver() {
-        viewModel.loginState.launchAndCollectIn(viewLifecycleOwner) { state ->
+@Composable
+fun LoginScreen(
+    viewModel: LoginFragmentVM = hiltViewModel(),
+    onLoginSuccess: () -> Unit,
+    onRegisterClicked: () -> Unit
+) {
+    val lifeCycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(key1 = Unit) {
+        viewModel.loginState.launchAndCollectIn(lifeCycleOwner) { state ->
             when (state) {
                 is LoginUseCase.UiState.Success -> {
-                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
+                    onLoginSuccess()
                 }
 
                 is LoginUseCase.UiState.Failure -> {
-                    showLongToast(state.failureMessage)
+                    //showLongToast(state.failureMessage)
                 }
 
                 LoginUseCase.UiState.Loading -> Timber.i(state.toString())
             }
         }
-    }
-
-    private fun initRegisterObserver() {
-        viewModel.uiEvent.launchAndCollectIn(viewLifecycleOwner) { event ->
+        viewModel.uiEvent.launchAndCollectIn(lifeCycleOwner) { event ->
             when (event) {
                 is LoginScreenEvent.NavigateToRegisterScreen -> {
-                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+                    onRegisterClicked()
                 }
             }
         }
     }
-
-    external fun getAPIKey(): String
-}
-
-
-@Composable
-fun LoginScreen(viewModel: LoginFragmentVM) {
     LoginFormContent(
         username = viewModel.username,
         password = viewModel.password,
