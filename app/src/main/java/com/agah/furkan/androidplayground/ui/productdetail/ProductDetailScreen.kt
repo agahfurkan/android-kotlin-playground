@@ -1,9 +1,5 @@
 package com.agah.furkan.androidplayground.ui.productdetail
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.LocalOverscrollConfiguration
@@ -40,7 +36,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -49,38 +44,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
-import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
-import dagger.hilt.android.AndroidEntryPoint
-
-@AndroidEntryPoint
-class ProductDetailFragment : BaseFragment(null) {
-    private val viewModel by viewModels<ProductDetailFragmentVM>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply {
-            setContent {
-                val product = viewModel.productDetail.observeAsState()
-                if (product.value is Result.Success) {
-                    ProductDetailScreen(product = (product.value as Result.Success).data)
-                }
-
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProductDetailScreen(product: ProductDetail) {
+fun ProductDetailScreen(viewModel: ProductDetailFragmentVM = hiltViewModel()) {
+    val product = viewModel.productDetail.observeAsState()
+    val productResult = product.value
+    if (productResult !is Result.Success) {
+        return
+    }
     AppTheme {
         Surface {
             Box {
@@ -93,13 +70,13 @@ fun ProductDetailScreen(product: ProductDetail) {
                             .verticalScroll(rememberScrollState())
                     ) {
                         ProductImage(
-                            product = product,
+                            product = productResult.data,
                             onBackButtonClicked = {},
                             onFavButtonClicked = {},
                             onShareButtonClicked = {})
-                        ProductHeader(product = product, onAllReviewsClicked = {})
+                        ProductHeader(product = productResult.data, onAllReviewsClicked = {})
                         ProductActionButtonContainer(
-                            product = product,
+                            product = productResult.data,
                             onProductDetailClicked = {},
                             onProductDescriptionClicked = {},
                             onReviewsClicked = {})
@@ -310,21 +287,6 @@ fun BoxScope.ProductFooter(onAddToCartClicked: () -> Unit) {
     }
 }
 
-@Preview
-@Composable
-fun ProductDetailPreview() {
-    ProductDetailScreen(
-        product = ProductDetail(
-            categoryId = 7571,
-            discount = 8.9,
-            picture = "labores",
-            price = 10.11,
-            productDescription = "adversarium",
-            productId = 9671,
-            productName = "Tamera Palmer"
-        )
-    )
-}
 
 @Composable
 fun ProductDetailAction(

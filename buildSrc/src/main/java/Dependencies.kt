@@ -81,6 +81,8 @@ object Dependencies {
         "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintLayoutComposeVersion}"
     private const val pagingCompose =
         "androidx.paging:paging-compose:${Versions.pagingComposeVersion}"
+    private const val composeNavigation =
+        "androidx.navigation:navigation-compose:${Versions.composeNavigationVersion}"
 
     private val composeLibraries = arrayListOf<String>(
         composeRuntime,
@@ -96,7 +98,8 @@ object Dependencies {
         hiltCompose,
         lottieCompose,
         constraintLayoutCompose,
-        pagingCompose
+        pagingCompose,
+        composeNavigation
     )
     val implementationLibraries = arrayListOf<String>().apply {
         add(stdlib)

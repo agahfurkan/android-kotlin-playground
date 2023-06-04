@@ -29,6 +29,10 @@ class SharedViewModel @Inject constructor(private val cartRepository: CartReposi
     val removeProductFromCart: LiveData<Result<String>>
         get() = _removeProductFromCart
 
+    init {
+        getUserCart()
+    }
+
     fun addProductToCart(product: Product) {
         viewModelScope.launch {
             val result = cartRepository.addProductToCart(
@@ -48,7 +52,7 @@ class SharedViewModel @Inject constructor(private val cartRepository: CartReposi
         }
     }
 
-    fun getUserCart() {
+    private fun getUserCart() {
         viewModelScope.launch {
             val result = cartRepository.fetchCart(userId = SharedPrefUtil.getUserId())
             if (result is Result.Success) {

@@ -1,9 +1,5 @@
 package com.agah.furkan.androidplayground.ui.cart
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -44,60 +39,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.fragment.app.activityViewModels
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
-import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.domain.model.result.Cart
-import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.seed
 import com.agah.furkan.androidplayground.util.discount
-import com.agah.furkan.androidplayground.util.showLongToast
-import dagger.hilt.android.AndroidEntryPoint
-
-@AndroidEntryPoint
-class CartFragment : BaseFragment(null) {
-    private val sharedViewModel by activityViewModels<SharedViewModel>()
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply {
-            setContent {
-                val userCart = sharedViewModel.userCart.collectAsState()
-                val cartList = userCart.value
-                if (cartList.isNotEmpty()) {
-                    CartScreen(cartList) { item ->
-                        sharedViewModel.removeProductFromCart(item.productId)
-                    }
-                } else {
-
-                }
-            }
-        }
-    }
-
-    private fun initObservers() {
-        sharedViewModel.removeProductFromCart.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is Result.Success -> showLongToast(result.data)
-                is Result.Failure -> {
-                }
-            }
-        }
-    }
-
-    companion object {
-        fun newInstance() = CartFragment()
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartScreen(cartList: List<Cart>, onCartItemRemoved: (Cart) -> Unit = {}) {
+fun CartScreen(
+    sharedViewModel: SharedViewModel = hiltViewModel()
+) {
+    val cartList = sharedViewModel.userCart.collectAsState()
     AppTheme {
         Scaffold(topBar = {
             TopAppBar(
@@ -109,9 +66,11 @@ fun CartScreen(cartList: List<Cart>, onCartItemRemoved: (Cart) -> Unit = {}) {
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
                 }
-                items(cartList.size) {
-                    val item = cartList[it]
-                    CartItem(item = item, onCartItemRemoved = onCartItemRemoved)
+                items(cartList.value.size) {
+                    val item = cartList.value[it]
+                    CartItem(item = item, onCartItemRemoved = { cart ->
+                        sharedViewModel.removeProductFromCart(cart.productId)
+                    })
                     Spacer(Modifier.height(8.dp))
                 }
                 item {
@@ -398,36 +357,6 @@ fun RecentlyAddedProductItem(
     }
 
 }
-
-@Preview
-@Composable
-fun CartScreenPreview() {
-    CartScreen(
-        cartList = listOf(
-            Cart(
-                cartId = 3755,
-                discount = 8.5,
-                picture = "neglegentur",
-                price = 123.54,
-                productDescription = "in",
-                productId = 9594,
-                productName = "Billie Giles"
-            ),
-            Cart(
-                cartId = 3755,
-                discount = 8.5,
-                picture = "neglegentur",
-                price = 123.54,
-                productDescription = "in",
-                productId = 9594,
-                productName = "Billie Giles"
-            )
-        )
-    ) {
-
-    }
-}
-
 
 @Composable
 @Preview(showBackground = true)

@@ -1,9 +1,5 @@
 package com.agah.furkan.androidplayground.ui.productcategory
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,64 +23,28 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.domain.model.result.Category
 import com.agah.furkan.androidplayground.domain.usecase.GetMainProductCategoryUseCase
-import com.agah.furkan.androidplayground.ui.base.BaseFragment
-import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.component.LoadingState
-import com.agah.furkan.androidplayground.ui.main.MainFragmentDirections
+import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.seed
-import dagger.hilt.android.AndroidEntryPoint
-
-@AndroidEntryPoint
-class CategoryFragment : BaseFragment(null) {
-    private val viewModel by viewModels<MainFragmentVM>(
-        ownerProducer = { requireParentFragment() }
-    )
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply {
-            setContent {
-                val state = viewModel.categoryList.collectAsState()
-                val stateValue = state.value
-                CategoryScreen(stateValue) { category ->
-                    findNavController().navigate(
-                        MainFragmentDirections.actionMainFragmentToProductListFragment(
-                            category.categoryId
-                        )
-                    )
-                }
-            }
-        }
-    }
-
-
-    companion object {
-        fun newInstance() = CategoryFragment()
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryScreen(
-    state: GetMainProductCategoryUseCase.UiState,
+    viewModel: MainFragmentVM = hiltViewModel(),
     onCategoryClicked: (Category) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-
+    val state = viewModel.categoryList.collectAsState()
+    val stateValue = state.value
     AppTheme {
         Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }, topBar = {
             TopAppBar(
@@ -93,15 +53,15 @@ fun CategoryScreen(
             )
         }) { padding ->
             Column(Modifier.padding(padding)) {
-                when (state) {
+                when (stateValue) {
                     is GetMainProductCategoryUseCase.UiState.Success -> {
-                        CategoryListSuccessState(state, onCategoryClicked)
+                        CategoryListSuccessState(stateValue, onCategoryClicked)
                     }
 
                     is GetMainProductCategoryUseCase.UiState.Failure -> {
                         LaunchedEffect(snackbarHostState) {
                             snackbarHostState.showSnackbar(
-                                message = state.failureMessage,
+                                message = stateValue.failureMessage,
                                 duration = SnackbarDuration.Indefinite,
                             )
                         }
@@ -113,6 +73,7 @@ fun CategoryScreen(
                 }
             }
         }
+
     }
 }
 
@@ -170,15 +131,4 @@ fun CategoryListSuccessStatePreview(
 @Preview
 fun LoadingPreview() {
     Loading()
-}
-
-
-@Composable
-@Preview
-fun CategoryScreenPreview() {
-    CategoryScreen(
-        GetMainProductCategoryUseCase.UiState.Loading
-    ) {
-
-    }
 }

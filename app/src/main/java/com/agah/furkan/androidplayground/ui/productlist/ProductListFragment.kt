@@ -1,9 +1,5 @@
 package com.agah.furkan.androidplayground.ui.productlist
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,65 +22,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.domain.model.result.Product
-import com.agah.furkan.androidplayground.ui.base.BaseFragment
 import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.seed
-import dagger.hilt.android.AndroidEntryPoint
-
-@AndroidEntryPoint
-class ProductListFragment : BaseFragment(null) {
-    private val viewModel by viewModels<ProductListFragmentVM>()
-    private val sharedViewModel by activityViewModels<SharedViewModel>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply {
-            setContent {
-                val productList = viewModel.getProducts.collectAsLazyPagingItems()
-
-                ProductListScreen(productList, { product ->
-                    sharedViewModel.addProductToCart(product)
-                }, { product ->
-                    findNavController().navigate(
-                        ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(
-                            productId = product.productId
-                        )
-                    )
-                }, {
-                    findNavController().popBackStack()
-                })
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductListScreen(
-    productList: LazyPagingItems<Product>,
-    addToCartClicked: (Product) -> Unit,
+    viewModel: ProductListFragmentVM = hiltViewModel(),
+    sharedViewModel: SharedViewModel = hiltViewModel(),
     itemClicked: (Product) -> Unit,
     onBackButtonClicked: () -> Unit = {}
 ) {
+    val productList = viewModel.getProducts.collectAsLazyPagingItems()
+
     AppTheme {
         Scaffold(topBar = {
             TopAppBar(
@@ -113,7 +76,7 @@ fun ProductListScreen(
             ) {
                 ProductListContent(
                     productList = productList,
-                    addToCartClicked = addToCartClicked,
+                    addToCartClicked = sharedViewModel::addProductToCart,
                     itemClicked = itemClicked
                 )
             }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavDirections
 import com.agah.furkan.androidplayground.ui.MainActivity
 import timber.log.Timber
 

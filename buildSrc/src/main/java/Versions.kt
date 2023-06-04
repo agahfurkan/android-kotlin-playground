@@ -29,4 +29,5 @@ object Versions {
     const val hiltComposeVersion = "1.1.0-alpha01"
     const val constraintLayoutComposeVersion = "1.0.1"
     const val pagingComposeVersion = "1.0.0-alpha20"
+    const val composeNavigationVersion = "2.5.3"
 }
