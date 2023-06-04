@@ -32,14 +32,14 @@ import com.agah.furkan.androidplayground.domain.model.result.Category
 import com.agah.furkan.androidplayground.domain.usecase.GetMainProductCategoryUseCase
 import com.agah.furkan.androidplayground.ui.component.LoadingState
 import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
-import com.agah.furkan.androidplayground.ui.main.MainFragmentVM
+import com.agah.furkan.androidplayground.ui.main.MainScreenVM
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.seed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryScreen(
-    viewModel: MainFragmentVM = hiltViewModel(),
+    viewModel: MainScreenVM = hiltViewModel(),
     onCategoryClicked: (Category) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }

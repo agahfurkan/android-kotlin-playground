@@ -33,7 +33,7 @@ import timber.log.Timber
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginFragmentVM = hiltViewModel(),
+    viewModel: LoginScreenVM = hiltViewModel(),
     onLoginSuccess: () -> Unit,
     onRegisterClicked: () -> Unit
 ) {

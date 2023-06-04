@@ -7,12 +7,11 @@ import com.agah.furkan.androidplayground.domain.usecase.GetMainProductCategoryUs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainFragmentVM @Inject constructor(private val getMainProductCategoryUseCase: GetMainProductCategoryUseCase) :
+class MainScreenVM @Inject constructor(private val getMainProductCategoryUseCase: GetMainProductCategoryUseCase) :
     ViewModel() {
     private val _categoryList =
         MutableStateFlow<GetMainProductCategoryUseCase.UiState>(GetMainProductCategoryUseCase.UiState.Loading)

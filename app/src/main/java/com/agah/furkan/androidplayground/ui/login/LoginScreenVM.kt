@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginFragmentVM @Inject constructor(private val loginUseCase: LoginUseCase) :
+class LoginScreenVM @Inject constructor(private val loginUseCase: LoginUseCase) :
     ViewModel() {
 
     private val _loginState = MutableSharedFlow<LoginUseCase.UiState>()

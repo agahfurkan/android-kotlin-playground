@@ -12,7 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductListFragmentVM @Inject constructor(
+class ProductListScreenVM @Inject constructor(
     productRepository: ProductRepositoryImpl,
     state: SavedStateHandle
 ) :

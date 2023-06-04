@@ -31,7 +31,7 @@ import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.util.launchAndCollectIn
 
 @Composable
-fun RegisterScreen(viewModel: RegisterFragmentVM = hiltViewModel(), onRegisterSuccess: () -> Unit) {
+fun RegisterScreen(viewModel: RegisterScreenVM = hiltViewModel(), onRegisterSuccess: () -> Unit) {
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(Unit) {
         viewModel.registerUserResponse.launchAndCollectIn(lifecycleOwner) { state ->

@@ -52,7 +52,7 @@ import com.agah.furkan.androidplayground.ui.theme.AppTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProductDetailScreen(viewModel: ProductDetailFragmentVM = hiltViewModel()) {
+fun ProductDetailScreen(viewModel: ProductDetailScreenVM = hiltViewModel()) {
     val product = viewModel.productDetail.observeAsState()
     val productResult = product.value
     if (productResult !is Result.Success) {

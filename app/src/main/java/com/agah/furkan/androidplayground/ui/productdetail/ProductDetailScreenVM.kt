@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductDetailFragmentVM @Inject constructor(
+class ProductDetailScreenVM @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val productRepository: ProductRepositoryImpl
 ) :

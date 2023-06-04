@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterFragmentVM @Inject constructor(private val userRepository: UserRepository) :
+class RegisterScreenVM @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
 
     private val _registerUserResponse = MutableSharedFlow<Result<String>>()

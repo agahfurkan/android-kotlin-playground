@@ -1,17 +1,18 @@
 package com.agah.furkan.androidplayground.ui.main
 
-import androidx.compose.material.BadgedBox
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -30,6 +31,7 @@ import com.agah.furkan.androidplayground.ui.productdetail.ProductDetailScreen
 import com.agah.furkan.androidplayground.ui.productlist.ProductListScreen
 import com.agah.furkan.androidplayground.ui.register.RegisterScreen
 import com.agah.furkan.androidplayground.ui.splash.SplashScreen
+import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,6 +53,7 @@ fun MainScreen() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
@@ -59,45 +62,54 @@ fun BottomNavigationBar(
     val items = BottomNavItem.getBottomNavItems()
     val cart = sharedViewModel.userCart.collectAsState()
 
-    BottomNavigation {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
+    AppTheme {
+        NavigationBar {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
 
-        items.forEach { item ->
-            BottomNavigationItem(
-                icon = {
-                    if (item == BottomNavItem.Cart) {
-                        BadgedBox(badge = { Text(text = cart.value.size.toString()) }) {
+            items.forEach { item ->
+                NavigationBarItem(
+                    icon = {
+                        if (item == BottomNavItem.Cart) {
+                            BadgedBox(badge = {
+                                Badge {
+                                    Text(text = cart.value.size.toString())
+                                }
+                            }) {
+                                Icon(
+                                    painterResource(id = item.icon),
+                                    contentDescription = item.title
+                                )
+                            }
+                        } else {
                             Icon(
-                                painterResource(id = item.icon),
+                                painter = painterResource(id = item.icon),
                                 contentDescription = item.title
                             )
                         }
-                    } else {
-                        Icon(painterResource(id = item.icon), contentDescription = item.title)
-                    }
-                },
-                label = {
-                    Text(
-                        text = item.title,
-                        fontSize = 9.sp
-                    )
-                },
-                alwaysShowLabel = true,
-                selected = currentRoute == item.screen_route,
-                onClick = {
-                    navController.navigate(item.screen_route) {
-                        navController.graph.startDestinationRoute?.let { screen_route ->
-                            popUpTo(screen_route) {
-                                saveState = true
-                            }
+                    },
+                    label = {
+                        if (item != BottomNavItem.SecondModule) {
+                            Text(text = item.title)
                         }
-                        launchSingleTop = true
-                        restoreState = true
+                    },
+                    alwaysShowLabel = item != BottomNavItem.SecondModule,
+                    selected = currentRoute == item.screen_route,
+                    onClick = {
+                        navController.navigate(item.screen_route) {
+                            navController.graph.startDestinationRoute?.let { screen_route ->
+                                popUpTo(screen_route) {
+                                    saveState = true
+                                }
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
-                }
-            )
+                )
+            }
         }
+
     }
 }
 
@@ -174,5 +186,13 @@ fun NavigationGraph(navController: NavHostController) {
                 }
             }
         }
+    }
+}
+
+@Composable
+@Preview
+fun PreviewBottomNavigationBar() {
+    AppTheme {
+        BottomNavigationBar(navController = rememberNavController())
     }
 }

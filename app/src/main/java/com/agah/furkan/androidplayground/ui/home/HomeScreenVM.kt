@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeFragmentVM @Inject constructor(private val announcementRepository: AnnouncementRepository) :
+class HomeScreenVM @Inject constructor(private val announcementRepository: AnnouncementRepository) :
     BaseViewModel() {
     private val _announcementList =
         MutableStateFlow<GetAnnouncementUiState>(GetAnnouncementUiState.Loading)

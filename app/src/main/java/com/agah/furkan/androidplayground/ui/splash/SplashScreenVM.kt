@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashFragmentVM @Inject constructor(private val userRepository: UserRepository) :
+class SplashScreenVM @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
     private val _isTokenValid = MutableSharedFlow<Boolean>()
     val isTokenValid: SharedFlow<Boolean> get() = _isTokenValid

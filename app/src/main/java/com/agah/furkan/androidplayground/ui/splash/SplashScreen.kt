@@ -14,7 +14,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
-fun SplashScreen(viewModel: SplashFragmentVM = hiltViewModel(), isTokenValid: (Boolean) -> Unit) {
+fun SplashScreen(viewModel: SplashScreenVM = hiltViewModel(), isTokenValid: (Boolean) -> Unit) {
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(key1 = Unit) {
         viewModel.isTokenValid.launchAndCollectIn(lifecycleOwner) {

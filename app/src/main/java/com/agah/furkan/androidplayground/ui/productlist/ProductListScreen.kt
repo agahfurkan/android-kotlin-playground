@@ -41,7 +41,7 @@ import com.agah.furkan.androidplayground.ui.theme.seed
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductListScreen(
-    viewModel: ProductListFragmentVM = hiltViewModel(),
+    viewModel: ProductListScreenVM = hiltViewModel(),
     sharedViewModel: SharedViewModel = hiltViewModel(),
     itemClicked: (Product) -> Unit,
     onBackButtonClicked: () -> Unit = {}
