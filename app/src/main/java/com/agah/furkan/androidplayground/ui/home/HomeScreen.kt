@@ -16,10 +16,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.seed
@@ -40,7 +42,7 @@ fun HomeScreen() {
                 .padding(padding)
                 .padding(16.dp), content = {
                 item {
-                    Text(text = "Announcements")
+                    Text(text = stringResource(R.string.announcements))
                     LazyRow(
                         modifier = Modifier.padding(top = 8.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -56,7 +58,7 @@ fun HomeScreen() {
                 }
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text("Exclusive Deals")
+                    Text(stringResource(id = R.string.exclusive_deals))
                     LazyRow(
                         modifier = Modifier.padding(top = 8.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)

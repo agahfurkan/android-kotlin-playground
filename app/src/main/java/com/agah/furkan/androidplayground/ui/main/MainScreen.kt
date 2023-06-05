@@ -1,5 +1,6 @@
 package com.agah.furkan.androidplayground.ui.main
 
+import androidx.activity.ComponentActivity
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -57,7 +59,7 @@ fun MainScreen() {
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
-    sharedViewModel: SharedViewModel = hiltViewModel()
+    sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity)
 ) {
     val items = BottomNavItem.getBottomNavItems()
     val cart = sharedViewModel.userCart.collectAsState()
@@ -70,7 +72,7 @@ fun BottomNavigationBar(
             items.forEach { item ->
                 NavigationBarItem(
                     icon = {
-                        if (item == BottomNavItem.Cart) {
+                        if (item == BottomNavItem.Cart && cart.value.isNotEmpty()) {
                             BadgedBox(badge = {
                                 Badge {
                                     Text(text = cart.value.size.toString())
@@ -154,7 +156,19 @@ fun NavigationGraph(navController: NavHostController) {
             "productDetail/{productId}",
             arguments = listOf(navArgument("productId") { type = NavType.LongType })
         ) { backStackEntry ->
-            ProductDetailScreen()
+            ProductDetailScreen(
+                onBackButtonClicked = {
+                    navController.popBackStack()
+                },
+                onProductDetailClicked = {
+                    // TODO: add navigation
+                },
+                onProductDescriptionClicked = {
+                    // TODO: add navigation
+                },
+                onReviewsClicked = {
+                    // TODO: add navigation
+                })
         }
         composable("login") {
             LoginScreen(onLoginSuccess = {

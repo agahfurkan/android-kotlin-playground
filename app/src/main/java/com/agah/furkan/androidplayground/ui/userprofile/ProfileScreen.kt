@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -73,7 +74,8 @@ fun ProfileScreen(onLogoutButtonClicked: () -> Unit) {
                     start.linkTo(userImgContainer.start)
                     end.linkTo(userImgContainer.end)
                 }
-                .padding(top = 16.dp, bottom = 51.dp), text = "Username")
+                .padding(top = 16.dp, bottom = 51.dp),
+                text = stringResource(id = R.string.username))
             IconButton(
                 modifier = Modifier.constrainAs(logoutButton) {
                     end.linkTo(parent.end)

@@ -1,5 +1,6 @@
 package com.agah.furkan.androidplayground.ui.productdetail
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.LocalOverscrollConfiguration
@@ -36,7 +37,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,13 +49,21 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
+import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProductDetailScreen(viewModel: ProductDetailScreenVM = hiltViewModel()) {
+fun ProductDetailScreen(
+    viewModel: ProductDetailScreenVM = hiltViewModel(),
+    sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
+    onBackButtonClicked: () -> Unit,
+    onProductDetailClicked: () -> Unit,
+    onProductDescriptionClicked: () -> Unit,
+    onReviewsClicked: () -> Unit,
+) {
     val product = viewModel.productDetail.observeAsState()
     val productResult = product.value
     if (productResult !is Result.Success) {
@@ -71,18 +82,32 @@ fun ProductDetailScreen(viewModel: ProductDetailScreenVM = hiltViewModel()) {
                     ) {
                         ProductImage(
                             product = productResult.data,
-                            onBackButtonClicked = {},
-                            onFavButtonClicked = {},
-                            onShareButtonClicked = {})
+                            onBackButtonClicked = {
+                                onBackButtonClicked()
+                            },
+                            onFavButtonClicked = {
+                                // TODO: add to fav
+                            },
+                            onShareButtonClicked = {
+                                // TODO: share
+                            })
                         ProductHeader(product = productResult.data, onAllReviewsClicked = {})
                         ProductActionButtonContainer(
                             product = productResult.data,
-                            onProductDetailClicked = {},
-                            onProductDescriptionClicked = {},
-                            onReviewsClicked = {})
+                            onProductDetailClicked = {
+                                onProductDetailClicked()
+                            },
+                            onProductDescriptionClicked = {
+                                onProductDescriptionClicked()
+                            },
+                            onReviewsClicked = {
+                                onReviewsClicked()
+                            })
                     }
                 }
-                ProductFooter(onAddToCartClicked = {})
+                ProductFooter(product = productResult.data, onAddToCartClicked = {
+                    // sharedViewModel.addProductToCart(it)
+                })
             }
         }
     }
@@ -235,7 +260,10 @@ fun ProductActionButtonContainer(
 }
 
 @Composable
-fun BoxScope.ProductFooter(onAddToCartClicked: () -> Unit) {
+fun BoxScope.ProductFooter(
+    product: ProductDetail,
+    onAddToCartClicked: (product: ProductDetail) -> Unit
+) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
@@ -255,7 +283,7 @@ fun BoxScope.ProductFooter(onAddToCartClicked: () -> Unit) {
             fontSize = 14.sp,
             maxLines = 1,
             textDecoration = TextDecoration.LineThrough,
-            text = "Price"
+            text = product.price.toString()
         )
         Text(
             modifier = Modifier
@@ -267,12 +295,12 @@ fun BoxScope.ProductFooter(onAddToCartClicked: () -> Unit) {
                 .padding(start = 8.dp),
             fontSize = 16.sp,
             maxLines = 1,
-            text = "Discounted Price"
+            text = product.price.times(product.discount).div(100).toString(),
         )
         createVerticalChain(price, discountedPrice, chainStyle = ChainStyle.Packed)
         Button(
             onClick = {
-                onAddToCartClicked()
+                onAddToCartClicked(product)
             },
             modifier = Modifier
                 .constrainAs(addToCartButton) {
@@ -282,7 +310,7 @@ fun BoxScope.ProductFooter(onAddToCartClicked: () -> Unit) {
                 }
                 .padding(top = 19.dp, bottom = 19.dp, end = 8.dp)
         ) {
-            Text("Add To Cart")
+            Text(stringResource(id = R.string.add_to_cart))
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.agah.furkan.androidplayground.ui.cart
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -52,7 +54,7 @@ import com.agah.furkan.androidplayground.util.discount
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartScreen(
-    sharedViewModel: SharedViewModel = hiltViewModel()
+    sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity)
 ) {
     val cartList = sharedViewModel.userCart.collectAsState()
     AppTheme {
@@ -350,7 +352,7 @@ fun RecentlyAddedProductItem(
         ) {
             Text(
                 modifier = Modifier.align(Alignment.Center),
-                text = "Add To Cart",
+                text = stringResource(id = R.string.add_to_cart),
                 fontSize = 10.sp
             )
         }

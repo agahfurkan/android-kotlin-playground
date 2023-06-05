@@ -18,4 +18,6 @@
     <string name="recently_added_products">Recently Added Products</string>
     <string name="products">Products</string>
     <string name="product_detail">Product Detail</string>
+    <string name="exclusive_deals">Exclusive Deals</string>
+    <string name="recently_viewed">Recently Viewed</string>
 </resources>

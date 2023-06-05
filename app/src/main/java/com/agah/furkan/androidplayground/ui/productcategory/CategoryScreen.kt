@@ -98,7 +98,7 @@ fun CategoryListSuccessState(
                     PlaceHolderImage()
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = "Category $it",
+                        text = state.categoryList[it].categoryName,
                         textAlign = TextAlign.Center
                     )
                 }
