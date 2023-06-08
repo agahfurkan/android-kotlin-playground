@@ -25,6 +25,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.agah.furkan.androidplayground.SharedViewModel
+import com.agah.furkan.androidplayground.domain.model.result.Cart
 import com.agah.furkan.androidplayground.ui.cart.CartScreen
 import com.agah.furkan.androidplayground.ui.home.HomeScreen
 import com.agah.furkan.androidplayground.ui.login.LoginScreen
@@ -43,10 +44,13 @@ fun MainScreen() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val showBottomBar = BottomNavItem.getBottomNavItems()
         .firstOrNull { it.screen_route == navBackStackEntry?.destination?.route } != null
+    val sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity)
+    val cart = sharedViewModel.userCart.collectAsState()
+
     Scaffold(
         bottomBar = {
             if (showBottomBar) {
-                BottomNavigationBar(navController = navController)
+                BottomNavigationBar(navController = navController, cart = cart.value)
             }
         }
     ) { padding ->
@@ -59,10 +63,10 @@ fun MainScreen() {
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
-    sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity)
+    cart: List<Cart>
 ) {
     val items = BottomNavItem.getBottomNavItems()
-    val cart = sharedViewModel.userCart.collectAsState()
+
 
     AppTheme {
         NavigationBar {
@@ -72,10 +76,10 @@ fun BottomNavigationBar(
             items.forEach { item ->
                 NavigationBarItem(
                     icon = {
-                        if (item == BottomNavItem.Cart && cart.value.isNotEmpty()) {
+                        if (item == BottomNavItem.Cart && cart.isNotEmpty()) {
                             BadgedBox(badge = {
                                 Badge {
-                                    Text(text = cart.value.size.toString())
+                                    Text(text = cart.size.toString())
                                 }
                             }) {
                                 Icon(
@@ -207,6 +211,18 @@ fun NavigationGraph(navController: NavHostController) {
 @Preview
 fun PreviewBottomNavigationBar() {
     AppTheme {
-        BottomNavigationBar(navController = rememberNavController())
+        BottomNavigationBar(
+            navController = rememberNavController(), listOf(
+                Cart(
+                    cartId = 5686,
+                    discount = 0.1,
+                    picture = "ante",
+                    price = 2.3,
+                    productDescription = "natoque",
+                    productId = 3735,
+                    productName = "Pedro Hayden"
+                )
+            )
+        )
     }
 }
