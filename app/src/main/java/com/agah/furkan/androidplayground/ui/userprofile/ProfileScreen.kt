@@ -20,6 +20,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.core.ui.component.PlaceHolderImage
+import com.agah.furkan.androidplayground.core.ui.component.WarningDialog
 import com.agah.furkan.androidplayground.ui.theme.divider
 import com.agah.furkan.androidplayground.ui.theme.gray
 import com.agah.furkan.androidplayground.ui.theme.seed
@@ -41,6 +44,16 @@ import com.agah.furkan.androidplayground.util.SharedPrefUtil
 
 @Composable
 fun ProfileScreen(onLogoutButtonClicked: () -> Unit) {
+    val showLogoutDialog = remember {
+        mutableStateOf(false)
+    }
+    if (showLogoutDialog.value) {
+        WarningDialog(showLogoutDialog) {
+            SharedPrefUtil.clearAllData()
+            onLogoutButtonClicked()
+        }
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         ConstraintLayout(
             modifier = Modifier
@@ -82,8 +95,7 @@ fun ProfileScreen(onLogoutButtonClicked: () -> Unit) {
                     top.linkTo(parent.top)
                 },
                 onClick = {
-                    SharedPrefUtil.clearAllData()
-                    onLogoutButtonClicked()
+                    showLogoutDialog.value = true
                 }) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_logout),
