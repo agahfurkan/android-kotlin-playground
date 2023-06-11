@@ -63,7 +63,7 @@ fun MainScreen() {
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
-    cart: List<Cart>
+    cart: Map<Long, List<Cart>>
 ) {
     val items = BottomNavItem.getBottomNavItems()
 
@@ -219,15 +219,17 @@ fun NavigationGraph(navController: NavHostController) {
 fun PreviewBottomNavigationBar() {
     AppTheme {
         BottomNavigationBar(
-            navController = rememberNavController(), listOf(
-                Cart(
-                    cartId = 5686,
-                    discount = 0.1,
-                    picture = "ante",
-                    price = 2.3,
-                    productDescription = "natoque",
-                    productId = 3735,
-                    productName = "Pedro Hayden"
+            navController = rememberNavController(), mapOf(
+                3735L to listOf(
+                    Cart(
+                        cartId = 5686,
+                        discount = 0.1,
+                        picture = "ante",
+                        price = 2.3,
+                        productDescription = "natoque",
+                        productId = 3735,
+                        productName = "Pedro Hayden"
+                    )
                 )
             )
         )

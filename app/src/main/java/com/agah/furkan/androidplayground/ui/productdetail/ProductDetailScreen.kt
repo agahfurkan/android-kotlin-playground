@@ -106,7 +106,7 @@ fun ProductDetailScreen(
                     }
                 }
                 ProductFooter(product = productResult.data, onAddToCartClicked = {
-                    // sharedViewModel.addProductToCart(it)
+                    sharedViewModel.addProductToCart(it.productId)
                 })
             }
         }

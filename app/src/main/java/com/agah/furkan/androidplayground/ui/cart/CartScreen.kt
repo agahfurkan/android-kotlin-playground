@@ -42,7 +42,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.domain.model.result.Cart
@@ -69,10 +68,21 @@ fun CartScreen(
                     Spacer(modifier = Modifier.height(16.dp))
                 }
                 items(cartList.value.size) {
-                    val item = cartList.value[it]
-                    CartItem(item = item, onCartItemRemoved = { cart ->
-                        sharedViewModel.removeProductFromCart(cart.productId)
-                    })
+                    val productList = cartList.value.values.toList()[it]
+                    val productItem = productList.first()
+                    CartItem(
+                        item = productItem,
+                        totalSizeOfSameProduct = productList.size,
+                        onCartItemRemoved = { cart ->
+                            sharedViewModel.removeProductFromCart(cart.productId)
+                        },
+                        removeProductFromCartClicked = {
+                            sharedViewModel.removeProductFromCart(productItem.productId)
+                        },
+                        addAdditionalProductClicked = {
+                            sharedViewModel.addProductToCart(productItem.productId.toInt())
+                        }
+                    )
                     Spacer(Modifier.height(8.dp))
                 }
                 item {
@@ -107,7 +117,13 @@ fun CartScreen(
 }
 
 @Composable
-fun CartItem(item: Cart, onCartItemRemoved: (Cart) -> Unit) {
+fun CartItem(
+    item: Cart,
+    totalSizeOfSameProduct: Int,
+    onCartItemRemoved: (Cart) -> Unit,
+    removeProductFromCartClicked: (Cart) -> Unit,
+    addAdditionalProductClicked: (Cart) -> Unit
+) {
     ConstraintLayout(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -177,7 +193,7 @@ fun CartItem(item: Cart, onCartItemRemoved: (Cart) -> Unit) {
                     .height(24.dp)
                     .width(24.dp),
                 onClick = {
-
+                    removeProductFromCartClicked(item)
                 }) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_minus),
@@ -193,7 +209,7 @@ fun CartItem(item: Cart, onCartItemRemoved: (Cart) -> Unit) {
             ) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = "5",
+                    text = totalSizeOfSameProduct.toString(),
                     fontSize = 12.sp,
                     textAlign = TextAlign.Center,
                 )
@@ -203,7 +219,7 @@ fun CartItem(item: Cart, onCartItemRemoved: (Cart) -> Unit) {
                     .height(24.dp)
                     .width(24.dp),
                 onClick = {
-
+                    addAdditionalProductClicked(item)
                 }) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus),
@@ -373,8 +389,8 @@ fun CartItemPreview() {
                 productDescription = "in",
                 productId = 9594,
                 productName = "Billie Giles"
-            )
-        ) {}
+            ), 1, {}, {}, {}
+        )
     }
 }
 

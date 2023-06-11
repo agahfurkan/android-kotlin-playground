@@ -89,7 +89,7 @@ fun ProductListScreen(
 @Composable
 fun ProductListContent(
     productList: LazyPagingItems<Product>,
-    addToCartClicked: (Product) -> Unit,
+    addToCartClicked: (productId: Int) -> Unit,
     itemClicked: (Product) -> Unit
 ) {
     LazyVerticalGrid(
@@ -110,7 +110,7 @@ fun ProductListContent(
 @Composable
 fun ProductListItem(
     product: Product,
-    addToCartClicked: (Product) -> Unit,
+    addToCartClicked: (productId: Int) -> Unit,
     itemClicked: (Product) -> Unit
 ) {
     Column(
@@ -150,7 +150,7 @@ fun ProductListItem(
                 .padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 6.dp)
                 .align(Alignment.CenterHorizontally),
             onClick = {
-                addToCartClicked(product)
+                addToCartClicked(product.productId.toInt())
             }) {
             Text(stringResource(id = R.string.add_to_cart))
         }
