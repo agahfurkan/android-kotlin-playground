@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.component
+package com.agah.furkan.androidplayground.core.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

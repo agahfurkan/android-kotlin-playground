@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.domain.model.result.Category
 import com.agah.furkan.androidplayground.domain.usecase.GetMainProductCategoryUseCase
-import com.agah.furkan.androidplayground.ui.component.LoadingState
-import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
+import com.agah.furkan.androidplayground.core.ui.component.LoadingState
+import com.agah.furkan.androidplayground.core.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.main.MainScreenVM
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.seed

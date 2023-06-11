@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
-import com.agah.furkan.androidplayground.ui.component.SearchTextField
+import com.agah.furkan.androidplayground.core.ui.component.PlaceHolderImage
+import com.agah.furkan.androidplayground.core.ui.component.SearchTextField
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.seed
 

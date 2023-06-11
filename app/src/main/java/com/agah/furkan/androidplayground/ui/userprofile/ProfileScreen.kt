@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
+import com.agah.furkan.androidplayground.core.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.theme.divider
 import com.agah.furkan.androidplayground.ui.theme.gray
 import com.agah.furkan.androidplayground.ui.theme.seed

@@ -45,7 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.domain.model.result.Cart
-import com.agah.furkan.androidplayground.ui.component.PlaceHolderImage
+import com.agah.furkan.androidplayground.core.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.seed
 import com.agah.furkan.androidplayground.util.discount
