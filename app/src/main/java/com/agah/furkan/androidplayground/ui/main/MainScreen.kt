@@ -18,13 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.agah.furkan.androidplayground.SharedViewModel
+import com.agah.furkan.androidplayground.core.ui.Screen
 import com.agah.furkan.androidplayground.domain.model.result.Cart
 import com.agah.furkan.androidplayground.ui.cart.CartScreen
 import com.agah.furkan.androidplayground.ui.home.HomeScreen
@@ -33,6 +32,7 @@ import com.agah.furkan.androidplayground.ui.productcategory.CategoryScreen
 import com.agah.furkan.androidplayground.ui.productdetail.ProductDetailScreen
 import com.agah.furkan.androidplayground.ui.productlist.ProductListScreen
 import com.agah.furkan.androidplayground.ui.register.RegisterScreen
+import com.agah.furkan.androidplayground.ui.search.SearchScreen
 import com.agah.furkan.androidplayground.ui.splash.SplashScreen
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreen
@@ -121,13 +121,15 @@ fun BottomNavigationBar(
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController, startDestination = "splash") {
+    NavHost(navController, startDestination = Screen.Splash.route) {
         composable(BottomNavItem.Home.screen_route) {
-            HomeScreen()
+            HomeScreen {
+                navController.navigate(Screen.Search.route)
+            }
         }
         composable(BottomNavItem.Categories.screen_route) {
             CategoryScreen { category ->
-                navController.navigate("productList/${category.categoryId}")
+                navController.navigate(Screen.ProductList.createRoute(category.categoryId))
             }
         }
         composable(BottomNavItem.Cart.screen_route) {
@@ -135,7 +137,7 @@ fun NavigationGraph(navController: NavHostController) {
         }
         composable(BottomNavItem.Profile.screen_route) {
             ProfileScreen {
-                navController.navigate("login") {
+                navController.navigate(Screen.Login.route) {
                     popUpTo(navController.graph.id) {
                         inclusive = true
                     }
@@ -146,19 +148,19 @@ fun NavigationGraph(navController: NavHostController) {
             // TODO: add navigation
         }
         composable(
-            "productList/{categoryId}",
-            arguments = listOf(navArgument("categoryId") { type = NavType.LongType })
+            Screen.ProductList.route,
+            arguments = Screen.ProductList.getArgs()
         ) { backStackEntry ->
             ProductListScreen(itemClicked = { product ->
-                navController.navigate("productDetail/${product.productId}")
+                navController.navigate(Screen.ProductDetail.createRoute(product.productId))
             }, onBackButtonClicked = {
                 navController.popBackStack()
             })
         }
 
         composable(
-            "productDetail/{productId}",
-            arguments = listOf(navArgument("productId") { type = NavType.LongType })
+            Screen.ProductDetail.route,
+            arguments = Screen.ProductDetail.getArgs()
         ) { backStackEntry ->
             ProductDetailScreen(
                 onBackButtonClicked = {
@@ -174,34 +176,39 @@ fun NavigationGraph(navController: NavHostController) {
                     // TODO: add navigation
                 })
         }
-        composable("login") {
+        composable(Screen.Login.route) {
             LoginScreen(onLoginSuccess = {
-                navController.navigate("Home") {
+                navController.navigate(Screen.Home.route) {
                     popUpTo(navController.graph.id) {
                         inclusive = true
                     }
                 }
             }, onRegisterClicked = {
-                navController.navigate("register")
+                navController.navigate(Screen.Register.route)
             })
         }
-        composable("register") {
+        composable(Screen.Register.route) {
             RegisterScreen {
-                navController.navigate("login")
+                navController.navigate(Screen.Login.route)
             }
         }
-        composable("splash") {
+        composable(Screen.Splash.route) {
             SplashScreen {
-                val router = if (it) {
-                    "Home"
+                val destination = if (it) {
+                    Screen.Home
                 } else {
-                    "login"
+                    Screen.Login
                 }
-                navController.navigate(router) {
+                navController.navigate(destination.route) {
                     popUpTo(navController.graph.id) {
                         inclusive = true
                     }
                 }
+            }
+        }
+        composable(Screen.Search.route) {
+            SearchScreen {
+                navController.popBackStack()
             }
         }
     }
