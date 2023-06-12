@@ -23,4 +23,5 @@ sealed class Screen(var title: String, var route: String) {
 
     object Login : Screen("Login", "login")
     object Register : Screen("Registe", "register")
+    object ProductDetailTabbed : Screen("Product Detail", "product_detail_tabbed")
 }

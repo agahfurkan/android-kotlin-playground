@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,13 +24,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
-import com.agah.furkan.androidplayground.core.ui.component.WarningDialog
 import com.agah.furkan.androidplayground.domain.model.result.Cart
 import com.agah.furkan.androidplayground.ui.cart.CartScreen
 import com.agah.furkan.androidplayground.ui.home.HomeScreen
 import com.agah.furkan.androidplayground.ui.login.LoginScreen
 import com.agah.furkan.androidplayground.ui.productcategory.CategoryScreen
 import com.agah.furkan.androidplayground.ui.productdetail.ProductDetailScreen
+import com.agah.furkan.androidplayground.ui.productdetailtab.ProductTabbedDetailScreen
 import com.agah.furkan.androidplayground.ui.productlist.ProductListScreen
 import com.agah.furkan.androidplayground.ui.register.RegisterScreen
 import com.agah.furkan.androidplayground.ui.search.SearchScreen
@@ -169,13 +168,13 @@ fun NavigationGraph(navController: NavHostController) {
                     navController.popBackStack()
                 },
                 onProductDetailClicked = {
-                    // TODO: add navigation
+                    navController.navigate(Screen.ProductDetailTabbed.route)
                 },
                 onProductDescriptionClicked = {
-                    // TODO: add navigation
+                    navController.navigate(Screen.ProductDetailTabbed.route)
                 },
                 onReviewsClicked = {
-                    // TODO: add navigation
+                    navController.navigate(Screen.ProductDetailTabbed.route)
                 })
         }
         composable(Screen.Login.route) {
@@ -210,6 +209,11 @@ fun NavigationGraph(navController: NavHostController) {
         }
         composable(Screen.Search.route) {
             SearchScreen {
+                navController.popBackStack()
+            }
+        }
+        composable(Screen.ProductDetailTabbed.route) {
+            ProductTabbedDetailScreen {
                 navController.popBackStack()
             }
         }
