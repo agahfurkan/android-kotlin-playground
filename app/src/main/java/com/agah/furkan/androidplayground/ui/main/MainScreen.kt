@@ -168,13 +168,15 @@ fun NavigationGraph(navController: NavHostController) {
                     navController.popBackStack()
                 },
                 onProductDetailClicked = {
-                    navController.navigate(Screen.ProductDetailTabbed.route)
+                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 0))
                 },
                 onProductDescriptionClicked = {
-                    navController.navigate(Screen.ProductDetailTabbed.route)
+                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 1))
                 },
                 onReviewsClicked = {
-                    navController.navigate(Screen.ProductDetailTabbed.route)
+                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
+                }, onAllReviewsClicked = {
+                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
                 })
         }
         composable(Screen.Login.route) {
@@ -212,8 +214,11 @@ fun NavigationGraph(navController: NavHostController) {
                 navController.popBackStack()
             }
         }
-        composable(Screen.ProductDetailTabbed.route) {
-            ProductTabbedDetailScreen {
+        composable(
+            route = Screen.ProductDetailTabbed.route,
+            arguments = Screen.ProductDetailTabbed.getArgs()
+        ) {
+            ProductTabbedDetailScreen(initialPage = it.arguments?.getInt("initialPage") ?: 0) {
                 navController.popBackStack()
             }
         }

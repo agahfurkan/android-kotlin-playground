@@ -2,11 +2,13 @@ package com.agah.furkan.androidplayground.ui.productdetailtab
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +19,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -26,18 +29,27 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
+import com.agah.furkan.androidplayground.core.ui.component.RatingBar
 import com.agah.furkan.androidplayground.data.model.ProductDetail
+import com.agah.furkan.androidplayground.data.model.averageRating
+import com.agah.furkan.androidplayground.data.model.totalReviewsByRating
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
+import com.agah.furkan.androidplayground.ui.theme.darkGray
+import com.agah.furkan.androidplayground.ui.theme.orange
 import com.agah.furkan.androidplayground.ui.theme.seed
 import kotlinx.coroutines.launch
 
@@ -45,9 +57,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun ProductTabbedDetailScreen(
     productTabbedDetailVM: ProductTabbedDetailVM = hiltViewModel(),
+    initialPage: Int = 0,
     onBackButtonClicked: () -> Unit
 ) {
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(initialPage = initialPage)
     val coroutineScope = rememberCoroutineScope()
     val productDetail = productTabbedDetailVM.productDetail.collectAsState().value
     if (productDetail !is ProductDetailState.Success) {
@@ -67,7 +80,7 @@ fun ProductTabbedDetailScreen(
         TabItem(
             title = "Reviews",
             screen = {
-                Text("Reviews")
+                ProductDetailReviewContent(productDetailReviews = productDetail.data.reviews)
             })
     )
 
@@ -168,24 +181,109 @@ fun ProductDetailReviewContent(productDetailReviews: List<ProductDetail.Review>)
     LazyColumn(Modifier.fillMaxSize()) {
         item {
             ProductDetailReviewHeader(productDetailReviews)
+            Spacer(modifier = Modifier.height(32.dp))
         }
         items(productDetailReviews.size) { index ->
             ProductDetailReviewItem(productDetailReviews[index])
+            Spacer(modifier = Modifier.height(12.dp))
         }
     }
 }
 
 @Composable
 fun ProductDetailReviewHeader(productDetailReviews: List<ProductDetail.Review>) {
-    ConstraintLayout(Modifier.fillMaxWidth()) {
-
+    ConstraintLayout(
+        Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, top = 32.dp)
+    ) {
+        val (averageRating, averageRatingBar, ratingsSection) = createRefs()
+        Text(
+            modifier = Modifier.constrainAs(averageRating) {
+                start.linkTo(averageRatingBar.start)
+                end.linkTo(averageRatingBar.end)
+                top.linkTo(ratingsSection.top)
+                bottom.linkTo(averageRatingBar.top)
+            },
+            text = productDetailReviews.averageRating().toString(),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        RatingBar(
+            modifier = Modifier
+                .constrainAs(averageRatingBar) {
+                    start.linkTo(parent.start)
+                    top.linkTo(averageRating.bottom)
+                    bottom.linkTo(ratingsSection.bottom)
+                }
+                .height(16.dp),
+            rating = productDetailReviews.averageRating()
+        )
+        createVerticalChain(averageRating, averageRatingBar, chainStyle = ChainStyle.Packed)
+        Column(
+            modifier = Modifier.constrainAs(ratingsSection) {
+                end.linkTo(parent.end)
+                top.linkTo(parent.top)
+            }, verticalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            productDetailReviews.totalReviewsByRating().forEach {
+                Row {
+                    Text(
+                        text = it.first.toString(),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Spacer(modifier = Modifier.width(7.dp))
+                    RatingBar(
+                        modifier = Modifier.height(16.dp),
+                        rating = it.first.toFloat()
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    LinearProgressIndicator(
+                        modifier = Modifier
+                            .width(100.dp)
+                            .height(4.dp)
+                            .align(Alignment.CenterVertically), progress = it.third,
+                        color = orange
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Text(
+                        text = it.second.toString(),
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Light
+                    )
+                }
+            }
+        }
     }
 }
 
 @Composable
 fun ProductDetailReviewItem(productDetailReview: ProductDetail.Review) {
-    Column {
-
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
+        RatingBar(
+            modifier = Modifier.height(16.dp),
+            rating = productDetailReview.rating.toFloat()
+        )
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                text = productDetailReview.userName,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Light,
+                color = darkGray
+            )
+            Text(
+                text = productDetailReview.date,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Light,
+                color = darkGray
+            )
+        }
+        Text(text = productDetailReview.review, fontSize = 14.sp, fontWeight = FontWeight.Light)
     }
 }
 
@@ -204,6 +302,44 @@ fun ProductDetailSectionItemPreview() {
                     name = "Otis Pierce",
                     value = "fermentum"
                 )
+            )
+        )
+    )
+}
+
+@Composable
+@Preview
+fun ProductDetailReviewContentPreview() {
+    ProductDetailReviewContent(
+        productDetailReviews = listOf(
+            ProductDetail.Review(
+                userName = "Stan Winters",
+                review = "ullamcorper",
+                rating = 1,
+                date = "praesent"
+            ), ProductDetail.Review(
+                userName = "Stan Winters",
+                review = "ullamcorper",
+                rating = 2,
+                date = "praesent"
+            ),
+            ProductDetail.Review(
+                userName = "Stan Winters",
+                review = "ullamcorper",
+                rating = 3,
+                date = "praesent"
+            ),
+            ProductDetail.Review(
+                userName = "Stan Winters",
+                review = "ullamcorper",
+                rating = 4,
+                date = "praesent"
+            ),
+            ProductDetail.Review(
+                userName = "Stan Winters",
+                review = "ullamcorper",
+                rating = 5,
+                date = "praesent"
             )
         )
     )

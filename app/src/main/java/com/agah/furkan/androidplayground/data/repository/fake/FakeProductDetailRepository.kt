@@ -5,6 +5,8 @@ import com.agah.furkan.androidplayground.domain.repository.ProductDetailReposito
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 class FakeProductDetailRepository @Inject constructor() : ProductDetailRepository {
     override fun getProductDetails(): Flow<ProductDetail> {
@@ -74,7 +76,7 @@ fun generateFakeReviewList(): List<ProductDetail.Review> {
             ProductDetail.Review(
                 userName = "Tracie Richmond",
                 review = "accommodare",
-                rating = 0.1f,
+                rating = Random.nextInt(1,6),
                 date = "senectus"
             )
         )

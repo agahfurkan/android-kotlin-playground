@@ -23,5 +23,12 @@ sealed class Screen(var title: String, var route: String) {
 
     object Login : Screen("Login", "login")
     object Register : Screen("Registe", "register")
-    object ProductDetailTabbed : Screen("Product Detail", "product_detail_tabbed")
+    object ProductDetailTabbed :
+        Screen("Product Detail", "product_detail_tabbed/{productId}/{initialPage}") {
+        fun createRoute(productId: Long, initialPage: Int) =
+            "product_detail_tabbed/$productId/$initialPage"
+
+        fun getArgs() = listOf(navArgument("productId") { type = NavType.LongType },
+            navArgument("initialPage") { type = NavType.IntType })
+    }
 }

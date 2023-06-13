@@ -60,9 +60,10 @@ fun ProductDetailScreen(
     viewModel: ProductDetailScreenVM = hiltViewModel(),
     sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     onBackButtonClicked: () -> Unit,
-    onProductDetailClicked: () -> Unit,
-    onProductDescriptionClicked: () -> Unit,
-    onReviewsClicked: () -> Unit,
+    onProductDetailClicked: (productId: Long) -> Unit,
+    onProductDescriptionClicked: (productId: Long) -> Unit,
+    onReviewsClicked: (productId: Long) -> Unit,
+    onAllReviewsClicked: (productId: Long) -> Unit
 ) {
     val product = viewModel.productDetail.observeAsState()
     val productResult = product.value
@@ -91,17 +92,19 @@ fun ProductDetailScreen(
                             onShareButtonClicked = {
                                 // TODO: share
                             })
-                        ProductHeader(product = productResult.data, onAllReviewsClicked = {})
+                        ProductHeader(product = productResult.data, onAllReviewsClicked = {
+                            onAllReviewsClicked(it)
+                        })
                         ProductActionButtonContainer(
                             product = productResult.data,
                             onProductDetailClicked = {
-                                onProductDetailClicked()
+                                onProductDetailClicked(it)
                             },
                             onProductDescriptionClicked = {
-                                onProductDescriptionClicked()
+                                onProductDescriptionClicked(it)
                             },
                             onReviewsClicked = {
-                                onReviewsClicked()
+                                onReviewsClicked(it)
                             })
                     }
                 }
@@ -187,7 +190,7 @@ fun ProductImage(
 }
 
 @Composable
-fun ProductHeader(product: ProductDetail, onAllReviewsClicked: () -> Unit) {
+fun ProductHeader(product: ProductDetail, onAllReviewsClicked: (productId: Long) -> Unit) {
     ConstraintLayout {
         val (brandText, productNameText, reviewRow) = createRefs()
 
@@ -217,7 +220,7 @@ fun ProductHeader(product: ProductDetail, onAllReviewsClicked: () -> Unit) {
                 }
                 .padding(start = 16.dp)
                 .clickable {
-                    onAllReviewsClicked()
+                    onAllReviewsClicked(product.productId.toLong())
                 }
         ) {
             Text(text = "4,4")
@@ -242,19 +245,19 @@ fun ProductHeader(product: ProductDetail, onAllReviewsClicked: () -> Unit) {
 @Composable
 fun ProductActionButtonContainer(
     product: ProductDetail,
-    onProductDetailClicked: () -> Unit,
-    onProductDescriptionClicked: () -> Unit,
-    onReviewsClicked: () -> Unit
+    onProductDetailClicked: (productId: Long) -> Unit,
+    onProductDescriptionClicked: (productId: Long) -> Unit,
+    onReviewsClicked: (productId: Long) -> Unit
 ) {
     Column(modifier = Modifier.padding(top = 16.dp)) {
         ProductDetailAction(actionText = "ProductDetail Details") {
-            onProductDetailClicked()
+            onProductDetailClicked(product.productId.toLong())
         }
         ProductDetailAction(actionText = "ProductDetail Description") {
-            onProductDescriptionClicked()
+            onProductDescriptionClicked(product.productId.toLong())
         }
         ProductDetailAction(modifier = Modifier.padding(bottom = 128.dp), actionText = "Reviews") {
-            onReviewsClicked()
+            onReviewsClicked(product.productId.toLong())
         }
     }
 }
