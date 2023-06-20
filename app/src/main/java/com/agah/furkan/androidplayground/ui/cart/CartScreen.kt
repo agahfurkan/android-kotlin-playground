@@ -48,7 +48,7 @@ import com.agah.furkan.androidplayground.domain.model.result.Cart
 import com.agah.furkan.androidplayground.core.ui.component.PlaceHolderImage
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.seed
-import com.agah.furkan.androidplayground.util.discount
+import com.agah.furkan.androidplayground.util.ext.discount
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

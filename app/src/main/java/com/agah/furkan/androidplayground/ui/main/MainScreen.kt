@@ -37,6 +37,8 @@ import com.agah.furkan.androidplayground.ui.search.SearchScreen
 import com.agah.furkan.androidplayground.ui.splash.SplashScreen
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreen
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,7 +69,6 @@ fun BottomNavigationBar(
     cart: Map<Long, List<Cart>>
 ) {
     val items = BottomNavItem.getBottomNavItems()
-
 
     AppTheme {
         NavigationBar {
@@ -123,20 +124,23 @@ fun BottomNavigationBar(
 @Composable
 fun NavigationGraph(navController: NavHostController) {
     NavHost(navController, startDestination = Screen.Splash.route) {
-        composable(BottomNavItem.Home.screen_route) {
+        composable(Screen.Home.route) {
+            val systemUiController: SystemUiController = rememberSystemUiController()
+            systemUiController.isStatusBarVisible = true
+
             HomeScreen {
                 navController.navigate(Screen.Search.route)
             }
         }
-        composable(BottomNavItem.Categories.screen_route) {
+        composable(Screen.Categories.route) {
             CategoryScreen { category ->
                 navController.navigate(Screen.ProductList.createRoute(category.categoryId))
             }
         }
-        composable(BottomNavItem.Cart.screen_route) {
+        composable(Screen.Cart.route) {
             CartScreen()
         }
-        composable(BottomNavItem.Profile.screen_route) {
+        composable(Screen.Profile.route) {
             ProfileScreen {
                 navController.navigate(Screen.Login.route) {
                     popUpTo(navController.graph.id) {
@@ -145,7 +149,7 @@ fun NavigationGraph(navController: NavHostController) {
                 }
             }
         }
-        composable(BottomNavItem.SecondModule.screen_route) {
+        composable(Screen.SecondModule.route) {
             // TODO: add navigation
         }
         composable(
@@ -196,6 +200,9 @@ fun NavigationGraph(navController: NavHostController) {
             }
         }
         composable(Screen.Splash.route) {
+            val systemUiController: SystemUiController = rememberSystemUiController()
+            systemUiController.isStatusBarVisible = false
+
             SplashScreen {
                 val destination = if (it) {
                     Screen.Home

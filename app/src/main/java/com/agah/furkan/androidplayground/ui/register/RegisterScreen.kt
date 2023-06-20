@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -28,20 +29,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
+import com.agah.furkan.androidplayground.util.ext.showToast
 import com.agah.furkan.androidplayground.util.launchAndCollectIn
 
 @Composable
 fun RegisterScreen(viewModel: RegisterScreenVM = hiltViewModel(), onRegisterSuccess: () -> Unit) {
     val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
+
     LaunchedEffect(Unit) {
         viewModel.registerUserResponse.launchAndCollectIn(lifecycleOwner) { state ->
             when (state) {
                 is Result.Success -> {
-                    onRegisterSuccess
+                    onRegisterSuccess()
                 }
 
                 is Result.Failure -> {
-                    //  showLongToast(apiResponse.error.errorMessage)
+                    context.showToast(state.error.errorMessage)
                 }
             }
         }

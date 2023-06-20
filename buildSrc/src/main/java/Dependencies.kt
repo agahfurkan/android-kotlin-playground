@@ -66,8 +66,10 @@ object Dependencies {
     private const val composeUiTooling = "androidx.compose.ui:ui-tooling"
     private const val composeActivity =
         "androidx.activity:activity-compose:${Versions.composeActivityVersion}"
-    private const val composeAccompanist =
+    private const val composeAccompanistThemeAdapter =
         "com.google.accompanist:accompanist-themeadapter-material:${Versions.accompanistVersion}"
+    private const val composeAccompanistSystemUI =
+        "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanistVersion}"
     private const val glideCompose =
         "com.github.bumptech.glide:compose:${Versions.glideComposeVersion}"
     private const val material3 =
@@ -92,7 +94,8 @@ object Dependencies {
         composeMaterial,
         composeRuntimeLivedata,
         composeUiTooling,
-        composeAccompanist,
+        composeAccompanistThemeAdapter,
+        composeAccompanistSystemUI,
         glideCompose,
         composeActivity,
         hiltCompose,

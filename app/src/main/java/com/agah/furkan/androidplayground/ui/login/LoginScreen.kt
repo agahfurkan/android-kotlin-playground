@@ -12,13 +12,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -28,9 +28,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
+import com.agah.furkan.androidplayground.util.ext.showToast
 import com.agah.furkan.androidplayground.util.launchAndCollectIn
 import timber.log.Timber
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     viewModel: LoginScreenVM = hiltViewModel(),
@@ -38,6 +40,8 @@ fun LoginScreen(
     onRegisterClicked: () -> Unit
 ) {
     val lifeCycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
+
     LaunchedEffect(key1 = Unit) {
         viewModel.loginState.launchAndCollectIn(lifeCycleOwner) { state ->
             when (state) {
@@ -46,7 +50,7 @@ fun LoginScreen(
                 }
 
                 is LoginUseCase.UiState.Failure -> {
-                    //showLongToast(state.failureMessage)
+                    context.showToast(state.failureMessage)
                 }
 
                 LoginUseCase.UiState.Loading -> Timber.i(state.toString())
@@ -72,11 +76,13 @@ fun LoginScreen(
         onLoginButtonChanged = viewModel::onLoginBtnClicked,
         onRegisterButtonChanged = viewModel::onRegisterButtonClicked
     )
+
 }
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun LoginFormContent(
+    modifier: Modifier = Modifier,
     username: String,
     password: String,
     onUsernameChanged: (String) -> Unit,
@@ -84,65 +90,64 @@ fun LoginFormContent(
     onLoginButtonChanged: () -> Unit,
     onRegisterButtonChanged: () -> Unit
 ) {
-    AppTheme {
-        Surface {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(all = 36.dp)
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Image(
-                    painterResource(id = R.drawable.placeholder_image),
-                    "",
-                    modifier = Modifier
-                        .width(LocalConfiguration.current.screenWidthDp.dp / 2)
-                        .aspectRatio(1f)
-                )
-                OutlinedTextField(value = username,
-                    label = { Text(text = stringResource(id = R.string.username)) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 24.dp),
-                    onValueChange = {
-                        onUsernameChanged(it)
-                    })
-                OutlinedTextField(value = password,
-                    label = { Text(text = stringResource(id = R.string.password)) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 12.dp),
-                    onValueChange = {
-                        onPasswordChanged(it)
-                    })
-                Button(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 32.dp), onClick = {
-                    onLoginButtonChanged()
-                }) {
-                    Text(stringResource(id = R.string.login))
-                }
-                Button(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp), onClick = {
-                    onRegisterButtonChanged()
-                }) {
-                    Text(stringResource(id = R.string.register))
-                }
-            }
+    Column(
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .fillMaxSize()
+            .padding(all = 36.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            painterResource(id = R.drawable.placeholder_image),
+            "",
+            modifier = Modifier
+                .width(LocalConfiguration.current.screenWidthDp.dp / 2)
+                .aspectRatio(1f)
+        )
+        OutlinedTextField(value = username,
+            label = { Text(text = stringResource(id = R.string.username)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp),
+            onValueChange = {
+                onUsernameChanged(it)
+            })
+        OutlinedTextField(value = password,
+            label = { Text(text = stringResource(id = R.string.password)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            onValueChange = {
+                onPasswordChanged(it)
+            })
+        Button(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 32.dp), onClick = {
+            onLoginButtonChanged()
+        }) {
+            Text(stringResource(id = R.string.login))
+        }
+        Button(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 12.dp), onClick = {
+            onRegisterButtonChanged()
+        }) {
+            Text(stringResource(id = R.string.register))
         }
     }
+
 }
 
 @Preview
 @Composable
 fun LoginFormContentPreview() {
-    LoginFormContent(
-        username = "Dusty Fox",
-        password = "eleifend",
-        onUsernameChanged = {},
-        onPasswordChanged = {},
-        onLoginButtonChanged = {},
-        onRegisterButtonChanged = {})
+    AppTheme {
+        LoginFormContent(
+            username = "Dusty Fox",
+            password = "eleifend",
+            onUsernameChanged = {},
+            onPasswordChanged = {},
+            onLoginButtonChanged = {},
+            onRegisterButtonChanged = {})
+    }
 }

@@ -34,101 +34,49 @@ fun HomeScreen(onSearchFocused: () -> Unit) {
         Surface {
             Column {
                 SearchContent {
-                    if(it.hasFocus){
+                    if (it.hasFocus) {
                         focusManager.clearFocus()
                         onSearchFocused()
                     }
                 }
                 LazyColumn(modifier = Modifier.padding(16.dp), content = {
                     item {
-                        Text(text = stringResource(R.string.announcements))
-                        LazyRow(
-                            modifier = Modifier.padding(top = 8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            items(100) {
-                                PlaceHolderImage(
-                                    Modifier
-                                        .height(80.dp)
-                                        .width(128.dp)
-                                )
-                            }
-                        }
+                        AnnouncementsContent()
                     }
                     item {
                         Spacer(modifier = Modifier.height(16.dp))
-                        Text(stringResource(id = R.string.exclusive_deals))
-                        LazyRow(
-                            modifier = Modifier.padding(top = 8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            items(100) {
-                                Column(
-                                    modifier = Modifier
-                                        .width(96.dp)
-                                ) {
-                                    PlaceHolderImage(
-                                        Modifier
-                                            .height(96.dp)
-                                            .width(96.dp)
-                                    )
-                                    Spacer(Modifier.height(4.dp))
-                                    Text("$100", fontSize = 10.sp, maxLines = 1)
-                                    Text(
-                                        "$100",
-                                        fontSize = 10.sp,
-                                        maxLines = 1,
-                                        textDecoration = TextDecoration.LineThrough
-                                    )
-                                    Text(
-                                        "Product Name",
-                                        fontSize = 10.sp,
-                                        maxLines = 3,
-                                        lineHeight = 16.sp
-                                    )
-                                }
-                            }
-                        }
+                    }
+                    item {
+                        ExclusiveDealsContent()
                     }
                     item {
                         Spacer(Modifier.height(16.dp))
-                        Text(stringResource(id = R.string.recently_viewed))
-                        LazyRow(
-                            modifier = Modifier.padding(top = 8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            items(100) {
-                                Column(
-                                    modifier = Modifier
-                                        .width(158.dp)
-                                ) {
-                                    PlaceHolderImage(
-                                        Modifier
-                                            .height(84.dp)
-                                            .width(158.dp)
-                                    )
-                                    Spacer(Modifier.height(4.dp))
-                                    Text("Product Name", fontSize = 10.sp, maxLines = 1)
-                                }
-                            }
-                        }
+                    }
+
+                    item {
+                        RecentlyViewedContent()
                     }
                     item {
                         Spacer(Modifier.height(16.dp))
                     }
                     items(100) {
-                        PlaceHolderImage(
-                            Modifier
-                                .fillMaxWidth()
-                                .height(101.dp)
-                        )
-                        Spacer(Modifier.height(8.dp))
+                        BrandBannerItem()
+
                     }
                 })
             }
-
         }
     }
+}
+
+@Composable
+fun BrandBannerItem() {
+    PlaceHolderImage(
+        Modifier
+            .fillMaxWidth()
+            .height(101.dp)
+    )
+    Spacer(Modifier.height(8.dp))
 }
 
 @Composable
@@ -143,6 +91,83 @@ fun SearchContent(onSearchFocused: (focusState: FocusState) -> Unit) {
         SearchTextField(onFocusChanged = {
             onSearchFocused(it)
         }, onValueChange = {})
+    }
+}
+
+@Composable
+fun AnnouncementsContent() {
+    Text(text = stringResource(R.string.announcements))
+    LazyRow(
+        modifier = Modifier.padding(top = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(100) {
+            PlaceHolderImage(
+                Modifier
+                    .height(80.dp)
+                    .width(128.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun ExclusiveDealsContent() {
+    Text(stringResource(id = R.string.exclusive_deals))
+    LazyRow(
+        modifier = Modifier.padding(top = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(100) {
+            Column(
+                modifier = Modifier
+                    .width(96.dp)
+            ) {
+                PlaceHolderImage(
+                    Modifier
+                        .height(96.dp)
+                        .width(96.dp)
+                )
+                Spacer(Modifier.height(4.dp))
+                Text("$100", fontSize = 10.sp, maxLines = 1)
+                Text(
+                    "$100",
+                    fontSize = 10.sp,
+                    maxLines = 1,
+                    textDecoration = TextDecoration.LineThrough
+                )
+                Text(
+                    "Product Name",
+                    fontSize = 10.sp,
+                    maxLines = 3,
+                    lineHeight = 16.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun RecentlyViewedContent() {
+    Text(stringResource(id = R.string.recently_viewed))
+    LazyRow(
+        modifier = Modifier.padding(top = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(100) {
+            Column(
+                modifier = Modifier
+                    .width(158.dp)
+            ) {
+                PlaceHolderImage(
+                    Modifier
+                        .height(84.dp)
+                        .width(158.dp)
+                )
+                Spacer(Modifier.height(4.dp))
+                Text("Product Name", fontSize = 10.sp, maxLines = 1)
+            }
+        }
     }
 }
 

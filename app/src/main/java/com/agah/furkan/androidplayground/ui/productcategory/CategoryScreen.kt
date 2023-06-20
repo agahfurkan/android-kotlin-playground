@@ -45,6 +45,7 @@ fun CategoryScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val state = viewModel.categoryList.collectAsState()
     val stateValue = state.value
+
     AppTheme {
         Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }, topBar = {
             TopAppBar(
