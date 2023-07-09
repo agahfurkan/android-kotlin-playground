@@ -5,7 +5,6 @@ object Dependencies {
     private const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlinVersion}"
     private const val core = "androidx.core:core-ktx:${Versions.ktxVersion}"
     private const val appcompat = "androidx.appcompat:appcompat:${Versions.appCompatVersion}"
-    private const val material = "com.google.android.material:material:${Versions.materialVersion}"
     private const val livedata =
         "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}"
     private const val livedataCommon =
@@ -56,11 +55,59 @@ object Dependencies {
     private const val lottie = "com.airbnb.android:lottie:${Versions.lottieVersion}"
     private const val paging = "androidx.paging:paging-runtime:${Versions.pagingVersion}"
     private const val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
+
+    //compose
+    private const val composeRuntime = "androidx.compose.runtime:runtime"
+    private const val composeUi = "androidx.compose.runtime:runtime"
+    private const val composeFoundation = "androidx.compose.runtime:runtime"
+    private const val composeFoundationLayout = "androidx.compose.runtime:runtime"
+    private const val composeMaterial = "androidx.compose.material:material"
+    private const val composeRuntimeLivedata = "androidx.compose.runtime:runtime-livedata"
+    private const val composeUiTooling = "androidx.compose.ui:ui-tooling"
+    private const val composeActivity =
+        "androidx.activity:activity-compose:${Versions.composeActivityVersion}"
+    private const val composeAccompanistThemeAdapter =
+        "com.google.accompanist:accompanist-themeadapter-material:${Versions.accompanistVersion}"
+    private const val composeAccompanistSystemUI =
+        "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanistVersion}"
+    private const val glideCompose =
+        "com.github.bumptech.glide:compose:${Versions.glideComposeVersion}"
+    private const val material3 =
+        "androidx.compose.material3:material3:${Versions.material3Version}"
+    private const val material3WindowSize =
+        "androidx.compose.material3:material3-window-size-class:${Versions.material3Version}"
+    private const val hiltCompose =
+        "androidx.hilt:hilt-navigation-compose:${Versions.hiltComposeVersion}"
+    private const val lottieCompose = "com.airbnb.android:lottie-compose:${Versions.lottieVersion}"
+    private const val constraintLayoutCompose =
+        "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintLayoutComposeVersion}"
+    private const val pagingCompose =
+        "androidx.paging:paging-compose:${Versions.pagingComposeVersion}"
+    private const val composeNavigation =
+        "androidx.navigation:navigation-compose:${Versions.composeNavigationVersion}"
+
+    private val composeLibraries = arrayListOf<String>(
+        composeRuntime,
+        composeUi,
+        composeFoundation,
+        composeFoundationLayout,
+        composeMaterial,
+        composeRuntimeLivedata,
+        composeUiTooling,
+        composeAccompanistThemeAdapter,
+        composeAccompanistSystemUI,
+        glideCompose,
+        composeActivity,
+        hiltCompose,
+        lottieCompose,
+        constraintLayoutCompose,
+        pagingCompose,
+        composeNavigation
+    )
     val implementationLibraries = arrayListOf<String>().apply {
         add(stdlib)
         add(core)
         add(appcompat)
-        add(material)
         add(livedata)
         add(livedataCommon)
         add(lifecycleRuntimeKtx)
@@ -78,19 +125,25 @@ object Dependencies {
         add(lottie)
         add(paging)
         add(timber)
+        add(material3)
+        add(material3WindowSize)
+        addAll(composeLibraries)
     }
+
     val kaptLibraries = arrayListOf<String>().apply {
         add(moshiCodegen)
         add(hiltCompiler)
         add(roomCompiler)
         add(glideCompiler)
     }
+
     val androidTestLibraries = arrayListOf<String>().apply {
         add(jUnit)
         add(truth)
         add(hiltTesting)
         add(hiltAndroidCompiler)
     }
+
     val testLibraries = arrayListOf<String>().apply {
         add(testRunner)
     }

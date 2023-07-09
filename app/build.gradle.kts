@@ -66,14 +66,22 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
     }
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
     }
     dependencies {
         implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+        val composeBom = platform("androidx.compose:compose-bom:2023.04.01")
+        implementation(composeBom)
         implementation(Dependencies.implementationLibraries)
         kapt(Dependencies.kaptLibraries)
+        androidTestImplementation(composeBom)
         androidTestImplementation(Dependencies.androidTestLibraries)
         testImplementation(Dependencies.testLibraries)
     }
