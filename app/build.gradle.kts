@@ -1,8 +1,3 @@
-import Dependencies.androidTestImplementation
-import Dependencies.implementation
-import Dependencies.kapt
-import Dependencies.testImplementation
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -10,21 +5,21 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("org.jlleitschuh.gradle.ktlint")
     id("dagger.hilt.android.plugin")
-    id("io.gitlab.arturbosch.detekt") version Versions.detektVersion
-    id("com.diffplug.spotless") version Versions.spotlessVersion
-    id("org.jetbrains.dokka") version Versions.dokkaVersion
+    id("io.gitlab.arturbosch.detekt") version "1.19.0"
+    id("com.diffplug.spotless") version "6.0.5"
+    id("org.jetbrains.dokka") version "1.6.10"
 }
 android {
     ndkVersion = "24.0.8215888"
-    compileSdk = AppConfig.compileSdk
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.agah.furkan.androidplayground"
-        minSdk = AppConfig.minSdk
-        targetSdk = AppConfig.targetSdk
-        versionCode = AppConfig.versionCode
-        versionName = AppConfig.versionName
-        testInstrumentationRunner = (AppConfig.testInstrumentationRunner)
+        minSdk = 21
+        targetSdk = 33
+        versionCode = 1
+        versionName = "1.0"
+        testInstrumentationRunner = "com.agah.furkan.androidplayground.CustomTestRunner"
     }
     buildTypes {
         getByName("release") {
@@ -72,18 +67,62 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
+    packagingOptions {
+        resources {
+            excludes += setOf("META-INF/gradle/incremental.annotation.processors")
+        }
+    }
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
     }
+
+    namespace = "com.agah.furkan.androidplayground"
+
     dependencies {
-        implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-        val composeBom = platform("androidx.compose:compose-bom:2023.04.01")
-        implementation(composeBom)
-        implementation(Dependencies.implementationLibraries)
-        kapt(Dependencies.kaptLibraries)
-        androidTestImplementation(composeBom)
-        androidTestImplementation(Dependencies.androidTestLibraries)
-        testImplementation(Dependencies.testLibraries)
+        implementation(platform(libs.androidx.compose.bom))
+        implementation(libs.kotlin.stdlib)
+        implementation(libs.core.ktx)
+        implementation(libs.lifecycle)
+        implementation(libs.lifecycle.common.java8)
+        implementation(libs.lifecycle.livedata)
+        implementation(libs.constraintlayout)
+        implementation(libs.constraintlayout.compose)
+        implementation(libs.retrofit)
+        implementation(libs.retrofit.converter.moshi)
+        implementation(libs.moshi)
+        kapt(libs.moshi.kotlin.codegen)
+        implementation(libs.okhttp3.logging)
+        implementation(libs.hilt.android)
+        kapt(libs.hilt.compiler)
+        implementation(libs.hilt.testing)
+        implementation(libs.hilt.android.compiler)
+        implementation(libs.hilt.navigation.compose)
+        implementation(libs.navigation.fragment.ktx)
+        implementation(libs.navigation.ui.ktx)
+        implementation(libs.navigation.compose)
+        implementation(libs.room.runtime)
+        implementation(libs.room.ktx)
+        kapt(libs.room.compiler)
+        implementation(libs.glide)
+        kapt(libs.glide.compiler)
+        implementation(libs.glide.compose)
+        implementation(libs.junitx)
+        implementation(libs.test.runner)
+        implementation(libs.truth)
+        implementation(libs.lottie)
+        implementation(libs.lottie.compose)
+        implementation(libs.paging)
+        implementation(libs.paging.compose)
+        implementation(libs.timber)
+        implementation(libs.compose.runtime)
+        implementation(libs.compose.material)
+        implementation(libs.material3.compose)
+        implementation(libs.material3.window.size)
+        implementation(libs.compose.runtime.livedata)
+        implementation(libs.compose.ui)
+        implementation(libs.activity.compose)
+        implementation(libs.accompanist.theme.adapter.material)
+        implementation(libs.accompanist.system.ui.controller)
     }
 }
 spotless {

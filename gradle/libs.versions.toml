@@ -1,0 +1,104 @@
+[versions]
+
+appCompatVersion = "1.6.0"
+ktxVersion = "1.9.0"
+kotlinVersion = "1.8.10"
+materialVersion = "1.9.0-alpha01"
+constraintLayoutVersion = "2.1.4"
+retrofitVersion = "2.5.0"
+retrofitMoshiConverterVersion = "2.9.0"
+moshiVersion = "1.14.0"
+navVersion = "2.5.3"
+roomVersion = "2.4.3"
+interceptorVersion = "4.7.2"
+glideVersion = "4.12.0"
+hiltVersion = "2.44"
+lifecycleVersion = "2.4.0"
+jUnitXVersion = "1.1.2"
+testRunnerVersion = "1.3.0"
+truthVersion = "1.1.2"
+lottieVersion = "6.0.0"
+pagingVersion = "3.1.0"
+detektVersion = "1.19.0"
+spotlessVersion = "6.0.5"
+timberVersion = "5.0.1"
+dokkaVersion = "1.6.10"
+accompanistVersion = "0.28.0"
+glideComposeVersion = "1.0.0-alpha.1"
+material3Version = "1.0.1"
+composeActivityVersion = "1.6.1"
+hiltComposeVersion = "1.1.0-alpha01"
+constraintLayoutComposeVersion = "1.0.1"
+pagingComposeVersion = "1.0.0-alpha20"
+composeNavigationVersion = "2.5.3"
+androidxComposeBom = "2023.04.01"
+
+[libraries]
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinVersion" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktxVersion" }
+
+lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleVersion" }
+lifecycle-common-java8 = { group = "androidx.lifecycle", name = "lifecycle-common-java8", version.ref = "lifecycleVersion" }
+lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleVersion" }
+
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayoutVersion" }
+constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayoutComposeVersion" }
+
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
+retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofitMoshiConverterVersion" }
+moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshiVersion" }
+moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshiVersion" }
+
+okhttp3-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "interceptorVersion" }
+
+
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
+hilt-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltVersion" }
+hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltComposeVersion" }
+
+navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navVersion" }
+navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navVersion" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigationVersion" }
+
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glideVersion" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glideVersion" }
+glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glideComposeVersion" }
+
+junitx = { group = "androidx.test.ext", name = "junit", version.ref = "jUnitXVersion" }
+test-runner = { group = "androidx.test", name = "runner", version.ref = "testRunnerVersion" }
+truth = { group = "com.google.truth", name = "truth", version.ref = "truthVersion" }
+
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottieVersion" }
+lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottieVersion" }
+
+paging = { group = "androidx.paging", name = "paging-runtime", version.ref = "pagingVersion" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingComposeVersion" }
+
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timberVersion" }
+
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
+compose-ui = { group = "androidx.compose.ui", name = "ui-tooling" }
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivityVersion" }
+accompanist-theme-adapter-material = { group = "com.google.accompanist", name = "accompanist-themeadapter-material", version.ref = "accompanistVersion" }
+accompanist-system-ui-controller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanistVersion" }
+compose-material = { group = "androidx.compose.material", name = "material" }
+material3-compose = { group = "androidx.compose.material3", name = "material3", version.ref = "material3Version" }
+material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3Version" }
+
+#build-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
+#kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-gradle" }
+#hilt-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+
+#[plugins]
+#android-application = { id = "com.android.application", version.ref = "gradle" }
+#kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-gradle" }
+#hilt = { id = "com.google.dagger", version.ref = "hilt" }
+
