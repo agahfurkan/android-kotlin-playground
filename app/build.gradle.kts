@@ -79,6 +79,11 @@ android {
     namespace = "com.agah.furkan.androidplayground"
 
     dependencies {
+        implementation(project(":core:data"))
+        implementation(project(":core:preferences"))
+        implementation(project(":core:ui"))
+        implementation(project(":data:cart"))
+
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.kotlin.stdlib)
         implementation(libs.core.ktx)
@@ -87,11 +92,9 @@ android {
         implementation(libs.lifecycle.livedata)
         implementation(libs.constraintlayout)
         implementation(libs.constraintlayout.compose)
-        implementation(libs.retrofit)
-        implementation(libs.retrofit.converter.moshi)
-        implementation(libs.moshi)
+
         kapt(libs.moshi.kotlin.codegen)
-        implementation(libs.okhttp3.logging)
+
         implementation(libs.hilt.android)
         kapt(libs.hilt.compiler)
         implementation(libs.hilt.testing)

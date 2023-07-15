@@ -4,10 +4,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.agah.furkan.androidplayground.data.mapper.toDomainModel
 import com.agah.furkan.androidplayground.data.remote.service.ProductService
-import com.agah.furkan.androidplayground.domain.ErrorMapper
-import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.domain.model.result.Product
-import com.agah.furkan.androidplayground.domain.util.suspendCall
+import com.agah.furkan.data.ErrorMapper
 import kotlinx.coroutines.Dispatchers
 import okio.IOException
 import retrofit2.HttpException
@@ -32,7 +30,7 @@ class ProductPagingSource(
         val pageIndex = params.key ?: INITIAL_PAGE_INDEX
         return try {
             val response =
-                suspendCall(
+                com.agah.furkan.data.suspendCall(
                     coroutineContext = Dispatchers.IO,
                     errorMapper = errorMapper,
                     mapOnSuccess = { response -> response.productList.map { it.toDomainModel() } }
@@ -44,13 +42,13 @@ class ProductPagingSource(
                     )
                 }
             val nextPageIndex =
-                if (response is Result.Success && response.data.isNotEmpty()) {
+                if (response is com.agah.furkan.data.model.Result.Success && response.data.isNotEmpty()) {
                     pageIndex + 1
                 } else {
                     null
                 }
             LoadResult.Page(
-                data = (response as Result.Success).data,
+                data = (response as com.agah.furkan.data.model.Result.Success).data,
                 prevKey = if (pageIndex == 0) null else pageIndex - 1,
                 nextKey = nextPageIndex
             )

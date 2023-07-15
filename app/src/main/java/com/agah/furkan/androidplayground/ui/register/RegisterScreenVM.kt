@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.data.model.Result
 import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class RegisterScreenVM @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
 
-    private val _registerUserResponse = MutableSharedFlow<Result<String>>()
+    private val _registerUserResponse = MutableSharedFlow<com.agah.furkan.data.model.Result<String>>()
     val registerUserResponse = _registerUserResponse.asSharedFlow()
 
     var username by mutableStateOf("")

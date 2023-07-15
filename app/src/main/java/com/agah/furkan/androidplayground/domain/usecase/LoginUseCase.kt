@@ -1,25 +1,28 @@
 package com.agah.furkan.androidplayground.domain.usecase
 
-import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.domain.repository.UserRepository
-import com.agah.furkan.androidplayground.util.SharedPrefUtil
+import com.agah.furkan.preferences.UserPreference
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class LoginUseCase @Inject constructor(private val userRepository: UserRepository) :
+class LoginUseCase @Inject constructor(
+    private val userRepository: UserRepository,
+    private val userPreference: UserPreference
+) :
     BaseUseCase<UseCaseParams.UserLoginParams, LoginUseCase.UiState> {
 
     override suspend fun invoke(params: UseCaseParams.UserLoginParams): Flow<UiState> = flow {
         emit(UiState.Loading)
         when (val result = userRepository.loginUser(params)) {
-            is Result.Success -> {
-                SharedPrefUtil.setToken(result.data.token)
-                SharedPrefUtil.setUserid(result.data.userId)
+            is com.agah.furkan.data.model.Result.Success -> {
+                userPreference.setToken(result.data.token)
+                userPreference.setUserId(result.data.userId)
                 emit(UiState.Success)
             }
-            is Result.Failure -> {
+
+            is com.agah.furkan.data.model.Result.Failure -> {
                 emit(UiState.Failure(failureMessage = result.error.errorMessage))
             }
         }

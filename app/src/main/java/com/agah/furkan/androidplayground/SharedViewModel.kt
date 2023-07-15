@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.base.BaseViewModel
-import com.agah.furkan.androidplayground.data.remote.model.request.AddProductToCartBody
-import com.agah.furkan.androidplayground.data.remote.model.request.RemoveProductFromCartBody
-import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.androidplayground.data.mapper.toDomainModel
 import com.agah.furkan.androidplayground.domain.model.result.Cart
-import com.agah.furkan.androidplayground.domain.repository.CartRepository
-import com.agah.furkan.androidplayground.util.SharedPrefUtil
+import com.agah.furkan.cart.CartRepository
+import com.agah.furkan.cart.remote.model.request.AddProductToCartBody
+import com.agah.furkan.cart.remote.model.request.RemoveProductFromCartBody
+import com.agah.furkan.preferences.UserPreference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,15 +17,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedViewModel @Inject constructor(private val cartRepository: CartRepository) :
+class SharedViewModel @Inject constructor(
+    private val cartRepository: CartRepository,
+    private val userPreference: UserPreference
+) :
     BaseViewModel() {
 
     private val _userCart = MutableStateFlow<Map<Long, List<Cart>>>(emptyMap())
     val userCart = _userCart.asStateFlow()
 
     private val _removeProductFromCart =
-        MutableLiveData<Result<String>>()
-    val removeProductFromCart: LiveData<Result<String>>
+        MutableLiveData<com.agah.furkan.data.model.Result<String>>()
+    val removeProductFromCart: LiveData<com.agah.furkan.data.model.Result<String>>
         get() = _removeProductFromCart
 
     init {
@@ -37,10 +40,10 @@ class SharedViewModel @Inject constructor(private val cartRepository: CartReposi
             val result = cartRepository.addProductToCart(
                 AddProductToCartBody(
                     productId = productId.toLong(),
-                    userId = SharedPrefUtil.getUserId()
+                    userId = userPreference.getUserId()
                 )
             )
-            if (result is Result.Success) {
+            if (result is com.agah.furkan.data.model.Result.Success) {
                 getUserCart()
             }
         }
@@ -48,9 +51,9 @@ class SharedViewModel @Inject constructor(private val cartRepository: CartReposi
 
     private fun getUserCart() {
         viewModelScope.launch {
-            val result = cartRepository.fetchCart(userId = SharedPrefUtil.getUserId())
-            if (result is Result.Success) {
-                val groupedResult = result.data.sortedBy { it.productId }.groupBy { it.productId }
+            val result = cartRepository.fetchCart(userId = userPreference.getUserId())
+            if (result is com.agah.furkan.data.model.Result.Success) {
+                val groupedResult = result.data.sortedBy { it.productId }.map { it.toDomainModel() }.groupBy { it.productId }
                 _userCart.emit(groupedResult)
             }
         }
@@ -60,7 +63,7 @@ class SharedViewModel @Inject constructor(private val cartRepository: CartReposi
         viewModelScope.launch {
             val result = cartRepository.removeProductFromCart(
                 RemoveProductFromCartBody(
-                    userId = SharedPrefUtil.getUserId(),
+                    userId = userPreference.getUserId(),
                     productId = productId
                 )
             )

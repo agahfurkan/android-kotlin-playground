@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.data.model.Result
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.util.ext.showToast
 import com.agah.furkan.androidplayground.util.launchAndCollectIn
@@ -40,11 +40,11 @@ fun RegisterScreen(viewModel: RegisterScreenVM = hiltViewModel(), onRegisterSucc
     LaunchedEffect(Unit) {
         viewModel.registerUserResponse.launchAndCollectIn(lifecycleOwner) { state ->
             when (state) {
-                is Result.Success -> {
+                is com.agah.furkan.data.model.Result.Success -> {
                     onRegisterSuccess()
                 }
 
-                is Result.Failure -> {
+                is com.agah.furkan.data.model.Result.Failure -> {
                     context.showToast(state.error.errorMessage)
                 }
             }

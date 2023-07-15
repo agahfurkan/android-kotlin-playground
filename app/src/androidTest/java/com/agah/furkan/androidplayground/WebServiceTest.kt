@@ -6,7 +6,6 @@ import com.agah.furkan.androidplayground.data.remote.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.remote.model.request.UserLoginBody
 import com.agah.furkan.androidplayground.data.remote.model.request.UserRegisterBody
 import com.agah.furkan.androidplayground.data.repository.UserRepository
-import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

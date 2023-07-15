@@ -5,12 +5,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.agah.furkan.androidplayground.data.mapper.toDomainModel
 import com.agah.furkan.androidplayground.data.remote.service.ProductService
-import com.agah.furkan.androidplayground.domain.ErrorMapper
-import com.agah.furkan.androidplayground.domain.Result
 import com.agah.furkan.androidplayground.domain.model.result.Product
 import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
 import com.agah.furkan.androidplayground.domain.repository.ProductRepository
-import com.agah.furkan.androidplayground.domain.util.suspendCall
+import com.agah.furkan.data.ErrorMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -45,8 +43,8 @@ class ProductRepositoryImpl(
         ).flow
     }
 
-    override suspend fun getProductDetail(productId: Long): Result<ProductDetail> =
-        suspendCall(
+    override suspend fun getProductDetail(productId: Long): com.agah.furkan.data.model.Result<ProductDetail> =
+        com.agah.furkan.data.suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
             mapOnSuccess = { response -> response.productDetail.toDomainModel() }

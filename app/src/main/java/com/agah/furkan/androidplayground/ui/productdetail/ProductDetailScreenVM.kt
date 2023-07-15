@@ -6,7 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.data.repository.ProductRepositoryImpl
-import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.data.model.Result
 import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,8 +20,8 @@ class ProductDetailScreenVM @Inject constructor(
     ViewModel() {
     private val productId = savedStateHandle.get<Long>("productId") ?: 0
 
-    private val _productDetail = MutableLiveData<Result<ProductDetail>>()
-    val productDetail: LiveData<Result<ProductDetail>> get() = _productDetail
+    private val _productDetail = MutableLiveData<com.agah.furkan.data.model.Result<ProductDetail>>()
+    val productDetail: LiveData<com.agah.furkan.data.model.Result<ProductDetail>> get() = _productDetail
 
     init {
         getProductDetail(productId)

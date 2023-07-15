@@ -37,6 +37,7 @@ import com.agah.furkan.androidplayground.ui.search.SearchScreen
 import com.agah.furkan.androidplayground.ui.splash.SplashScreen
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreen
+import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreenViewModel
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -141,7 +142,10 @@ fun NavigationGraph(navController: NavHostController) {
             CartScreen()
         }
         composable(Screen.Profile.route) {
+            val viewModel = hiltViewModel<ProfileScreenViewModel>()
+
             ProfileScreen {
+                viewModel.logout()
                 navController.navigate(Screen.Login.route) {
                     popUpTo(navController.graph.id) {
                         inclusive = true

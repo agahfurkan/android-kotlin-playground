@@ -3,7 +3,6 @@ package com.agah.furkan.androidplayground.data.mapper
 import com.agah.furkan.androidplayground.data.remote.model.request.UserLoginBody
 import com.agah.furkan.androidplayground.data.remote.model.request.UserRegisterBody
 import com.agah.furkan.androidplayground.data.remote.model.request.ValidateTokenBody
-import com.agah.furkan.androidplayground.data.remote.model.response.CartResponse
 import com.agah.furkan.androidplayground.data.remote.model.response.CategoryResponse
 import com.agah.furkan.androidplayground.data.remote.model.response.ProductDetailResponse
 import com.agah.furkan.androidplayground.data.remote.model.response.ProductResponse
@@ -14,6 +13,7 @@ import com.agah.furkan.androidplayground.domain.model.result.Category
 import com.agah.furkan.androidplayground.domain.model.result.LoginResult
 import com.agah.furkan.androidplayground.domain.model.result.Product
 import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
+import com.agah.furkan.cart.remote.model.response.CartResponse
 
 fun CartResponse.Cart.toDomainModel(): Cart {
     return Cart(

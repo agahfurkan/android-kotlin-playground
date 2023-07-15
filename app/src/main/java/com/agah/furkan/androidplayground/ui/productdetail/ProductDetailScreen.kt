@@ -50,7 +50,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
-import com.agah.furkan.androidplayground.domain.Result
+import com.agah.furkan.data.model.Result
 import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 
@@ -67,7 +67,7 @@ fun ProductDetailScreen(
 ) {
     val product = viewModel.productDetail.observeAsState()
     val productResult = product.value
-    if (productResult !is Result.Success) {
+    if (productResult !is com.agah.furkan.data.model.Result.Success) {
         return
     }
     AppTheme {

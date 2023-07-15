@@ -40,7 +40,6 @@ import com.agah.furkan.androidplayground.core.ui.component.WarningDialog
 import com.agah.furkan.androidplayground.ui.theme.divider
 import com.agah.furkan.androidplayground.ui.theme.gray
 import com.agah.furkan.androidplayground.ui.theme.seed
-import com.agah.furkan.androidplayground.util.SharedPrefUtil
 
 @Composable
 fun ProfileScreen(onLogoutButtonClicked: () -> Unit) {
@@ -49,7 +48,7 @@ fun ProfileScreen(onLogoutButtonClicked: () -> Unit) {
     }
     if (showLogoutDialog.value) {
         WarningDialog(showLogoutDialog) {
-            SharedPrefUtil.clearAllData()
+
             onLogoutButtonClicked()
         }
     }
