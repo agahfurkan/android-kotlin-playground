@@ -30,7 +30,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,7 +50,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
-import com.agah.furkan.data.model.Result
 import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 
@@ -65,11 +64,11 @@ fun ProductDetailScreen(
     onReviewsClicked: (productId: Long) -> Unit,
     onAllReviewsClicked: (productId: Long) -> Unit
 ) {
-    val product = viewModel.productDetail.observeAsState()
-    val productResult = product.value
-    if (productResult !is com.agah.furkan.data.model.Result.Success) {
-        return
-    }
+    // TODO: refactor
+    val productResult = viewModel.productDetail.collectAsState()
+    val productState = productResult.value as? ProductDetailUiState.Success ?: return
+
+
     AppTheme {
         Surface {
             Box {
@@ -82,7 +81,7 @@ fun ProductDetailScreen(
                             .verticalScroll(rememberScrollState())
                     ) {
                         ProductImage(
-                            product = productResult.data,
+                            product = productState.productDetail,
                             onBackButtonClicked = {
                                 onBackButtonClicked()
                             },
@@ -92,11 +91,11 @@ fun ProductDetailScreen(
                             onShareButtonClicked = {
                                 // TODO: share
                             })
-                        ProductHeader(product = productResult.data, onAllReviewsClicked = {
+                        ProductHeader(product = productState.productDetail, onAllReviewsClicked = {
                             onAllReviewsClicked(it)
                         })
                         ProductActionButtonContainer(
-                            product = productResult.data,
+                            product = productState.productDetail,
                             onProductDetailClicked = {
                                 onProductDetailClicked(it)
                             },
@@ -108,7 +107,7 @@ fun ProductDetailScreen(
                             })
                     }
                 }
-                ProductFooter(product = productResult.data, onAddToCartClicked = {
+                ProductFooter(product = productState.productDetail, onAddToCartClicked = {
                     sharedViewModel.addProductToCart(it.productId)
                 })
             }

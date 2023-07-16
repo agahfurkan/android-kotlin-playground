@@ -3,10 +3,8 @@ package com.agah.furkan.androidplayground.data.repository
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.agah.furkan.androidplayground.data.mapper.toDomainModel
-import com.agah.furkan.androidplayground.data.remote.service.ProductService
 import com.agah.furkan.androidplayground.domain.model.result.Product
-import com.agah.furkan.data.ErrorMapper
-import kotlinx.coroutines.Dispatchers
+import com.agah.furkan.product.ProductRepository
 import okio.IOException
 import retrofit2.HttpException
 
@@ -14,9 +12,8 @@ const val PRODUCT_PAGE_SIZE = 50
 const val INITIAL_PAGE_INDEX = 0
 
 class ProductPagingSource(
-    private val productService: ProductService,
-    private val categoryId: Long,
-    private val errorMapper: ErrorMapper
+    private val productRepository: ProductRepository,
+    private val categoryId: Long
 ) : PagingSource<Int, Product>() {
 
     override fun getRefreshKey(state: PagingState<Int, Product>): Int? {
@@ -29,26 +26,20 @@ class ProductPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         val pageIndex = params.key ?: INITIAL_PAGE_INDEX
         return try {
-            val response =
-                com.agah.furkan.data.suspendCall(
-                    coroutineContext = Dispatchers.IO,
-                    errorMapper = errorMapper,
-                    mapOnSuccess = { response -> response.productList.map { it.toDomainModel() } }
-                ) {
-                    productService.getProductList(
-                        categoryId = categoryId,
-                        pageIndex = pageIndex,
-                        pageLength = PRODUCT_PAGE_SIZE
-                    )
-                }
+            val response = productRepository.getProductList(
+                categoryId = categoryId,
+                pageIndex = pageIndex,
+                pageLength = PRODUCT_PAGE_SIZE
+            )
+
             val nextPageIndex =
-                if (response is com.agah.furkan.data.model.Result.Success && response.data.isNotEmpty()) {
+                if (response is com.agah.furkan.data.model.Result.Success && response.data.productList.isNotEmpty()) {
                     pageIndex + 1
                 } else {
                     null
                 }
             LoadResult.Page(
-                data = (response as com.agah.furkan.data.model.Result.Success).data,
+                data = (response as com.agah.furkan.data.model.Result.Success).data.productList.map { it.toDomainModel() },
                 prevKey = if (pageIndex == 0) null else pageIndex - 1,
                 nextKey = nextPageIndex
             )

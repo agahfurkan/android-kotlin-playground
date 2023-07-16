@@ -1,27 +1,28 @@
 package com.agah.furkan.androidplayground.ui.productdetail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.data.repository.ProductRepositoryImpl
+import com.agah.furkan.androidplayground.data.mapper.toDomainModel
 import com.agah.furkan.data.model.Result
-import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
+import com.agah.furkan.product.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailScreenVM @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val productRepository: ProductRepositoryImpl
+    private val productRepository: ProductRepository
 ) :
     ViewModel() {
     private val productId = savedStateHandle.get<Long>("productId") ?: 0
 
-    private val _productDetail = MutableLiveData<com.agah.furkan.data.model.Result<ProductDetail>>()
-    val productDetail: LiveData<com.agah.furkan.data.model.Result<ProductDetail>> get() = _productDetail
+    private val _productDetail =
+        MutableStateFlow<ProductDetailUiState>(ProductDetailUiState.Loading)
+    val productDetail = _productDetail.asStateFlow()
 
     init {
         getProductDetail(productId)
@@ -30,7 +31,17 @@ class ProductDetailScreenVM @Inject constructor(
     fun getProductDetail(productId: Long) {
         viewModelScope.launch {
             val result = productRepository.getProductDetail(productId)
-            _productDetail.postValue(result)
+
+            val state = when (result) {
+                is Result.Success -> {
+                    ProductDetailUiState.Success(result.data.productDetail.toDomainModel())
+                }
+
+                is Result.Failure -> {
+                    ProductDetailUiState.Error(result.error.errorMessage)
+                }
+            }
+            _productDetail.emit(state)
         }
     }
 }

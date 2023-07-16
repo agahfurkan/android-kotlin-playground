@@ -4,13 +4,12 @@ import android.app.Application
 import androidx.room.Room
 import com.agah.furkan.androidplayground.data.local.AppDatabase
 import com.agah.furkan.androidplayground.data.local.dao.DummyDao
-import com.agah.furkan.androidplayground.data.remote.service.CategoryService
-import com.agah.furkan.androidplayground.data.remote.service.ProductService
+import com.agah.furkan.androidplayground.domain.usecase.ProductListPagingSource
+import com.agah.furkan.product.ProductRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
@@ -18,13 +17,9 @@ import javax.inject.Singleton
 object AppModule {
     @Singleton
     @Provides
-    fun provideCategoryService(retrofit: Retrofit): CategoryService =
-        retrofit.create(CategoryService::class.java)
-
-    @Singleton
-    @Provides
-    fun provideProductService(retrofit: Retrofit): ProductService =
-        retrofit.create(ProductService::class.java)
+    fun provideProductListPagingSource(productRepository: ProductRepository): ProductListPagingSource {
+        return ProductListPagingSource(productRepository)
+    }
 
     @Singleton
     @Provides

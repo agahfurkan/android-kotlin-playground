@@ -1,9 +1,9 @@
 package com.agah.furkan.androidplayground.domain.usecase
 
-import com.agah.furkan.data.model.Result
+import com.agah.furkan.androidplayground.data.mapper.toDomainModel
 import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.domain.model.result.Category
-import com.agah.furkan.androidplayground.domain.repository.CategoryRepository
+import com.agah.furkan.category.CategoryRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -14,8 +14,9 @@ class GetMainProductCategoryUseCase @Inject constructor(private val categoryRepo
         emit(UiState.Loading)
         when (val result = categoryRepository.fetchMainProductCategories()) {
             is com.agah.furkan.data.model.Result.Success -> {
-                emit(UiState.Success(categoryList = result.data))
+                emit(UiState.Success(categoryList = result.data.map { it.toDomainModel() }))
             }
+
             is com.agah.furkan.data.model.Result.Failure -> {
                 emit(UiState.Failure(failureMessage = result.error.errorMessage))
             }

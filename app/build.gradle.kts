@@ -84,6 +84,8 @@ android {
         implementation(project(":core:ui"))
         implementation(project(":data:cart"))
         implementation(project(":data:user"))
+        implementation(project(":data:category"))
+        implementation(project(":data:product"))
 
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.kotlin.stdlib)

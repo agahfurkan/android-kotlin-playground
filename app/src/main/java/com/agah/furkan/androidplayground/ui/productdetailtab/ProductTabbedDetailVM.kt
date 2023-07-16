@@ -3,7 +3,7 @@ package com.agah.furkan.androidplayground.ui.productdetailtab
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.base.BaseViewModel
-import com.agah.furkan.androidplayground.domain.repository.ProductDetailRepository
+import com.agah.furkan.product.ProductDetailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductTabbedDetailVM @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val productDetailRepository: ProductDetailRepository
+    private val productDetailRepository: com.agah.furkan.product.ProductDetailRepository
 ) :
     BaseViewModel() {
     private val productId = savedStateHandle.get<Long>("productId") ?: 0

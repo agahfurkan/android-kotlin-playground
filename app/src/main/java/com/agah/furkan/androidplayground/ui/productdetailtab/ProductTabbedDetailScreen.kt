@@ -44,9 +44,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.core.ui.component.RatingBar
-import com.agah.furkan.androidplayground.data.model.ProductDetail
-import com.agah.furkan.androidplayground.data.model.averageRating
-import com.agah.furkan.androidplayground.data.model.totalReviewsByRating
+import com.agah.furkan.product.ProductDetail
+import com.agah.furkan.product.averageRating
+import com.agah.furkan.product.totalReviewsByRating
 import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.theme.darkGray
 import com.agah.furkan.androidplayground.ui.theme.orange
