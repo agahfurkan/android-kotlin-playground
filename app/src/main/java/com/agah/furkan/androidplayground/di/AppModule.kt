@@ -6,7 +6,6 @@ import com.agah.furkan.androidplayground.data.local.AppDatabase
 import com.agah.furkan.androidplayground.data.local.dao.DummyDao
 import com.agah.furkan.androidplayground.data.remote.service.CategoryService
 import com.agah.furkan.androidplayground.data.remote.service.ProductService
-import com.agah.furkan.androidplayground.data.remote.service.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,11 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-    @Singleton
-    @Provides
-    fun provideUserService(retrofit: Retrofit): UserService =
-        retrofit.create(UserService::class.java)
-
     @Singleton
     @Provides
     fun provideCategoryService(retrofit: Retrofit): CategoryService =

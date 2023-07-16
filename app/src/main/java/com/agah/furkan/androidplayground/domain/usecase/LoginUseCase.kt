@@ -1,8 +1,9 @@
 package com.agah.furkan.androidplayground.domain.usecase
 
+import com.agah.furkan.androidplayground.data.mapper.toRequestModel
 import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
-import com.agah.furkan.androidplayground.domain.repository.UserRepository
 import com.agah.furkan.preferences.UserPreference
+import com.agah.furkan.user.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -15,10 +16,10 @@ class LoginUseCase @Inject constructor(
 
     override suspend fun invoke(params: UseCaseParams.UserLoginParams): Flow<UiState> = flow {
         emit(UiState.Loading)
-        when (val result = userRepository.loginUser(params)) {
+        when (val result = userRepository.loginUser(params.toRequestModel())) {
             is com.agah.furkan.data.model.Result.Success -> {
-                userPreference.setToken(result.data.token)
-                userPreference.setUserId(result.data.userId)
+                userPreference.setToken(result.data.token!!)
+                userPreference.setUserId(result.data.userId!!)
                 emit(UiState.Success)
             }
 

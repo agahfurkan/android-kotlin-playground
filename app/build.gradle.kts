@@ -83,6 +83,7 @@ android {
         implementation(project(":core:preferences"))
         implementation(project(":core:ui"))
         implementation(project(":data:cart"))
+        implementation(project(":data:user"))
 
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.kotlin.stdlib)

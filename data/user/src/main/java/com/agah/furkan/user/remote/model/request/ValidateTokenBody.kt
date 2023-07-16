@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.data.remote.model.request
+package com.agah.furkan.user.remote.model.request
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

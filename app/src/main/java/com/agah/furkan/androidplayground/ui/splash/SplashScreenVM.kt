@@ -2,9 +2,9 @@ package com.agah.furkan.androidplayground.ui.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
-import com.agah.furkan.androidplayground.domain.repository.UserRepository
 import com.agah.furkan.preferences.UserPreference
+import com.agah.furkan.user.UserRepository
+import com.agah.furkan.user.remote.model.request.ValidateTokenBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -34,7 +34,7 @@ class SplashScreenVM @Inject constructor(
                 async {
                     if (userPreference.getToken() != null) {
                         val result = userRepository.validateToken(
-                            UseCaseParams.ValidateTokenParams(
+                            ValidateTokenBody(
                                 token = userPreference.getToken().toString()
                             )
                         )
