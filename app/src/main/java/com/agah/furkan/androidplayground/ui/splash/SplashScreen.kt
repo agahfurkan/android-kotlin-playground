@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.ui.theme.AppTheme
+import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.util.launchAndCollectIn
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec

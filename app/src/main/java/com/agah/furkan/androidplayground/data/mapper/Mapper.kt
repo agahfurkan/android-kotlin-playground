@@ -1,11 +1,11 @@
 package com.agah.furkan.androidplayground.data.mapper
 
 import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
-import com.agah.furkan.androidplayground.domain.model.result.Cart
 import com.agah.furkan.androidplayground.domain.model.result.Category
 import com.agah.furkan.androidplayground.domain.model.result.LoginResult
 import com.agah.furkan.androidplayground.domain.model.result.Product
 import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
+import com.agah.furkan.cart.Cart
 import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.category.remote.model.response.CategoryResponse
 import com.agah.furkan.product.remote.model.response.ProductDetailResponse

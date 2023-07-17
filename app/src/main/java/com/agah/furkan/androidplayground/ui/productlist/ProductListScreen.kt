@@ -36,9 +36,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.domain.model.result.Product
-import com.agah.furkan.androidplayground.core.ui.component.PlaceHolderImage
-import com.agah.furkan.androidplayground.ui.theme.AppTheme
-import com.agah.furkan.androidplayground.ui.theme.seed
+import com.agah.furkan.ui.component.PlaceHolderImage
+import com.agah.furkan.ui.theme.AppTheme
+import com.agah.furkan.ui.theme.seed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

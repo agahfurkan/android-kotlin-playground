@@ -51,7 +51,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
-import com.agah.furkan.androidplayground.ui.theme.AppTheme
+import com.agah.furkan.ui.theme.AppTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

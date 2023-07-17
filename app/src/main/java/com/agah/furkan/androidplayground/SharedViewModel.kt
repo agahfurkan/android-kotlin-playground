@@ -2,10 +2,10 @@ package com.agah.furkan.androidplayground
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.base.BaseViewModel
 import com.agah.furkan.androidplayground.data.mapper.toDomainModel
-import com.agah.furkan.androidplayground.domain.model.result.Cart
+import com.agah.furkan.cart.Cart
 import com.agah.furkan.cart.CartRepository
 import com.agah.furkan.cart.remote.model.request.AddProductToCartBody
 import com.agah.furkan.cart.remote.model.request.RemoveProductFromCartBody
@@ -20,8 +20,7 @@ import javax.inject.Inject
 class SharedViewModel @Inject constructor(
     private val cartRepository: CartRepository,
     private val userPreference: UserPreference
-) :
-    BaseViewModel() {
+) : ViewModel() {
 
     private val _userCart = MutableStateFlow<Map<Long, List<Cart>>>(emptyMap())
     val userCart = _userCart.asStateFlow()
@@ -53,7 +52,8 @@ class SharedViewModel @Inject constructor(
         viewModelScope.launch {
             val result = cartRepository.fetchCart(userId = userPreference.getUserId())
             if (result is com.agah.furkan.data.model.Result.Success) {
-                val groupedResult = result.data.sortedBy { it.productId }.map { it.toDomainModel() }.groupBy { it.productId }
+                val groupedResult = result.data.sortedBy { it.productId }.map { it.toDomainModel() }
+                    .groupBy { it.productId }
                 _userCart.emit(groupedResult)
             }
         }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="offers">Offers</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="recently_added_products">Recently Added Products</string>
+</resources>

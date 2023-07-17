@@ -1,9 +1,8 @@
 package com.agah.furkan.androidplayground.ui.productdetailtab
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.base.BaseViewModel
-import com.agah.furkan.product.ProductDetailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,8 +13,7 @@ import javax.inject.Inject
 class ProductTabbedDetailVM @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val productDetailRepository: com.agah.furkan.product.ProductDetailRepository
-) :
-    BaseViewModel() {
+) : ViewModel() {
     private val productId = savedStateHandle.get<Long>("productId") ?: 0
     private val _productDetail = MutableStateFlow<ProductDetailState>(ProductDetailState.Loading)
     val productDetail = _productDetail.asStateFlow()

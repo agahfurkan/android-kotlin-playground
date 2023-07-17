@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.agah.furkan.cart"
+    namespace = "com.agah.furkan.data.cart"
     compileSdk = 33
 
     defaultConfig {

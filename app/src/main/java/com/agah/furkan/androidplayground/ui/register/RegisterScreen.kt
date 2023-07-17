@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.data.model.Result
-import com.agah.furkan.androidplayground.ui.theme.AppTheme
+import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.util.ext.showToast
 import com.agah.furkan.androidplayground.util.launchAndCollectIn
 

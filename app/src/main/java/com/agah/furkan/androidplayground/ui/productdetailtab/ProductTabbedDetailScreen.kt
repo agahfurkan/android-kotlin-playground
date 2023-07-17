@@ -43,14 +43,14 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.core.ui.component.RatingBar
+import com.agah.furkan.ui.component.RatingBar
 import com.agah.furkan.product.ProductDetail
 import com.agah.furkan.product.averageRating
 import com.agah.furkan.product.totalReviewsByRating
-import com.agah.furkan.androidplayground.ui.theme.AppTheme
-import com.agah.furkan.androidplayground.ui.theme.darkGray
-import com.agah.furkan.androidplayground.ui.theme.orange
-import com.agah.furkan.androidplayground.ui.theme.seed
+import com.agah.furkan.ui.theme.AppTheme
+import com.agah.furkan.ui.theme.darkGray
+import com.agah.furkan.ui.theme.orange
+import com.agah.furkan.ui.theme.seed
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)

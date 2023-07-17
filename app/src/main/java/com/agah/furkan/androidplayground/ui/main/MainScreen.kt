@@ -24,8 +24,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
-import com.agah.furkan.androidplayground.domain.model.result.Cart
-import com.agah.furkan.androidplayground.ui.cart.CartScreen
 import com.agah.furkan.androidplayground.ui.home.HomeScreen
 import com.agah.furkan.androidplayground.ui.login.LoginScreen
 import com.agah.furkan.androidplayground.ui.productcategory.CategoryScreen
@@ -35,9 +33,10 @@ import com.agah.furkan.androidplayground.ui.productlist.ProductListScreen
 import com.agah.furkan.androidplayground.ui.register.RegisterScreen
 import com.agah.furkan.androidplayground.ui.search.SearchScreen
 import com.agah.furkan.androidplayground.ui.splash.SplashScreen
-import com.agah.furkan.androidplayground.ui.theme.AppTheme
 import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreen
 import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreenViewModel
+import com.agah.furkan.cart.Cart
+import com.agah.furkan.ui.theme.AppTheme
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -139,7 +138,15 @@ fun NavigationGraph(navController: NavHostController) {
             }
         }
         composable(Screen.Cart.route) {
-            CartScreen()
+            val sharedViewModel: SharedViewModel =
+                hiltViewModel(LocalContext.current as ComponentActivity)
+            val cartListState = sharedViewModel.userCart.collectAsState()
+            val cartList = cartListState.value
+            com.agah.furkan.cart.CartScreen(
+                cartList = cartList,
+                onCartItemRemoved = {},
+                removeProductFromCartClicked = {},
+                addAdditionalProductClicked = {})
         }
         composable(Screen.Profile.route) {
             val viewModel = hiltViewModel<ProfileScreenViewModel>()

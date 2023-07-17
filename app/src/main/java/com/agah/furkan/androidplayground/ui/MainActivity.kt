@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.agah.furkan.androidplayground.ui.main.MainScreen
-import com.agah.furkan.androidplayground.ui.theme.AppTheme
+import com.agah.furkan.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
