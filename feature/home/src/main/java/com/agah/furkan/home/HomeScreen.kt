@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.home
+package com.agah.furkan.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.agah.furkan.androidplayground.R
 import com.agah.furkan.ui.component.PlaceHolderImage
 import com.agah.furkan.ui.component.SearchTextField
 import com.agah.furkan.ui.theme.AppTheme

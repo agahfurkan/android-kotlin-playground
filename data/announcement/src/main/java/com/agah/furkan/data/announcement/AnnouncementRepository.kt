@@ -1,6 +1,5 @@
-package com.agah.furkan.androidplayground.domain.repository
+package com.agah.furkan.data.announcement
 
-import com.agah.furkan.androidplayground.data.model.Announcement
 import kotlinx.coroutines.flow.Flow
 
 interface AnnouncementRepository {

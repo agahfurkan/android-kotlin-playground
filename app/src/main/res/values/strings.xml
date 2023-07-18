@@ -12,11 +12,8 @@
     <string name="categories">Categories</string>
     <string name="second_module">Second Module</string>
     <string name="click_here_to_register"><u>Click here to register</u></string>
-    <string name="announcements">Announcements</string>
 
 
     <string name="products">Products</string>
     <string name="product_detail">Product Detail</string>
-    <string name="exclusive_deals">Exclusive Deals</string>
-    <string name="recently_viewed">Recently Viewed</string>
 </resources>

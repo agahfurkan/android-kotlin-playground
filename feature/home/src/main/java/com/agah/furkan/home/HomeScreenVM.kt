@@ -1,9 +1,9 @@
-package com.agah.furkan.androidplayground.ui.home
+package com.agah.furkan.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.domain.repository.AnnouncementRepository
-import com.agah.furkan.androidplayground.ui.home.state.GetAnnouncementUiState
+import com.agah.furkan.data.announcement.AnnouncementRepository
+import com.agah.furkan.home.state.GetAnnouncementUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

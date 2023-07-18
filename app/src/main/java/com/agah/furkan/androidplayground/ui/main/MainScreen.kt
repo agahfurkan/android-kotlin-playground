@@ -24,7 +24,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
-import com.agah.furkan.androidplayground.ui.home.HomeScreen
+import com.agah.furkan.home.HomeScreen
 import com.agah.furkan.androidplayground.ui.login.LoginScreen
 import com.agah.furkan.androidplayground.ui.productcategory.CategoryScreen
 import com.agah.furkan.androidplayground.ui.productdetail.ProductDetailScreen
@@ -128,7 +128,7 @@ fun NavigationGraph(navController: NavHostController) {
             val systemUiController: SystemUiController = rememberSystemUiController()
             systemUiController.isStatusBarVisible = true
 
-            HomeScreen {
+            com.agah.furkan.home.HomeScreen {
                 navController.navigate(Screen.Search.route)
             }
         }

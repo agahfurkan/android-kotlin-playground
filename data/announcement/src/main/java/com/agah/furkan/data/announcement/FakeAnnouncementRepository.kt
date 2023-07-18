@@ -1,13 +1,12 @@
-package com.agah.furkan.androidplayground.data.repository.fake
+package com.agah.furkan.data.announcement
 
-import com.agah.furkan.androidplayground.data.model.Announcement
-import com.agah.furkan.androidplayground.domain.repository.AnnouncementRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class FakeAnnouncementRepository @Inject constructor() : AnnouncementRepository {
+class FakeAnnouncementRepository @Inject constructor() :
+    AnnouncementRepository {
     override fun getAnnouncements(): Flow<List<Announcement>> {
         return flow {
             delay(5000)

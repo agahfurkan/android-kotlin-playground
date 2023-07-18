@@ -87,6 +87,7 @@ android {
         implementation(project(":data:category"))
         implementation(project(":data:product"))
         implementation(project(":feature:cart"))
+        implementation(project(":feature:home"))
 
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.constraintlayout.compose)
