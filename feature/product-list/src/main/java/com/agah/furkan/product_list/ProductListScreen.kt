@@ -1,6 +1,5 @@
-package com.agah.furkan.androidplayground.ui.productlist
+package com.agah.furkan.product_list
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -33,8 +31,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.product.remote.model.response.ProductResponse
 import com.agah.furkan.ui.component.PlaceHolderImage
 import com.agah.furkan.ui.theme.AppTheme
@@ -44,9 +40,9 @@ import com.agah.furkan.ui.theme.seed
 @Composable
 fun ProductListScreen(
     viewModel: ProductListScreenVM = hiltViewModel(),
-    sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     itemClicked: (ProductResponse.Product) -> Unit,
-    onBackButtonClicked: () -> Unit = {}
+    onBackButtonClicked: () -> Unit,
+    addToCartClicked: (productId: Int) -> Unit,
 ) {
     val productList = viewModel.getProducts.collectAsLazyPagingItems()
 
@@ -78,7 +74,7 @@ fun ProductListScreen(
             ) {
                 ProductListContent(
                     productList = productList,
-                    addToCartClicked = sharedViewModel::addProductToCart,
+                    addToCartClicked = addToCartClicked,
                     itemClicked = itemClicked
                 )
             }

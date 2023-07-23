@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.data.repository
+package com.agah.furkan.product_list
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

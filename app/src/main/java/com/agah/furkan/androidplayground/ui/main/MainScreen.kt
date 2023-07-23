@@ -25,7 +25,6 @@ import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
 import com.agah.furkan.androidplayground.ui.productdetailtab.ProductTabbedDetailScreen
-import com.agah.furkan.androidplayground.ui.productlist.ProductListScreen
 import com.agah.furkan.androidplayground.ui.register.RegisterScreen
 import com.agah.furkan.androidplayground.ui.search.SearchScreen
 import com.agah.furkan.cart.remote.model.response.CartResponse
@@ -161,10 +160,12 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             Screen.ProductList.route,
             arguments = Screen.ProductList.getArgs()
         ) { backStackEntry ->
-            ProductListScreen(itemClicked = { product ->
+            com.agah.furkan.product_list.ProductListScreen(itemClicked = { product ->
                 navController.navigate(Screen.ProductDetail.createRoute(product.productId))
             }, onBackButtonClicked = {
                 navController.popBackStack()
+            }, addToCartClicked = {
+                sharedViewModel.addProductToCart(it)
             })
         }
 

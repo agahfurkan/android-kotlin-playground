@@ -95,6 +95,7 @@ android {
         implementation(project(":feature:category-list"))
         implementation(project(":feature:profile"))
         implementation(project(":feature:product-detail"))
+        implementation(project(":feature:product-list"))
 
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.constraintlayout.compose)
@@ -102,7 +103,7 @@ android {
         implementation(libs.navigation.compose)
         implementation(libs.glide.compose)
 
-        implementation(libs.paging.compose)
+
         implementation(libs.compose.runtime)
         implementation(libs.compose.material)
         implementation(libs.material3.compose)
@@ -132,7 +133,6 @@ android {
         implementation(libs.test.runner)
         implementation(libs.truth)
         implementation(libs.lottie)
-        implementation(libs.paging)
 
         implementation(libs.material3.window.size)
         implementation(libs.accompanist.theme.adapter.material)

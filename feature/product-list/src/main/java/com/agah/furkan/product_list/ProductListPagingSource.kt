@@ -1,10 +1,8 @@
-package com.agah.furkan.androidplayground.domain.usecase
+package com.agah.furkan.product_list
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.agah.furkan.androidplayground.data.repository.PRODUCT_PAGE_SIZE
-import com.agah.furkan.androidplayground.data.repository.ProductPagingSource
 import com.agah.furkan.product.ProductRepository
 import com.agah.furkan.product.remote.model.response.ProductResponse
 import kotlinx.coroutines.flow.Flow

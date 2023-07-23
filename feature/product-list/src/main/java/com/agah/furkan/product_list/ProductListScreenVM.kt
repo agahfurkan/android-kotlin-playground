@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.productlist
+package com.agah.furkan.product_list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.agah.furkan.androidplayground.domain.usecase.ProductListPagingSource
 import com.agah.furkan.product.remote.model.response.ProductResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
