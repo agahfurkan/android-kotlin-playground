@@ -96,6 +96,7 @@ android {
         implementation(project(":feature:profile"))
         implementation(project(":feature:product-detail"))
         implementation(project(":feature:product-list"))
+        implementation(project(":feature:product-detail-tabbed"))
 
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.constraintlayout.compose)
@@ -116,7 +117,6 @@ android {
         implementation(libs.lifecycle)
         implementation(libs.lifecycle.common.java8)
         implementation(libs.lifecycle.livedata)
-        implementation(libs.constraintlayout)
         kapt(libs.moshi.kotlin.codegen)
         implementation(libs.hilt.android)
         kapt(libs.hilt.compiler)

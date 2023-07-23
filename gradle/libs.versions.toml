@@ -4,7 +4,6 @@ appCompatVersion = "1.6.0"
 ktxVersion = "1.9.0"
 kotlinVersion = "1.8.10"
 materialVersion = "1.9.0-alpha01"
-constraintLayoutVersion = "2.1.4"
 retrofitVersion = "2.5.0"
 retrofitMoshiConverterVersion = "2.9.0"
 moshiVersion = "1.14.0"
@@ -41,7 +40,6 @@ lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", vers
 lifecycle-common-java8 = { group = "androidx.lifecycle", name = "lifecycle-common-java8", version.ref = "lifecycleVersion" }
 lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleVersion" }
 
-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayoutVersion" }
 constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayoutComposeVersion" }
 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }

@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.productdetailtab
+package com.agah.furkan.product_detail_tabbed
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -42,7 +42,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.androidplayground.R
 import com.agah.furkan.ui.component.RatingBar
 import com.agah.furkan.product.ProductDetail
 import com.agah.furkan.product.averageRating

@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.productdetailtab
+package com.agah.furkan.product_detail_tabbed
 
 import com.agah.furkan.product.ProductDetail
 
