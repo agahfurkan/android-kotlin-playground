@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.userprofile
+package com.agah.furkan.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,7 +34,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.agah.furkan.androidplayground.R
 import com.agah.furkan.ui.component.PlaceHolderImage
 import com.agah.furkan.ui.component.WarningDialog
 import com.agah.furkan.ui.theme.divider

@@ -93,6 +93,7 @@ android {
         implementation(project(":feature:splash"))
         implementation(project(":feature:login"))
         implementation(project(":feature:category-list"))
+        implementation(project(":feature:profile"))
 
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.constraintlayout.compose)

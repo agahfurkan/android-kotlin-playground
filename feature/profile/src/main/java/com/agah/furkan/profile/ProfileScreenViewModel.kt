@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.userprofile
+package com.agah.furkan.profile
 
 import androidx.lifecycle.ViewModel
 import com.agah.furkan.preferences.UserPreference

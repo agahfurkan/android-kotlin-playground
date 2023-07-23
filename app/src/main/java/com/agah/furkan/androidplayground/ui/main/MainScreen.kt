@@ -29,8 +29,8 @@ import com.agah.furkan.androidplayground.ui.productdetailtab.ProductTabbedDetail
 import com.agah.furkan.androidplayground.ui.productlist.ProductListScreen
 import com.agah.furkan.androidplayground.ui.register.RegisterScreen
 import com.agah.furkan.androidplayground.ui.search.SearchScreen
-import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreen
-import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreenViewModel
+import com.agah.furkan.profile.ProfileScreen
+import com.agah.furkan.profile.ProfileScreenViewModel
 import com.agah.furkan.cart.Cart
 import com.agah.furkan.category_list.CategoryListScreen
 import com.agah.furkan.ui.theme.AppTheme
