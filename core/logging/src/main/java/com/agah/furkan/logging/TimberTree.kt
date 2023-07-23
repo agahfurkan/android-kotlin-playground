@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.util
+package com.agah.furkan.logging
 
 import timber.log.Timber
 

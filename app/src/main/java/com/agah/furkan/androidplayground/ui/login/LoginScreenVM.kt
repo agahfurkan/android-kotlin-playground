@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
+import com.agah.furkan.logging.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -15,7 +16,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginScreenVM @Inject constructor(private val loginUseCase: LoginUseCase) :
+class LoginScreenVM @Inject constructor(
+    private val loginUseCase: LoginUseCase,
+    private val logger: Logger
+) :
     ViewModel() {
 
     private val _loginState = MutableSharedFlow<LoginUseCase.UiState>()
@@ -31,6 +35,9 @@ class LoginScreenVM @Inject constructor(private val loginUseCase: LoginUseCase) 
         viewModelScope.launch {
             val state = loginUseCase(userLoginParams)
             state.collect {
+                if (it is LoginUseCase.UiState.Loading) {
+                    logger.i(state.toString())
+                }
                 _loginState.emit(it)
             }
         }

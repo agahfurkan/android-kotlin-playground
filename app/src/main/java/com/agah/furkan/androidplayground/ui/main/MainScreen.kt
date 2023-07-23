@@ -24,7 +24,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
-import com.agah.furkan.home.HomeScreen
 import com.agah.furkan.androidplayground.ui.login.LoginScreen
 import com.agah.furkan.androidplayground.ui.productcategory.CategoryScreen
 import com.agah.furkan.androidplayground.ui.productdetail.ProductDetailScreen
@@ -32,7 +31,6 @@ import com.agah.furkan.androidplayground.ui.productdetailtab.ProductTabbedDetail
 import com.agah.furkan.androidplayground.ui.productlist.ProductListScreen
 import com.agah.furkan.androidplayground.ui.register.RegisterScreen
 import com.agah.furkan.androidplayground.ui.search.SearchScreen
-import com.agah.furkan.androidplayground.ui.splash.SplashScreen
 import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreen
 import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreenViewModel
 import com.agah.furkan.cart.Cart
@@ -214,7 +212,7 @@ fun NavigationGraph(navController: NavHostController) {
             val systemUiController: SystemUiController = rememberSystemUiController()
             systemUiController.isStatusBarVisible = false
 
-            SplashScreen {
+            com.agah.furkan.splash.SplashScreen {
                 val destination = if (it) {
                     Screen.Home
                 } else {

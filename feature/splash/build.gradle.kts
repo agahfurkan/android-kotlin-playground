@@ -1,10 +1,11 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
-    namespace = "com.agah.furkan.util"
+    namespace = "com.agah.furkan.splash"
     compileSdk = 33
 
     defaultConfig {
@@ -24,6 +25,12 @@ android {
             )
         }
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -37,5 +44,16 @@ android {
 }
 
 dependencies {
-    implementation(libs.activity.compose)
+    implementation(project(":core:ui"))
+    implementation(project(":core:data"))
+    implementation(project(":core:util"))
+    implementation(project(":core:preferences"))
+    implementation(project(":data:user"))
+    implementation(libs.lottie.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.material3.compose)
+    implementation(libs.compose.ui)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 }

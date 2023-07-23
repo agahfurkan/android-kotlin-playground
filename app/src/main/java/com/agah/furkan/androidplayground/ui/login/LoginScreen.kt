@@ -28,9 +28,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
 import com.agah.furkan.ui.theme.AppTheme
-import com.agah.furkan.androidplayground.util.ext.showToast
-import com.agah.furkan.androidplayground.util.launchAndCollectIn
-import timber.log.Timber
+import com.agah.furkan.util.launchAndCollectIn
+import com.agah.furkan.util.showToast
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +52,7 @@ fun LoginScreen(
                     context.showToast(state.failureMessage)
                 }
 
-                LoginUseCase.UiState.Loading -> Timber.i(state.toString())
+                LoginUseCase.UiState.Loading -> {}
             }
         }
         viewModel.uiEvent.launchAndCollectIn(lifeCycleOwner) { event ->

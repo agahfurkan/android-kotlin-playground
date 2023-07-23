@@ -1,10 +1,11 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
-    namespace = "com.agah.furkan.util"
+    namespace = "com.agah.furkan.logging"
     compileSdk = 33
 
     defaultConfig {
@@ -37,5 +38,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.activity.compose)
+    implementation(libs.timber)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 }

@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.splash
+package com.agah.furkan.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

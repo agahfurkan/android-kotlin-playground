@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.util
+package com.agah.furkan.util
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
