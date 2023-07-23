@@ -24,7 +24,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
-import com.agah.furkan.androidplayground.ui.login.LoginScreen
+import com.agah.furkan.login.LoginScreen
 import com.agah.furkan.androidplayground.ui.productcategory.CategoryScreen
 import com.agah.furkan.androidplayground.ui.productdetail.ProductDetailScreen
 import com.agah.furkan.androidplayground.ui.productdetailtab.ProductTabbedDetailScreen
@@ -193,7 +193,7 @@ fun NavigationGraph(navController: NavHostController) {
                 })
         }
         composable(Screen.Login.route) {
-            LoginScreen(onLoginSuccess = {
+            com.agah.furkan.login.LoginScreen(onLoginSuccess = {
                 navController.navigate(Screen.Home.route) {
                     popUpTo(navController.graph.id) {
                         inclusive = true

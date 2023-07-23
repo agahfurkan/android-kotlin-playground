@@ -2,7 +2,6 @@ package com.agah.furkan.androidplayground.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.domain.usecase.GetMainProductCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +22,7 @@ class MainScreenVM @Inject constructor(private val getMainProductCategoryUseCase
 
     private fun fetchMainProductCategories() {
         viewModelScope.launch {
-            getMainProductCategoryUseCase(UseCaseParams.None).collect {
+            getMainProductCategoryUseCase.getProductCategories().collect {
                 _categoryList.emit(it)
             }
         }

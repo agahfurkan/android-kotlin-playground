@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.login
+package com.agah.furkan.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -25,8 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
+import com.agah.furkan.domain.login.LoginUseCase
 import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.util.launchAndCollectIn
 import com.agah.furkan.util.showToast

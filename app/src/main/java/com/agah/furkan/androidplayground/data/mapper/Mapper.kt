@@ -1,8 +1,6 @@
 package com.agah.furkan.androidplayground.data.mapper
 
-import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
 import com.agah.furkan.androidplayground.domain.model.result.Category
-import com.agah.furkan.androidplayground.domain.model.result.LoginResult
 import com.agah.furkan.androidplayground.domain.model.result.Product
 import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
 import com.agah.furkan.cart.Cart
@@ -10,10 +8,6 @@ import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.category.remote.model.response.CategoryResponse
 import com.agah.furkan.product.remote.model.response.ProductDetailResponse
 import com.agah.furkan.product.remote.model.response.ProductResponse
-import com.agah.furkan.user.remote.model.request.UserLoginBody
-import com.agah.furkan.user.remote.model.request.UserRegisterBody
-import com.agah.furkan.user.remote.model.request.ValidateTokenBody
-import com.agah.furkan.user.remote.model.response.UserLoginResponse
 
 fun CartResponse.Cart.toDomainModel(): Cart {
     return Cart(
@@ -55,21 +49,3 @@ fun ProductDetailResponse.ProductDetail.toDomainModel(): ProductDetail {
     )
 }
 
-fun UserLoginResponse.toDomainModel(): LoginResult {
-    if (token == null || userId == null) {
-        throw IllegalStateException("cannot be null")
-    }
-    return LoginResult(token = token!!, userId = userId!!, message = message ?: "")
-}
-
-fun UseCaseParams.UserLoginParams.toRequestModel(): UserLoginBody {
-    return UserLoginBody(password = password, username = username)
-}
-
-fun UseCaseParams.UserRegisterParams.toRequestModel(): UserRegisterBody {
-    return UserRegisterBody(password = password, username = username)
-}
-
-fun UseCaseParams.ValidateTokenParams.toRequestModel(): ValidateTokenBody {
-    return ValidateTokenBody(token = token)
-}

@@ -1,12 +1,11 @@
-package com.agah.furkan.androidplayground.ui.login
+package com.agah.furkan.login
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.domain.model.request.UseCaseParams
-import com.agah.furkan.androidplayground.domain.usecase.LoginUseCase
+import com.agah.furkan.domain.login.LoginUseCase
 import com.agah.furkan.logging.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,8 +18,7 @@ import javax.inject.Inject
 class LoginScreenVM @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val logger: Logger
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val _loginState = MutableSharedFlow<LoginUseCase.UiState>()
     val loginState: SharedFlow<LoginUseCase.UiState> get() = _loginState
@@ -31,9 +29,9 @@ class LoginScreenVM @Inject constructor(
     var username by mutableStateOf("")
     var password by mutableStateOf("")
 
-    private fun login(userLoginParams: UseCaseParams.UserLoginParams) {
+    private fun login(password: String, username: String) {
         viewModelScope.launch {
-            val state = loginUseCase(userLoginParams)
+            val state = loginUseCase.login(password, username)
             state.collect {
                 if (it is LoginUseCase.UiState.Loading) {
                     logger.i(state.toString())
@@ -49,7 +47,7 @@ class LoginScreenVM @Inject constructor(
             return
         if (password.isBlank())
             return
-        login(UseCaseParams.UserLoginParams(username = username, password = password))
+        login(username = username, password = password)
     }
 
     fun onRegisterButtonClicked() {

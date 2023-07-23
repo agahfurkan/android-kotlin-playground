@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.login
+package com.agah.furkan.login
 
 sealed class LoginScreenEvent {
     object NavigateToRegisterScreen : LoginScreenEvent()

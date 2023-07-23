@@ -91,6 +91,7 @@ android {
         implementation(project(":feature:cart"))
         implementation(project(":feature:home"))
         implementation(project(":feature:splash"))
+        implementation(project(":feature:login"))
 
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.constraintlayout.compose)

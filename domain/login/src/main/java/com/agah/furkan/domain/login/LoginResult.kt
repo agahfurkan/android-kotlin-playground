@@ -1,3 +1,3 @@
-package com.agah.furkan.androidplayground.domain.model.result
+package com.agah.furkan.domain.login
 
 data class LoginResult(val token: String, val userId: Long, val message: String)
