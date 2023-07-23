@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.productcategory
+package com.agah.furkan.category_list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,19 +28,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.androidplayground.domain.model.result.Category
-import com.agah.furkan.androidplayground.domain.usecase.GetMainProductCategoryUseCase
+import com.agah.furkan.category.remote.model.response.CategoryResponse
 import com.agah.furkan.ui.component.LoadingState
 import com.agah.furkan.ui.component.PlaceHolderImage
-import com.agah.furkan.androidplayground.ui.main.MainScreenVM
 import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.seed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoryScreen(
-    viewModel: MainScreenVM = hiltViewModel(),
-    onCategoryClicked: (Category) -> Unit
+fun CategoryListScreen(
+    viewModel: CategoryListViewModel = hiltViewModel(),
+    onCategoryClicked: (CategoryResponse.Category) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val state = viewModel.categoryList.collectAsState()
@@ -55,20 +53,20 @@ fun CategoryScreen(
         }) { padding ->
             Column(Modifier.padding(padding)) {
                 when (stateValue) {
-                    is GetMainProductCategoryUseCase.UiState.Success -> {
+                    is CategoryListUiState.Success -> {
                         CategoryListSuccessState(stateValue, onCategoryClicked)
                     }
 
-                    is GetMainProductCategoryUseCase.UiState.Failure -> {
+                    is CategoryListUiState.Error -> {
                         LaunchedEffect(snackbarHostState) {
                             snackbarHostState.showSnackbar(
-                                message = stateValue.failureMessage,
+                                message = stateValue.errorMessage,
                                 duration = SnackbarDuration.Indefinite,
                             )
                         }
                     }
 
-                    GetMainProductCategoryUseCase.UiState.Loading -> {
+                    CategoryListUiState.Loading -> {
                         Loading()
                     }
                 }
@@ -80,26 +78,26 @@ fun CategoryScreen(
 
 @Composable
 fun CategoryListSuccessState(
-    state: GetMainProductCategoryUseCase.UiState.Success,
-    onCategoryClicked: (Category) -> Unit
+    state: CategoryListUiState.Success,
+    onCategoryClicked: (CategoryResponse.Category) -> Unit
 ) {
     LazyVerticalGrid(modifier = Modifier.padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         columns = GridCells.Fixed(3),
         content = {
-            items(state.categoryList.size) {
+            items(state.data.size) {
                 Column(modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
                         onCategoryClicked(
-                            state.categoryList[it]
+                            state.data[it]
                         )
                     }) {
                     PlaceHolderImage()
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        text = state.categoryList[it].categoryName,
+                        text = state.data[it].categoryName,
                         textAlign = TextAlign.Center
                     )
                 }
@@ -117,12 +115,10 @@ fun Loading() {
 @Composable
 @Preview
 fun CategoryListSuccessStatePreview(
-    @PreviewParameter(CategoryPreviewParameterProvider::class) categoryList: List<Category>
+    @PreviewParameter(CategoryPreviewParameterProvider::class) categoryList: List<CategoryResponse.Category>
 ) {
     CategoryListSuccessState(
-        GetMainProductCategoryUseCase.UiState.Success(
-            categoryList = categoryList
-        )
+        CategoryListUiState.Success(data = categoryList)
     ) {
 
     }

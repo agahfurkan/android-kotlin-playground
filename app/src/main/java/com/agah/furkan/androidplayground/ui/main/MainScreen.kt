@@ -24,8 +24,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
-import com.agah.furkan.login.LoginScreen
-import com.agah.furkan.androidplayground.ui.productcategory.CategoryScreen
 import com.agah.furkan.androidplayground.ui.productdetail.ProductDetailScreen
 import com.agah.furkan.androidplayground.ui.productdetailtab.ProductTabbedDetailScreen
 import com.agah.furkan.androidplayground.ui.productlist.ProductListScreen
@@ -34,6 +32,7 @@ import com.agah.furkan.androidplayground.ui.search.SearchScreen
 import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreen
 import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreenViewModel
 import com.agah.furkan.cart.Cart
+import com.agah.furkan.category_list.CategoryListScreen
 import com.agah.furkan.ui.theme.AppTheme
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -131,7 +130,7 @@ fun NavigationGraph(navController: NavHostController) {
             }
         }
         composable(Screen.Categories.route) {
-            CategoryScreen { category ->
+            CategoryListScreen { category ->
                 navController.navigate(Screen.ProductList.createRoute(category.categoryId))
             }
         }

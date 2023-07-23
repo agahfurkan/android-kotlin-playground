@@ -1,11 +1,9 @@
 package com.agah.furkan.androidplayground.data.mapper
 
-import com.agah.furkan.androidplayground.domain.model.result.Category
 import com.agah.furkan.androidplayground.domain.model.result.Product
 import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
 import com.agah.furkan.cart.Cart
 import com.agah.furkan.cart.remote.model.response.CartResponse
-import com.agah.furkan.category.remote.model.response.CategoryResponse
 import com.agah.furkan.product.remote.model.response.ProductDetailResponse
 import com.agah.furkan.product.remote.model.response.ProductResponse
 
@@ -19,10 +17,6 @@ fun CartResponse.Cart.toDomainModel(): Cart {
         productId = productId,
         productName = productName
     )
-}
-
-fun CategoryResponse.Category.toDomainModel(): Category {
-    return Category(categoryId = categoryId, categoryName = categoryName)
 }
 
 fun ProductResponse.Product.toDomainModel(): Product {
