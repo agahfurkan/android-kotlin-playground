@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.ui.register
+package com.agah.furkan.register
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

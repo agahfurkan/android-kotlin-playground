@@ -97,6 +97,7 @@ android {
         implementation(project(":feature:product-detail"))
         implementation(project(":feature:product-list"))
         implementation(project(":feature:product-detail-tabbed"))
+        implementation(project(":feature:register"))
 
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.constraintlayout.compose)

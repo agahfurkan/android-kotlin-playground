@@ -24,8 +24,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
-import com.agah.furkan.product_detail_tabbed.ProductTabbedDetailScreen
-import com.agah.furkan.androidplayground.ui.register.RegisterScreen
+import com.agah.furkan.register.RegisterScreen
 import com.agah.furkan.androidplayground.ui.search.SearchScreen
 import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.category_list.CategoryListScreen
@@ -202,7 +201,7 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             })
         }
         composable(Screen.Register.route) {
-            RegisterScreen {
+            com.agah.furkan.register.RegisterScreen {
                 navController.navigate(Screen.Login.route)
             }
         }
