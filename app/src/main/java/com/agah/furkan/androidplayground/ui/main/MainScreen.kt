@@ -24,8 +24,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
-import com.agah.furkan.register.RegisterScreen
-import com.agah.furkan.androidplayground.ui.search.SearchScreen
 import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.category_list.CategoryListScreen
 import com.agah.furkan.profile.ProfileScreen
@@ -223,7 +221,7 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             }
         }
         composable(Screen.Search.route) {
-            SearchScreen {
+            com.agah.furkan.search.SearchScreen {
                 navController.popBackStack()
             }
         }

@@ -84,10 +84,12 @@ android {
         implementation(project(":core:ui"))
         implementation(project(":core:logging"))
         implementation(project(":core:util"))
+
         implementation(project(":data:cart"))
         implementation(project(":data:user"))
         implementation(project(":data:category"))
         implementation(project(":data:product"))
+
         implementation(project(":feature:cart"))
         implementation(project(":feature:home"))
         implementation(project(":feature:splash"))
@@ -98,6 +100,7 @@ android {
         implementation(project(":feature:product-list"))
         implementation(project(":feature:product-detail-tabbed"))
         implementation(project(":feature:register"))
+        implementation(project(":feature:search"))
 
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.constraintlayout.compose)
