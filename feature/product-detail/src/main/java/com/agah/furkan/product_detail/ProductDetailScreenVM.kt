@@ -1,9 +1,8 @@
-package com.agah.furkan.androidplayground.ui.productdetail
+package com.agah.furkan.product_detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.androidplayground.data.mapper.toDomainModel
 import com.agah.furkan.data.model.Result
 import com.agah.furkan.product.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,7 +33,7 @@ class ProductDetailScreenVM @Inject constructor(
 
             val state = when (result) {
                 is Result.Success -> {
-                    ProductDetailUiState.Success(result.data.productDetail.toDomainModel())
+                    ProductDetailUiState.Success(result.data.productDetail)
                 }
 
                 is Result.Failure -> {

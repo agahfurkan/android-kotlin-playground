@@ -35,7 +35,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.SharedViewModel
-import com.agah.furkan.androidplayground.domain.model.result.Product
+import com.agah.furkan.product.remote.model.response.ProductResponse
 import com.agah.furkan.ui.component.PlaceHolderImage
 import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.seed
@@ -45,7 +45,7 @@ import com.agah.furkan.ui.theme.seed
 fun ProductListScreen(
     viewModel: ProductListScreenVM = hiltViewModel(),
     sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
-    itemClicked: (Product) -> Unit,
+    itemClicked: (ProductResponse.Product) -> Unit,
     onBackButtonClicked: () -> Unit = {}
 ) {
     val productList = viewModel.getProducts.collectAsLazyPagingItems()
@@ -88,9 +88,9 @@ fun ProductListScreen(
 
 @Composable
 fun ProductListContent(
-    productList: LazyPagingItems<Product>,
+    productList: LazyPagingItems<ProductResponse.Product>,
     addToCartClicked: (productId: Int) -> Unit,
-    itemClicked: (Product) -> Unit
+    itemClicked: (ProductResponse.Product) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -109,9 +109,9 @@ fun ProductListContent(
 
 @Composable
 fun ProductListItem(
-    product: Product,
+    product: ProductResponse.Product,
     addToCartClicked: (productId: Int) -> Unit,
-    itemClicked: (Product) -> Unit
+    itemClicked: (ProductResponse.Product) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -161,7 +161,7 @@ fun ProductListItem(
 @Preview(showBackground = true)
 fun ProductListItemPreview() {
     AppTheme {
-        ProductListItem(product = Product(
+        ProductListItem(product = ProductResponse.Product(
             categoryId = 6567,
             discount = 0.1,
             picture = "penatibus",

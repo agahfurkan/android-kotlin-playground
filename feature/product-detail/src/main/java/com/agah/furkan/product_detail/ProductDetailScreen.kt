@@ -1,6 +1,5 @@
-package com.agah.furkan.androidplayground.ui.productdetail
+package com.agah.furkan.product_detail
 
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.LocalOverscrollConfiguration
@@ -37,7 +36,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -48,21 +46,19 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.SharedViewModel
-import com.agah.furkan.androidplayground.domain.model.result.ProductDetail
+import com.agah.furkan.product.remote.model.response.ProductDetailResponse
 import com.agah.furkan.ui.theme.AppTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ProductDetailScreen(
     viewModel: ProductDetailScreenVM = hiltViewModel(),
-    sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity),
     onBackButtonClicked: () -> Unit,
     onProductDetailClicked: (productId: Long) -> Unit,
     onProductDescriptionClicked: (productId: Long) -> Unit,
     onReviewsClicked: (productId: Long) -> Unit,
-    onAllReviewsClicked: (productId: Long) -> Unit
+    onAllReviewsClicked: (productId: Long) -> Unit,
+    onAddToCartClicked: (product: ProductDetailResponse.ProductDetail) -> Unit
 ) {
     // TODO: refactor
     val productResult = viewModel.productDetail.collectAsState()
@@ -108,7 +104,7 @@ fun ProductDetailScreen(
                     }
                 }
                 ProductFooter(product = productState.productDetail, onAddToCartClicked = {
-                    sharedViewModel.addProductToCart(it.productId)
+                    onAddToCartClicked(it)
                 })
             }
         }
@@ -118,7 +114,7 @@ fun ProductDetailScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ProductImage(
-    product: ProductDetail,
+    product: ProductDetailResponse.ProductDetail,
     onBackButtonClicked: () -> Unit,
     onFavButtonClicked: () -> Unit,
     onShareButtonClicked: () -> Unit
@@ -189,7 +185,10 @@ fun ProductImage(
 }
 
 @Composable
-fun ProductHeader(product: ProductDetail, onAllReviewsClicked: (productId: Long) -> Unit) {
+fun ProductHeader(
+    product: ProductDetailResponse.ProductDetail,
+    onAllReviewsClicked: (productId: Long) -> Unit
+) {
     ConstraintLayout {
         val (brandText, productNameText, reviewRow) = createRefs()
 
@@ -243,7 +242,7 @@ fun ProductHeader(product: ProductDetail, onAllReviewsClicked: (productId: Long)
 
 @Composable
 fun ProductActionButtonContainer(
-    product: ProductDetail,
+    product: ProductDetailResponse.ProductDetail,
     onProductDetailClicked: (productId: Long) -> Unit,
     onProductDescriptionClicked: (productId: Long) -> Unit,
     onReviewsClicked: (productId: Long) -> Unit
@@ -263,8 +262,8 @@ fun ProductActionButtonContainer(
 
 @Composable
 fun BoxScope.ProductFooter(
-    product: ProductDetail,
-    onAddToCartClicked: (product: ProductDetail) -> Unit
+    product: ProductDetailResponse.ProductDetail,
+    onAddToCartClicked: (product: ProductDetailResponse.ProductDetail) -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier

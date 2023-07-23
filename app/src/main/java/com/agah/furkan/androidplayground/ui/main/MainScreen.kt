@@ -24,15 +24,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
-import com.agah.furkan.androidplayground.ui.productdetail.ProductDetailScreen
 import com.agah.furkan.androidplayground.ui.productdetailtab.ProductTabbedDetailScreen
 import com.agah.furkan.androidplayground.ui.productlist.ProductListScreen
 import com.agah.furkan.androidplayground.ui.register.RegisterScreen
 import com.agah.furkan.androidplayground.ui.search.SearchScreen
+import com.agah.furkan.cart.remote.model.response.CartResponse
+import com.agah.furkan.category_list.CategoryListScreen
 import com.agah.furkan.profile.ProfileScreen
 import com.agah.furkan.profile.ProfileScreenViewModel
-import com.agah.furkan.cart.Cart
-import com.agah.furkan.category_list.CategoryListScreen
 import com.agah.furkan.ui.theme.AppTheme
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -55,7 +54,7 @@ fun MainScreen() {
         }
     ) { padding ->
         padding
-        NavigationGraph(navController = navController)
+        NavigationGraph(navController = navController, sharedViewModel)
     }
 }
 
@@ -63,7 +62,7 @@ fun MainScreen() {
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
-    cart: Map<Long, List<Cart>>
+    cart: Map<Long, List<CartResponse.Cart>>
 ) {
     val items = BottomNavItem.getBottomNavItems()
 
@@ -119,7 +118,7 @@ fun BottomNavigationBar(
 }
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
+fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedViewModel) {
     NavHost(navController, startDestination = Screen.Splash.route) {
         composable(Screen.Home.route) {
             val systemUiController: SystemUiController = rememberSystemUiController()
@@ -135,8 +134,6 @@ fun NavigationGraph(navController: NavHostController) {
             }
         }
         composable(Screen.Cart.route) {
-            val sharedViewModel: SharedViewModel =
-                hiltViewModel(LocalContext.current as ComponentActivity)
             val cartListState = sharedViewModel.userCart.collectAsState()
             val cartList = cartListState.value
             com.agah.furkan.cart.CartScreen(
@@ -175,7 +172,8 @@ fun NavigationGraph(navController: NavHostController) {
             Screen.ProductDetail.route,
             arguments = Screen.ProductDetail.getArgs()
         ) { backStackEntry ->
-            ProductDetailScreen(
+
+            com.agah.furkan.product_detail.ProductDetailScreen(
                 onBackButtonClicked = {
                     navController.popBackStack()
                 },
@@ -189,7 +187,7 @@ fun NavigationGraph(navController: NavHostController) {
                     navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
                 }, onAllReviewsClicked = {
                     navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
-                })
+                }, onAddToCartClicked = { sharedViewModel.addProductToCart(it.productId) })
         }
         composable(Screen.Login.route) {
             com.agah.furkan.login.LoginScreen(onLoginSuccess = {
@@ -247,7 +245,7 @@ fun PreviewBottomNavigationBar() {
         BottomNavigationBar(
             navController = rememberNavController(), mapOf(
                 3735L to listOf(
-                    Cart(
+                    CartResponse.Cart(
                         cartId = 5686,
                         discount = 0.1,
                         picture = "ante",

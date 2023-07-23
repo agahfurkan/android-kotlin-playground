@@ -6,8 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.agah.furkan.androidplayground.domain.model.result.Product
 import com.agah.furkan.androidplayground.domain.usecase.ProductListPagingSource
+import com.agah.furkan.product.remote.model.response.ProductResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -17,8 +17,8 @@ class ProductListScreenVM @Inject constructor(
     state: SavedStateHandle
 ) : ViewModel() {
 
-    private var _productList = MutableLiveData<List<Product>>()
-    val productList: LiveData<List<Product>> get() = _productList
+    private var _productList = MutableLiveData<List<ProductResponse.Product>>()
+    val productList: LiveData<List<ProductResponse.Product>> get() = _productList
     val getProducts =
         productListPagingSource.getProductList(categoryId = state.get<Long>("categoryId") ?: 0L)
             .cachedIn(viewModelScope)

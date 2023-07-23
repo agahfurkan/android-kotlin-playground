@@ -1,10 +1,11 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
-    namespace = "com.agah.furkan.feature.cart"
+    namespace = "com.agah.furkan.product_detail"
     compileSdk = 33
 
     defaultConfig {
@@ -37,17 +38,20 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = "1.8"
+    }
 }
 
 dependencies {
     implementation(project(":core:ui"))
-    implementation(project(":core:util"))
-    implementation(project(":data:cart"))
+    implementation(project(":core:data"))
+    implementation(project(":data:product"))
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.hilt.navigation.compose)
     implementation(libs.material3.compose)
-    implementation(libs.material3.window.size)
-    implementation(libs.constraintlayout.compose)
-    implementation(libs.activity.compose)
-    implementation(libs.compose.runtime)
     implementation(libs.compose.ui)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    implementation(libs.constraintlayout.compose)
 }

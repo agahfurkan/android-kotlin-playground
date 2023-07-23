@@ -94,6 +94,7 @@ android {
         implementation(project(":feature:login"))
         implementation(project(":feature:category-list"))
         implementation(project(":feature:profile"))
+        implementation(project(":feature:product-detail"))
 
         implementation(platform(libs.androidx.compose.bom))
         implementation(libs.constraintlayout.compose)

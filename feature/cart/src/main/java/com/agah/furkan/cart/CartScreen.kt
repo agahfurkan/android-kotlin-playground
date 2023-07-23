@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.feature.cart.R
 import com.agah.furkan.ui.component.PlaceHolderImage
 import com.agah.furkan.ui.theme.AppTheme
@@ -47,7 +48,7 @@ import com.agah.furkan.util.discount
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartScreen(
-    cartList: Map<Long, List<Cart>>,
+    cartList: Map<Long, List<CartResponse.Cart>>,
     onCartItemRemoved: (Long) -> Unit,
     removeProductFromCartClicked: (Long) -> Unit,
     addAdditionalProductClicked: (Int) -> Unit
@@ -115,11 +116,11 @@ fun CartScreen(
 
 @Composable
 fun CartItem(
-    item: Cart,
+    item: CartResponse.Cart,
     totalSizeOfSameProduct: Int,
-    onCartItemRemoved: (Cart) -> Unit,
-    removeProductFromCartClicked: (Cart) -> Unit,
-    addAdditionalProductClicked: (Cart) -> Unit
+    onCartItemRemoved: (CartResponse.Cart) -> Unit,
+    removeProductFromCartClicked: (CartResponse.Cart) -> Unit,
+    addAdditionalProductClicked: (CartResponse.Cart) -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -378,7 +379,7 @@ fun RecentlyAddedProductItem(
 fun CartItemPreview() {
     AppTheme {
         CartItem(
-            Cart(
+            CartResponse.Cart(
                 cartId = 3755,
                 discount = 8.5,
                 picture = "neglegentur",
