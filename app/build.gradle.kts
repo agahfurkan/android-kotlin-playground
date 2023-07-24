@@ -128,9 +128,7 @@ android {
         implementation(libs.hilt.android.compiler)
         implementation(libs.navigation.fragment.ktx)
         implementation(libs.navigation.ui.ktx)
-        implementation(libs.room.runtime)
-        implementation(libs.room.ktx)
-        kapt(libs.room.compiler)
+
         implementation(libs.glide)
         kapt(libs.glide.compiler)
         implementation(libs.junitx)

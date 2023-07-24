@@ -1,4 +1,4 @@
-package com.agah.furkan.androidplayground.data.local.model
+package com.agah.furkan.core.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
