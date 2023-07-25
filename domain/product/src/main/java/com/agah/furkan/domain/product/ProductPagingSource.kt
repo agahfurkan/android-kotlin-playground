@@ -1,11 +1,8 @@
-package com.agah.furkan.product_list
+package com.agah.furkan.domain.product
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.agah.furkan.product.ProductRepository
-import com.agah.furkan.product.remote.model.response.ProductResponse
-import okio.IOException
-import retrofit2.HttpException
 
 const val PRODUCT_PAGE_SIZE = 50
 const val INITIAL_PAGE_INDEX = 0
@@ -13,17 +10,17 @@ const val INITIAL_PAGE_INDEX = 0
 class ProductPagingSource(
     private val productRepository: ProductRepository,
     private val categoryId: Long
-) : PagingSource<Int, ProductResponse.Product>() {
+) : PagingSource<Int, Product>() {
 
 
-    override fun getRefreshKey(state: PagingState<Int, ProductResponse.Product>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Product>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ProductResponse.Product> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         val pageIndex = params.key ?: INITIAL_PAGE_INDEX
         return try {
             val response = productRepository.getProductList(
@@ -39,13 +36,21 @@ class ProductPagingSource(
                     null
                 }
             LoadResult.Page(
-                data = (response as com.agah.furkan.data.model.Result.Success).data.productList,
+                data = (response as com.agah.furkan.data.model.Result.Success).data.productList.map {
+                    Product(
+                        categoryId = it.categoryId,
+                        discount = it.discount,
+                        picture = it.picture,
+                        price = it.price,
+                        productDescription = it.productDescription,
+                        productId = it.productId,
+                        productName = it.productName
+                    )
+                },
                 prevKey = if (pageIndex == 0) null else pageIndex - 1,
                 nextKey = nextPageIndex
             )
-        } catch (exception: IOException) {
-            LoadResult.Error(exception)
-        } catch (exception: HttpException) {
+        } catch (exception: Exception) {
             LoadResult.Error(exception)
         }
     }

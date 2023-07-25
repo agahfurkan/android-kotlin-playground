@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.agah.furkan.product.remote.model.response.ProductResponse
+import com.agah.furkan.domain.product.Product
 import com.agah.furkan.ui.component.PlaceHolderImage
 import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.seed
@@ -40,7 +40,7 @@ import com.agah.furkan.ui.theme.seed
 @Composable
 fun ProductListScreen(
     viewModel: ProductListScreenVM = hiltViewModel(),
-    itemClicked: (ProductResponse.Product) -> Unit,
+    itemClicked: (productId: Long) -> Unit,
     onBackButtonClicked: () -> Unit,
     addToCartClicked: (productId: Int) -> Unit,
 ) {
@@ -84,9 +84,9 @@ fun ProductListScreen(
 
 @Composable
 fun ProductListContent(
-    productList: LazyPagingItems<ProductResponse.Product>,
+    productList: LazyPagingItems<Product>,
     addToCartClicked: (productId: Int) -> Unit,
-    itemClicked: (ProductResponse.Product) -> Unit
+    itemClicked: (productId:Long) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -105,9 +105,9 @@ fun ProductListContent(
 
 @Composable
 fun ProductListItem(
-    product: ProductResponse.Product,
+    product: Product,
     addToCartClicked: (productId: Int) -> Unit,
-    itemClicked: (ProductResponse.Product) -> Unit
+    itemClicked: (productId: Long) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -117,7 +117,7 @@ fun ProductListItem(
                 color = Color.Black
             )
             .clickable {
-                itemClicked(product)
+                itemClicked(product.productId)
             }
     ) {
         PlaceHolderImage(modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 6.dp))
@@ -157,7 +157,7 @@ fun ProductListItem(
 @Preview(showBackground = true)
 fun ProductListItemPreview() {
     AppTheme {
-        ProductListItem(product = ProductResponse.Product(
+        ProductListItem(product = Product(
             categoryId = 6567,
             discount = 0.1,
             picture = "penatibus",

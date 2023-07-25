@@ -125,8 +125,8 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             }
         }
         composable(Screen.Categories.route) {
-            CategoryListScreen { category ->
-                navController.navigate(Screen.ProductList.createRoute(category.categoryId))
+            CategoryListScreen { categoryId ->
+                navController.navigate(Screen.ProductList.createRoute(categoryId))
             }
         }
         composable(Screen.Cart.route) {
@@ -157,8 +157,8 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             Screen.ProductList.route,
             arguments = Screen.ProductList.getArgs()
         ) { backStackEntry ->
-            com.agah.furkan.product_list.ProductListScreen(itemClicked = { product ->
-                navController.navigate(Screen.ProductDetail.createRoute(product.productId))
+            com.agah.furkan.product_list.ProductListScreen(itemClicked = { productId ->
+                navController.navigate(Screen.ProductDetail.createRoute(productId))
             }, onBackButtonClicked = {
                 navController.popBackStack()
             }, addToCartClicked = {
@@ -185,7 +185,7 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
                     navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
                 }, onAllReviewsClicked = {
                     navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
-                }, onAddToCartClicked = { sharedViewModel.addProductToCart(it.productId) })
+                }, onAddToCartClicked = { sharedViewModel.addProductToCart(it) })
         }
         composable(Screen.Login.route) {
             com.agah.furkan.login.LoginScreen(onLoginSuccess = {

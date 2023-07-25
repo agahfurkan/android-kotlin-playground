@@ -58,7 +58,7 @@ fun ProductDetailScreen(
     onProductDescriptionClicked: (productId: Long) -> Unit,
     onReviewsClicked: (productId: Long) -> Unit,
     onAllReviewsClicked: (productId: Long) -> Unit,
-    onAddToCartClicked: (product: ProductDetailResponse.ProductDetail) -> Unit
+    onAddToCartClicked: (productId: Int) -> Unit
 ) {
     // TODO: refactor
     val productResult = viewModel.productDetail.collectAsState()
@@ -104,7 +104,7 @@ fun ProductDetailScreen(
                     }
                 }
                 ProductFooter(product = productState.productDetail, onAddToCartClicked = {
-                    onAddToCartClicked(it)
+                    onAddToCartClicked(it.productId)
                 })
             }
         }

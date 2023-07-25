@@ -81,14 +81,10 @@ android {
     dependencies {
         implementation(project(":core:data"))
         implementation(project(":core:preferences"))
-        implementation(project(":core:ui"))
         implementation(project(":core:logging"))
-        implementation(project(":core:util"))
+        implementation(project(":core:ui"))
 
         implementation(project(":data:cart"))
-        implementation(project(":data:user"))
-        implementation(project(":data:category"))
-        implementation(project(":data:product"))
 
         implementation(project(":feature:cart"))
         implementation(project(":feature:home"))
@@ -106,40 +102,24 @@ android {
         implementation(libs.constraintlayout.compose)
         implementation(libs.hilt.navigation.compose)
         implementation(libs.navigation.compose)
-        implementation(libs.glide.compose)
 
 
         implementation(libs.compose.runtime)
-        implementation(libs.compose.material)
         implementation(libs.material3.compose)
         implementation(libs.compose.runtime.livedata)
         implementation(libs.compose.ui)
         implementation(libs.activity.compose)
 
         implementation(libs.kotlin.stdlib)
-        implementation(libs.core.ktx)
-        implementation(libs.lifecycle)
-        implementation(libs.lifecycle.common.java8)
-        implementation(libs.lifecycle.livedata)
-        kapt(libs.moshi.kotlin.codegen)
+
         implementation(libs.hilt.android)
         kapt(libs.hilt.compiler)
-        implementation(libs.hilt.testing)
         implementation(libs.hilt.android.compiler)
-        implementation(libs.navigation.fragment.ktx)
-        implementation(libs.navigation.ui.ktx)
 
-        implementation(libs.glide)
-        kapt(libs.glide.compiler)
-        implementation(libs.junitx)
-        implementation(libs.test.runner)
-        implementation(libs.truth)
-        implementation(libs.lottie)
 
         implementation(libs.material3.window.size)
         implementation(libs.accompanist.theme.adapter.material)
         implementation(libs.accompanist.system.ui.controller)
-        implementation(libs.lottie.compose)
     }
 }
 spotless {

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.agah.furkan.product_list"
+    namespace = "com.agah.furkan.domain.product"
     compileSdk = 33
 
     defaultConfig {
@@ -25,12 +25,6 @@ android {
             )
         }
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -44,14 +38,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain:product"))
+    implementation(project(":data:product"))
     implementation(project(":core:data"))
-    implementation(project(":core:ui"))
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.hilt.navigation.compose)
-    implementation(libs.material3.compose)
-    implementation(libs.compose.ui)
+    implementation(libs.paging)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    implementation(libs.paging.compose)
 }

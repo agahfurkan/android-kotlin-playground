@@ -38,7 +38,7 @@ import com.agah.furkan.ui.theme.seed
 @Composable
 fun CategoryListScreen(
     viewModel: CategoryListViewModel = hiltViewModel(),
-    onCategoryClicked: (CategoryResponse.Category) -> Unit
+    onCategoryClicked: (categoryId: Long) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val state = viewModel.categoryList.collectAsState()
@@ -79,7 +79,7 @@ fun CategoryListScreen(
 @Composable
 fun CategoryListSuccessState(
     state: CategoryListUiState.Success,
-    onCategoryClicked: (CategoryResponse.Category) -> Unit
+    onCategoryClicked: (categoryId: Long) -> Unit
 ) {
     LazyVerticalGrid(modifier = Modifier.padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -91,7 +91,7 @@ fun CategoryListSuccessState(
                     .fillMaxWidth()
                     .clickable {
                         onCategoryClicked(
-                            state.data[it]
+                            state.data[it].categoryId
                         )
                     }) {
                     PlaceHolderImage()
