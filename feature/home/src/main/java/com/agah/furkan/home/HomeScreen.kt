@@ -1,6 +1,7 @@
 package com.agah.furkan.home
 
 import androidx.compose.foundation.background
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +28,12 @@ import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.seed
 
 @Composable
-fun HomeScreen(onSearchFocused: () -> Unit) {
+internal fun HomeScreenRoute(onSearchFocused: () -> Unit) {
+    HomeScreen(onSearchFocused)
+}
+
+@Composable
+private fun HomeScreen(onSearchFocused: () -> Unit) {
     val focusManager = LocalFocusManager.current
     AppTheme {
         Surface {
@@ -69,7 +75,7 @@ fun HomeScreen(onSearchFocused: () -> Unit) {
 }
 
 @Composable
-fun BrandBannerItem() {
+private fun BrandBannerItem() {
     PlaceHolderImage(
         Modifier
             .fillMaxWidth()
@@ -79,7 +85,7 @@ fun BrandBannerItem() {
 }
 
 @Composable
-fun SearchContent(onSearchFocused: (focusState: FocusState) -> Unit) {
+private fun SearchContent(onSearchFocused: (focusState: FocusState) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -94,7 +100,7 @@ fun SearchContent(onSearchFocused: (focusState: FocusState) -> Unit) {
 }
 
 @Composable
-fun AnnouncementsContent() {
+private fun AnnouncementsContent() {
     Text(text = stringResource(R.string.announcements))
     LazyRow(
         modifier = Modifier.padding(top = 8.dp),
@@ -111,7 +117,7 @@ fun AnnouncementsContent() {
 }
 
 @Composable
-fun ExclusiveDealsContent() {
+private fun ExclusiveDealsContent() {
     Text(stringResource(id = R.string.exclusive_deals))
     LazyRow(
         modifier = Modifier.padding(top = 8.dp),
@@ -147,7 +153,7 @@ fun ExclusiveDealsContent() {
 }
 
 @Composable
-fun RecentlyViewedContent() {
+private fun RecentlyViewedContent() {
     Text(stringResource(id = R.string.recently_viewed))
     LazyRow(
         modifier = Modifier.padding(top = 8.dp),
@@ -172,6 +178,6 @@ fun RecentlyViewedContent() {
 
 @Preview
 @Composable
-fun HomeScreenPreview() {
+private fun HomeScreenPreview() {
     HomeScreen {}
 }

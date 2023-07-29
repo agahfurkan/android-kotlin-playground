@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -27,6 +28,8 @@ import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
 import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.category_list.navigation.categoryListScreen
+import com.agah.furkan.home.navigation.homeScreen
+import com.agah.furkan.home.navigation.navigateToHomeScreen
 import com.agah.furkan.navigation.cartScreen
 import com.agah.furkan.profile.ProfileScreen
 import com.agah.furkan.profile.ProfileScreenViewModel
@@ -120,13 +123,8 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
     val cartListState = sharedViewModel.userCart.collectAsState()
     val cartList = cartListState.value
     NavHost(navController, startDestination = Screen.Splash.route) {
-        composable(Screen.Home.route) {
-            val systemUiController: SystemUiController = rememberSystemUiController()
-            systemUiController.isStatusBarVisible = true
-
-            com.agah.furkan.home.HomeScreen {
-                navController.navigate(Screen.Search.route)
-            }
+        homeScreen {
+            navController.navigate(Screen.Search.route)
         }
         categoryListScreen { categoryId ->
             navController.navigate(Screen.ProductList.createRoute(categoryId))
@@ -136,6 +134,7 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             onCartItemRemoved = {},
             removeProductFromCartClicked = {},
             addAdditionalProductClicked = {})
+
         composable(Screen.Profile.route) {
             val viewModel = hiltViewModel<ProfileScreenViewModel>()
 
@@ -187,11 +186,10 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
         }
         composable(Screen.Login.route) {
             com.agah.furkan.login.LoginScreen(onLoginSuccess = {
-                navController.navigate(Screen.Home.route) {
-                    popUpTo(navController.graph.id) {
-                        inclusive = true
-                    }
-                }
+                navController.navigateToHomeScreen(
+                    NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
+                        .build()
+                )
             }, onRegisterClicked = {
                 navController.navigate(Screen.Register.route)
             })
@@ -204,17 +202,14 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
         composable(Screen.Splash.route) {
             val systemUiController: SystemUiController = rememberSystemUiController()
             systemUiController.isStatusBarVisible = false
-
+            val navOptions =
+                NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
+                    .build()
             com.agah.furkan.splash.SplashScreen {
-                val destination = if (it) {
-                    Screen.Home
+                if (it) {
+                    navController.navigateToHomeScreen(navOptions)
                 } else {
-                    Screen.Login
-                }
-                navController.navigate(destination.route) {
-                    popUpTo(navController.graph.id) {
-                        inclusive = true
-                    }
+                    navController.navigate(Screen.Login.route, navOptions)
                 }
             }
         }

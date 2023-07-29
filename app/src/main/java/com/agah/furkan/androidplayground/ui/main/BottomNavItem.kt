@@ -5,6 +5,7 @@ import androidx.annotation.StringRes
 import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.core.ui.Screen
 import com.agah.furkan.category_list.navigation.categoryListRoute
+import com.agah.furkan.home.navigation.homeRoute
 import com.agah.furkan.navigation.cartRoute
 
 sealed class BottomNavItem(
@@ -13,7 +14,7 @@ sealed class BottomNavItem(
     val screenRoute: String
 ) {
     object Home :
-        BottomNavItem(R.string.bottom_nav_home, R.drawable.ic_round_home, Screen.Home.route)
+        BottomNavItem(R.string.bottom_nav_home, R.drawable.ic_round_home, homeRoute)
 
     object Categories :
         BottomNavItem(R.string.bottom_nav_categories, R.drawable.ic_grid, categoryListRoute)
