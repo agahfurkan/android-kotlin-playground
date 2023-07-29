@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryListViewModel @Inject constructor(private val categoryRepository: CategoryRepository) :
+internal class CategoryListViewModel @Inject constructor(private val categoryRepository: CategoryRepository) :
     ViewModel() {
     private val _categoryList = MutableStateFlow<CategoryListUiState>(CategoryListUiState.Loading)
     val categoryList = _categoryList.asStateFlow()

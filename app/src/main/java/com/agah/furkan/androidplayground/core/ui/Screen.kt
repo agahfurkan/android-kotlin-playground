@@ -5,8 +5,6 @@ import androidx.navigation.navArgument
 
 sealed class Screen(var title: String, var route: String) {
     object Home : Screen("Home", "home")
-    object Categories : Screen("Categories", "categories")
-    object Cart : Screen("Cart", "cart")
     object Profile : Screen("Profile", "profile")
     object SecondModule : Screen("Second Module", "second_module")
     object Splash : Screen("Splash", "splash")

@@ -50,4 +50,5 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui)
+    implementation(libs.navigation.compose)
 }

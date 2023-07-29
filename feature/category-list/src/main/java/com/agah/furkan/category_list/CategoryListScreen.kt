@@ -34,15 +34,25 @@ import com.agah.furkan.ui.component.PlaceHolderImage
 import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.seed
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoryListScreen(
+internal fun CategoryListRoute(
     viewModel: CategoryListViewModel = hiltViewModel(),
     onCategoryClicked: (categoryId: Long) -> Unit
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
     val state = viewModel.categoryList.collectAsState()
     val stateValue = state.value
+
+    CategoryListScreen(stateValue, onCategoryClicked)
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun CategoryListScreen(
+    state: CategoryListUiState,
+    onCategoryClicked: (categoryId: Long) -> Unit
+) {
+    val snackbarHostState = remember { SnackbarHostState() }
+
 
     AppTheme {
         Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }, topBar = {
@@ -52,15 +62,15 @@ fun CategoryListScreen(
             )
         }) { padding ->
             Column(Modifier.padding(padding)) {
-                when (stateValue) {
+                when (state) {
                     is CategoryListUiState.Success -> {
-                        CategoryListSuccessState(stateValue, onCategoryClicked)
+                        CategoryListSuccessState(state, onCategoryClicked)
                     }
 
                     is CategoryListUiState.Error -> {
                         LaunchedEffect(snackbarHostState) {
                             snackbarHostState.showSnackbar(
-                                message = stateValue.errorMessage,
+                                message = state.errorMessage,
                                 duration = SnackbarDuration.Indefinite,
                             )
                         }
@@ -77,7 +87,7 @@ fun CategoryListScreen(
 }
 
 @Composable
-fun CategoryListSuccessState(
+private fun CategoryListSuccessState(
     state: CategoryListUiState.Success,
     onCategoryClicked: (categoryId: Long) -> Unit
 ) {
@@ -106,7 +116,7 @@ fun CategoryListSuccessState(
 }
 
 @Composable
-fun Loading() {
+private fun Loading() {
     Box(modifier = Modifier.fillMaxSize()) {
         LoadingState(modifier = Modifier.align(Alignment.Center))
     }
@@ -114,7 +124,7 @@ fun Loading() {
 
 @Composable
 @Preview
-fun CategoryListSuccessStatePreview(
+private fun CategoryListSuccessStatePreview(
     @PreviewParameter(CategoryPreviewParameterProvider::class) categoryList: List<CategoryResponse.Category>
 ) {
     CategoryListSuccessState(
@@ -126,6 +136,6 @@ fun CategoryListSuccessStatePreview(
 
 @Composable
 @Preview
-fun LoadingPreview() {
+private fun LoadingPreview() {
     Loading()
 }

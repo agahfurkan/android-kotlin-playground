@@ -1,6 +1,6 @@
 package com.agah.furkan.cart
 
-data class Cart(
+internal data class Cart(
     val cartId: Long,
     val discount: Double,
     val picture: String,

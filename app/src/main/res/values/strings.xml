@@ -1,19 +1,7 @@
 <resources>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
-    <string name="discover">Discover</string>
-    <string name="cart">Cart</string>
-    <string name="profile">Profile</string>
-    <string name="logout">Logout</string>
-
-    <string name="home">Home</string>
-    <string name="categories">Categories</string>
-    <string name="second_module">Second Module</string>
-    <string name="click_here_to_register"><u>Click here to register</u></string>
-
-
-    <string name="products">Products</string>
-    <string name="product_detail">Product Detail</string>
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_categories">Categories</string>
+    <string name="bottom_nav_cart">Cart</string>
+    <string name="bottom_nav_profile">Profile</string>
+    <string name="bottom_nav_second_module">Second Module</string>
 </resources>

@@ -45,9 +45,24 @@ import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.seed
 import com.agah.furkan.util.discount
 
+@Composable
+internal fun CartScreenRoute(
+    cartList: Map<Long, List<CartResponse.Cart>>,
+    onCartItemRemoved: (Long) -> Unit,
+    removeProductFromCartClicked: (Long) -> Unit,
+    addAdditionalProductClicked: (Int) -> Unit
+) {
+    CartScreen(
+        cartList = cartList,
+        onCartItemRemoved = onCartItemRemoved,
+        removeProductFromCartClicked = removeProductFromCartClicked,
+        addAdditionalProductClicked = addAdditionalProductClicked
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartScreen(
+private fun CartScreen(
     cartList: Map<Long, List<CartResponse.Cart>>,
     onCartItemRemoved: (Long) -> Unit,
     removeProductFromCartClicked: (Long) -> Unit,
@@ -115,7 +130,7 @@ fun CartScreen(
 }
 
 @Composable
-fun CartItem(
+private fun CartItem(
     item: CartResponse.Cart,
     totalSizeOfSameProduct: Int,
     onCartItemRemoved: (CartResponse.Cart) -> Unit,
@@ -264,7 +279,7 @@ fun CartItem(
 }
 
 @Composable
-fun OfferList() {
+private fun OfferList() {
     Column {
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
@@ -292,7 +307,7 @@ fun OfferList() {
 }
 
 @Composable
-fun RecentlyAddedProductItem(
+private fun RecentlyAddedProductItem(
     item: RecentlyAddedProductItemModel,
     onAddToCardButtonClicked: () -> Unit
 ) {
@@ -376,7 +391,7 @@ fun RecentlyAddedProductItem(
 
 @Composable
 @Preview(showBackground = true)
-fun CartItemPreview() {
+private fun CartItemPreview() {
     AppTheme {
         CartItem(
             CartResponse.Cart(
@@ -394,7 +409,7 @@ fun CartItemPreview() {
 
 @Composable
 @Preview(showBackground = true)
-fun OfferListPreview() {
+private fun OfferListPreview() {
     AppTheme {
         OfferList()
     }
@@ -402,7 +417,7 @@ fun OfferListPreview() {
 
 @Composable
 @Preview(showBackground = true)
-fun RecentlyAddedProductItemPreview() {
+private fun RecentlyAddedProductItemPreview() {
     AppTheme {
         RecentlyAddedProductItem(
             RecentlyAddedProductItemModel(

@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -25,7 +26,8 @@ import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
 import com.agah.furkan.cart.remote.model.response.CartResponse
-import com.agah.furkan.category_list.CategoryListScreen
+import com.agah.furkan.category_list.navigation.categoryListScreen
+import com.agah.furkan.navigation.cartScreen
 import com.agah.furkan.profile.ProfileScreen
 import com.agah.furkan.profile.ProfileScreenViewModel
 import com.agah.furkan.ui.theme.AppTheme
@@ -38,7 +40,7 @@ fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val showBottomBar = BottomNavItem.getBottomNavItems()
-        .firstOrNull { it.screen_route == navBackStackEntry?.destination?.route } != null
+        .firstOrNull { it.screenRoute == navBackStackEntry?.destination?.route } != null
     val sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity)
     val cart = sharedViewModel.userCart.collectAsState()
 
@@ -77,26 +79,26 @@ fun BottomNavigationBar(
                                 }
                             }) {
                                 Icon(
-                                    painterResource(id = item.icon),
-                                    contentDescription = item.title
+                                    painterResource(id = item.iconRes),
+                                    contentDescription = stringResource(id = item.titleRes)
                                 )
                             }
                         } else {
                             Icon(
-                                painter = painterResource(id = item.icon),
-                                contentDescription = item.title
+                                painter = painterResource(id = item.iconRes),
+                                contentDescription = stringResource(id = item.titleRes)
                             )
                         }
                     },
                     label = {
                         if (item != BottomNavItem.SecondModule) {
-                            Text(text = item.title)
+                            Text(text = stringResource(id = item.titleRes))
                         }
                     },
                     alwaysShowLabel = item != BottomNavItem.SecondModule,
-                    selected = currentRoute == item.screen_route,
+                    selected = currentRoute == item.screenRoute,
                     onClick = {
-                        navController.navigate(item.screen_route) {
+                        navController.navigate(item.screenRoute) {
                             navController.graph.startDestinationRoute?.let { screen_route ->
                                 popUpTo(screen_route) {
                                     saveState = true
@@ -115,6 +117,8 @@ fun BottomNavigationBar(
 
 @Composable
 fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedViewModel) {
+    val cartListState = sharedViewModel.userCart.collectAsState()
+    val cartList = cartListState.value
     NavHost(navController, startDestination = Screen.Splash.route) {
         composable(Screen.Home.route) {
             val systemUiController: SystemUiController = rememberSystemUiController()
@@ -124,20 +128,14 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
                 navController.navigate(Screen.Search.route)
             }
         }
-        composable(Screen.Categories.route) {
-            CategoryListScreen { categoryId ->
-                navController.navigate(Screen.ProductList.createRoute(categoryId))
-            }
+        categoryListScreen { categoryId ->
+            navController.navigate(Screen.ProductList.createRoute(categoryId))
         }
-        composable(Screen.Cart.route) {
-            val cartListState = sharedViewModel.userCart.collectAsState()
-            val cartList = cartListState.value
-            com.agah.furkan.cart.CartScreen(
-                cartList = cartList,
-                onCartItemRemoved = {},
-                removeProductFromCartClicked = {},
-                addAdditionalProductClicked = {})
-        }
+
+        cartScreen(cartList = cartList,
+            onCartItemRemoved = {},
+            removeProductFromCartClicked = {},
+            addAdditionalProductClicked = {})
         composable(Screen.Profile.route) {
             val viewModel = hiltViewModel<ProfileScreenViewModel>()
 

@@ -1,6 +1,6 @@
 package com.agah.furkan.cart
 
-data class RecentlyAddedProductItemModel(
+internal data class RecentlyAddedProductItemModel(
     val productName: String,
     val price: Double,
     val discount: Double
