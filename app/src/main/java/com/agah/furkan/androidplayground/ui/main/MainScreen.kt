@@ -34,6 +34,8 @@ import com.agah.furkan.login.navigation.loginScreen
 import com.agah.furkan.navigation.cartScreen
 import com.agah.furkan.navigation.navigateToProductDetail
 import com.agah.furkan.navigation.productDetailScreen
+import com.agah.furkan.product_detail_tabbed.navigation.navigateToProductDetailTabbed
+import com.agah.furkan.product_detail_tabbed.navigation.productDetailTabbedScreen
 import com.agah.furkan.profile.ProfileScreen
 import com.agah.furkan.profile.ProfileScreenViewModel
 import com.agah.furkan.ui.theme.AppTheme
@@ -170,15 +172,15 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
                 navController.popBackStack()
             },
             onProductDetailClicked = {
-                navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 0))
+                navController.navigateToProductDetailTabbed(productId = it, initialPage = 0)
             },
             onProductDescriptionClicked = {
-                navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 1))
+                navController.navigateToProductDetailTabbed(productId = it, initialPage = 1)
             },
             onReviewsClicked = {
-                navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
+                navController.navigateToProductDetailTabbed(productId = it, initialPage = 2)
             }, onAllReviewsClicked = {
-                navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
+                navController.navigateToProductDetailTabbed(productId = it, initialPage = 2)
             }, onAddToCartClicked = { sharedViewModel.addProductToCart(it) })
         loginScreen(onLoginSuccess = {
             navController.navigateToHomeScreen(
@@ -212,17 +214,8 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
                 navController.popBackStack()
             }
         }
-        composable(
-            route = Screen.ProductDetailTabbed.route,
-            arguments = Screen.ProductDetailTabbed.getArgs()
-        ) {
-            com.agah.furkan.product_detail_tabbed.ProductTabbedDetailScreen(
-                initialPage = it.arguments?.getInt(
-                    "initialPage"
-                ) ?: 0
-            ) {
-                navController.popBackStack()
-            }
+        productDetailTabbedScreen {
+            navController.popBackStack()
         }
     }
 }

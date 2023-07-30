@@ -42,19 +42,30 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.ui.component.RatingBar
 import com.agah.furkan.product.ProductDetail
 import com.agah.furkan.product.averageRating
 import com.agah.furkan.product.totalReviewsByRating
+import com.agah.furkan.ui.component.RatingBar
 import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.darkGray
 import com.agah.furkan.ui.theme.orange
 import com.agah.furkan.ui.theme.seed
 import kotlinx.coroutines.launch
 
+@Composable
+internal fun ProductDetailTabbedRoute(
+    initialPage: Int = 0,
+    onBackButtonClicked: () -> Unit
+) {
+    ProductTabbedDetailScreen(
+        initialPage = initialPage,
+        onBackButtonClicked = onBackButtonClicked
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun ProductTabbedDetailScreen(
+private fun ProductTabbedDetailScreen(
     productTabbedDetailVM: ProductTabbedDetailVM = hiltViewModel(),
     initialPage: Int = 0,
     onBackButtonClicked: () -> Unit
@@ -130,7 +141,7 @@ fun ProductTabbedDetailScreen(
 }
 
 @Composable
-fun ProductDetailDescriptionContent(description: String) {
+private fun ProductDetailDescriptionContent(description: String) {
     val scrollState = rememberScrollState()
     Column(
         Modifier
@@ -143,7 +154,7 @@ fun ProductDetailDescriptionContent(description: String) {
 }
 
 @Composable
-fun ProductDetailContent(productDetailSections: List<ProductDetail.Section>) {
+private fun ProductDetailContent(productDetailSections: List<ProductDetail.Section>) {
     LazyColumn(Modifier.fillMaxSize()) {
         items(productDetailSections.size) { index ->
             ProductDetailSectionItem(productDetailSections[index])
@@ -152,7 +163,7 @@ fun ProductDetailContent(productDetailSections: List<ProductDetail.Section>) {
 }
 
 @Composable
-fun ProductDetailSectionItem(productDetailSection: ProductDetail.Section) {
+private fun ProductDetailSectionItem(productDetailSection: ProductDetail.Section) {
     Column(Modifier.fillMaxWidth()) {
         Text(
             modifier = Modifier
@@ -176,7 +187,7 @@ fun ProductDetailSectionItem(productDetailSection: ProductDetail.Section) {
 }
 
 @Composable
-fun ProductDetailReviewContent(productDetailReviews: List<ProductDetail.Review>) {
+private fun ProductDetailReviewContent(productDetailReviews: List<ProductDetail.Review>) {
     LazyColumn(Modifier.fillMaxSize()) {
         item {
             ProductDetailReviewHeader(productDetailReviews)
@@ -190,7 +201,7 @@ fun ProductDetailReviewContent(productDetailReviews: List<ProductDetail.Review>)
 }
 
 @Composable
-fun ProductDetailReviewHeader(productDetailReviews: List<ProductDetail.Review>) {
+private fun ProductDetailReviewHeader(productDetailReviews: List<ProductDetail.Review>) {
     ConstraintLayout(
         Modifier
             .fillMaxWidth()
@@ -258,7 +269,7 @@ fun ProductDetailReviewHeader(productDetailReviews: List<ProductDetail.Review>) 
 }
 
 @Composable
-fun ProductDetailReviewItem(productDetailReview: ProductDetail.Review) {
+private fun ProductDetailReviewItem(productDetailReview: ProductDetail.Review) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -288,7 +299,7 @@ fun ProductDetailReviewItem(productDetailReview: ProductDetail.Review) {
 
 @Composable
 @Preview
-fun ProductDetailSectionItemPreview() {
+private fun ProductDetailSectionItemPreview() {
     ProductDetailSectionItem(
         ProductDetail.Section(
             sectionName = "Nicolas Caldwell",
@@ -308,7 +319,7 @@ fun ProductDetailSectionItemPreview() {
 
 @Composable
 @Preview
-fun ProductDetailReviewContentPreview() {
+private fun ProductDetailReviewContentPreview() {
     ProductDetailReviewContent(
         productDetailReviews = listOf(
             ProductDetail.Review(

@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductTabbedDetailVM @Inject constructor(
+internal class ProductTabbedDetailVM @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val productDetailRepository: com.agah.furkan.product.ProductDetailRepository
 ) : ViewModel() {
