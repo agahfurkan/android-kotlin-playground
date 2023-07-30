@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileScreenViewModel @Inject constructor(private val userPreference: UserPreference) :
+internal class ProfileScreenViewModel @Inject constructor(private val userPreference: UserPreference) :
     ViewModel() {
 
     fun logout() {

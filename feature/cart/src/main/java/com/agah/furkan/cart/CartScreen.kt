@@ -46,7 +46,7 @@ import com.agah.furkan.ui.theme.seed
 import com.agah.furkan.util.discount
 
 @Composable
-internal fun CartScreenRoute(
+internal fun CartRoute(
     cartList: Map<Long, List<CartResponse.Cart>>,
     onCartItemRemoved: (Long) -> Unit,
     removeProductFromCartClicked: (Long) -> Unit,

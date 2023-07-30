@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.agah.furkan.cart.CartScreenRoute
+import com.agah.furkan.cart.CartRoute
 import com.agah.furkan.cart.remote.model.response.CartResponse
 
 const val cartRoute = "cartRoute"
@@ -20,7 +20,7 @@ fun NavGraphBuilder.cartScreen(
     addAdditionalProductClicked: (Int) -> Unit
 ) {
     composable(route = cartRoute) {
-        CartScreenRoute(
+        CartRoute(
             cartList,
             onCartItemRemoved,
             removeProductFromCartClicked,

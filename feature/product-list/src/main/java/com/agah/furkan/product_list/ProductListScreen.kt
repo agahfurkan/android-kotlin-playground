@@ -37,7 +37,7 @@ import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.seed
 
 @Composable
-internal fun ProductListScreenRoute(
+internal fun ProductListRoute(
     itemClicked: (productId: Long) -> Unit,
     onBackButtonClicked: () -> Unit,
     addToCartClicked: (productId: Int) -> Unit,

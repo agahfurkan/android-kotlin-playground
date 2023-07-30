@@ -34,6 +34,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.ui.component.PlaceHolderImage
 import com.agah.furkan.ui.component.WarningDialog
 import com.agah.furkan.ui.theme.divider
@@ -41,13 +42,21 @@ import com.agah.furkan.ui.theme.gray
 import com.agah.furkan.ui.theme.seed
 
 @Composable
-fun ProfileScreen(onLogoutButtonClicked: () -> Unit) {
+internal fun ProfileRoute(onLogoutButtonClicked: () -> Unit) {
+    ProfileScreen(onLogoutButtonClicked = onLogoutButtonClicked)
+}
+
+@Composable
+private fun ProfileScreen(
+    viewModel: ProfileScreenViewModel = hiltViewModel(),
+    onLogoutButtonClicked: () -> Unit
+) {
     val showLogoutDialog = remember {
         mutableStateOf(false)
     }
     if (showLogoutDialog.value) {
         WarningDialog(showLogoutDialog) {
-
+            viewModel.logout()
             onLogoutButtonClicked()
         }
     }
@@ -146,7 +155,7 @@ fun ProfileScreen(onLogoutButtonClicked: () -> Unit) {
 
 @Composable
 @Preview(showBackground = true)
-fun ProfileScreenPreview() {
+private fun ProfileScreenPreview() {
     ProfileScreen {
 
     }

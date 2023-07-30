@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.agah.furkan.home.HomeScreenRoute
+import com.agah.furkan.home.HomeRoute
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -18,6 +18,6 @@ fun NavGraphBuilder.homeScreen(onSearchFocused: () -> Unit) {
     composable(homeRoute) {
         val systemUiController: SystemUiController = rememberSystemUiController()
         systemUiController.isStatusBarVisible = true
-        HomeScreenRoute(onSearchFocused)
+        HomeRoute(onSearchFocused)
     }
 }

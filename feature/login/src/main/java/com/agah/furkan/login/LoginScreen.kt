@@ -31,7 +31,7 @@ import com.agah.furkan.util.launchAndCollectIn
 import com.agah.furkan.util.showToast
 
 @Composable
-internal fun LoginScreenRoute(
+internal fun LoginRoute(
     onLoginSuccess: () -> Unit,
     onRegisterClicked: () -> Unit
 ) {

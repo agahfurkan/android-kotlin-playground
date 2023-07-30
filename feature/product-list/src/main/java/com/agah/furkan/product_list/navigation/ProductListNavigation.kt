@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.agah.furkan.product_list.ProductListScreenRoute
+import com.agah.furkan.product_list.ProductListRoute
 
 internal const val ARG_CATEGORY_ID = "categoryId"
 const val productListRoute = "productListRoute/{$ARG_CATEGORY_ID}"
@@ -23,7 +23,7 @@ fun NavGraphBuilder.productListScreen(
         productListRoute,
         arguments = listOf(navArgument("categoryId") { type = NavType.LongType })
     ) {
-        ProductListScreenRoute(
+        ProductListRoute(
             itemClicked = itemClicked,
             onBackButtonClicked = onBackButtonClicked,
             addToCartClicked = addToCartClicked

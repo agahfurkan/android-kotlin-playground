@@ -28,7 +28,7 @@ import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.seed
 
 @Composable
-internal fun HomeScreenRoute(onSearchFocused: () -> Unit) {
+internal fun HomeRoute(onSearchFocused: () -> Unit) {
     HomeScreen(onSearchFocused)
 }
 

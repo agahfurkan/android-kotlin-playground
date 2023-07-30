@@ -32,14 +32,14 @@ import com.agah.furkan.category_list.navigation.categoryListScreen
 import com.agah.furkan.home.navigation.homeScreen
 import com.agah.furkan.home.navigation.navigateToHomeScreen
 import com.agah.furkan.login.navigation.loginScreen
+import com.agah.furkan.login.navigation.navigateToLoginScreen
 import com.agah.furkan.product_detail.navigation.navigateToProductDetail
 import com.agah.furkan.product_detail.navigation.productDetailScreen
 import com.agah.furkan.product_detail_tabbed.navigation.navigateToProductDetailTabbed
 import com.agah.furkan.product_detail_tabbed.navigation.productDetailTabbedScreen
 import com.agah.furkan.product_list.navigation.navigateToProductListScreen
 import com.agah.furkan.product_list.navigation.productListScreen
-import com.agah.furkan.profile.ProfileScreen
-import com.agah.furkan.profile.ProfileScreenViewModel
+import com.agah.furkan.profile.navigation.profileScreen
 import com.agah.furkan.ui.theme.AppTheme
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -50,7 +50,7 @@ fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val showBottomBar = BottomNavItem.getBottomNavItems()
-        .firstOrNull { it.screenRoute == navBackStackEntry?.destination?.route } != null
+        .firstOrNull { it.route == navBackStackEntry?.destination?.route } != null
     val sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity)
     val cart = sharedViewModel.userCart.collectAsState()
 
@@ -106,9 +106,9 @@ fun BottomNavigationBar(
                         }
                     },
                     alwaysShowLabel = item != BottomNavItem.SecondModule,
-                    selected = currentRoute == item.screenRoute,
+                    selected = currentRoute == item.route,
                     onClick = {
-                        navController.navigate(item.screenRoute) {
+                        navController.navigate(item.route) {
                             navController.graph.startDestinationRoute?.let { screen_route ->
                                 popUpTo(screen_route) {
                                     saveState = true
@@ -143,18 +143,11 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             onCartItemRemoved = {},
             removeProductFromCartClicked = {},
             addAdditionalProductClicked = {})
-
-        composable(Screen.Profile.route) {
-            val viewModel = hiltViewModel<ProfileScreenViewModel>()
-
-            ProfileScreen {
-                viewModel.logout()
-                navController.navigate(Screen.Login.route) {
-                    popUpTo(navController.graph.id) {
-                        inclusive = true
-                    }
-                }
-            }
+        profileScreen {
+            navController.navigateToLoginScreen(
+                NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
+                    .build()
+            )
         }
         composable(Screen.SecondModule.route) {
             // TODO: add navigation
@@ -191,7 +184,7 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
         })
         composable(Screen.Register.route) {
             com.agah.furkan.register.RegisterScreen {
-                navController.navigate(Screen.Login.route)
+                navController.navigateToLoginScreen()
             }
         }
         composable(Screen.Splash.route) {
@@ -204,7 +197,7 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
                 if (it) {
                     navController.navigateToHomeScreen(navOptions)
                 } else {
-                    navController.navigate(Screen.Login.route, navOptions)
+                    navController.navigateToLoginScreen(navOptions)
                 }
             }
         }
