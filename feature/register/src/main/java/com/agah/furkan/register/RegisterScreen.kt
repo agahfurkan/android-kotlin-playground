@@ -27,11 +27,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.ui.theme.AppTheme
-import com.agah.furkan.util.showToast
 import com.agah.furkan.util.launchAndCollectIn
+import com.agah.furkan.util.showToast
 
 @Composable
-fun RegisterScreen(viewModel: RegisterScreenVM = hiltViewModel(), onRegisterSuccess: () -> Unit) {
+fun RegisterRoute(onRegisterSuccess: () -> Unit) {
+    RegisterScreen(onRegisterSuccess = onRegisterSuccess)
+}
+
+
+@Composable
+private fun RegisterScreen(
+    viewModel: RegisterScreenVM = hiltViewModel(),
+    onRegisterSuccess: () -> Unit
+) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
 
@@ -63,7 +72,7 @@ fun RegisterScreen(viewModel: RegisterScreenVM = hiltViewModel(), onRegisterSucc
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun RegisterFormContent(
+private fun RegisterFormContent(
     username: String,
     password: String,
     onUsernameChanged: (String) -> Unit,
@@ -116,7 +125,7 @@ fun RegisterFormContent(
 
 @Preview
 @Composable
-fun RegisterFormContentPreview() {
+private fun RegisterFormContentPreview() {
     RegisterFormContent(
         username = "Dion Grant",
         password = "ocurreret",

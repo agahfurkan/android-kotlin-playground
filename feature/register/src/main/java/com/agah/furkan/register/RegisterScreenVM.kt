@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterScreenVM @Inject constructor(private val userRepository: UserRepository) :
+internal class RegisterScreenVM @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
 
     private val _registerUserResponse =

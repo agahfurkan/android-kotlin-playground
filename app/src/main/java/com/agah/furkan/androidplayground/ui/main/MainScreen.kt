@@ -40,6 +40,8 @@ import com.agah.furkan.product_detail_tabbed.navigation.productDetailTabbedScree
 import com.agah.furkan.product_list.navigation.navigateToProductListScreen
 import com.agah.furkan.product_list.navigation.productListScreen
 import com.agah.furkan.profile.navigation.profileScreen
+import com.agah.furkan.register.navigation.navigateToRegisterScreen
+import com.agah.furkan.register.navigation.registerScreen
 import com.agah.furkan.ui.theme.AppTheme
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -180,13 +182,13 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
                     .build()
             )
         }, onRegisterClicked = {
-            navController.navigate(Screen.Register.route)
+            navController.navigateToRegisterScreen()
         })
-        composable(Screen.Register.route) {
-            com.agah.furkan.register.RegisterScreen {
-                navController.navigateToLoginScreen()
-            }
+
+        registerScreen {
+            navController.navigateToLoginScreen()
         }
+
         composable(Screen.Splash.route) {
             val systemUiController: SystemUiController = rememberSystemUiController()
             systemUiController.isStatusBarVisible = false
