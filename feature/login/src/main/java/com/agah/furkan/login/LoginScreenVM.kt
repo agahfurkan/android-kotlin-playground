@@ -8,9 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.agah.furkan.domain.login.LoginUseCase
 import com.agah.furkan.logging.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,11 +19,11 @@ internal class LoginScreenVM @Inject constructor(
     private val logger: Logger
 ) : ViewModel() {
 
-    private val _loginState = MutableSharedFlow<LoginUseCase.UiState>()
-    val loginState: SharedFlow<LoginUseCase.UiState> get() = _loginState
+    private val _loginState = Channel<LoginUseCase.UiState>(Channel.BUFFERED)
+    val loginState = _loginState.receiveAsFlow()
 
-    private val _uiEvent = MutableSharedFlow<LoginScreenEvent>()
-    val uiEvent = _uiEvent.asSharedFlow()
+    private val _uiEvent = Channel<LoginScreenEvent>(Channel.BUFFERED)
+    val uiEvent = _uiEvent.receiveAsFlow()
 
     var username by mutableStateOf("")
     var password by mutableStateOf("")
@@ -36,7 +35,7 @@ internal class LoginScreenVM @Inject constructor(
                 if (it is LoginUseCase.UiState.Loading) {
                     logger.i(state.toString())
                 }
-                _loginState.emit(it)
+                _loginState.send(it)
             }
         }
     }
@@ -52,7 +51,7 @@ internal class LoginScreenVM @Inject constructor(
 
     fun onRegisterButtonClicked() {
         viewModelScope.launch {
-            _uiEvent.emit(LoginScreenEvent.NavigateToRegisterScreen)
+            _uiEvent.send(LoginScreenEvent.NavigateToRegisterScreen)
         }
     }
 }

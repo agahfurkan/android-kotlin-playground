@@ -18,7 +18,10 @@ internal fun SplashRoute(isTokenValid: (Boolean) -> Unit) {
 }
 
 @Composable
-private fun SplashScreen(viewModel: SplashScreenVM = hiltViewModel(), isTokenValid: (Boolean) -> Unit) {
+private fun SplashScreen(
+    viewModel: SplashScreenVM = hiltViewModel(),
+    isTokenValid: (Boolean) -> Unit
+) {
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(key1 = Unit) {
         viewModel.isTokenValid.launchAndCollectIn(lifecycleOwner) {
