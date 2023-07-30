@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.agah.furkan.login.LoginScreenRoute
 
-const val loginScreenRoute = "loginScreen"
+const val loginScreenRoute = "loginRoute"
 
 fun NavController.navigateToLoginScreen() {
     navigate(loginScreenRoute)

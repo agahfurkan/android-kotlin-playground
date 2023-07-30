@@ -1,4 +1,4 @@
-package com.agah.furkan.navigation
+package com.agah.furkan.product_detail.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -7,10 +7,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.agah.furkan.product_detail.ProductDetailRoute
 
-const val productDetailRoute = "productDetail/{productId}"
+internal const val ARG_PRODUCT_ID = "productId"
+const val productDetailRoute = "productDetailRoute/{$ARG_PRODUCT_ID}"
 
 fun NavController.navigateToProductDetail(productId: Long) {
-    navigate("productDetail/$productId")
+    navigate(productDetailRoute.replace("{$ARG_PRODUCT_ID}", productId.toString()))
 }
 
 fun NavGraphBuilder.productDetailScreen(

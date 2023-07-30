@@ -7,12 +7,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.agah.furkan.product_detail_tabbed.ProductDetailTabbedRoute
 
-private const val ARG_PRODUCT_ID = "productId"
-private const val ARG_INITIAL_PAGE = "initialPage"
-const val productDetailTabbedRoute = "product_detail_tabbed/{$ARG_PRODUCT_ID}/{$ARG_INITIAL_PAGE}"
+internal const val ARG_PRODUCT_ID = "productId"
+internal const val ARG_INITIAL_PAGE = "initialPage"
+const val productDetailTabbedRoute = "productDetailTabbedRoute/{$ARG_PRODUCT_ID}/{$ARG_INITIAL_PAGE}"
 
 fun NavController.navigateToProductDetailTabbed(productId: Long, initialPage: Int) {
-    navigate("product_detail_tabbed/$productId/$initialPage")
+    navigate(
+        productDetailTabbedRoute.replace("{$ARG_PRODUCT_ID}", productId.toString())
+            .replace("{$ARG_INITIAL_PAGE}", initialPage.toString())
+    )
 }
 
 fun NavGraphBuilder.productDetailTabbedScreen(

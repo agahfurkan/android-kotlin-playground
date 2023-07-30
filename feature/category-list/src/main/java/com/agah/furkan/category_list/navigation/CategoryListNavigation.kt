@@ -6,7 +6,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.agah.furkan.category_list.CategoryListRoute
 
-const val categoryListRoute = "category_list_route"
+const val categoryListRoute = "categoryListRoute"
 
 fun NavController.navigateToCategoryList(navOptions: NavOptions? = null) {
     this.navigate(categoryListRoute, navOptions)

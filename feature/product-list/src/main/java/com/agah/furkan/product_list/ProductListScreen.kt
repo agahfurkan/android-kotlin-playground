@@ -36,9 +36,22 @@ import com.agah.furkan.ui.component.PlaceHolderImage
 import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.seed
 
+@Composable
+internal fun ProductListScreenRoute(
+    itemClicked: (productId: Long) -> Unit,
+    onBackButtonClicked: () -> Unit,
+    addToCartClicked: (productId: Int) -> Unit,
+) {
+    ProductListScreen(
+        itemClicked = itemClicked,
+        onBackButtonClicked = onBackButtonClicked,
+        addToCartClicked = addToCartClicked
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductListScreen(
+private fun ProductListScreen(
     viewModel: ProductListScreenVM = hiltViewModel(),
     itemClicked: (productId: Long) -> Unit,
     onBackButtonClicked: () -> Unit,
@@ -83,10 +96,10 @@ fun ProductListScreen(
 }
 
 @Composable
-fun ProductListContent(
+private fun ProductListContent(
     productList: LazyPagingItems<Product>,
     addToCartClicked: (productId: Int) -> Unit,
-    itemClicked: (productId:Long) -> Unit
+    itemClicked: (productId: Long) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -104,7 +117,7 @@ fun ProductListContent(
 }
 
 @Composable
-fun ProductListItem(
+private fun ProductListItem(
     product: Product,
     addToCartClicked: (productId: Int) -> Unit,
     itemClicked: (productId: Long) -> Unit
@@ -155,7 +168,7 @@ fun ProductListItem(
 
 @Composable
 @Preview(showBackground = true)
-fun ProductListItemPreview() {
+private fun ProductListItemPreview() {
     AppTheme {
         ProductListItem(product = Product(
             categoryId = 6567,

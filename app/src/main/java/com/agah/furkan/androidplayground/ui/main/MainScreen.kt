@@ -26,16 +26,18 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.androidplayground.core.ui.Screen
+import com.agah.furkan.cart.navigation.cartScreen
 import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.category_list.navigation.categoryListScreen
 import com.agah.furkan.home.navigation.homeScreen
 import com.agah.furkan.home.navigation.navigateToHomeScreen
 import com.agah.furkan.login.navigation.loginScreen
-import com.agah.furkan.navigation.cartScreen
-import com.agah.furkan.navigation.navigateToProductDetail
-import com.agah.furkan.navigation.productDetailScreen
+import com.agah.furkan.product_detail.navigation.navigateToProductDetail
+import com.agah.furkan.product_detail.navigation.productDetailScreen
 import com.agah.furkan.product_detail_tabbed.navigation.navigateToProductDetailTabbed
 import com.agah.furkan.product_detail_tabbed.navigation.productDetailTabbedScreen
+import com.agah.furkan.product_list.navigation.navigateToProductListScreen
+import com.agah.furkan.product_list.navigation.productListScreen
 import com.agah.furkan.profile.ProfileScreen
 import com.agah.furkan.profile.ProfileScreenViewModel
 import com.agah.furkan.ui.theme.AppTheme
@@ -131,11 +133,13 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
         homeScreen {
             navController.navigate(Screen.Search.route)
         }
+
         categoryListScreen { categoryId ->
-            navController.navigate(Screen.ProductList.createRoute(categoryId))
+            navController.navigateToProductListScreen(categoryId)
         }
 
-        cartScreen(cartList = cartList,
+        cartScreen(
+            cartList = cartList,
             onCartItemRemoved = {},
             removeProductFromCartClicked = {},
             addAdditionalProductClicked = {})
@@ -155,18 +159,13 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
         composable(Screen.SecondModule.route) {
             // TODO: add navigation
         }
-        composable(
-            Screen.ProductList.route,
-            arguments = Screen.ProductList.getArgs()
-        ) { backStackEntry ->
-            com.agah.furkan.product_list.ProductListScreen(itemClicked = { productId ->
-                navController.navigateToProductDetail(productId)
-            }, onBackButtonClicked = {
-                navController.popBackStack()
-            }, addToCartClicked = {
-                sharedViewModel.addProductToCart(it)
-            })
-        }
+        productListScreen(itemClicked = { productId ->
+            navController.navigateToProductDetail(productId)
+        }, onBackButtonClicked = {
+            navController.popBackStack()
+        }, addToCartClicked = {
+            sharedViewModel.addProductToCart(it)
+        })
         productDetailScreen(
             onBackButtonClicked = {
                 navController.popBackStack()

@@ -7,11 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.agah.furkan.domain.product.Product
+import com.agah.furkan.product_list.navigation.ARG_CATEGORY_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductListScreenVM @Inject constructor(
+internal class ProductListScreenVM @Inject constructor(
     productListPagingSource: com.agah.furkan.domain.product.ProductListPagingSource,
     state: SavedStateHandle
 ) : ViewModel() {
@@ -19,6 +20,6 @@ class ProductListScreenVM @Inject constructor(
     private var _productList = MutableLiveData<List<Product>>()
     val productList: LiveData<List<Product>> get() = _productList
     val getProducts =
-        productListPagingSource.getProductList(categoryId = state.get<Long>("categoryId") ?: 0L)
+        productListPagingSource.getProductList(categoryId = state.get<Long>(ARG_CATEGORY_ID) ?: 0L)
             .cachedIn(viewModelScope)
 }

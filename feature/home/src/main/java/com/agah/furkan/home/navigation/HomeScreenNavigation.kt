@@ -8,7 +8,7 @@ import com.agah.furkan.home.HomeScreenRoute
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-const val homeRoute = "home_route"
+const val homeRoute = "homeRoute"
 
 fun NavController.navigateToHomeScreen(navOptions: NavOptions? = null) {
     navigate(homeRoute, navOptions)

@@ -6,7 +6,7 @@ import com.agah.furkan.androidplayground.R
 import com.agah.furkan.androidplayground.core.ui.Screen
 import com.agah.furkan.category_list.navigation.categoryListRoute
 import com.agah.furkan.home.navigation.homeRoute
-import com.agah.furkan.navigation.cartRoute
+import com.agah.furkan.cart.navigation.cartRoute
 
 sealed class BottomNavItem(
     @StringRes val titleRes: Int,
