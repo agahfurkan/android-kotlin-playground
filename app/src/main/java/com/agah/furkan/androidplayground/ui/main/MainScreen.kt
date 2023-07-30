@@ -30,6 +30,7 @@ import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.category_list.navigation.categoryListScreen
 import com.agah.furkan.home.navigation.homeScreen
 import com.agah.furkan.home.navigation.navigateToHomeScreen
+import com.agah.furkan.login.navigation.loginScreen
 import com.agah.furkan.navigation.cartScreen
 import com.agah.furkan.profile.ProfileScreen
 import com.agah.furkan.profile.ProfileScreenViewModel
@@ -184,16 +185,14 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
                     navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
                 }, onAddToCartClicked = { sharedViewModel.addProductToCart(it) })
         }
-        composable(Screen.Login.route) {
-            com.agah.furkan.login.LoginScreen(onLoginSuccess = {
-                navController.navigateToHomeScreen(
-                    NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
-                        .build()
-                )
-            }, onRegisterClicked = {
-                navController.navigate(Screen.Register.route)
-            })
-        }
+        loginScreen(onLoginSuccess = {
+            navController.navigateToHomeScreen(
+                NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
+                    .build()
+            )
+        }, onRegisterClicked = {
+            navController.navigate(Screen.Register.route)
+        })
         composable(Screen.Register.route) {
             com.agah.furkan.register.RegisterScreen {
                 navController.navigate(Screen.Login.route)

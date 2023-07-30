@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginScreenVM @Inject constructor(
+internal class LoginScreenVM @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val logger: Logger
 ) : ViewModel() {

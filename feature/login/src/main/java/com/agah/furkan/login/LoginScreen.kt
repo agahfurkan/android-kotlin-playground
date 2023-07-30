@@ -30,9 +30,17 @@ import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.util.launchAndCollectIn
 import com.agah.furkan.util.showToast
 
+@Composable
+internal fun LoginScreenRoute(
+    onLoginSuccess: () -> Unit,
+    onRegisterClicked: () -> Unit
+) {
+    LoginScreen(onLoginSuccess = onLoginSuccess, onRegisterClicked = onRegisterClicked)
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(
+private fun LoginScreen(
     viewModel: LoginScreenVM = hiltViewModel(),
     onLoginSuccess: () -> Unit,
     onRegisterClicked: () -> Unit
@@ -79,7 +87,7 @@ fun LoginScreen(
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun LoginFormContent(
+private fun LoginFormContent(
     modifier: Modifier = Modifier,
     username: String,
     password: String,
@@ -138,7 +146,7 @@ fun LoginFormContent(
 
 @Preview
 @Composable
-fun LoginFormContentPreview() {
+private fun LoginFormContentPreview() {
     AppTheme {
         LoginFormContent(
             username = "Dusty Fox",

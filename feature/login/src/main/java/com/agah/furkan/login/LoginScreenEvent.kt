@@ -1,5 +1,5 @@
 package com.agah.furkan.login
 
-sealed class LoginScreenEvent {
+internal sealed class LoginScreenEvent {
     object NavigateToRegisterScreen : LoginScreenEvent()
 }
