@@ -27,7 +27,12 @@ import com.agah.furkan.ui.component.SearchTextField
 import com.agah.furkan.ui.theme.seed
 
 @Composable
-fun SearchScreen(onBackPress: () -> Unit) {
+fun SearchRoute(onBackPress: () -> Unit) {
+    SearchScreen(onBackPress = onBackPress)
+}
+
+@Composable
+private fun SearchScreen(onBackPress: () -> Unit) {
     val focusRequester = remember { FocusRequester() }
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -77,7 +82,7 @@ fun SearchScreen(onBackPress: () -> Unit) {
 
 @Composable
 @Preview
-fun SearchScreenPreview() {
+private fun SearchScreenPreview() {
     SearchScreen {
 
     }

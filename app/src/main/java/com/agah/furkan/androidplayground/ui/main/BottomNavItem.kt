@@ -3,7 +3,6 @@ package com.agah.furkan.androidplayground.ui.main
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.core.ui.Screen
 import com.agah.furkan.cart.navigation.cartRoute
 import com.agah.furkan.category_list.navigation.categoryListRoute
 import com.agah.furkan.home.navigation.homeRoute
@@ -28,7 +27,7 @@ sealed class BottomNavItem(
         BottomNavItem(
             R.string.bottom_nav_second_module,
             R.drawable.ic_star,
-            Screen.SecondModule.route
+            "dummyRoute"
         )
 
     companion object {

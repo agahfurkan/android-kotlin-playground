@@ -52,6 +52,6 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.activity.compose)
-    implementation(libs.navigation.compose)
     implementation(libs.accompanist.system.ui.controller)
+    implementation(libs.hilt.navigation.compose)
 }

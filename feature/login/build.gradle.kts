@@ -55,5 +55,4 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    implementation(libs.navigation.compose)
 }

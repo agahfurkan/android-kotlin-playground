@@ -25,7 +25,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
-import com.agah.furkan.androidplayground.core.ui.Screen
 import com.agah.furkan.cart.navigation.cartScreen
 import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.category_list.navigation.categoryListScreen
@@ -42,6 +41,10 @@ import com.agah.furkan.product_list.navigation.productListScreen
 import com.agah.furkan.profile.navigation.profileScreen
 import com.agah.furkan.register.navigation.navigateToRegisterScreen
 import com.agah.furkan.register.navigation.registerScreen
+import com.agah.furkan.search.navigation.navigateToSearchScreen
+import com.agah.furkan.search.navigation.searchScreen
+import com.agah.furkan.splash.navigation.splashRoute
+import com.agah.furkan.splash.navigation.splashScreen
 import com.agah.furkan.ui.theme.AppTheme
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -131,9 +134,9 @@ fun BottomNavigationBar(
 fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedViewModel) {
     val cartListState = sharedViewModel.userCart.collectAsState()
     val cartList = cartListState.value
-    NavHost(navController, startDestination = Screen.Splash.route) {
+    NavHost(navController, startDestination = splashRoute) {
         homeScreen {
-            navController.navigate(Screen.Search.route)
+            navController.navigateToSearchScreen()
         }
 
         categoryListScreen { categoryId ->
@@ -151,9 +154,7 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
                     .build()
             )
         }
-        composable(Screen.SecondModule.route) {
-            // TODO: add navigation
-        }
+
         productListScreen(itemClicked = { productId ->
             navController.navigateToProductDetail(productId)
         }, onBackButtonClicked = {
@@ -161,6 +162,7 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
         }, addToCartClicked = {
             sharedViewModel.addProductToCart(it)
         })
+
         productDetailScreen(
             onBackButtonClicked = {
                 navController.popBackStack()
@@ -176,6 +178,7 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             }, onAllReviewsClicked = {
                 navController.navigateToProductDetailTabbed(productId = it, initialPage = 2)
             }, onAddToCartClicked = { sharedViewModel.addProductToCart(it) })
+
         loginScreen(onLoginSuccess = {
             navController.navigateToHomeScreen(
                 NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
@@ -188,28 +191,26 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
         registerScreen {
             navController.navigateToLoginScreen()
         }
-
-        composable(Screen.Splash.route) {
-            val systemUiController: SystemUiController = rememberSystemUiController()
-            systemUiController.isStatusBarVisible = false
+        splashScreen {
             val navOptions =
                 NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
                     .build()
-            com.agah.furkan.splash.SplashScreen {
-                if (it) {
-                    navController.navigateToHomeScreen(navOptions)
-                } else {
-                    navController.navigateToLoginScreen(navOptions)
-                }
+            if (it) {
+                navController.navigateToHomeScreen(navOptions)
+            } else {
+                navController.navigateToLoginScreen(navOptions)
             }
+
         }
-        composable(Screen.Search.route) {
-            com.agah.furkan.search.SearchScreen {
-                navController.popBackStack()
-            }
+        searchScreen {
+            navController.popBackStack()
         }
         productDetailTabbedScreen {
             navController.popBackStack()
+        }
+        // TODO: add second module
+        composable("dummyRoute"){
+
         }
     }
 }

@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashScreenVM @Inject constructor(
+internal class SplashScreenVM @Inject constructor(
     private val userRepository: UserRepository,
     private val userPreference: UserPreference
 ) :
