@@ -3,7 +3,7 @@ package com.agah.furkan.product_detail
 import com.agah.furkan.product.remote.model.response.ProductDetailResponse
 
 
-sealed class ProductDetailUiState {
+internal sealed class ProductDetailUiState {
     data class Success(val productDetail: ProductDetailResponse.ProductDetail) :
         ProductDetailUiState()
 

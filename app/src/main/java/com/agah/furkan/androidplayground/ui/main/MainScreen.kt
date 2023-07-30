@@ -32,6 +32,8 @@ import com.agah.furkan.home.navigation.homeScreen
 import com.agah.furkan.home.navigation.navigateToHomeScreen
 import com.agah.furkan.login.navigation.loginScreen
 import com.agah.furkan.navigation.cartScreen
+import com.agah.furkan.navigation.navigateToProductDetail
+import com.agah.furkan.navigation.productDetailScreen
 import com.agah.furkan.profile.ProfileScreen
 import com.agah.furkan.profile.ProfileScreenViewModel
 import com.agah.furkan.ui.theme.AppTheme
@@ -156,35 +158,28 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             arguments = Screen.ProductList.getArgs()
         ) { backStackEntry ->
             com.agah.furkan.product_list.ProductListScreen(itemClicked = { productId ->
-                navController.navigate(Screen.ProductDetail.createRoute(productId))
+                navController.navigateToProductDetail(productId)
             }, onBackButtonClicked = {
                 navController.popBackStack()
             }, addToCartClicked = {
                 sharedViewModel.addProductToCart(it)
             })
         }
-
-        composable(
-            Screen.ProductDetail.route,
-            arguments = Screen.ProductDetail.getArgs()
-        ) { backStackEntry ->
-
-            com.agah.furkan.product_detail.ProductDetailScreen(
-                onBackButtonClicked = {
-                    navController.popBackStack()
-                },
-                onProductDetailClicked = {
-                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 0))
-                },
-                onProductDescriptionClicked = {
-                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 1))
-                },
-                onReviewsClicked = {
-                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
-                }, onAllReviewsClicked = {
-                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
-                }, onAddToCartClicked = { sharedViewModel.addProductToCart(it) })
-        }
+        productDetailScreen(
+            onBackButtonClicked = {
+                navController.popBackStack()
+            },
+            onProductDetailClicked = {
+                navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 0))
+            },
+            onProductDescriptionClicked = {
+                navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 1))
+            },
+            onReviewsClicked = {
+                navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
+            }, onAllReviewsClicked = {
+                navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
+            }, onAddToCartClicked = { sharedViewModel.addProductToCart(it) })
         loginScreen(onLoginSuccess = {
             navController.navigateToHomeScreen(
                 NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)

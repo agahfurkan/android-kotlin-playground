@@ -49,9 +49,29 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.product.remote.model.response.ProductDetailResponse
 import com.agah.furkan.ui.theme.AppTheme
 
+
+@Composable
+fun ProductDetailRoute(
+    onBackButtonClicked: () -> Unit,
+    onProductDetailClicked: (productId: Long) -> Unit,
+    onProductDescriptionClicked: (productId: Long) -> Unit,
+    onReviewsClicked: (productId: Long) -> Unit,
+    onAllReviewsClicked: (productId: Long) -> Unit,
+    onAddToCartClicked: (productId: Int) -> Unit
+) {
+    ProductDetailScreen(
+        onBackButtonClicked = onBackButtonClicked,
+        onProductDetailClicked = onProductDetailClicked,
+        onProductDescriptionClicked = onProductDescriptionClicked,
+        onReviewsClicked = onReviewsClicked,
+        onAllReviewsClicked = onAllReviewsClicked,
+        onAddToCartClicked = onAddToCartClicked
+    )
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProductDetailScreen(
+private fun ProductDetailScreen(
     viewModel: ProductDetailScreenVM = hiltViewModel(),
     onBackButtonClicked: () -> Unit,
     onProductDetailClicked: (productId: Long) -> Unit,
@@ -113,7 +133,7 @@ fun ProductDetailScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProductImage(
+private fun ProductImage(
     product: ProductDetailResponse.ProductDetail,
     onBackButtonClicked: () -> Unit,
     onFavButtonClicked: () -> Unit,
@@ -185,7 +205,7 @@ fun ProductImage(
 }
 
 @Composable
-fun ProductHeader(
+private fun ProductHeader(
     product: ProductDetailResponse.ProductDetail,
     onAllReviewsClicked: (productId: Long) -> Unit
 ) {
@@ -241,7 +261,7 @@ fun ProductHeader(
 }
 
 @Composable
-fun ProductActionButtonContainer(
+private fun ProductActionButtonContainer(
     product: ProductDetailResponse.ProductDetail,
     onProductDetailClicked: (productId: Long) -> Unit,
     onProductDescriptionClicked: (productId: Long) -> Unit,
@@ -261,7 +281,7 @@ fun ProductActionButtonContainer(
 }
 
 @Composable
-fun BoxScope.ProductFooter(
+private fun BoxScope.ProductFooter(
     product: ProductDetailResponse.ProductDetail,
     onAddToCartClicked: (product: ProductDetailResponse.ProductDetail) -> Unit
 ) {
@@ -318,7 +338,7 @@ fun BoxScope.ProductFooter(
 
 
 @Composable
-fun ProductDetailAction(
+private fun ProductDetailAction(
     modifier: Modifier = Modifier,
     actionText: String,
     onButtonClick: () -> Unit
@@ -355,7 +375,7 @@ fun ProductDetailAction(
 
 @Composable
 @Preview(showBackground = true)
-fun ProductDetailActionPreview() {
+private fun ProductDetailActionPreview() {
     ProductDetailAction(actionText = "ProductDetail Details") {
 
     }

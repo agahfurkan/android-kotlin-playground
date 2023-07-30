@@ -13,11 +13,6 @@ sealed class Screen(var title: String, var route: String) {
         fun getArgs() = listOf(navArgument("categoryId") { type = NavType.LongType })
     }
 
-    object ProductDetail : Screen("Product Detail", "productDetail/{productId}") {
-        fun createRoute(productId: Long) = "productDetail/$productId"
-        fun getArgs() = listOf(navArgument("productId") { type = NavType.LongType })
-    }
-
     object Login : Screen("Login", "login")
     object Register : Screen("Registe", "register")
     object ProductDetailTabbed :
