@@ -2,7 +2,6 @@ package com.agah.furkan.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.logging.Logger
 import com.agah.furkan.preferences.UserPreference
 import com.agah.furkan.user.UserRepository
 import com.agah.furkan.user.remote.model.request.ValidateTokenBody

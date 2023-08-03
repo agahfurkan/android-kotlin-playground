@@ -40,7 +40,6 @@ android {
 
 dependencies {
     implementation(project(":core:preferences"))
-    implementation("androidx.appcompat:appcompat:1.6.1")
     api(libs.retrofit)
     api(libs.moshi)
     api(libs.hilt.android)

@@ -46,8 +46,6 @@ import com.agah.furkan.search.navigation.searchScreen
 import com.agah.furkan.splash.navigation.splashRoute
 import com.agah.furkan.splash.navigation.splashScreen
 import com.agah.furkan.ui.theme.AppTheme
-import com.google.accompanist.systemuicontroller.SystemUiController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -209,7 +207,7 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             navController.popBackStack()
         }
         // TODO: add second module
-        composable("dummyRoute"){
+        composable("dummyRoute") {
 
         }
     }

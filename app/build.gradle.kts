@@ -98,28 +98,12 @@ android {
         implementation(project(":feature:register"))
         implementation(project(":feature:search"))
 
-        implementation(platform(libs.androidx.compose.bom))
-        implementation(libs.constraintlayout.compose)
         implementation(libs.hilt.navigation.compose)
-        implementation(libs.navigation.compose)
-
-
-        implementation(libs.compose.runtime)
         implementation(libs.material3.compose)
-        implementation(libs.compose.runtime.livedata)
         implementation(libs.compose.ui)
-        implementation(libs.activity.compose)
-
-        implementation(libs.kotlin.stdlib)
-
+        implementation(libs.accompanist.theme.adapter.material)
         implementation(libs.hilt.android)
         kapt(libs.hilt.compiler)
-        implementation(libs.hilt.android.compiler)
-
-
-        implementation(libs.material3.window.size)
-        implementation(libs.accompanist.theme.adapter.material)
-        implementation(libs.accompanist.system.ui.controller)
     }
 }
 spotless {

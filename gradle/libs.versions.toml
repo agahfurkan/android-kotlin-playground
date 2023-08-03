@@ -1,7 +1,5 @@
 [versions]
 ktxVersion = "1.9.0"
-kotlinVersion = "1.8.10"
-materialVersion = "1.9.0-alpha01"
 retrofitVersion = "2.5.0"
 retrofitMoshiConverterVersion = "2.9.0"
 moshiVersion = "1.14.0"
@@ -31,31 +29,19 @@ composeNavigationVersion = "2.5.3"
 androidxComposeBom = "2023.04.01"
 
 [libraries]
-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinVersion" }
-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktxVersion" }
-
-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleVersion" }
-lifecycle-common-java8 = { group = "androidx.lifecycle", name = "lifecycle-common-java8", version.ref = "lifecycleVersion" }
-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleVersion" }
-
 constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayoutComposeVersion" }
 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
 retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofitMoshiConverterVersion" }
 moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshiVersion" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshiVersion" }
-
 okhttp3-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "interceptorVersion" }
 
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
 hilt-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltVersion" }
-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltComposeVersion" }
-
-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navVersion" }
-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigationVersion" }
 
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
@@ -69,7 +55,7 @@ junitx = { group = "androidx.test.ext", name = "junit", version.ref = "jUnitXVer
 test-runner = { group = "androidx.test", name = "runner", version.ref = "testRunnerVersion" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truthVersion" }
 
-lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottieVersion" }
+
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottieVersion" }
 
 paging = { group = "androidx.paging", name = "paging-runtime", version.ref = "pagingVersion" }
@@ -79,12 +65,11 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
 compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
-compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
 compose-ui = { group = "androidx.compose.ui", name = "ui-tooling" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivityVersion" }
-accompanist-theme-adapter-material = { group = "com.google.accompanist", name = "accompanist-themeadapter-material", version.ref = "accompanistVersion" }
 accompanist-system-ui-controller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanistVersion" }
-compose-material = { group = "androidx.compose.material", name = "material" }
+accompanist-theme-adapter-material = { group = "com.google.accompanist", name = "accompanist-themeadapter-material", version.ref = "accompanistVersion" }
+
 material3-compose = { group = "androidx.compose.material3", name = "material3", version.ref = "material3Version" }
 material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3Version" }
 
