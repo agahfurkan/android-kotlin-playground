@@ -32,12 +32,13 @@ class SharedViewModel @Inject constructor(
     }
 
     fun refreshUserCart() {
-        getUserCart()
+        getUserCart(true)
     }
 
-    private fun getUserCart() {
+    private fun getUserCart(refresh: Boolean = false) {
         viewModelScope.launch {
-            val result = cartRepository.fetchCart(userId = userPreference.getUserId())
+            val result =
+                cartRepository.getCart(refresh = refresh, userId = userPreference.getUserId())
             if (result is com.agah.furkan.data.model.Result.Success) {
                 val groupedResult = result.data.sortedBy { it.productId }
                     .groupBy { it.productId }
