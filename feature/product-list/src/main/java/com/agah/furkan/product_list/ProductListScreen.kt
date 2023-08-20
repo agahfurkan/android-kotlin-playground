@@ -18,10 +18,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -35,17 +37,18 @@ import com.agah.furkan.domain.product.Product
 import com.agah.furkan.ui.component.PlaceHolderImage
 import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.seed
+import com.agah.furkan.util.launchAndCollectIn
 
 @Composable
 internal fun ProductListRoute(
     itemClicked: (productId: Long) -> Unit,
     onBackButtonClicked: () -> Unit,
-    addToCartClicked: (productId: Int) -> Unit,
+    newProductAddedToCart: () -> Unit,
 ) {
     ProductListScreen(
         itemClicked = itemClicked,
         onBackButtonClicked = onBackButtonClicked,
-        addToCartClicked = addToCartClicked
+        newProductAddedToCart = newProductAddedToCart
     )
 }
 
@@ -55,9 +58,28 @@ private fun ProductListScreen(
     viewModel: ProductListScreenVM = hiltViewModel(),
     itemClicked: (productId: Long) -> Unit,
     onBackButtonClicked: () -> Unit,
-    addToCartClicked: (productId: Int) -> Unit,
+    newProductAddedToCart: () -> Unit,
 ) {
+    val lifeCycleOwner = LocalLifecycleOwner.current
     val productList = viewModel.getProducts.collectAsLazyPagingItems()
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.addProductToCartState.launchAndCollectIn(lifeCycleOwner) { state ->
+            when (state) {
+                is AddProductToCartUiState.Success -> {
+                    newProductAddedToCart()
+                }
+
+                is AddProductToCartUiState.Error -> {
+
+                }
+
+                is AddProductToCartUiState.Loading -> {
+
+                }
+            }
+        }
+    }
 
     AppTheme {
         Scaffold(topBar = {
@@ -87,7 +109,7 @@ private fun ProductListScreen(
             ) {
                 ProductListContent(
                     productList = productList,
-                    addToCartClicked = addToCartClicked,
+                    addToCartClicked = viewModel::addProductToCart,
                     itemClicked = itemClicked
                 )
             }

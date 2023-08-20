@@ -17,7 +17,7 @@ fun NavController.navigateToProductListScreen(categoryId: Long) {
 fun NavGraphBuilder.productListScreen(
     itemClicked: (productId: Long) -> Unit,
     onBackButtonClicked: () -> Unit,
-    addToCartClicked: (productId: Int) -> Unit,
+    newProductAddedToCart: () -> Unit,
 ) {
     composable(
         productListRoute,
@@ -26,7 +26,7 @@ fun NavGraphBuilder.productListScreen(
         ProductListRoute(
             itemClicked = itemClicked,
             onBackButtonClicked = onBackButtonClicked,
-            addToCartClicked = addToCartClicked
+            newProductAddedToCart = newProductAddedToCart
         )
     }
 }

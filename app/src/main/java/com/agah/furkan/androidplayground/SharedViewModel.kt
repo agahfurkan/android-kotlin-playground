@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.cart.CartRepository
-import com.agah.furkan.cart.remote.model.request.AddProductToCartBody
-import com.agah.furkan.cart.remote.model.request.RemoveProductFromCartBody
 import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.preferences.UserPreference
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,18 +31,8 @@ class SharedViewModel @Inject constructor(
         getUserCart()
     }
 
-    fun addProductToCart(productId: Int) {
-        viewModelScope.launch {
-            val result = cartRepository.addProductToCart(
-                AddProductToCartBody(
-                    productId = productId.toLong(),
-                    userId = userPreference.getUserId()
-                )
-            )
-            if (result is com.agah.furkan.data.model.Result.Success) {
-                getUserCart()
-            }
-        }
+    fun refreshUserCart() {
+        getUserCart()
     }
 
     private fun getUserCart() {
@@ -55,19 +43,6 @@ class SharedViewModel @Inject constructor(
                     .groupBy { it.productId }
                 _userCart.emit(groupedResult)
             }
-        }
-    }
-
-    fun removeProductFromCart(productId: Long) {
-        viewModelScope.launch {
-            val result = cartRepository.removeProductFromCart(
-                RemoveProductFromCartBody(
-                    userId = userPreference.getUserId(),
-                    productId = productId
-                )
-            )
-            getUserCart()
-            _removeProductFromCart.postValue(result)
         }
     }
 }

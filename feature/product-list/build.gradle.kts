@@ -44,9 +44,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":data:cart"))
     implementation(project(":domain:product"))
     implementation(project(":core:data"))
     implementation(project(":core:ui"))
+    implementation(project(":core:preferences"))
+    implementation(project(":core:util"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.hilt.navigation.compose)
     implementation(libs.material3.compose)

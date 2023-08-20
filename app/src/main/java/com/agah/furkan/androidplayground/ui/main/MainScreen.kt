@@ -144,7 +144,7 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
         cartScreen(
             cartList = cartList,
             onCartItemRemoved = {},
-            removeProductFromCartClicked = {},
+            productRemovedFromCart = sharedViewModel::refreshUserCart,
             addAdditionalProductClicked = {})
         profileScreen {
             navController.navigateToLoginScreen(
@@ -157,9 +157,8 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             navController.navigateToProductDetail(productId)
         }, onBackButtonClicked = {
             navController.popBackStack()
-        }, addToCartClicked = {
-            sharedViewModel.addProductToCart(it)
-        })
+        }, newProductAddedToCart = sharedViewModel::refreshUserCart
+        )
 
         productDetailScreen(
             onBackButtonClicked = {
@@ -175,7 +174,8 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
                 navController.navigateToProductDetailTabbed(productId = it, initialPage = 2)
             }, onAllReviewsClicked = {
                 navController.navigateToProductDetailTabbed(productId = it, initialPage = 2)
-            }, onAddToCartClicked = { sharedViewModel.addProductToCart(it) })
+            }, newProductAddedToCart = sharedViewModel::refreshUserCart
+        )
 
         loginScreen(onLoginSuccess = {
             navController.navigateToHomeScreen(

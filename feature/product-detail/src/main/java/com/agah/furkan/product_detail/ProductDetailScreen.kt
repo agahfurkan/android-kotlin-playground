@@ -29,6 +29,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -48,6 +50,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.product.remote.model.response.ProductDetailResponse
 import com.agah.furkan.ui.theme.AppTheme
+import com.agah.furkan.util.launchAndCollectIn
 
 
 @Composable
@@ -57,7 +60,7 @@ fun ProductDetailRoute(
     onProductDescriptionClicked: (productId: Long) -> Unit,
     onReviewsClicked: (productId: Long) -> Unit,
     onAllReviewsClicked: (productId: Long) -> Unit,
-    onAddToCartClicked: (productId: Int) -> Unit
+    newProductAddedToCart: () -> Unit
 ) {
     ProductDetailScreen(
         onBackButtonClicked = onBackButtonClicked,
@@ -65,7 +68,7 @@ fun ProductDetailRoute(
         onProductDescriptionClicked = onProductDescriptionClicked,
         onReviewsClicked = onReviewsClicked,
         onAllReviewsClicked = onAllReviewsClicked,
-        onAddToCartClicked = onAddToCartClicked
+        newProductAddedToCart = newProductAddedToCart
     )
 }
 
@@ -78,12 +81,30 @@ private fun ProductDetailScreen(
     onProductDescriptionClicked: (productId: Long) -> Unit,
     onReviewsClicked: (productId: Long) -> Unit,
     onAllReviewsClicked: (productId: Long) -> Unit,
-    onAddToCartClicked: (productId: Int) -> Unit
+    newProductAddedToCart: () -> Unit
 ) {
     // TODO: refactor
     val productResult = viewModel.productDetail.collectAsState()
     val productState = productResult.value as? ProductDetailUiState.Success ?: return
+    val lifeCycleOwner = LocalLifecycleOwner.current
 
+    LaunchedEffect(key1 = Unit) {
+        viewModel.addProductToCartState.launchAndCollectIn(lifeCycleOwner) { state ->
+            when (state) {
+                is AddProductToCartUiState.Success -> {
+                    newProductAddedToCart()
+                }
+
+                is AddProductToCartUiState.Error -> {
+
+                }
+
+                is AddProductToCartUiState.Loading -> {
+
+                }
+            }
+        }
+    }
 
     AppTheme {
         Surface {
@@ -124,7 +145,7 @@ private fun ProductDetailScreen(
                     }
                 }
                 ProductFooter(product = productState.productDetail, onAddToCartClicked = {
-                    onAddToCartClicked(it.productId)
+                    viewModel.addProductToCart(it.productId)
                 })
             }
         }

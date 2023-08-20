@@ -25,11 +25,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -38,24 +40,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.feature.cart.R
 import com.agah.furkan.ui.component.PlaceHolderImage
 import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.ui.theme.seed
 import com.agah.furkan.util.discount
+import com.agah.furkan.util.launchAndCollectIn
 
 @Composable
 internal fun CartRoute(
     cartList: Map<Long, List<CartResponse.Cart>>,
     onCartItemRemoved: (Long) -> Unit,
-    removeProductFromCartClicked: (Long) -> Unit,
+    productRemovedFromCart: () -> Unit,
     addAdditionalProductClicked: (Int) -> Unit
 ) {
     CartScreen(
         cartList = cartList,
         onCartItemRemoved = onCartItemRemoved,
-        removeProductFromCartClicked = removeProductFromCartClicked,
+        productRemovedFromCart = productRemovedFromCart,
         addAdditionalProductClicked = addAdditionalProductClicked
     )
 }
@@ -63,11 +67,30 @@ internal fun CartRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CartScreen(
+    viewModel: CartScreenViewModel = hiltViewModel(),
     cartList: Map<Long, List<CartResponse.Cart>>,
     onCartItemRemoved: (Long) -> Unit,
-    removeProductFromCartClicked: (Long) -> Unit,
+    productRemovedFromCart: () -> Unit,
     addAdditionalProductClicked: (Int) -> Unit
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(key1 = Unit) {
+        viewModel.removeProductState.launchAndCollectIn(lifecycleOwner) { state ->
+            when (state) {
+                is RemoveProductFromCartUiState.Success -> {
+                    productRemovedFromCart()
+                }
+
+                is RemoveProductFromCartUiState.Error -> {
+
+                }
+
+                is RemoveProductFromCartUiState.Loading -> {
+
+                }
+            }
+        }
+    }
     AppTheme {
         Scaffold(topBar = {
             TopAppBar(
@@ -88,9 +111,10 @@ private fun CartScreen(
                         totalSizeOfSameProduct = productList.size,
                         onCartItemRemoved = { cart ->
                             onCartItemRemoved(cart.productId)
+                            productItem.productId
                         },
-                        removeProductFromCartClicked = {
-                            removeProductFromCartClicked(productItem.productId)
+                        removeProductFromCartClicked = { cart ->
+                            viewModel.removeProductFromCart(cart.productId)
                         },
                         addAdditionalProductClicked = {
                             addAdditionalProductClicked(productItem.productId.toInt())

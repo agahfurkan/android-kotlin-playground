@@ -3,18 +3,25 @@ package com.agah.furkan.product_detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.agah.furkan.cart.CartRepository
+import com.agah.furkan.cart.remote.model.request.AddProductToCartBody
 import com.agah.furkan.data.model.Result
+import com.agah.furkan.preferences.UserPreference
 import com.agah.furkan.product.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ProductDetailScreenVM @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val cartRepository: CartRepository,
+    private val userPreference: UserPreference
 ) :
     ViewModel() {
     private val productId = savedStateHandle.get<Long>("productId") ?: 0
@@ -22,6 +29,10 @@ internal class ProductDetailScreenVM @Inject constructor(
     private val _productDetail =
         MutableStateFlow<ProductDetailUiState>(ProductDetailUiState.Loading)
     val productDetail = _productDetail.asStateFlow()
+
+    private val _addProductToCartState =
+        Channel<AddProductToCartUiState>(capacity = Channel.BUFFERED)
+    val addProductToCartState = _addProductToCartState.receiveAsFlow()
 
     init {
         getProductDetail(productId)
@@ -41,6 +52,28 @@ internal class ProductDetailScreenVM @Inject constructor(
                 }
             }
             _productDetail.emit(state)
+        }
+    }
+
+    fun addProductToCart(productId: Int) {
+        viewModelScope.launch {
+            _addProductToCartState.trySend(AddProductToCartUiState.Loading)
+            val result = cartRepository.addProductToCart(
+                AddProductToCartBody(
+                    productId = productId.toLong(),
+                    userId = userPreference.getUserId()
+                )
+            )
+            val state = when (result) {
+                is Result.Success -> {
+                    AddProductToCartUiState.Success
+                }
+
+                is Result.Failure -> {
+                    AddProductToCartUiState.Error(result.error.errorMessage)
+                }
+            }
+            _addProductToCartState.trySend(state)
         }
     }
 }

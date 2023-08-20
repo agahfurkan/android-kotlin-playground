@@ -16,14 +16,14 @@ fun NavController.navigateToCartScreen(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.cartScreen(
     cartList: Map<Long, List<CartResponse.Cart>>,
     onCartItemRemoved: (Long) -> Unit,
-    removeProductFromCartClicked: (Long) -> Unit,
+    productRemovedFromCart: () -> Unit,
     addAdditionalProductClicked: (Int) -> Unit
 ) {
     composable(route = cartRoute) {
         CartRoute(
             cartList,
             onCartItemRemoved,
-            removeProductFromCartClicked,
+            productRemovedFromCart,
             addAdditionalProductClicked
         )
     }

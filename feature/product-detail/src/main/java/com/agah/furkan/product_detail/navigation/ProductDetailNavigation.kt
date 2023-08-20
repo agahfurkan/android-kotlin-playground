@@ -20,7 +20,7 @@ fun NavGraphBuilder.productDetailScreen(
     onProductDescriptionClicked: (productId: Long) -> Unit,
     onReviewsClicked: (productId: Long) -> Unit,
     onAllReviewsClicked: (productId: Long) -> Unit,
-    onAddToCartClicked: (productId: Int) -> Unit
+    newProductAddedToCart: () -> Unit
 ) {
     composable(
         route = productDetailRoute,
@@ -32,7 +32,7 @@ fun NavGraphBuilder.productDetailScreen(
             onProductDescriptionClicked = onProductDescriptionClicked,
             onReviewsClicked = onReviewsClicked,
             onAllReviewsClicked = onAllReviewsClicked,
-            onAddToCartClicked = onAddToCartClicked
+            newProductAddedToCart = newProductAddedToCart
         )
     }
 }

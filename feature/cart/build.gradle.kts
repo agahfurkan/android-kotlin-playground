@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
@@ -37,12 +38,17 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = "1.8"
+    }
 }
 
 dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:util"))
     implementation(project(":data:cart"))
+    implementation(project(":core:preferences"))
+    implementation(project(":core:data"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.material3.compose)
     implementation(libs.material3.window.size)
@@ -51,4 +57,5 @@ dependencies {
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui)
     implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.compiler)
 }
