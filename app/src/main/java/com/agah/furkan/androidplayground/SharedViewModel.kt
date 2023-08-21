@@ -8,8 +8,10 @@ import com.agah.furkan.cart.CartRepository
 import com.agah.furkan.cart.remote.model.response.CartResponse
 import com.agah.furkan.preferences.UserPreference
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +28,9 @@ class SharedViewModel @Inject constructor(
         MutableLiveData<com.agah.furkan.data.model.Result<String>>()
     val removeProductFromCart: LiveData<com.agah.furkan.data.model.Result<String>>
         get() = _removeProductFromCart
+
+    private val _navigateToLoginScreen = Channel<Boolean>(capacity = Channel.BUFFERED)
+    val navigateToLoginScreen = _navigateToLoginScreen.receiveAsFlow()
 
     init {
         getUserCart()
@@ -45,5 +50,9 @@ class SharedViewModel @Inject constructor(
                 _userCart.emit(groupedResult)
             }
         }
+    }
+
+    fun sessionEnded() {
+        _navigateToLoginScreen.trySend(true)
     }
 }

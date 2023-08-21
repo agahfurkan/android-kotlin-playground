@@ -1,10 +1,12 @@
 package com.agah.furkan.data.di
 
+import com.agah.furkan.core.session.SessionManager
 import com.agah.furkan.data.Constants
 import com.agah.furkan.data.ErrorMapper
 import com.agah.furkan.data.ErrorMapperImpl
-import com.agah.furkan.data.retrofit.AuthHeaderInterceptor
+import com.agah.furkan.data.retrofit.AuthInterceptor
 import com.agah.furkan.data.retrofit.CustomCallFactory
+import com.agah.furkan.data.retrofit.HeaderInterceptor
 import com.agah.furkan.preferences.UserPreference
 import dagger.Module
 import dagger.Provides
@@ -49,7 +51,10 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(userPreference: UserPreference): OkHttpClient {
+    fun provideOkHttpClient(
+        userPreference: UserPreference,
+        sessionManager: SessionManager
+    ): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -91,7 +96,8 @@ object DataModule {
             trustManagers[0] as X509TrustManager
 
         return OkHttpClient.Builder()
-            .addInterceptor(AuthHeaderInterceptor(userPreference))
+            .addInterceptor(HeaderInterceptor(userPreference))
+            .addInterceptor(AuthInterceptor(sessionManager))
             .addInterceptor(interceptor)
             .readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(Constants.WRITE_TIMEOUT, TimeUnit.SECONDS)

@@ -1,3 +1,4 @@
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -5,12 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.agah.furkan.data"
+    namespace = "com.agah.furkan.core.session"
     compileSdk = 33
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -29,7 +29,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -40,12 +39,6 @@ android {
 
 dependencies {
     implementation(project(":core:preferences"))
-    implementation(project(":core:session"))
-    api(libs.retrofit)
-    api(libs.moshi)
-    api(libs.hilt.android)
-    implementation(libs.retrofit.converter.moshi)
-    implementation(libs.okhttp3.logging)
+    implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    kapt(libs.moshi.kotlin.codegen)
 }

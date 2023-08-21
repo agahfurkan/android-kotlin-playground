@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":core:util"))
     implementation(project(":core:ui"))
     implementation(project(":core:logging"))
+    implementation(project(":core:session"))
     implementation(project(":domain:login"))
     implementation(libs.lottie.compose)
     implementation(platform(libs.androidx.compose.bom))

@@ -31,6 +31,10 @@ espresso-core = "3.5.1"
 uiautomator = "2.2.0"
 benchmark-macro-junit4 = "1.1.1"
 profileInstallerVersion = "1.2.0"
+core-ktx = "1.9.0"
+junit = "4.13.2"
+appcompat = "1.6.1"
+material = "1.8.0"
 
 [libraries]
 constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayoutComposeVersion" }
@@ -80,6 +84,10 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
 profile-installer = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileInstallerVersion" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 #build-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 #kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-gradle" }

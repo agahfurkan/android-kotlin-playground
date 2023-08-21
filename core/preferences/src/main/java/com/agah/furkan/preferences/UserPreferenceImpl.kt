@@ -2,8 +2,9 @@ package com.agah.furkan.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import javax.inject.Inject
 
-class UserPreferenceImpl(applicationContext: Context) : UserPreference {
+class UserPreferenceImpl @Inject constructor(applicationContext: Context) : UserPreference {
     private var sharedPref: SharedPreferences? = null
 
     init {

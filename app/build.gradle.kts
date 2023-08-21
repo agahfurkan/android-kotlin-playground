@@ -85,10 +85,12 @@ android {
     namespace = "com.agah.furkan.androidplayground"
 
     dependencies {
+        implementation(project(":core:session"))
         implementation(project(":core:data"))
         implementation(project(":core:preferences"))
         implementation(project(":core:logging"))
         implementation(project(":core:ui"))
+        implementation(project(":core:util"))
 
         implementation(project(":data:cart"))
 

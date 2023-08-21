@@ -10,9 +10,11 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,6 +48,7 @@ import com.agah.furkan.search.navigation.searchScreen
 import com.agah.furkan.splash.navigation.splashRoute
 import com.agah.furkan.splash.navigation.splashScreen
 import com.agah.furkan.ui.theme.AppTheme
+import com.agah.furkan.util.launchAndCollectIn
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,7 +59,16 @@ fun MainScreen() {
         .firstOrNull { it.route == navBackStackEntry?.destination?.route } != null
     val sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity)
     val cart = sharedViewModel.userCart.collectAsState()
+    val lifecycleOwner = LocalLifecycleOwner.current
 
+    LaunchedEffect(key1 = Unit) {
+        sharedViewModel.navigateToLoginScreen.launchAndCollectIn(lifecycleOwner) { state ->
+            navController.navigateToLoginScreen(
+                NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
+                    .build()
+            )
+        }
+    }
     Scaffold(
         bottomBar = {
             if (showBottomBar) {

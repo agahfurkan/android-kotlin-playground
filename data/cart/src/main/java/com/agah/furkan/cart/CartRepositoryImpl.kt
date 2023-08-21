@@ -41,6 +41,8 @@ class CartRepositoryImpl(
                 cartCacheMutex.withLock {
                     this.cartCache = result
                 }
+            } else {
+                return result
             }
         }
 
