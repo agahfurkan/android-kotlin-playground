@@ -54,11 +54,15 @@ private fun ProfileScreen(
     val showLogoutDialog = remember {
         mutableStateOf(false)
     }
-    if (showLogoutDialog.value) {
-        WarningDialog(showLogoutDialog) {
-            viewModel.logout()
-            onLogoutButtonClicked()
-        }
+
+    WarningDialog(showLogoutDialog,
+        title = "Warning",
+        message = "Are you sure you want to logout ?",
+        positiveButtonText = "Logout",
+        negativeButtonText = "Cancel",
+        onNegativeButtonClicked = {}) {
+        viewModel.logout()
+        onLogoutButtonClicked()
     }
 
     Column(modifier = Modifier.fillMaxSize()) {

@@ -28,27 +28,36 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.agah.furkan.ui.R
 import com.agah.furkan.ui.theme.seed
 
 @Composable
 fun WarningDialog(
     showDialog: MutableState<Boolean>,
-    title: String = "Warning",
-    message: String = "Logout ?",
-    actionButtonText: String = "Logout",
-    dismissButtonText: String = "Cancel",
-    onActionButtonClicked: () -> Unit,
+    title: String,
+    message: String,
+    positiveButtonText: String? = null,
+    negativeButtonText: String? = null,
+    dialogProperties: DialogProperties = DialogProperties(),
+    onNegativeButtonClicked: () -> Unit = {},
+    onPositiveButtonClicked: () -> Unit = {}
 ) {
-    Dialog(onDismissRequest = { showDialog.value = false }) {
-        CustomDialogContent(
-            openDialogCustom = showDialog,
-            title = title,
-            message = message,
-            actionButtonText = actionButtonText,
-            dismissButtonText = dismissButtonText,
-            onActionButtonClicked = onActionButtonClicked
-        )
+    if (showDialog.value) {
+        Dialog(
+            onDismissRequest = { showDialog.value = false },
+            properties = dialogProperties
+        ) {
+            CustomDialogContent(
+                openDialogCustom = showDialog,
+                title = title,
+                message = message,
+                positiveButtonText = positiveButtonText,
+                negativeButtonText = negativeButtonText,
+                onNegativeButtonClicked = onNegativeButtonClicked,
+                onPositiveButtonClicked = onPositiveButtonClicked
+            )
+        }
     }
 }
 
@@ -57,11 +66,12 @@ fun WarningDialog(
 fun CustomDialogContent(
     modifier: Modifier = Modifier,
     openDialogCustom: MutableState<Boolean>,
-    title: String = "Warning",
-    message: String = "Logout ?",
-    actionButtonText: String = "Logout",
-    dismissButtonText: String = "Cancel",
-    onActionButtonClicked: () -> Unit
+    title: String,
+    message: String,
+    negativeButtonText: String? = null,
+    positiveButtonText: String? = null,
+    onNegativeButtonClicked: () -> Unit = {},
+    onPositiveButtonClicked: () -> Unit = {}
 ) {
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -113,27 +123,30 @@ fun CustomDialogContent(
                     .background(seed),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-
-                TextButton(onClick = {
-                    openDialogCustom.value = false
-                }) {
-                    Text(
-                        dismissButtonText,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
-                    )
+                if (negativeButtonText != null) {
+                    TextButton(onClick = {
+                        onNegativeButtonClicked()
+                    }) {
+                        Text(
+                            negativeButtonText,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
+                        )
+                    }
                 }
-                TextButton(onClick = {
-                    openDialogCustom.value = false
-                    onActionButtonClicked()
-                }) {
-                    Text(
-                        actionButtonText,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = Color.White,
-                        modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
-                    )
+                if (positiveButtonText != null) {
+                    TextButton(onClick = {
+                        openDialogCustom.value = false
+                        onPositiveButtonClicked()
+                    }) {
+                        Text(
+                            positiveButtonText,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color.White,
+                            modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
+                        )
+                    }
                 }
             }
         }
@@ -143,5 +156,9 @@ fun CustomDialogContent(
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun MyDialogUIPreview() {
-    CustomDialogContent(openDialogCustom = mutableStateOf(false), onActionButtonClicked = {})
+    CustomDialogContent(
+        openDialogCustom = mutableStateOf(false),
+        title = "Title",
+        message = "Message"
+    )
 }

@@ -32,10 +32,6 @@ class SharedViewModel @Inject constructor(
     private val _navigateToLoginScreen = Channel<Boolean>(capacity = Channel.BUFFERED)
     val navigateToLoginScreen = _navigateToLoginScreen.receiveAsFlow()
 
-    init {
-        getUserCart()
-    }
-
     fun refreshUserCart() {
         getUserCart(true)
     }
