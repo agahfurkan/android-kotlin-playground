@@ -8,6 +8,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version AppConfig.detektVersion
     id("com.diffplug.spotless") version AppConfig.spotlessVersion
     id("org.jetbrains.dokka") version AppConfig.dokkaVersion
+    id("com.google.gms.google-services")
 }
 android {
     ndkVersion = "24.0.8215888"
@@ -54,8 +55,6 @@ android {
         }
 
         create("prod") {
-            applicationIdSuffix = ".prod"
-            versionNameSuffix = "-prod"
             buildConfigField("String", "BASE_URL", "\"https://10.0.2.2:5000/api/\"")
             resValue("string", "app_name", "PROD-Android Playground")
         }
@@ -91,6 +90,7 @@ android {
         implementation(project(":core:logging"))
         implementation(project(":core:ui"))
         implementation(project(":core:util"))
+        implementation(project(":core:remoteconfig"))
 
         implementation(project(":data:cart"))
 
@@ -114,6 +114,7 @@ android {
         kapt(libs.hilt.compiler)
     }
 }
+
 spotless {
     java {
         target("**/*.java")
