@@ -41,4 +41,5 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.firebase.config.ktx)
+    implementation(libs.firebase.analytics.ktx)
 }

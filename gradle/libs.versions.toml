@@ -1,4 +1,5 @@
 [versions]
+firebaseAnalyticsKtxVersion = "21.3.0"
 firebaseConfigKtxVersion = "21.4.1"
 ktxVersion = "1.9.0"
 retrofitVersion = "2.5.0"
@@ -40,6 +41,7 @@ material = "1.8.0"
 [libraries]
 constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayoutComposeVersion" }
 
+firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx", version.ref = "firebaseAnalyticsKtxVersion" }
 firebase-config-ktx = { module = "com.google.firebase:firebase-config-ktx", version.ref = "firebaseConfigKtxVersion" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
 retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofitMoshiConverterVersion" }

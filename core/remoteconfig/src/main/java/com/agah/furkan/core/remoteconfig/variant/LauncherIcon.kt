@@ -7,8 +7,6 @@ sealed class LauncherIcon(val value: Long) : Variant(RemoteConfigKey.LAUNCHER_IC
     object Variant1 : LauncherIcon(1)
     object Variant2 : LauncherIcon(2)
     object Variant3 : LauncherIcon(3)
-    object Variant4 : LauncherIcon(4)
-    object Variant5 : LauncherIcon(5)
 
     companion object {
         fun fromValue(value: Long): LauncherIcon = when (value) {
@@ -16,8 +14,6 @@ sealed class LauncherIcon(val value: Long) : Variant(RemoteConfigKey.LAUNCHER_IC
             1L -> Variant1
             2L -> Variant2
             3L -> Variant3
-            4L -> Variant4
-            5L -> Variant5
             else -> Default
         }
     }

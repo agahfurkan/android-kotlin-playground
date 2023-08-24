@@ -1,5 +1,7 @@
 package com.agah.furkan.androidplayground.ui
 
+import android.content.ComponentName
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,6 +16,7 @@ import com.agah.furkan.logging.Logger
 import com.agah.furkan.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), SessionListener {
@@ -33,14 +36,15 @@ class MainActivity : ComponentActivity(), SessionListener {
         sessionManager.addSessionListener(this)
         remoteConfig.onActivated { launcherIcon: LauncherIcon ->
             logger.i("LauncherIcon: $launcherIcon")
-            /*when (launcherIcon) {
-                LauncherIcon.Default -> TODO()
-                LauncherIcon.Variant1 -> TODO()
-                LauncherIcon.Variant2 -> TODO()
-                LauncherIcon.Variant3 -> TODO()
-                LauncherIcon.Variant4 -> TODO()
-                LauncherIcon.Variant5 -> TODO()
-            }*/
+
+            val alias = when (launcherIcon) {
+                LauncherIcon.Default -> ".ui.MainActivity"
+                LauncherIcon.Variant1 -> ".ui.MainActivityAlias1"
+                LauncherIcon.Variant2 -> ".ui.MainActivityAlias2"
+                LauncherIcon.Variant3 -> ".ui.MainActivityAlias3"
+            }
+
+            changeLauncherIcon(alias)
         }
 
         setContent {
@@ -56,5 +60,40 @@ class MainActivity : ComponentActivity(), SessionListener {
 
     override fun sessionEnded() {
         sharedViewModel.sessionEnded()
+    }
+
+    // TODO: check app kill issue 
+    private fun changeLauncherIcon(aliasComponentName: String) {
+        val packageManager: PackageManager = packageManager
+        val packageName = "com.agah.furkan.androidplayground"
+
+        val component = ComponentName(this, "$packageName$aliasComponentName")
+        packageManager.setComponentEnabledSetting(
+            component,
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP
+        )
+
+        ALIAS_LIST.forEach {
+            if (it != aliasComponentName) {
+                val component2 = ComponentName(this, "$packageName$it")
+                packageManager.setComponentEnabledSetting(
+                    component2,
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP
+                )
+            }
+        }
+
+
+    }
+
+    companion object {
+        private val ALIAS_LIST = listOf<String>(
+            ".ui.MainActivity",
+            ".ui.MainActivityAlias1",
+            ".ui.MainActivityAlias2",
+            ".ui.MainActivityAlias3"
+        )
     }
 }
