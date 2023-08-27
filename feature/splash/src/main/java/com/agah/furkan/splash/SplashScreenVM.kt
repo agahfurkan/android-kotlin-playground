@@ -2,6 +2,7 @@ package com.agah.furkan.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.preferences.UserPreference
 import com.agah.furkan.user.UserRepository
 import com.agah.furkan.user.remote.model.request.ValidateTokenBody
@@ -37,7 +38,7 @@ internal class SplashScreenVM @Inject constructor(
                                 token = userPreference.getToken().toString()
                             )
                         )
-                        if (result is com.agah.furkan.data.model.Result.Failure) {
+                        if (result is Result.Failure) {
                             userPreference.clearAllData()
                         }
                     }

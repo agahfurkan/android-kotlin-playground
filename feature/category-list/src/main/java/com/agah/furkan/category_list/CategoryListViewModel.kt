@@ -3,6 +3,7 @@ package com.agah.furkan.category_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.category.CategoryRepository
+import com.agah.furkan.core.data.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,11 +24,11 @@ internal class CategoryListViewModel @Inject constructor(private val categoryRep
         viewModelScope.launch {
             val result = categoryRepository.fetchMainProductCategories()
             val state = when (result) {
-                is com.agah.furkan.data.model.Result.Success -> {
+                is Result.Success -> {
                     CategoryListUiState.Success(result.data)
                 }
 
-                is com.agah.furkan.data.model.Result.Failure -> {
+                is Result.Failure -> {
                     CategoryListUiState.Error(result.error.errorMessage)
                 }
             }

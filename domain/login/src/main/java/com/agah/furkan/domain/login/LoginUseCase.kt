@@ -1,5 +1,6 @@
 package com.agah.furkan.domain.login
 
+import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.preferences.UserPreference
 import com.agah.furkan.user.UserRepository
 import com.agah.furkan.user.remote.model.request.UserLoginBody
@@ -16,13 +17,13 @@ class LoginUseCase @Inject constructor(
             emit(UiState.Loading)
             when (val result =
                 userRepository.loginUser(UserLoginBody(password = password, username = username))) {
-                is com.agah.furkan.data.model.Result.Success -> {
+                is Result.Success -> {
                     userPreference.setToken(result.data.token!!)
                     userPreference.setUserId(result.data.userId!!)
                     emit(UiState.Success)
                 }
 
-                is com.agah.furkan.data.model.Result.Failure -> {
+                is Result.Failure -> {
                     emit(UiState.Failure(failureMessage = result.error.errorMessage))
                 }
             }

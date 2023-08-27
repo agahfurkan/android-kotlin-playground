@@ -3,13 +3,14 @@ package com.agah.furkan.cart
 import com.agah.furkan.cart.remote.model.request.AddProductToCartBody
 import com.agah.furkan.cart.remote.model.request.RemoveProductFromCartBody
 import com.agah.furkan.cart.remote.model.response.CartResponse
+import com.agah.furkan.core.data.model.Result
 
 interface CartRepository {
     suspend fun getCart(
         refresh: Boolean = false,
         userId: Long
-    ): com.agah.furkan.data.model.Result<List<CartResponse.Cart>>
+    ): Result<List<CartResponse.Cart>>
 
-    suspend fun addProductToCart(addProductToCartBody: AddProductToCartBody): com.agah.furkan.data.model.Result<String>
-    suspend fun removeProductFromCart(removeProductFromCartBody: RemoveProductFromCartBody): com.agah.furkan.data.model.Result<String>
+    suspend fun addProductToCart(addProductToCartBody: AddProductToCartBody): Result<String>
+    suspend fun removeProductFromCart(removeProductFromCartBody: RemoveProductFromCartBody): Result<String>
 }

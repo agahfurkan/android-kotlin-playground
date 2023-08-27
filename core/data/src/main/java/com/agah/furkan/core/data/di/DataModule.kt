@@ -1,12 +1,12 @@
-package com.agah.furkan.data.di
+package com.agah.furkan.core.data.di
 
 import com.agah.furkan.core.session.SessionManager
-import com.agah.furkan.data.Constants
-import com.agah.furkan.data.ErrorMapper
-import com.agah.furkan.data.ErrorMapperImpl
-import com.agah.furkan.data.retrofit.AuthInterceptor
-import com.agah.furkan.data.retrofit.CustomCallFactory
-import com.agah.furkan.data.retrofit.HeaderInterceptor
+import com.agah.furkan.core.data.Constants
+import com.agah.furkan.core.data.ErrorMapper
+import com.agah.furkan.core.data.ErrorMapperImpl
+import com.agah.furkan.core.data.retrofit.AuthInterceptor
+import com.agah.furkan.core.data.retrofit.CustomCallFactory
+import com.agah.furkan.core.data.retrofit.HeaderInterceptor
 import com.agah.furkan.preferences.UserPreference
 import dagger.Module
 import dagger.Provides

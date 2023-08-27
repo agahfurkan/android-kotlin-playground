@@ -1,8 +1,9 @@
-package com.agah.furkan.data
+package com.agah.furkan.core.data
 
 
-import com.agah.furkan.data.model.Error
-import com.agah.furkan.data.model.Result
+import com.agah.furkan.core.data.model.BaseResponse
+import com.agah.furkan.core.data.model.Error
+import com.agah.furkan.core.data.model.Result
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
@@ -18,13 +19,13 @@ suspend fun <DATA, DOMAIN> suspendCall(
         if (result == null) {
             Result.Failure(Error.NullResponseError)
         } else {
-            if ((result is com.agah.furkan.data.model.BaseResponse) && result.isSuccess.not()) {
+            if ((result is BaseResponse) && result.isSuccess.not()) {
                 Result.Failure(Error.NetworkError(result.message ?: Error.defaultMessage))
             } else {
                 Result.Success(mapOnSuccess(result))
             }
         }
     } catch (expected: Exception) {
-        Result.Failure(errorMapper.mapError(expected.cause))
+        Result.Failure(errorMapper.mapError(expected))
     }
 }

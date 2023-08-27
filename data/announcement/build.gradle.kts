@@ -41,4 +41,6 @@ dependencies {
     implementation(project(":core:data"))
     kapt(libs.hilt.compiler)
     kapt(libs.moshi.kotlin.codegen)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
 }

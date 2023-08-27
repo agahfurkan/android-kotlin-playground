@@ -1,7 +1,8 @@
 package com.agah.furkan.product
 
-import com.agah.furkan.data.ErrorMapper
-import com.agah.furkan.data.model.Result
+import com.agah.furkan.core.data.ErrorMapper
+import com.agah.furkan.core.data.suspendCall
+import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.product.remote.ProductService
 import com.agah.furkan.product.remote.model.response.ProductDetailResponse
 import com.agah.furkan.product.remote.model.response.ProductResponse
@@ -25,7 +26,7 @@ class ProductRepositoryImpl(
         pageIndex: Int,
         pageLength: Int
     ): Result<ProductResponse> {
-        return com.agah.furkan.data.suspendCall(
+        return suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
             mapOnSuccess = { response -> response }
@@ -39,7 +40,7 @@ class ProductRepositoryImpl(
     }
 
     override suspend fun getProductDetail(productId: Long): Result<ProductDetailResponse> =
-        com.agah.furkan.data.suspendCall(
+        suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
             mapOnSuccess = { response -> response }

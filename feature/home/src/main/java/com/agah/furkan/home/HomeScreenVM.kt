@@ -21,6 +21,11 @@ class HomeScreenVM @Inject constructor(private val announcementRepository: Annou
 
     fun getAnnouncements() {
         viewModelScope.launch {
+            val result=announcementRepository.getAnnouncements()
+            when(result){
+                is com.agah.furkan.data.model.Result.Failure -> TODO()
+                is com.agah.furkan.data.model.Result.Success -> TODO()
+            }
             announcementRepository.getAnnouncements().collect {
                 _announcementList.value = GetAnnouncementUiState.Success(it)
             }

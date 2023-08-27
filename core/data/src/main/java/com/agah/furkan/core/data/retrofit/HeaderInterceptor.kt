@@ -1,4 +1,4 @@
-package com.agah.furkan.data.retrofit
+package com.agah.furkan.core.data.retrofit
 
 import com.agah.furkan.preferences.UserPreference
 import okhttp3.Interceptor

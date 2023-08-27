@@ -1,4 +1,4 @@
-package com.agah.furkan.data.model
+package com.agah.furkan.core.data.model
 
 import retrofit2.Response
 

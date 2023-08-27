@@ -1,6 +1,6 @@
-package com.agah.furkan.data.retrofit
+package com.agah.furkan.core.data.retrofit
 
-import com.agah.furkan.data.model.ApiResponse
+import com.agah.furkan.core.data.model.ApiResponse
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.Call

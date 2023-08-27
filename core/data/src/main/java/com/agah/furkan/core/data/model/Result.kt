@@ -1,4 +1,4 @@
-package com.agah.furkan.data.model
+package com.agah.furkan.core.data.model
 
 sealed class Result<T> {
     class Success<T>(val data: T) : Result<T>()

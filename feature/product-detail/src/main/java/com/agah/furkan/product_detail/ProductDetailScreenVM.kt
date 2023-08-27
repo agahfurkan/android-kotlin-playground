@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.cart.CartRepository
 import com.agah.furkan.cart.remote.model.request.AddProductToCartBody
-import com.agah.furkan.data.model.Result
+import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.preferences.UserPreference
 import com.agah.furkan.product.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

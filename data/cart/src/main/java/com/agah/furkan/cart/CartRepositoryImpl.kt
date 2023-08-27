@@ -4,9 +4,9 @@ import com.agah.furkan.cart.remote.CartService
 import com.agah.furkan.cart.remote.model.request.AddProductToCartBody
 import com.agah.furkan.cart.remote.model.request.RemoveProductFromCartBody
 import com.agah.furkan.cart.remote.model.response.CartResponse
-import com.agah.furkan.data.ErrorMapper
-import com.agah.furkan.data.model.Result
-import com.agah.furkan.data.suspendCall
+import com.agah.furkan.core.data.ErrorMapper
+import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.data.suspendCall
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

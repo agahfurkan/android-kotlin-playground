@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.ui.theme.AppTheme
 import com.agah.furkan.util.launchAndCollectIn
 import com.agah.furkan.util.showToast
@@ -47,11 +48,11 @@ private fun RegisterScreen(
     LaunchedEffect(Unit) {
         viewModel.registerUserResponse.launchAndCollectIn(lifecycleOwner) { state ->
             when (state) {
-                is com.agah.furkan.data.model.Result.Success -> {
+                is Result.Success -> {
                     onRegisterSuccess()
                 }
 
-                is com.agah.furkan.data.model.Result.Failure -> {
+                is Result.Failure -> {
                     context.showToast(state.error.errorMessage)
                 }
             }

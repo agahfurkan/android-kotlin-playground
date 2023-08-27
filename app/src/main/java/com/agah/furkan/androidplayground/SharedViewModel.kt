@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.cart.CartRepository
 import com.agah.furkan.cart.remote.model.response.CartResponse
+import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.preferences.UserPreference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -25,8 +26,8 @@ class SharedViewModel @Inject constructor(
     val userCart = _userCart.asStateFlow()
 
     private val _removeProductFromCart =
-        MutableLiveData<com.agah.furkan.data.model.Result<String>>()
-    val removeProductFromCart: LiveData<com.agah.furkan.data.model.Result<String>>
+        MutableLiveData<Result<String>>()
+    val removeProductFromCart: LiveData<Result<String>>
         get() = _removeProductFromCart
 
     private val _navigateToLoginScreen = Channel<Boolean>(capacity = Channel.BUFFERED)
@@ -40,7 +41,7 @@ class SharedViewModel @Inject constructor(
         viewModelScope.launch {
             val result =
                 cartRepository.getCart(refresh = refresh, userId = userPreference.getUserId())
-            if (result is com.agah.furkan.data.model.Result.Success) {
+            if (result is Result.Success) {
                 val groupedResult = result.data.sortedBy { it.productId }
                     .groupBy { it.productId }
                 _userCart.emit(groupedResult)

@@ -1,4 +1,4 @@
-package com.agah.furkan.data
+package com.agah.furkan.core.data
 
 internal object Constants {
     const val READ_TIMEOUT = 30L

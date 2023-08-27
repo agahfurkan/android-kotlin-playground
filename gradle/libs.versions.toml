@@ -13,7 +13,7 @@ hiltVersion = "2.44"
 lifecycleVersion = "2.4.0"
 jUnitXVersion = "1.1.2"
 testRunnerVersion = "1.3.0"
-truthVersion = "1.1.2"
+truthVersion = "1.1.4"
 lottieVersion = "6.0.0"
 pagingVersion = "3.1.0"
 detektVersion = "1.19.0"
@@ -37,6 +37,8 @@ core-ktx = "1.9.0"
 junit = "4.13.2"
 appcompat = "1.6.1"
 material = "1.8.0"
+mockkVersion = "1.13.7"
+
 
 [libraries]
 constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayoutComposeVersion" }
@@ -48,7 +50,6 @@ retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter
 moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshiVersion" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshiVersion" }
 okhttp3-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "interceptorVersion" }
-
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
@@ -63,16 +64,9 @@ glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "gl
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glideVersion" }
 glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glideComposeVersion" }
 
-junitx = { group = "androidx.test.ext", name = "junit", version.ref = "jUnitXVersion" }
-test-runner = { group = "androidx.test", name = "runner", version.ref = "testRunnerVersion" }
-truth = { group = "com.google.truth", name = "truth", version.ref = "truthVersion" }
-
-
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottieVersion" }
-
 paging = { group = "androidx.paging", name = "paging-runtime", version.ref = "pagingVersion" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingComposeVersion" }
-
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timberVersion" }
 
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
@@ -84,15 +78,20 @@ accompanist-theme-adapter-material = { group = "com.google.accompanist", name = 
 
 material3-compose = { group = "androidx.compose.material3", name = "material3", version.ref = "material3Version" }
 material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3Version" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
 profile-installer = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileInstallerVersion" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+junitx = { group = "androidx.test.ext", name = "junit", version.ref = "jUnitXVersion" }
+test-runner = { group = "androidx.test", name = "runner", version.ref = "testRunnerVersion" }
+truth = { group = "com.google.truth", name = "truth", version.ref = "truthVersion" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
 #build-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 #kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-gradle" }
 #hilt-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
