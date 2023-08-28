@@ -33,12 +33,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.agah.furkan.domain.product.Product
 import com.agah.furkan.core.ui.component.PlaceHolderImage
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.seed
 import com.agah.furkan.core.util.launchAndCollectIn
-import com.agah.furkan.product_list.R
+import com.agah.furkan.domain.product.Product
 
 @Composable
 internal fun ProductListRoute(

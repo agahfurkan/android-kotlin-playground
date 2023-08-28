@@ -29,7 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.agah.furkan.ui.R
+import com.agah.furkan.core.ui.R
 import com.agah.furkan.core.ui.theme.seed
 
 @Composable

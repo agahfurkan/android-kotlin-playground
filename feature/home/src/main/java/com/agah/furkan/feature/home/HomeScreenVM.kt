@@ -2,6 +2,7 @@ package com.agah.furkan.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.data.announcement.AnnouncementRepository
 import com.agah.furkan.feature.home.state.GetAnnouncementUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,14 +22,18 @@ class HomeScreenVM @Inject constructor(private val announcementRepository: Annou
 
     fun getAnnouncements() {
         viewModelScope.launch {
-            val result=announcementRepository.getAnnouncements()
-            when(result){
-                is com.agah.furkan.data.model.Result.Failure -> TODO()
-                is com.agah.furkan.data.model.Result.Success -> TODO()
+            val result = announcementRepository.getAnnouncements()
+            
+            val state = when (result) {
+                is Result.Success -> {
+                    GetAnnouncementUiState.Success(result.data)
+                }
+
+                is Result.Failure -> {
+                    GetAnnouncementUiState.Failure(result.error.errorMessage)
+                }
             }
-            announcementRepository.getAnnouncements().collect {
-                _announcementList.value = GetAnnouncementUiState.Success(it)
-            }
+            _announcementList.emit(state)
         }
 
     }

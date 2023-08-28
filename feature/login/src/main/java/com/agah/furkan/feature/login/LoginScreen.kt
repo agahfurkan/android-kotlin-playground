@@ -25,11 +25,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.domain.login.LoginUseCase
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.util.launchAndCollectIn
 import com.agah.furkan.core.util.showToast
-import com.agah.furkan.login.R
+import com.agah.furkan.domain.login.LoginUseCase
 
 @Composable
 internal fun LoginRoute(

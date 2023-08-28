@@ -1,7 +1,6 @@
 package com.agah.furkan.feature.home
 
 import androidx.compose.foundation.background
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,7 +25,6 @@ import com.agah.furkan.core.ui.component.PlaceHolderImage
 import com.agah.furkan.core.ui.component.SearchTextField
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.seed
-import com.agah.furkan.home.R
 
 @Composable
 internal fun HomeRoute(onSearchFocused: () -> Unit) {

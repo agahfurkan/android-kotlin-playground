@@ -30,7 +30,6 @@ import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.util.launchAndCollectIn
 import com.agah.furkan.core.util.showToast
-import com.agah.furkan.register.R
 
 @Composable
 fun RegisterRoute(onRegisterSuccess: () -> Unit) {

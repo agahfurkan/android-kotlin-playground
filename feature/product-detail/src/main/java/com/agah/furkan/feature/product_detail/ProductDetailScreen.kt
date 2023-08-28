@@ -48,10 +48,9 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.data.product.remote.model.response.ProductDetailResponse
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.util.launchAndCollectIn
-import com.agah.furkan.product_detail.R
+import com.agah.furkan.data.product.remote.model.response.ProductDetailResponse
 
 
 @Composable

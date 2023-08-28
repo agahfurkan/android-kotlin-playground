@@ -40,7 +40,6 @@ import com.agah.furkan.core.ui.component.WarningDialog
 import com.agah.furkan.core.ui.theme.divider
 import com.agah.furkan.core.ui.theme.gray
 import com.agah.furkan.core.ui.theme.seed
-import com.agah.furkan.profile.R
 
 @Composable
 internal fun ProfileRoute(onLogoutButtonClicked: () -> Unit) {
