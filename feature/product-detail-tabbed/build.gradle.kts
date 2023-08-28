@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.agah.furkan.product_detail_tabbed"
+    namespace = "com.agah.furkan.feature.product_detail_tabbed"
     compileSdk = 33
 
     defaultConfig {

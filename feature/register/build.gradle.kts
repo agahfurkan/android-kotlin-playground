@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.agah.furkan.register"
+    namespace = "com.agah.furkan.feature.register"
     compileSdk = 33
 
     defaultConfig {

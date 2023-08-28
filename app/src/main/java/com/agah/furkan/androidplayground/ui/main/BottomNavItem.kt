@@ -3,10 +3,10 @@ package com.agah.furkan.androidplayground.ui.main
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.cart.navigation.cartRoute
-import com.agah.furkan.category_list.navigation.categoryListRoute
-import com.agah.furkan.home.navigation.homeRoute
-import com.agah.furkan.profile.navigation.profileRoute
+import com.agah.furkan.feature.cart.navigation.cartRoute
+import com.agah.furkan.feature.category_list.navigation.categoryListRoute
+import com.agah.furkan.feature.home.navigation.homeRoute
+import com.agah.furkan.feature.profile.navigation.profileRoute
 
 sealed class BottomNavItem(
     @StringRes val titleRes: Int,

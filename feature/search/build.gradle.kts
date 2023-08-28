@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.agah.furkan.search"
+    namespace = "com.agah.furkan.feature.search"
     compileSdk = 33
 
     defaultConfig {

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.agah.furkan.splash"
+    namespace = "com.agah.furkan.feature.splash"
     compileSdk = 33
 
     defaultConfig {

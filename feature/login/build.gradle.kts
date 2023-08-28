@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.agah.furkan.login"
+    namespace = "com.agah.furkan.feature.login"
     compileSdk = 33
 
     defaultConfig {
