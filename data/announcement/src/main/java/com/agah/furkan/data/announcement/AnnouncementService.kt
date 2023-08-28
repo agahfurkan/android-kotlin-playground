@@ -1,6 +1,6 @@
 package com.agah.furkan.data.announcement
 
-import com.agah.furkan.data.remote.response.AnnouncementResponse
+import com.agah.furkan.data.announcement.remote.response.AnnouncementResponse
 import retrofit2.http.GET
 
 interface AnnouncementService {

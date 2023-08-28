@@ -3,7 +3,7 @@ package com.agah.furkan.domain.product
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.product.ProductRepository
+import com.agah.furkan.data.product.ProductRepository
 
 const val PRODUCT_PAGE_SIZE = 50
 const val INITIAL_PAGE_INDEX = 0

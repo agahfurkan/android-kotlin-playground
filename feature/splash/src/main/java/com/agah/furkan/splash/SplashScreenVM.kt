@@ -3,9 +3,9 @@ package com.agah.furkan.splash
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.preferences.UserPreference
-import com.agah.furkan.user.UserRepository
-import com.agah.furkan.user.remote.model.request.ValidateTokenBody
+import com.agah.furkan.core.preferences.UserPreference
+import com.agah.furkan.data.user.UserRepository
+import com.agah.furkan.data.user.remote.model.request.ValidateTokenBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -18,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SplashScreenVM @Inject constructor(
     private val userRepository: UserRepository,
-    private val userPreference: UserPreference) :
+    private val userPreference: UserPreference
+) :
     ViewModel() {
     private val _isTokenValid = Channel<Boolean>(Channel.BUFFERED)
     val isTokenValid = _isTokenValid.receiveAsFlow()

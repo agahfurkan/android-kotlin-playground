@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.agah.furkan.product"
+    namespace = "com.agah.furkan.data.product"
     compileSdk = 33
 
     defaultConfig {

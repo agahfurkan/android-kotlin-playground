@@ -26,9 +26,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.domain.login.LoginUseCase
-import com.agah.furkan.ui.theme.AppTheme
-import com.agah.furkan.util.launchAndCollectIn
-import com.agah.furkan.util.showToast
+import com.agah.furkan.core.ui.theme.AppTheme
+import com.agah.furkan.core.util.launchAndCollectIn
+import com.agah.furkan.core.util.showToast
 
 @Composable
 internal fun LoginRoute(

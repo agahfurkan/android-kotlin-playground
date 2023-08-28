@@ -1,9 +1,9 @@
 package com.agah.furkan.domain.login
 
 import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.preferences.UserPreference
-import com.agah.furkan.user.UserRepository
-import com.agah.furkan.user.remote.model.request.UserLoginBody
+import com.agah.furkan.core.preferences.UserPreference
+import com.agah.furkan.data.user.UserRepository
+import com.agah.furkan.data.user.remote.model.request.UserLoginBody
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

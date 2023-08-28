@@ -1,7 +1,7 @@
 package com.agah.furkan.androidplayground
 
 import android.app.Application
-import com.agah.furkan.logging.Logger
+import com.agah.furkan.core.logging.Logger
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

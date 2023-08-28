@@ -1,6 +1,6 @@
 package com.agah.furkan.product_detail
 
-import com.agah.furkan.product.remote.model.response.ProductDetailResponse
+import com.agah.furkan.data.product.remote.model.response.ProductDetailResponse
 
 
 internal sealed class ProductDetailUiState {

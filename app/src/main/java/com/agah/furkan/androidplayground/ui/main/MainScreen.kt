@@ -34,7 +34,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.cart.navigation.cartScreen
-import com.agah.furkan.cart.remote.model.response.CartResponse
+import com.agah.furkan.data.cart.remote.model.response.CartResponse
 import com.agah.furkan.category_list.navigation.categoryListScreen
 import com.agah.furkan.home.navigation.homeScreen
 import com.agah.furkan.home.navigation.navigateToHomeScreen
@@ -53,9 +53,9 @@ import com.agah.furkan.search.navigation.navigateToSearchScreen
 import com.agah.furkan.search.navigation.searchScreen
 import com.agah.furkan.splash.navigation.splashRoute
 import com.agah.furkan.splash.navigation.splashScreen
-import com.agah.furkan.ui.component.WarningDialog
-import com.agah.furkan.ui.theme.AppTheme
-import com.agah.furkan.util.launchAndCollectIn
+import com.agah.furkan.core.ui.component.WarningDialog
+import com.agah.furkan.core.ui.theme.AppTheme
+import com.agah.furkan.core.util.launchAndCollectIn
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

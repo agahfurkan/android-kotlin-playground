@@ -1,6 +1,6 @@
 package com.agah.furkan.category_list
 
-import com.agah.furkan.category.remote.model.response.CategoryResponse
+import com.agah.furkan.data.category.remote.model.response.CategoryResponse
 
 internal sealed class CategoryListUiState {
     data class Success(val data: List<CategoryResponse.Category>) : CategoryListUiState()

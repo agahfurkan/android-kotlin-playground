@@ -5,8 +5,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.ui.theme.AppTheme
-import com.agah.furkan.util.launchAndCollectIn
+import com.agah.furkan.core.ui.theme.AppTheme
+import com.agah.furkan.core.util.launchAndCollectIn
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants

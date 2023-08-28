@@ -2,7 +2,7 @@ package com.agah.furkan.category_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.category.CategoryRepository
+import com.agah.furkan.data.category.CategoryRepository
 import com.agah.furkan.core.data.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

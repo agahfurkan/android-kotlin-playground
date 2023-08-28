@@ -2,7 +2,7 @@ package com.agah.furkan.data.announcement
 
 import com.agah.furkan.core.data.ErrorMapper
 import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.data.remote.response.AnnouncementResponse
+import com.agah.furkan.data.announcement.remote.response.AnnouncementResponse
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

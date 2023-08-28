@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.agah.furkan.logging"
+    namespace = "com.agah.furkan.core.logging"
     compileSdk = 33
 
     defaultConfig {

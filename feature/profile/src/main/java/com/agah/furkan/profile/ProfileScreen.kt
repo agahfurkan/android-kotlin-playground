@@ -35,11 +35,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.ui.component.PlaceHolderImage
-import com.agah.furkan.ui.component.WarningDialog
-import com.agah.furkan.ui.theme.divider
-import com.agah.furkan.ui.theme.gray
-import com.agah.furkan.ui.theme.seed
+import com.agah.furkan.core.ui.component.PlaceHolderImage
+import com.agah.furkan.core.ui.component.WarningDialog
+import com.agah.furkan.core.ui.theme.divider
+import com.agah.furkan.core.ui.theme.gray
+import com.agah.furkan.core.ui.theme.seed
 
 @Composable
 internal fun ProfileRoute(onLogoutButtonClicked: () -> Unit) {

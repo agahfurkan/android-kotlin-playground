@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.agah.furkan.cart.CartRoute
-import com.agah.furkan.cart.remote.model.response.CartResponse
+import com.agah.furkan.data.cart.remote.model.response.CartResponse
 
 const val cartRoute = "cartRoute"
 

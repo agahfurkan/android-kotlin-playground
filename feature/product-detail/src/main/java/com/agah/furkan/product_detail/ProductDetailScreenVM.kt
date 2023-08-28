@@ -3,11 +3,11 @@ package com.agah.furkan.product_detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.cart.CartRepository
-import com.agah.furkan.cart.remote.model.request.AddProductToCartBody
+import com.agah.furkan.data.cart.CartRepository
+import com.agah.furkan.data.cart.remote.model.request.AddProductToCartBody
 import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.preferences.UserPreference
-import com.agah.furkan.product.ProductRepository
+import com.agah.furkan.core.preferences.UserPreference
+import com.agah.furkan.data.product.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

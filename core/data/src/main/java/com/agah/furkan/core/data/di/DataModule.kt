@@ -7,7 +7,7 @@ import com.agah.furkan.core.data.ErrorMapperImpl
 import com.agah.furkan.core.data.retrofit.AuthInterceptor
 import com.agah.furkan.core.data.retrofit.CustomCallFactory
 import com.agah.furkan.core.data.retrofit.HeaderInterceptor
-import com.agah.furkan.preferences.UserPreference
+import com.agah.furkan.core.preferences.UserPreference
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

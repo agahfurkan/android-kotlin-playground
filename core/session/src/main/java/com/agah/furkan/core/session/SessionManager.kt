@@ -1,6 +1,6 @@
 package com.agah.furkan.core.session
 
-import com.agah.furkan.preferences.UserPreference
+import com.agah.furkan.core.preferences.UserPreference
 import javax.inject.Inject
 import javax.inject.Singleton
 

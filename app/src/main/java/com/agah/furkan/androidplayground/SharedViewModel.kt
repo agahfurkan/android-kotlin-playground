@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.cart.CartRepository
-import com.agah.furkan.cart.remote.model.response.CartResponse
+import com.agah.furkan.data.cart.CartRepository
+import com.agah.furkan.data.cart.remote.model.response.CartResponse
 import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.preferences.UserPreference
+import com.agah.furkan.core.preferences.UserPreference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

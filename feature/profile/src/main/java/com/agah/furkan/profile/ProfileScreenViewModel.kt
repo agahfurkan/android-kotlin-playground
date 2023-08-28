@@ -1,7 +1,7 @@
 package com.agah.furkan.profile
 
 import androidx.lifecycle.ViewModel
-import com.agah.furkan.preferences.UserPreference
+import com.agah.furkan.core.preferences.UserPreference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

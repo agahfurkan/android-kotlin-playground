@@ -23,8 +23,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.agah.furkan.ui.component.SearchTextField
-import com.agah.furkan.ui.theme.seed
+import com.agah.furkan.core.ui.component.SearchTextField
+import com.agah.furkan.core.ui.theme.seed
 
 @Composable
 fun SearchRoute(onBackPress: () -> Unit) {

@@ -12,8 +12,8 @@ import com.agah.furkan.core.remoteconfig.RemoteConfig
 import com.agah.furkan.core.remoteconfig.variant.LauncherIcon
 import com.agah.furkan.core.session.SessionListener
 import com.agah.furkan.core.session.SessionManager
-import com.agah.furkan.logging.Logger
-import com.agah.furkan.ui.theme.AppTheme
+import com.agah.furkan.core.logging.Logger
+import com.agah.furkan.core.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

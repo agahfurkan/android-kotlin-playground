@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.user.UserRepository
-import com.agah.furkan.user.remote.model.request.UserRegisterBody
+import com.agah.furkan.data.user.UserRepository
+import com.agah.furkan.data.user.remote.model.request.UserRegisterBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow

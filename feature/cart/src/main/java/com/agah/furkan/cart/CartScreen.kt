@@ -41,13 +41,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.cart.remote.model.response.CartResponse
+import com.agah.furkan.data.cart.remote.model.response.CartResponse
 import com.agah.furkan.feature.cart.R
-import com.agah.furkan.ui.component.PlaceHolderImage
-import com.agah.furkan.ui.theme.AppTheme
-import com.agah.furkan.ui.theme.seed
-import com.agah.furkan.util.discount
-import com.agah.furkan.util.launchAndCollectIn
+import com.agah.furkan.core.ui.component.PlaceHolderImage
+import com.agah.furkan.core.ui.theme.AppTheme
+import com.agah.furkan.core.ui.theme.seed
+import com.agah.furkan.core.util.discount
+import com.agah.furkan.core.util.launchAndCollectIn
 
 @Composable
 internal fun CartRoute(
