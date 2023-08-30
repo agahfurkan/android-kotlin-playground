@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+    id("playground.android.hilt")
 }
 
 android {
@@ -27,6 +27,4 @@ dependencies {
     implementation(project(":core:preferences"))
     implementation(project(":core:data"))
     implementation(project(":data:user"))
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
 }

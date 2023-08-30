@@ -2,7 +2,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+    id("playground.android.hilt")
 }
 
 android {
@@ -25,8 +25,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
     implementation(libs.firebase.config.ktx)
     implementation(libs.firebase.analytics.ktx)
 }

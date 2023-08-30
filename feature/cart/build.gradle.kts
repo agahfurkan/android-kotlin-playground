@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+    id("playground.android.hilt")
 }
 
 android {
@@ -44,5 +44,4 @@ dependencies {
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui)
     implementation(libs.hilt.navigation.compose)
-    kapt(libs.hilt.compiler)
 }

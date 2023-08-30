@@ -1,10 +1,9 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("org.jlleitschuh.gradle.ktlint")
-    id("dagger.hilt.android.plugin")
+    id("playground.android.hilt")
     id("io.gitlab.arturbosch.detekt") version AppConfig.detektVersion
     id("com.diffplug.spotless") version AppConfig.spotlessVersion
     id("org.jetbrains.dokka") version AppConfig.dokkaVersion
@@ -110,8 +109,6 @@ android {
         implementation(libs.material3.compose)
         implementation(libs.compose.ui)
         implementation(libs.accompanist.theme.adapter.material)
-        implementation(libs.hilt.android)
-        kapt(libs.hilt.compiler)
     }
 }
 

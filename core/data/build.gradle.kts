@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+    id("playground.android.hilt")
 }
 
 android {
@@ -28,10 +28,8 @@ dependencies {
     implementation(project(":core:session"))
     api(libs.retrofit)
     api(libs.moshi)
-    api(libs.hilt.android)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.okhttp3.logging)
-    kapt(libs.hilt.compiler)
     kapt(libs.moshi.kotlin.codegen)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
