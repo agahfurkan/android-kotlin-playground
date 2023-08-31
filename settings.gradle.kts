@@ -1,3 +1,7 @@
+pluginManagement {
+    includeBuild("build-logic")
+}
+
 include (":app")
 rootProject.name = "Android Playground"
 include(":core:data")

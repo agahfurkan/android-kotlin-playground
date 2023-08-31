@@ -1,6 +1,8 @@
 [versions]
 firebaseAnalyticsKtxVersion = "21.3.0"
 firebaseConfigKtxVersion = "21.4.1"
+gradleVersion = "8.1.0"
+kotlinGradlePluginVersion = "1.8.10"
 ktxVersion = "1.9.0"
 retrofitVersion = "2.5.0"
 retrofitMoshiConverterVersion = "2.9.0"
@@ -45,6 +47,8 @@ constraintlayout-compose = { group = "androidx.constraintlayout", name = "constr
 
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx", version.ref = "firebaseAnalyticsKtxVersion" }
 firebase-config-ktx = { module = "com.google.firebase:firebase-config-ktx", version.ref = "firebaseConfigKtxVersion" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradleVersion" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePluginVersion" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
 retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofitMoshiConverterVersion" }
 moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshiVersion" }
@@ -93,7 +97,6 @@ test-runner = { group = "androidx.test", name = "runner", version.ref = "testRun
 truth = { group = "com.google.truth", name = "truth", version.ref = "truthVersion" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
 #build-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
-#kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin-gradle" }
 #hilt-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 
 #[plugins]

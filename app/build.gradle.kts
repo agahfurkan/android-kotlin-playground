@@ -4,22 +4,22 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("org.jlleitschuh.gradle.ktlint")
     id("playground.android.hilt")
-    id("io.gitlab.arturbosch.detekt") version AppConfig.detektVersion
-    id("com.diffplug.spotless") version AppConfig.spotlessVersion
-    id("org.jetbrains.dokka") version AppConfig.dokkaVersion
+    id("io.gitlab.arturbosch.detekt") version "1.19.0"
+    id("com.diffplug.spotless") version "6.0.5"
+    id("org.jetbrains.dokka") version "1.6.10"
     id("com.google.gms.google-services")
 }
 android {
     ndkVersion = "24.0.8215888"
-    compileSdk = AppConfig.compileSdk
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.agah.furkan.androidplayground"
-        minSdk = AppConfig.minSdk
-        targetSdk = AppConfig.targetSdk
-        versionCode = AppConfig.versionCode
-        versionName = AppConfig.versionName
-        testInstrumentationRunner = (AppConfig.testInstrumentationRunner)
+        minSdk = 21
+        targetSdk = 33
+        versionCode = 1
+        versionName = "1.0"
+        testInstrumentationRunner = "com.agah.furkan.androidplayground.CustomTestRunner"
     }
     buildTypes {
         getByName("release") {

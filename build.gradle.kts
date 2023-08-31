@@ -8,8 +8,8 @@ buildscript {
         }
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.1.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
+        classpath(libs.gradle)
+        classpath(libs.kotlin.gradle.plugin)
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
         classpath("org.jlleitschuh.gradle:ktlint-gradle:10.2.0")
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.44")
