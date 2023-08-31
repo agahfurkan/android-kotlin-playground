@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.data.cart.CartRepository
-import com.agah.furkan.data.cart.remote.model.response.CartResponse
 import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.core.preferences.UserPreference
+import com.agah.furkan.data.cart.CartRepository
+import com.agah.furkan.data.cart.remote.model.response.CartResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SharedViewModel @Inject constructor(
     private val cartRepository: CartRepository,
-    private val userPreference: UserPreference
+    private val userPreference: UserPreference,
 ) : ViewModel() {
 
     private val _userCart = MutableStateFlow<Map<Long, List<CartResponse.Cart>>>(emptyMap())

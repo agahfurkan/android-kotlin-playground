@@ -13,8 +13,8 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("org.jlleitschuh.gradle.ktlint")
     id("playground.android.hilt")
-    id("io.gitlab.arturbosch.detekt") version "1.19.0"
-    id("com.diffplug.spotless") version "6.0.5"
+    id("io.gitlab.arturbosch.detekt") version "1.23.1"
+    id("com.diffplug.spotless") version "6.21.0"
     id("org.jetbrains.dokka") version "1.6.10"
     id("com.google.gms.google-services")
 }
@@ -48,7 +48,7 @@ android {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
         getByName("debug") {
@@ -105,6 +105,7 @@ android {
     namespace = "com.agah.furkan.androidplayground"
 
     dependencies {
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1")
         implementation(project(":core:session"))
         implementation(project(":core:data"))
         implementation(project(":core:preferences"))
@@ -165,9 +166,15 @@ spotless {
     }
 }
 detekt {
-    config = files("$rootDir/config/detekt.yml")
+    config.setFrom("$rootDir/config/detekt.yml")
 }
 tasks.dokkaHtml.configure {
     outputDirectory.set(file("../documentation/html"))
     pluginsMapConfiguration.set(mapOf("org.jetbrains.dokka.base.DokkaBase" to """{ "separateInheritedMembers": true}"""))
+}
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    jvmTarget = "1.8"
+}
+ktlint {
+    version.set("0.48.2")
 }

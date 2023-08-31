@@ -17,7 +17,6 @@ import com.agah.furkan.core.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), SessionListener {
     private val sharedViewModel by viewModels<SharedViewModel>()
@@ -38,10 +37,10 @@ class MainActivity : ComponentActivity(), SessionListener {
             logger.i("LauncherIcon: $launcherIcon")
 
             val alias = when (launcherIcon) {
-                LauncherIcon.Default -> ALIAS_LIST[0]
-                LauncherIcon.Variant1 -> ALIAS_LIST[1]
-                LauncherIcon.Variant2 -> ALIAS_LIST[2]
-                LauncherIcon.Variant3 -> ALIAS_LIST[3]
+                LauncherIcon.Default -> DEFAULT_ALIAS
+                LauncherIcon.Variant1 -> LAUNCHER_ALIAS1
+                LauncherIcon.Variant2 -> LAUNCHER_ALIAS2
+                LauncherIcon.Variant3 -> LAUNCHER_ALIAS3
             }
 
             changeLauncherIcon(alias)
@@ -55,14 +54,13 @@ class MainActivity : ComponentActivity(), SessionListener {
     }
 
     override fun sessionStarted() {
-
+        // no-op
     }
 
     override fun sessionEnded() {
         sharedViewModel.sessionEnded()
     }
 
-    // TODO: check app kill issue 
     private fun changeLauncherIcon(aliasComponentName: String) {
         val packageManager: PackageManager = packageManager
         val packageName = "com.agah.furkan.androidplayground"
@@ -73,14 +71,14 @@ class MainActivity : ComponentActivity(), SessionListener {
         packageManager.setComponentEnabledSetting(
             component,
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP
+            PackageManager.DONT_KILL_APP,
         )
 
         val component2 = ComponentName(this, "$activeAlias")
         packageManager.setComponentEnabledSetting(
             component2,
             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-            PackageManager.DONT_KILL_APP
+            PackageManager.DONT_KILL_APP,
         )
     }
 
@@ -90,11 +88,9 @@ class MainActivity : ComponentActivity(), SessionListener {
     }
 
     companion object {
-        private val ALIAS_LIST = listOf<String>(
-            ".DefaultAlias",
-            ".ActivityAlias1",
-            ".ActivityAlias2",
-            ".ActivityAlias3"
-        )
+        private const val DEFAULT_ALIAS = ".DefaultAlias"
+        private const val LAUNCHER_ALIAS1 = ".ActivityAlias1"
+        private const val LAUNCHER_ALIAS2 = ".ActivityAlias2"
+        private const val LAUNCHER_ALIAS3 = ".ActivityAlias3"
     }
 }

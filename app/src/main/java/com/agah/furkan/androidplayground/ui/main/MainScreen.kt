@@ -26,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
@@ -33,8 +34,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
-import com.agah.furkan.feature.cart.navigation.cartScreen
+import com.agah.furkan.core.ui.component.WarningDialog
+import com.agah.furkan.core.ui.theme.AppTheme
+import com.agah.furkan.core.util.launchAndCollectIn
 import com.agah.furkan.data.cart.remote.model.response.CartResponse
+import com.agah.furkan.feature.cart.navigation.cartScreen
 import com.agah.furkan.feature.category_list.navigation.categoryListScreen
 import com.agah.furkan.feature.home.navigation.homeScreen
 import com.agah.furkan.feature.home.navigation.navigateToHomeScreen
@@ -53,9 +57,7 @@ import com.agah.furkan.feature.search.navigation.navigateToSearchScreen
 import com.agah.furkan.feature.search.navigation.searchScreen
 import com.agah.furkan.feature.splash.navigation.splashRoute
 import com.agah.furkan.feature.splash.navigation.splashScreen
-import com.agah.furkan.core.ui.component.WarningDialog
-import com.agah.furkan.core.ui.theme.AppTheme
-import com.agah.furkan.core.util.launchAndCollectIn
+import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,15 +76,15 @@ fun MainScreen() {
         showDialog = showNavigateToLoginDialog,
         dialogProperties = DialogProperties(
             dismissOnBackPress = false,
-            dismissOnClickOutside = false
+            dismissOnClickOutside = false,
         ),
         title = "Warning",
         message = "Session ended. Please login again.",
-        positiveButtonText = "Ok"
+        positiveButtonText = "Ok",
     ) {
         navController.navigateToLoginScreen(
             NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
-                .build()
+                .build(),
         )
     }
 
@@ -109,7 +111,7 @@ fun MainScreen() {
 
                 BottomNavigationBar(navController = navController, cart = cart.value)
             }
-        }
+        },
     ) { padding ->
         padding
         NavigationGraph(navController = navController, sharedViewModel)
@@ -120,7 +122,7 @@ fun MainScreen() {
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
-    cart: Map<Long, List<CartResponse.Cart>>
+    cart: Map<Long, List<CartResponse.Cart>>,
 ) {
     val items = BottomNavItem.getBottomNavItems()
 
@@ -140,13 +142,13 @@ fun BottomNavigationBar(
                             }) {
                                 Icon(
                                     painterResource(id = item.iconRes),
-                                    contentDescription = stringResource(id = item.titleRes)
+                                    contentDescription = stringResource(id = item.titleRes),
                                 )
                             }
                         } else {
                             Icon(
                                 painter = painterResource(id = item.iconRes),
-                                contentDescription = stringResource(id = item.titleRes)
+                                contentDescription = stringResource(id = item.titleRes),
                             )
                         }
                     },
@@ -167,11 +169,10 @@ fun BottomNavigationBar(
                             launchSingleTop = true
                             restoreState = true
                         }
-                    }
+                    },
                 )
             }
         }
-
     }
 }
 
@@ -180,33 +181,17 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
     val cartListState = sharedViewModel.userCart.collectAsState()
     val cartList = cartListState.value
     NavHost(navController, startDestination = splashRoute) {
-        homeScreen {
-            navController.navigateToSearchScreen()
-        }
-
-        categoryListScreen { categoryId ->
-            navController.navigateToProductListScreen(categoryId)
-        }
-
-        cartScreen(
-            cartList = cartList,
-            onCartItemRemoved = {},
-            productRemovedFromCart = sharedViewModel::refreshUserCart,
-            addAdditionalProductClicked = {})
-        profileScreen {
-            navController.navigateToLoginScreen(
-                NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
-                    .build()
-            )
-        }
-
-        productListScreen(itemClicked = { productId ->
-            navController.navigateToProductDetail(productId)
-        }, onBackButtonClicked = {
-            navController.popBackStack()
-        }, newProductAddedToCart = sharedViewModel::refreshUserCart
+        BottomBarScreens(navController, sharedViewModel, cartList)
+        AuthScreens(navController)
+        productListScreen(
+            itemClicked = { productId ->
+                navController.navigateToProductDetail(productId)
+            },
+            onBackButtonClicked = {
+                navController.popBackStack()
+            },
+            newProductAddedToCart = sharedViewModel::refreshUserCart,
         )
-
         productDetailScreen(
             onBackButtonClicked = {
                 navController.popBackStack()
@@ -219,23 +204,13 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             },
             onReviewsClicked = {
                 navController.navigateToProductDetailTabbed(productId = it, initialPage = 2)
-            }, onAllReviewsClicked = {
+            },
+            onAllReviewsClicked = {
                 navController.navigateToProductDetailTabbed(productId = it, initialPage = 2)
-            }, newProductAddedToCart = sharedViewModel::refreshUserCart
+            },
+            newProductAddedToCart = sharedViewModel::refreshUserCart,
         )
 
-        loginScreen(onLoginSuccess = {
-            navController.navigateToHomeScreen(
-                NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
-                    .build()
-            )
-        }, onRegisterClicked = {
-            navController.navigateToRegisterScreen()
-        })
-
-        registerScreen {
-            navController.navigateToLoginScreen()
-        }
         splashScreen {
             val navOptions =
                 NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
@@ -245,7 +220,6 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
             } else {
                 navController.navigateToLoginScreen(navOptions)
             }
-
         }
         searchScreen {
             navController.popBackStack()
@@ -253,10 +227,52 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
         productDetailTabbedScreen {
             navController.popBackStack()
         }
-        // TODO: add second module
-        composable("dummyRoute") {
+    }
+}
 
-        }
+fun NavGraphBuilder.AuthScreens(navController: NavController) {
+    loginScreen(onLoginSuccess = {
+        navController.navigateToHomeScreen(
+            NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
+                .build(),
+        )
+    }, onRegisterClicked = {
+        navController.navigateToRegisterScreen()
+    })
+    registerScreen {
+        navController.navigateToLoginScreen()
+    }
+}
+
+fun NavGraphBuilder.BottomBarScreens(
+    navController: NavController,
+    sharedViewModel: SharedViewModel,
+    cartList: Map<Long, List<CartResponse.Cart>>,
+) {
+    homeScreen {
+        navController.navigateToSearchScreen()
+    }
+
+    categoryListScreen { categoryId ->
+        navController.navigateToProductListScreen(categoryId)
+    }
+
+    cartScreen(
+        cartList = cartList,
+        onCartItemRemoved = {},
+        productRemovedFromCart = sharedViewModel::refreshUserCart,
+        addAdditionalProductClicked = {},
+    )
+
+    profileScreen {
+        navController.navigateToLoginScreen(
+            NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
+                .build(),
+        )
+    }
+
+    composable("dummyRoute") {
+        // add navigation
     }
 }
 
@@ -265,8 +281,9 @@ fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedVie
 fun PreviewBottomNavigationBar() {
     AppTheme {
         BottomNavigationBar(
-            navController = rememberNavController(), mapOf(
-                3735L to listOf(
+            navController = rememberNavController(),
+            mapOf(
+                Random.nextLong() to listOf(
                     CartResponse.Cart(
                         cartId = 5686,
                         discount = 0.1,
@@ -274,10 +291,10 @@ fun PreviewBottomNavigationBar() {
                         price = 2.3,
                         productDescription = "natoque",
                         productId = 3735,
-                        productName = "Pedro Hayden"
-                    )
-                )
-            )
+                        productName = "Pedro Hayden",
+                    ),
+                ),
+            ),
         )
     }
 }

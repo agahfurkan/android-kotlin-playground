@@ -10,10 +10,10 @@ buildscript {
     dependencies {
         classpath(libs.gradle)
         classpath(libs.kotlin.gradle.plugin)
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3")
-        classpath("org.jlleitschuh.gradle:ktlint-gradle:10.2.0")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.44")
-        classpath("com.google.gms:google-services:4.3.15")
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+        classpath(libs.ktlint.gradle)
+        classpath(libs.hilt.android.gradle.plugin)
+        classpath(libs.google.services)
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

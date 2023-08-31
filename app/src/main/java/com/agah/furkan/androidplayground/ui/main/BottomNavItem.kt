@@ -11,7 +11,7 @@ import com.agah.furkan.feature.profile.navigation.profileRoute
 sealed class BottomNavItem(
     @StringRes val titleRes: Int,
     @DrawableRes val iconRes: Int,
-    val route: String
+    val route: String,
 ) {
     object Home :
         BottomNavItem(R.string.bottom_nav_home, R.drawable.ic_round_home, homeRoute)
@@ -27,7 +27,7 @@ sealed class BottomNavItem(
         BottomNavItem(
             R.string.bottom_nav_second_module,
             R.drawable.ic_star,
-            "dummyRoute"
+            "dummyRoute",
         )
 
     companion object {
@@ -36,7 +36,7 @@ sealed class BottomNavItem(
             Categories,
             Cart,
             Profile,
-            SecondModule
+            SecondModule,
         )
     }
 }

@@ -55,8 +55,8 @@ class WebServiceTest {
                 userRepository.loginUser(
                     UserLoginBody(
                         username = Date().toString(),
-                        password = "12345"
-                    )
+                        password = "12345",
+                    ),
                 )
             assertThat((response as ApiSuccessResponse).data.isSuccess).isFalse()
             assertThat(response.data.token).isNull()
@@ -70,8 +70,8 @@ class WebServiceTest {
                 userRepository.registerNewUser(
                     UserRegisterBody(
                         username = Date().toString(),
-                        password = "test"
-                    )
+                        password = "test",
+                    ),
                 )
             assertThat((response as ApiSuccessResponse).data.isSuccess).isTrue()
         }
@@ -84,8 +84,8 @@ class WebServiceTest {
                 userRepository.registerNewUser(
                     UserRegisterBody(
                         username = "test",
-                        password = "test"
-                    )
+                        password = "test",
+                    ),
                 )
             assertThat((response as ApiSuccessResponse).data.isSuccess).isFalse()
         }
