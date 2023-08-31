@@ -1,3 +1,12 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
+val keystoreProperties = Properties().apply {
+    val file = File("keystore-info.txt")
+    if (file.canRead()) {
+        load(file.reader())
+    }
+}
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -11,19 +20,32 @@ plugins {
 }
 android {
     ndkVersion = "24.0.8215888"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.agah.furkan.androidplayground"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "com.agah.furkan.androidplayground.CustomTestRunner"
     }
+    signingConfigs {
+        if (keystoreProperties.getProperty("file") != null) {
+            create("release") {
+                storeFile = file(keystoreProperties.getProperty("file"))
+                storePassword = keystoreProperties.getProperty("store_password")
+                keyAlias = keystoreProperties.getProperty("key_alias")
+                keyPassword = keystoreProperties.getProperty("key_password")
+            }
+        }
+    }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            if (signingConfigs.firstOrNull { it.name == "release" } != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
