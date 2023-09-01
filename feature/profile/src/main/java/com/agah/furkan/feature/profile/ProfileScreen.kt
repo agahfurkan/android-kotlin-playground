@@ -37,6 +37,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.core.ui.component.PlaceHolderImage
 import com.agah.furkan.core.ui.component.WarningDialog
+import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.divider
 import com.agah.furkan.core.ui.theme.gray
 import com.agah.furkan.core.ui.theme.seed
@@ -65,13 +66,22 @@ private fun ProfileScreen(
         onLogoutButtonClicked()
     }
 
+    ProfileScreenContent(onLogoutButtonClicked = {
+        showLogoutDialog.value = true
+    }, onDownloadPdfClicked = {
+        viewModel.downloadPdf()
+    })
+}
+
+@Composable
+internal fun ProfileScreenContent(onLogoutButtonClicked: () -> Unit, onDownloadPdfClicked: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = seed)
         ) {
-            val (notificationButton, logoutButton, userImgContainer, username) = createRefs()
+            val (notificationButton, buttonContainer, userImgContainer, username) = createRefs()
             Box(
                 modifier = Modifier
                     .constrainAs(userImgContainer) {
@@ -100,19 +110,30 @@ private fun ProfileScreen(
                 }
                 .padding(top = 16.dp, bottom = 51.dp),
                 text = stringResource(id = R.string.username))
-            IconButton(
-                modifier = Modifier.constrainAs(logoutButton) {
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                },
-                onClick = {
-                    showLogoutDialog.value = true
-                }) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_logout),
-                    tint = Color.White,
-                    contentDescription = ""
-                )
+            Column(modifier = Modifier.constrainAs(buttonContainer) {
+                end.linkTo(parent.end)
+                top.linkTo(parent.top)
+            }) {
+                IconButton(
+                    onClick = {
+                        onLogoutButtonClicked()
+                    }) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_logout),
+                        tint = Color.White,
+                        contentDescription = ""
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        onDownloadPdfClicked()
+                    }) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.baseline_cloud_download_24),
+                        tint = Color.White,
+                        contentDescription = ""
+                    )
+                }
             }
             IconButton(
                 modifier = Modifier.constrainAs(notificationButton) {
@@ -154,13 +175,13 @@ private fun ProfileScreen(
             }
         })
     }
-
 }
 
 @Composable
 @Preview(showBackground = true)
 private fun ProfileScreenPreview() {
-    ProfileScreen {
+    AppTheme {
+        ProfileScreenContent(onLogoutButtonClicked = {}, onDownloadPdfClicked = {})
 
     }
 }

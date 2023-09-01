@@ -3,6 +3,8 @@ firebaseAnalyticsKtxVersion = "21.3.0"
 firebaseConfigKtxVersion = "21.4.1"
 googleServicesVersion = "4.3.15"
 gradleVersion = "8.1.0"
+hiltCompilerVersion = "1.0.0"
+hiltWorkVersion = "1.0.0"
 kotlinGradlePluginVersion = "1.8.10"
 ktlintGradleVersion = "11.5.1"
 ktxVersion = "1.9.0"
@@ -48,6 +50,8 @@ workRuntimeVersion = "2.8.1"
 
 
 [libraries]
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompilerVersion" }
+androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltWorkVersion" }
 androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsGradlePluginVersion" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtxVersion" }
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntimeVersion" }

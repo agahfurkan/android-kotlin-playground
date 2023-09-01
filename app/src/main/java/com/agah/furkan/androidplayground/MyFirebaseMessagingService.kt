@@ -22,7 +22,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        //no-op
+        // no-op
     }
 
     private fun sendNotification(title: String, message: String) {
@@ -49,7 +49,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(

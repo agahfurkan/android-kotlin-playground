@@ -133,8 +133,8 @@ android {
         implementation(libs.compose.ui)
         implementation(libs.accompanist.theme.adapter.material)
         implementation(libs.firebase.messaging.ktx)
-        implementation(libs.androidx.work.runtime.ktx)
-        implementation(libs.androidx.work.runtime)
+        implementation(libs.androidx.hilt.work)
+        kapt(libs.androidx.hilt.compiler)
     }
 }
 spotless {
