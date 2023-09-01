@@ -132,9 +132,11 @@ android {
         implementation(libs.material3.compose)
         implementation(libs.compose.ui)
         implementation(libs.accompanist.theme.adapter.material)
+        implementation(libs.firebase.messaging.ktx)
+        implementation(libs.androidx.work.runtime.ktx)
+        implementation(libs.androidx.work.runtime)
     }
 }
-
 spotless {
     java {
         target("**/*.java")

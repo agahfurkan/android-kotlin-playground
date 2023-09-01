@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.agah.furkan.feature.product_detail.ProductDetailRoute
 
 internal const val ARG_PRODUCT_ID = "productId"
@@ -24,7 +25,14 @@ fun NavGraphBuilder.productDetailScreen(
 ) {
     composable(
         route = productDetailRoute,
-        arguments = listOf(navArgument("productId") { type = NavType.LongType })
+        arguments = listOf(navArgument("productId") { type = NavType.LongType }),
+        deepLinks = listOf(
+            navDeepLink {
+                with(this) {
+                    uriPattern = "https://playground.com/productDetail/{$ARG_PRODUCT_ID}"
+                }
+            }
+        ),
     ) {
         ProductDetailRoute(
             onBackButtonClicked = onBackButtonClicked,
