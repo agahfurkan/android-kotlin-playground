@@ -105,7 +105,8 @@ android {
     namespace = "com.agah.furkan.androidplayground"
 
     dependencies {
-        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.1")
+        detektPlugins(libs.detekt.formatting)
+
         implementation(project(":core:session"))
         implementation(project(":core:data"))
         implementation(project(":core:preferences"))
@@ -113,6 +114,7 @@ android {
         implementation(project(":core:ui"))
         implementation(project(":core:util"))
         implementation(project(":core:remoteconfig"))
+        implementation(project(":core:notification"))
 
         implementation(project(":data:cart"))
 

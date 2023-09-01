@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:preferences"))
     implementation(project(":core:data"))
+    implementation(project(":core:notification"))
     implementation(project(":data:pdf"))
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.work.runtime)

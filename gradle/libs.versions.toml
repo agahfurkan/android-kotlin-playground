@@ -1,4 +1,5 @@
 [versions]
+detektFormattingVersion = "1.23.1"
 firebaseAnalyticsKtxVersion = "21.3.0"
 firebaseConfigKtxVersion = "21.4.1"
 googleServicesVersion = "4.3.15"
@@ -57,6 +58,7 @@ androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntimeVersion" }
 constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayoutComposeVersion" }
 
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detektFormattingVersion" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx", version.ref = "firebaseAnalyticsKtxVersion" }
 firebase-config-ktx = { module = "com.google.firebase:firebase-config-ktx", version.ref = "firebaseConfigKtxVersion" }
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServicesVersion" }
