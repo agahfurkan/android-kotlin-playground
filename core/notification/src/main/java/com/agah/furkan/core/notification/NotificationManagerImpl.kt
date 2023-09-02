@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
 @SuppressLint("MissingPermission")
-class NotificationManagerImpl(private val context: Context) : NotificationManager {
+internal class NotificationManagerImpl(private val context: Context) : NotificationManager {
     override fun createNotificationChannel(
         channelId: String,
         channelName: String,
@@ -40,7 +40,7 @@ class NotificationManagerImpl(private val context: Context) : NotificationManage
         title: String,
         content: String
     ) {
-        val channelId = "123"
+        val channelId = ChannelId.DEFAULT.id
         val requestCode = 0
 
         createNotificationChannel(
@@ -82,7 +82,7 @@ class NotificationManagerImpl(private val context: Context) : NotificationManage
         progress: Int,
         indeterminate: Boolean
     ) {
-        val chanelId = "12345"
+        val chanelId = ChannelId.PROGRESS.id
 
         createNotificationChannel(
             channelId = chanelId,
@@ -104,7 +104,7 @@ class NotificationManagerImpl(private val context: Context) : NotificationManage
         NotificationManagerCompat.from(context).notify(notificationId, builder.build())
     }
 
-    override fun cancelNotification(notificationId: Int) {
-        NotificationManagerCompat.from(context).cancel(notificationId)
+    override fun cancelNotification(notificationId: NotificationId) {
+        NotificationManagerCompat.from(context).cancel(notificationId.id)
     }
 }

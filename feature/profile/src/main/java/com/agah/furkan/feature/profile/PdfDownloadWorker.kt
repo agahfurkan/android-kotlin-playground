@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.agah.furkan.core.notification.NotificationId
 import com.agah.furkan.core.notification.NotificationManager
 import com.agah.furkan.data.pdf.PdfRepository
 import dagger.assisted.Assisted
@@ -19,13 +20,13 @@ class PdfDownloadWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         notificationManager.showProgressNotification(
-            notificationId = 123,
+            notificationId = NotificationId.PROGRESS.id,
             title = "Downloading pdf..."
         )
 
         val result = pdfRepository.getPdfList()
 
-        notificationManager.cancelNotification(123)
+        notificationManager.cancelNotification(NotificationId.PROGRESS)
 
         return when (result) {
             is com.agah.furkan.core.data.model.Result.Success -> Result.success()

@@ -27,5 +27,5 @@ interface NotificationManager {
         indeterminate: Boolean = true
     )
 
-    fun cancelNotification(notificationId: Int)
+    fun cancelNotification(notificationId: NotificationId)
 }

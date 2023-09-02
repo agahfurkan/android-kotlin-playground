@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NotificationModule {
+internal object NotificationModule {
     @Singleton
     @Provides
     fun provideNotificationManager(application: Application): com.agah.furkan.core.notification.NotificationManager {
