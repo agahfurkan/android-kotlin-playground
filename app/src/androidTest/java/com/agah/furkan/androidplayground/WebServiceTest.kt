@@ -6,7 +6,6 @@ import com.agah.furkan.androidplayground.data.remote.ApiSuccessResponse
 import com.agah.furkan.androidplayground.data.remote.model.request.UserLoginBody
 import com.agah.furkan.androidplayground.data.remote.model.request.UserRegisterBody
 import com.agah.furkan.androidplayground.data.repository.UserRepository
-import com.agah.furkan.androidplayground.util.SharedPrefUtil
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -56,8 +55,8 @@ class WebServiceTest {
                 userRepository.loginUser(
                     UserLoginBody(
                         username = Date().toString(),
-                        password = "12345"
-                    )
+                        password = "12345",
+                    ),
                 )
             assertThat((response as ApiSuccessResponse).data.isSuccess).isFalse()
             assertThat(response.data.token).isNull()
@@ -71,8 +70,8 @@ class WebServiceTest {
                 userRepository.registerNewUser(
                     UserRegisterBody(
                         username = Date().toString(),
-                        password = "test"
-                    )
+                        password = "test",
+                    ),
                 )
             assertThat((response as ApiSuccessResponse).data.isSuccess).isTrue()
         }
@@ -85,8 +84,8 @@ class WebServiceTest {
                 userRepository.registerNewUser(
                     UserRegisterBody(
                         username = "test",
-                        password = "test"
-                    )
+                        password = "test",
+                    ),
                 )
             assertThat((response as ApiSuccessResponse).data.isSuccess).isFalse()
         }

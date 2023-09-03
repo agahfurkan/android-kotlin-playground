@@ -10,35 +10,54 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
-import com.agah.furkan.androidplayground.core.ui.Screen
-import com.agah.furkan.androidplayground.domain.model.result.Cart
-import com.agah.furkan.androidplayground.ui.cart.CartScreen
-import com.agah.furkan.androidplayground.ui.home.HomeScreen
-import com.agah.furkan.androidplayground.ui.login.LoginScreen
-import com.agah.furkan.androidplayground.ui.productcategory.CategoryScreen
-import com.agah.furkan.androidplayground.ui.productdetail.ProductDetailScreen
-import com.agah.furkan.androidplayground.ui.productdetailtab.ProductTabbedDetailScreen
-import com.agah.furkan.androidplayground.ui.productlist.ProductListScreen
-import com.agah.furkan.androidplayground.ui.register.RegisterScreen
-import com.agah.furkan.androidplayground.ui.search.SearchScreen
-import com.agah.furkan.androidplayground.ui.splash.SplashScreen
-import com.agah.furkan.androidplayground.ui.theme.AppTheme
-import com.agah.furkan.androidplayground.ui.userprofile.ProfileScreen
-import com.google.accompanist.systemuicontroller.SystemUiController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.agah.furkan.core.ui.component.WarningDialog
+import com.agah.furkan.core.ui.theme.AppTheme
+import com.agah.furkan.core.util.launchAndCollectIn
+import com.agah.furkan.data.cart.remote.model.response.CartResponse
+import com.agah.furkan.feature.cart.navigation.cartScreen
+import com.agah.furkan.feature.category_list.navigation.categoryListScreen
+import com.agah.furkan.feature.home.navigation.homeScreen
+import com.agah.furkan.feature.home.navigation.navigateToHomeScreen
+import com.agah.furkan.feature.login.navigation.loginScreen
+import com.agah.furkan.feature.login.navigation.navigateToLoginScreen
+import com.agah.furkan.feature.product_detail.navigation.navigateToProductDetail
+import com.agah.furkan.feature.product_detail.navigation.productDetailScreen
+import com.agah.furkan.feature.product_detail_tabbed.navigation.navigateToProductDetailTabbed
+import com.agah.furkan.feature.product_detail_tabbed.navigation.productDetailTabbedScreen
+import com.agah.furkan.feature.product_list.navigation.navigateToProductListScreen
+import com.agah.furkan.feature.product_list.navigation.productListScreen
+import com.agah.furkan.feature.profile.navigation.profileScreen
+import com.agah.furkan.feature.register.navigation.navigateToRegisterScreen
+import com.agah.furkan.feature.register.navigation.registerScreen
+import com.agah.furkan.feature.search.navigation.navigateToSearchScreen
+import com.agah.furkan.feature.search.navigation.searchScreen
+import com.agah.furkan.feature.splash.navigation.splashRoute
+import com.agah.furkan.feature.splash.navigation.splashScreen
+import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,19 +65,56 @@ fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val showBottomBar = BottomNavItem.getBottomNavItems()
-        .firstOrNull { it.screen_route == navBackStackEntry?.destination?.route } != null
+        .firstOrNull { it.route == navBackStackEntry?.destination?.route } != null
     val sharedViewModel: SharedViewModel = hiltViewModel(LocalContext.current as ComponentActivity)
     val cart = sharedViewModel.userCart.collectAsState()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val showNavigateToLoginDialog = remember {
+        mutableStateOf(false)
+    }
+    WarningDialog(
+        showDialog = showNavigateToLoginDialog,
+        dialogProperties = DialogProperties(
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false,
+        ),
+        title = "Warning",
+        message = "Session ended. Please login again.",
+        positiveButtonText = "Ok",
+    ) {
+        navController.navigateToLoginScreen(
+            NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
+                .build(),
+        )
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        sharedViewModel.navigateToLoginScreen.launchAndCollectIn(lifecycleOwner) { state ->
+            showNavigateToLoginDialog.value = state
+        }
+    }
 
     Scaffold(
         bottomBar = {
             if (showBottomBar) {
+                DisposableEffect(lifecycleOwner) {
+                    val observer = LifecycleEventObserver { _, event ->
+                        if (event == Lifecycle.Event.ON_START) {
+                            sharedViewModel.refreshUserCart()
+                        }
+                    }
+                    lifecycleOwner.lifecycle.addObserver(observer)
+                    onDispose {
+                        lifecycleOwner.lifecycle.removeObserver(observer)
+                    }
+                }
+
                 BottomNavigationBar(navController = navController, cart = cart.value)
             }
-        }
+        },
     ) { padding ->
         padding
-        NavigationGraph(navController = navController)
+        NavigationGraph(navController = navController, sharedViewModel)
     }
 }
 
@@ -66,7 +122,7 @@ fun MainScreen() {
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
-    cart: Map<Long, List<Cart>>
+    cart: Map<Long, List<CartResponse.Cart>>,
 ) {
     val items = BottomNavItem.getBottomNavItems()
 
@@ -85,26 +141,26 @@ fun BottomNavigationBar(
                                 }
                             }) {
                                 Icon(
-                                    painterResource(id = item.icon),
-                                    contentDescription = item.title
+                                    painterResource(id = item.iconRes),
+                                    contentDescription = stringResource(id = item.titleRes),
                                 )
                             }
                         } else {
                             Icon(
-                                painter = painterResource(id = item.icon),
-                                contentDescription = item.title
+                                painter = painterResource(id = item.iconRes),
+                                contentDescription = stringResource(id = item.titleRes),
                             )
                         }
                     },
                     label = {
                         if (item != BottomNavItem.SecondModule) {
-                            Text(text = item.title)
+                            Text(text = stringResource(id = item.titleRes))
                         }
                     },
                     alwaysShowLabel = item != BottomNavItem.SecondModule,
-                    selected = currentRoute == item.screen_route,
+                    selected = currentRoute == item.route,
                     onClick = {
-                        navController.navigate(item.screen_route) {
+                        navController.navigate(item.route) {
                             navController.graph.startDestinationRoute?.let { screen_route ->
                                 popUpTo(screen_route) {
                                     saveState = true
@@ -113,122 +169,110 @@ fun BottomNavigationBar(
                             launchSingleTop = true
                             restoreState = true
                         }
-                    }
+                    },
                 )
             }
         }
-
     }
 }
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController, startDestination = Screen.Splash.route) {
-        composable(Screen.Home.route) {
-            val systemUiController: SystemUiController = rememberSystemUiController()
-            systemUiController.isStatusBarVisible = true
-
-            HomeScreen {
-                navController.navigate(Screen.Search.route)
-            }
-        }
-        composable(Screen.Categories.route) {
-            CategoryScreen { category ->
-                navController.navigate(Screen.ProductList.createRoute(category.categoryId))
-            }
-        }
-        composable(Screen.Cart.route) {
-            CartScreen()
-        }
-        composable(Screen.Profile.route) {
-            ProfileScreen {
-                navController.navigate(Screen.Login.route) {
-                    popUpTo(navController.graph.id) {
-                        inclusive = true
-                    }
-                }
-            }
-        }
-        composable(Screen.SecondModule.route) {
-            // TODO: add navigation
-        }
-        composable(
-            Screen.ProductList.route,
-            arguments = Screen.ProductList.getArgs()
-        ) { backStackEntry ->
-            ProductListScreen(itemClicked = { product ->
-                navController.navigate(Screen.ProductDetail.createRoute(product.productId))
-            }, onBackButtonClicked = {
+fun NavigationGraph(navController: NavHostController, sharedViewModel: SharedViewModel) {
+    val cartListState = sharedViewModel.userCart.collectAsState()
+    val cartList = cartListState.value
+    NavHost(navController, startDestination = splashRoute) {
+        BottomBarScreens(navController, sharedViewModel, cartList)
+        AuthScreens(navController)
+        productListScreen(
+            itemClicked = { productId ->
+                navController.navigateToProductDetail(productId)
+            },
+            onBackButtonClicked = {
                 navController.popBackStack()
-            })
-        }
-
-        composable(
-            Screen.ProductDetail.route,
-            arguments = Screen.ProductDetail.getArgs()
-        ) { backStackEntry ->
-            ProductDetailScreen(
-                onBackButtonClicked = {
-                    navController.popBackStack()
-                },
-                onProductDetailClicked = {
-                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 0))
-                },
-                onProductDescriptionClicked = {
-                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 1))
-                },
-                onReviewsClicked = {
-                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
-                }, onAllReviewsClicked = {
-                    navController.navigate(Screen.ProductDetailTabbed.createRoute(it, 2))
-                })
-        }
-        composable(Screen.Login.route) {
-            LoginScreen(onLoginSuccess = {
-                navController.navigate(Screen.Home.route) {
-                    popUpTo(navController.graph.id) {
-                        inclusive = true
-                    }
-                }
-            }, onRegisterClicked = {
-                navController.navigate(Screen.Register.route)
-            })
-        }
-        composable(Screen.Register.route) {
-            RegisterScreen {
-                navController.navigate(Screen.Login.route)
-            }
-        }
-        composable(Screen.Splash.route) {
-            val systemUiController: SystemUiController = rememberSystemUiController()
-            systemUiController.isStatusBarVisible = false
-
-            SplashScreen {
-                val destination = if (it) {
-                    Screen.Home
-                } else {
-                    Screen.Login
-                }
-                navController.navigate(destination.route) {
-                    popUpTo(navController.graph.id) {
-                        inclusive = true
-                    }
-                }
-            }
-        }
-        composable(Screen.Search.route) {
-            SearchScreen {
+            },
+            newProductAddedToCart = sharedViewModel::refreshUserCart,
+        )
+        productDetailScreen(
+            onBackButtonClicked = {
                 navController.popBackStack()
+            },
+            onProductDetailClicked = {
+                navController.navigateToProductDetailTabbed(productId = it, initialPage = 0)
+            },
+            onProductDescriptionClicked = {
+                navController.navigateToProductDetailTabbed(productId = it, initialPage = 1)
+            },
+            onReviewsClicked = {
+                navController.navigateToProductDetailTabbed(productId = it, initialPage = 2)
+            },
+            onAllReviewsClicked = {
+                navController.navigateToProductDetailTabbed(productId = it, initialPage = 2)
+            },
+            newProductAddedToCart = sharedViewModel::refreshUserCart,
+        )
+
+        splashScreen {
+            val navOptions =
+                NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
+                    .build()
+            if (it) {
+                navController.navigateToHomeScreen(navOptions)
+            } else {
+                navController.navigateToLoginScreen(navOptions)
             }
         }
-        composable(
-            route = Screen.ProductDetailTabbed.route,
-            arguments = Screen.ProductDetailTabbed.getArgs()
-        ) {
-            ProductTabbedDetailScreen(initialPage = it.arguments?.getInt("initialPage") ?: 0) {
-                navController.popBackStack()
-            }
+        searchScreen {
+            navController.popBackStack()
         }
+        productDetailTabbedScreen {
+            navController.popBackStack()
+        }
+    }
+}
+
+fun NavGraphBuilder.AuthScreens(navController: NavController) {
+    loginScreen(onLoginSuccess = {
+        navController.navigateToHomeScreen(
+            NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
+                .build(),
+        )
+    }, onRegisterClicked = {
+        navController.navigateToRegisterScreen()
+    })
+    registerScreen {
+        navController.navigateToLoginScreen()
+    }
+}
+
+fun NavGraphBuilder.BottomBarScreens(
+    navController: NavController,
+    sharedViewModel: SharedViewModel,
+    cartList: Map<Long, List<CartResponse.Cart>>,
+) {
+    homeScreen {
+        navController.navigateToSearchScreen()
+    }
+
+    categoryListScreen { categoryId ->
+        navController.navigateToProductListScreen(categoryId)
+    }
+
+    cartScreen(
+        cartList = cartList,
+        onCartItemRemoved = {},
+        productRemovedFromCart = sharedViewModel::refreshUserCart,
+        addAdditionalProductClicked = {},
+    )
+
+    profileScreen {
+        navController.navigateToLoginScreen(
+            NavOptions.Builder().setPopUpTo(navController.graph.id, inclusive = true)
+                .build(),
+        )
+    }
+
+    composable("dummyRoute") {
+        // add navigation
     }
 }
 
@@ -237,19 +281,20 @@ fun NavigationGraph(navController: NavHostController) {
 fun PreviewBottomNavigationBar() {
     AppTheme {
         BottomNavigationBar(
-            navController = rememberNavController(), mapOf(
-                3735L to listOf(
-                    Cart(
+            navController = rememberNavController(),
+            mapOf(
+                Random.nextLong() to listOf(
+                    CartResponse.Cart(
                         cartId = 5686,
                         discount = 0.1,
                         picture = "ante",
                         price = 2.3,
                         productDescription = "natoque",
                         productId = 3735,
-                        productName = "Pedro Hayden"
-                    )
-                )
-            )
+                        productName = "Pedro Hayden",
+                    ),
+                ),
+            ),
         )
     }
 }

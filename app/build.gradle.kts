@@ -1,36 +1,64 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
+val keystoreProperties = Properties().apply {
+    val file = File("keystore-info.txt")
+    if (file.canRead()) {
+        load(file.reader())
+    }
+}
+
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("org.jlleitschuh.gradle.ktlint")
-    id("dagger.hilt.android.plugin")
-    id("io.gitlab.arturbosch.detekt") version "1.19.0"
-    id("com.diffplug.spotless") version "6.0.5"
+    id("playground.android.hilt")
+    id("io.gitlab.arturbosch.detekt") version "1.23.1"
+    id("com.diffplug.spotless") version "6.21.0"
     id("org.jetbrains.dokka") version "1.6.10"
+    id("com.google.gms.google-services")
 }
 android {
     ndkVersion = "24.0.8215888"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.agah.furkan.androidplayground"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "com.agah.furkan.androidplayground.CustomTestRunner"
     }
+    signingConfigs {
+        if (keystoreProperties.getProperty("file") != null) {
+            create("release") {
+                storeFile = file(keystoreProperties.getProperty("file"))
+                storePassword = keystoreProperties.getProperty("store_password")
+                keyAlias = keystoreProperties.getProperty("key_alias")
+                keyPassword = keystoreProperties.getProperty("key_password")
+            }
+        }
+    }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            if (signingConfigs.firstOrNull { it.name == "release" } != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
         getByName("debug") {
             isMinifyEnabled = false
+        }
+        create("benchmark") {
+            initWith(buildTypes.getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            isDebuggable = false
         }
     }
     externalNativeBuild {
@@ -48,8 +76,6 @@ android {
         }
 
         create("prod") {
-            applicationIdSuffix = ".prod"
-            versionNameSuffix = "-prod"
             buildConfigField("String", "BASE_URL", "\"https://10.0.2.2:5000/api/\"")
             resValue("string", "app_name", "PROD-Android Playground")
         }
@@ -79,50 +105,39 @@ android {
     namespace = "com.agah.furkan.androidplayground"
 
     dependencies {
-        implementation(platform(libs.androidx.compose.bom))
-        implementation(libs.kotlin.stdlib)
-        implementation(libs.core.ktx)
-        implementation(libs.lifecycle)
-        implementation(libs.lifecycle.common.java8)
-        implementation(libs.lifecycle.livedata)
-        implementation(libs.constraintlayout)
-        implementation(libs.constraintlayout.compose)
-        implementation(libs.retrofit)
-        implementation(libs.retrofit.converter.moshi)
-        implementation(libs.moshi)
-        kapt(libs.moshi.kotlin.codegen)
-        implementation(libs.okhttp3.logging)
-        implementation(libs.hilt.android)
-        kapt(libs.hilt.compiler)
-        implementation(libs.hilt.testing)
-        implementation(libs.hilt.android.compiler)
+        detektPlugins(libs.detekt.formatting)
+
+        implementation(project(":core:session"))
+        implementation(project(":core:data"))
+        implementation(project(":core:preferences"))
+        implementation(project(":core:logging"))
+        implementation(project(":core:resources"))
+        implementation(project(":core:ui"))
+        implementation(project(":core:util"))
+        implementation(project(":core:remoteconfig"))
+        implementation(project(":core:notification"))
+
+        implementation(project(":data:cart"))
+
+        implementation(project(":feature:cart"))
+        implementation(project(":feature:home"))
+        implementation(project(":feature:splash"))
+        implementation(project(":feature:login"))
+        implementation(project(":feature:category-list"))
+        implementation(project(":feature:profile"))
+        implementation(project(":feature:product-detail"))
+        implementation(project(":feature:product-list"))
+        implementation(project(":feature:product-detail-tabbed"))
+        implementation(project(":feature:register"))
+        implementation(project(":feature:search"))
+
         implementation(libs.hilt.navigation.compose)
-        implementation(libs.navigation.fragment.ktx)
-        implementation(libs.navigation.ui.ktx)
-        implementation(libs.navigation.compose)
-        implementation(libs.room.runtime)
-        implementation(libs.room.ktx)
-        kapt(libs.room.compiler)
-        implementation(libs.glide)
-        kapt(libs.glide.compiler)
-        implementation(libs.glide.compose)
-        implementation(libs.junitx)
-        implementation(libs.test.runner)
-        implementation(libs.truth)
-        implementation(libs.lottie)
-        implementation(libs.lottie.compose)
-        implementation(libs.paging)
-        implementation(libs.paging.compose)
-        implementation(libs.timber)
-        implementation(libs.compose.runtime)
-        implementation(libs.compose.material)
         implementation(libs.material3.compose)
-        implementation(libs.material3.window.size)
-        implementation(libs.compose.runtime.livedata)
         implementation(libs.compose.ui)
-        implementation(libs.activity.compose)
         implementation(libs.accompanist.theme.adapter.material)
-        implementation(libs.accompanist.system.ui.controller)
+        implementation(libs.firebase.messaging.ktx)
+        implementation(libs.androidx.hilt.work)
+        kapt(libs.androidx.hilt.compiler)
     }
 }
 spotless {
@@ -156,9 +171,15 @@ spotless {
     }
 }
 detekt {
-    config = files("$rootDir/config/detekt.yml")
+    config.setFrom("$rootDir/config/detekt.yml")
 }
 tasks.dokkaHtml.configure {
     outputDirectory.set(file("../documentation/html"))
     pluginsMapConfiguration.set(mapOf("org.jetbrains.dokka.base.DokkaBase" to """{ "separateInheritedMembers": true}"""))
+}
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    jvmTarget = "1.8"
+}
+ktlint {
+    version.set("0.48.2")
 }

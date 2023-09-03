@@ -1,17 +1,34 @@
 package com.agah.furkan.androidplayground.ui.main
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.agah.furkan.androidplayground.R
-import com.agah.furkan.androidplayground.core.ui.Screen
+import com.agah.furkan.feature.cart.navigation.cartRoute
+import com.agah.furkan.feature.category_list.navigation.categoryListRoute
+import com.agah.furkan.feature.home.navigation.homeRoute
+import com.agah.furkan.feature.profile.navigation.profileRoute
 
-sealed class BottomNavItem(var title: String, var icon: Int, var screen_route: String) {
-    object Home : BottomNavItem(Screen.Home.title, R.drawable.ic_round_home, Screen.Home.route)
+sealed class BottomNavItem(
+    @StringRes val titleRes: Int,
+    @DrawableRes val iconRes: Int,
+    val route: String,
+) {
+    object Home :
+        BottomNavItem(R.string.bottom_nav_home, R.drawable.ic_round_home, homeRoute)
+
     object Categories :
-        BottomNavItem(Screen.Categories.title, R.drawable.ic_grid, Screen.Categories.route)
+        BottomNavItem(R.string.bottom_nav_categories, R.drawable.ic_grid, categoryListRoute)
 
-    object Cart : BottomNavItem(Screen.Cart.title, R.drawable.ic_cart, Screen.Cart.route)
-    object Profile : BottomNavItem(Screen.Profile.title, R.drawable.ic_person, Screen.Profile.route)
+    object Cart : BottomNavItem(R.string.bottom_nav_cart, R.drawable.ic_cart, cartRoute)
+    object Profile :
+        BottomNavItem(R.string.bottom_nav_profile, R.drawable.ic_person, profileRoute)
+
     object SecondModule :
-        BottomNavItem(Screen.SecondModule.title, R.drawable.ic_star, Screen.SecondModule.route)
+        BottomNavItem(
+            R.string.bottom_nav_second_module,
+            R.drawable.ic_star,
+            "dummyRoute",
+        )
 
     companion object {
         fun getBottomNavItems() = listOf(
@@ -19,7 +36,7 @@ sealed class BottomNavItem(var title: String, var icon: Int, var screen_route: S
             Categories,
             Cart,
             Profile,
-            SecondModule
+            SecondModule,
         )
     }
 }
