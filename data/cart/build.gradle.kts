@@ -9,5 +9,6 @@ android {
 
 dependencies {
     implementation(project(":core:data"))
+
     kapt(libs.moshi.kotlin.codegen)
 }

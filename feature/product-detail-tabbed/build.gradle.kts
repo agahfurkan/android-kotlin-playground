@@ -8,6 +8,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":data:product"))
+    implementation(project(":core:resources"))
     implementation(project(":core:ui"))
+
+    implementation(project(":data:product"))
 }

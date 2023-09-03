@@ -8,10 +8,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:resources"))
     implementation(project(":core:ui"))
     implementation(project(":core:util"))
-    implementation(project(":data:cart"))
     implementation(project(":core:preferences"))
     implementation(project(":core:data"))
+
+    implementation(project(":data:cart"))
     implementation(libs.material3.window.size)
 }

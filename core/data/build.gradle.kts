@@ -10,6 +10,7 @@ android {
 dependencies {
     implementation(project(":core:preferences"))
     implementation(project(":core:session"))
+
     api(libs.retrofit)
     api(libs.moshi)
     implementation(libs.retrofit.converter.moshi)

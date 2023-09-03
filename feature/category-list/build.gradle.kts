@@ -8,8 +8,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:resources"))
     implementation(project(":core:ui"))
     implementation(project(":core:data"))
+
     implementation(project(":data:category"))
     implementation(platform(libs.androidx.compose.bom))
 }

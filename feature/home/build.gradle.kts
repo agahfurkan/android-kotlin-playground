@@ -8,8 +8,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:resources"))
     implementation(project(":core:ui"))
     implementation(project(":core:data"))
+
     implementation(project(":data:announcement"))
     implementation(libs.accompanist.system.ui.controller)
 }

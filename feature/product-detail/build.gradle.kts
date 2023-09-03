@@ -8,10 +8,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":data:cart"))
+    implementation(project(":core:resources"))
     implementation(project(":core:ui"))
     implementation(project(":core:data"))
-    implementation(project(":data:product"))
     implementation(project(":core:preferences"))
     implementation(project(":core:util"))
+
+    implementation(project(":data:cart"))
+    implementation(project(":data:product"))
 }

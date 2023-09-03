@@ -7,5 +7,5 @@ android {
     namespace = "com.agah.furkan.core.notification"
 }
 dependencies {
-    implementation(project(":core:ui"))
+    implementation(project(":core:resources"))
 }

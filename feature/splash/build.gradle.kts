@@ -8,11 +8,14 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:resources"))
     implementation(project(":core:ui"))
     implementation(project(":core:data"))
     implementation(project(":core:util"))
     implementation(project(":core:preferences"))
+
     implementation(project(":data:user"))
+
     implementation(libs.lottie.compose)
     implementation(libs.accompanist.system.ui.controller)
 }

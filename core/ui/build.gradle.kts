@@ -7,5 +7,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:resources"))
+
     implementation(libs.lottie.compose)
 }

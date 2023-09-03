@@ -8,7 +8,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":data:product"))
     implementation(project(":core:data"))
+
+    implementation(project(":data:product"))
     implementation(libs.paging)
 }

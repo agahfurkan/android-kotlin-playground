@@ -111,6 +111,7 @@ android {
         implementation(project(":core:data"))
         implementation(project(":core:preferences"))
         implementation(project(":core:logging"))
+        implementation(project(":core:resources"))
         implementation(project(":core:ui"))
         implementation(project(":core:util"))
         implementation(project(":core:remoteconfig"))
