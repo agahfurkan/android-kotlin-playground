@@ -6,7 +6,7 @@ val keystoreProperties = Properties().apply {
         load(file.reader())
     }
 }
-
+apply ("..//projectDependencyGraph.gradle")
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -140,6 +140,7 @@ android {
         kapt(libs.androidx.hilt.compiler)
     }
 }
+
 spotless {
     java {
         target("**/*.java")
