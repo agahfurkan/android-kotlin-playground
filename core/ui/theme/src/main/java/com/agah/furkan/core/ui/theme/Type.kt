@@ -6,7 +6,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.agah.furkan.core.ui.R
 
 val CustomTypography = Typography(
     displayLarge = TextStyle(

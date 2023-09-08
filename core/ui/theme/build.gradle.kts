@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.agah.furkan.core.ui"
+    namespace = "com.agah.furkan.core.ui.theme"
 }
 
 dependencies {
