@@ -13,6 +13,7 @@ dependencies {
     implementation(project(":core:util"))
     implementation(project(":core:preferences"))
     implementation(project(":core:data"))
+    implementation(project(":core:ui:components"))
 
     implementation(project(":data:cart"))
     implementation(libs.material3.window.size)

@@ -13,6 +13,7 @@ dependencies {
     implementation(project(":core:preferences"))
     implementation(project(":core:data"))
     implementation(project(":core:notification"))
+    implementation(project(":core:ui:components"))
 
     implementation(project(":data:pdf"))
 

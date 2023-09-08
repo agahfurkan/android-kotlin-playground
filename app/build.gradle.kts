@@ -6,7 +6,7 @@ val keystoreProperties = Properties().apply {
         load(file.reader())
     }
 }
-apply ("..//projectDependencyGraph.gradle")
+apply("..//projectDependencyGraph.gradle")
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -116,6 +116,7 @@ android {
         implementation(project(":core:util"))
         implementation(project(":core:remoteconfig"))
         implementation(project(":core:notification"))
+        implementation(project(":core:ui:components"))
 
         implementation(project(":data:cart"))
 

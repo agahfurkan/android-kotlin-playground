@@ -29,10 +29,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.data.category.remote.model.response.CategoryResponse
-import com.agah.furkan.core.ui.component.LoadingState
-import com.agah.furkan.core.ui.component.PlaceHolderImage
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.seed
+import com.agah.furkan.ui.components.LoadingState
+import com.agah.furkan.ui.components.PlaceHolderImage
 
 @Composable
 internal fun CategoryListRoute(

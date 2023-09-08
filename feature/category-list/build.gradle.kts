@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":core:resources"))
     implementation(project(":core:ui:theme"))
     implementation(project(":core:data"))
+    implementation(project(":core:ui:components"))
 
     implementation(project(":data:category"))
     implementation(platform(libs.androidx.compose.bom))

@@ -34,7 +34,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
-import com.agah.furkan.core.ui.component.WarningDialog
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.util.launchAndCollectIn
 import com.agah.furkan.data.cart.remote.model.response.CartResponse
@@ -57,6 +56,7 @@ import com.agah.furkan.feature.search.navigation.navigateToSearchScreen
 import com.agah.furkan.feature.search.navigation.searchScreen
 import com.agah.furkan.feature.splash.navigation.splashRoute
 import com.agah.furkan.feature.splash.navigation.splashScreen
+import com.agah.furkan.ui.components.WarningDialog
 import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)

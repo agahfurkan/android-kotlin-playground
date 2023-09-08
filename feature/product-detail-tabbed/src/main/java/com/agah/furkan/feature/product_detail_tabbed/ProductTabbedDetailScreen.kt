@@ -42,7 +42,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.core.ui.component.RatingBar
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.darkGray
 import com.agah.furkan.core.ui.theme.orange
@@ -50,6 +49,7 @@ import com.agah.furkan.core.ui.theme.seed
 import com.agah.furkan.data.product.ProductDetail
 import com.agah.furkan.data.product.averageRating
 import com.agah.furkan.data.product.totalReviewsByRating
+import com.agah.furkan.ui.components.RatingBar
 import kotlinx.coroutines.launch
 
 @Composable

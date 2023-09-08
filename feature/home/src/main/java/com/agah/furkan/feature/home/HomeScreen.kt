@@ -21,10 +21,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.agah.furkan.core.ui.component.PlaceHolderImage
-import com.agah.furkan.core.ui.component.SearchTextField
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.seed
+import com.agah.furkan.ui.components.PlaceHolderImage
+import com.agah.furkan.ui.components.SearchTextField
 
 @Composable
 internal fun HomeRoute(onSearchFocused: () -> Unit) {

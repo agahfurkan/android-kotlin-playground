@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":core:resources"))
     implementation(project(":core:ui:theme"))
     implementation(project(":core:data"))
+    implementation(project(":core:ui:components"))
 
     implementation(project(":data:announcement"))
     implementation(libs.accompanist.system.ui.controller)

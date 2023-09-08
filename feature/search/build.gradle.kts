@@ -10,4 +10,5 @@ android {
 dependencies {
     implementation(project(":core:resources"))
     implementation(project(":core:ui:theme"))
+    implementation(project(":core:ui:components"))
 }
