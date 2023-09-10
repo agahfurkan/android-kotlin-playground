@@ -41,25 +41,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.data.cart.remote.model.response.CartResponse
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.seed
 import com.agah.furkan.core.util.discount
 import com.agah.furkan.core.util.launchAndCollectIn
+import com.agah.furkan.data.cart.remote.model.response.CartResponse
 import com.agah.furkan.ui.components.PlaceHolderImage
 
 @Composable
 internal fun CartRoute(
     cartList: Map<Long, List<CartResponse.Cart>>,
-    onCartItemRemoved: (Long) -> Unit,
-    productRemovedFromCart: () -> Unit,
-    addAdditionalProductClicked: (Int) -> Unit
+    refreshCart: () -> Unit
 ) {
     CartScreen(
         cartList = cartList,
-        onCartItemRemoved = onCartItemRemoved,
-        productRemovedFromCart = productRemovedFromCart,
-        addAdditionalProductClicked = addAdditionalProductClicked
+        refreshCart = refreshCart
     )
 }
 
@@ -68,16 +64,14 @@ internal fun CartRoute(
 private fun CartScreen(
     viewModel: CartScreenViewModel = hiltViewModel(),
     cartList: Map<Long, List<CartResponse.Cart>>,
-    onCartItemRemoved: (Long) -> Unit,
-    productRemovedFromCart: () -> Unit,
-    addAdditionalProductClicked: (Int) -> Unit
+    refreshCart: () -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(key1 = Unit) {
         viewModel.removeProductState.launchAndCollectIn(lifecycleOwner) { state ->
             when (state) {
                 is RemoveProductFromCartUiState.Success -> {
-                    productRemovedFromCart()
+                    refreshCart()
                 }
 
                 is RemoveProductFromCartUiState.Error -> {
@@ -85,6 +79,22 @@ private fun CartScreen(
                 }
 
                 is RemoveProductFromCartUiState.Loading -> {
+
+                }
+            }
+        }
+
+        viewModel.addProductToCartState.launchAndCollectIn(lifecycleOwner) { state ->
+            when (state) {
+                is AddProductToCartUiState.Success -> {
+                    refreshCart()
+                }
+
+                is AddProductToCartUiState.Error -> {
+
+                }
+
+                is AddProductToCartUiState.Loading -> {
 
                 }
             }
@@ -109,14 +119,13 @@ private fun CartScreen(
                         item = productItem,
                         totalSizeOfSameProduct = productList.size,
                         onCartItemRemoved = { cart ->
-                            onCartItemRemoved(cart.productId)
-                            productItem.productId
+                            viewModel.removeProductFromCart(cart.productId)
                         },
                         removeProductFromCartClicked = { cart ->
                             viewModel.removeProductFromCart(cart.productId)
                         },
                         addAdditionalProductClicked = {
-                            addAdditionalProductClicked(productItem.productId.toInt())
+                            viewModel.addProductToCart(productItem.productId)
                         }
                     )
                     Spacer(Modifier.height(8.dp))

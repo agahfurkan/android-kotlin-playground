@@ -137,7 +137,7 @@ fun BottomNavigationBar(
                         if (item == BottomNavItem.Cart && cart.isNotEmpty()) {
                             BadgedBox(badge = {
                                 Badge {
-                                    Text(text = cart.size.toString())
+                                    Text(text = cart.values.sumOf { it.size }.toString())
                                 }
                             }) {
                                 Icon(
@@ -259,9 +259,7 @@ fun NavGraphBuilder.BottomBarScreens(
 
     cartScreen(
         cartList = cartList,
-        onCartItemRemoved = {},
-        productRemovedFromCart = sharedViewModel::refreshUserCart,
-        addAdditionalProductClicked = {},
+        refreshCart = sharedViewModel::refreshUserCart,
     )
 
     profileScreen {
