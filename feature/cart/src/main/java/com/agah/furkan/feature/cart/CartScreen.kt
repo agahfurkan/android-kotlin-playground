@@ -45,12 +45,11 @@ import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.seed
 import com.agah.furkan.core.util.discount
 import com.agah.furkan.core.util.launchAndCollectIn
-import com.agah.furkan.data.cart.remote.model.response.CartResponse
 import com.agah.furkan.ui.components.PlaceHolderImage
 
 @Composable
 internal fun CartRoute(
-    cartList: Map<Long, List<CartResponse.Cart>>,
+    cartList: Map<Long, List<Cart>>,
     refreshCart: () -> Unit
 ) {
     CartScreen(
@@ -63,7 +62,7 @@ internal fun CartRoute(
 @Composable
 private fun CartScreen(
     viewModel: CartScreenViewModel = hiltViewModel(),
-    cartList: Map<Long, List<CartResponse.Cart>>,
+    cartList: Map<Long, List<Cart>>,
     refreshCart: () -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -163,11 +162,11 @@ private fun CartScreen(
 
 @Composable
 private fun CartItem(
-    item: CartResponse.Cart,
+    item: Cart,
     totalSizeOfSameProduct: Int,
-    onCartItemRemoved: (CartResponse.Cart) -> Unit,
-    removeProductFromCartClicked: (CartResponse.Cart) -> Unit,
-    addAdditionalProductClicked: (CartResponse.Cart) -> Unit
+    onCartItemRemoved: (Cart) -> Unit,
+    removeProductFromCartClicked: (Cart) -> Unit,
+    addAdditionalProductClicked: (Cart) -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -426,7 +425,7 @@ private fun RecentlyAddedProductItem(
 private fun CartItemPreview() {
     AppTheme {
         CartItem(
-            CartResponse.Cart(
+            Cart(
                 cartId = 3755,
                 discount = 8.5,
                 picture = "neglegentur",

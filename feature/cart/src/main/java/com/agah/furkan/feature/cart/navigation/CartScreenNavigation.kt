@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.agah.furkan.data.cart.remote.model.response.CartResponse
+import com.agah.furkan.feature.cart.Cart
 import com.agah.furkan.feature.cart.CartRoute
 
 const val cartRoute = "cartRoute"
@@ -14,7 +14,7 @@ fun NavController.navigateToCartScreen(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.cartScreen(
-    cartList: Map<Long, List<CartResponse.Cart>>,
+    cartList: Map<Long, List<Cart>>,
     refreshCart: () -> Unit
 ) {
     composable(route = cartRoute) {

@@ -36,7 +36,7 @@ import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.util.launchAndCollectIn
-import com.agah.furkan.data.cart.remote.model.response.CartResponse
+import com.agah.furkan.feature.cart.Cart
 import com.agah.furkan.feature.cart.navigation.cartScreen
 import com.agah.furkan.feature.category_list.navigation.categoryListScreen
 import com.agah.furkan.feature.home.navigation.homeScreen
@@ -122,7 +122,7 @@ fun MainScreen() {
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
-    cart: Map<Long, List<CartResponse.Cart>>,
+    cart: Map<Long, List<Cart>>,
 ) {
     val items = BottomNavItem.getBottomNavItems()
 
@@ -247,7 +247,7 @@ fun NavGraphBuilder.AuthScreens(navController: NavController) {
 fun NavGraphBuilder.BottomBarScreens(
     navController: NavController,
     sharedViewModel: SharedViewModel,
-    cartList: Map<Long, List<CartResponse.Cart>>,
+    cartList: Map<Long, List<Cart>>,
 ) {
     homeScreen {
         navController.navigateToSearchScreen()
@@ -282,7 +282,7 @@ fun PreviewBottomNavigationBar() {
             navController = rememberNavController(),
             mapOf(
                 Random.nextLong() to listOf(
-                    CartResponse.Cart(
+                    Cart(
                         cartId = 5686,
                         discount = 0.1,
                         picture = "ante",

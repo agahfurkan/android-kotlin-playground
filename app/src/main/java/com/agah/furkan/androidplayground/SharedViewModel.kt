@@ -7,7 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.core.preferences.UserPreference
 import com.agah.furkan.data.cart.CartRepository
-import com.agah.furkan.data.cart.remote.model.response.CartResponse
+import com.agah.furkan.feature.cart.Cart
+import com.agah.furkan.feature.cart.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +23,7 @@ class SharedViewModel @Inject constructor(
     private val userPreference: UserPreference,
 ) : ViewModel() {
 
-    private val _userCart = MutableStateFlow<Map<Long, List<CartResponse.Cart>>>(emptyMap())
+    private val _userCart = MutableStateFlow<Map<Long, List<Cart>>>(emptyMap())
     val userCart = _userCart.asStateFlow()
 
     private val _removeProductFromCart =
@@ -42,7 +43,7 @@ class SharedViewModel @Inject constructor(
             val result =
                 cartRepository.getCart(refresh = refresh, userId = userPreference.getUserId())
             if (result is Result.Success) {
-                val groupedResult = result.data.sortedBy { it.productId }
+                val groupedResult = result.data.toUiModel().sortedBy { it.productId }
                     .groupBy { it.productId }
                 _userCart.emit(groupedResult)
             }

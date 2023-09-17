@@ -1,8 +1,8 @@
-package com.agah.furkan.feature.cart
+package com.agah.furkan.data.cart.model
 
-import com.agah.furkan.data.cart.model.CartDomainModel
+import com.agah.furkan.data.cart.remote.model.response.CartResponse
 
-data class Cart(
+data class CartDomainModel(
     val cartId: Long,
     val discount: Double,
     val picture: String,
@@ -12,9 +12,9 @@ data class Cart(
     val productName: String
 )
 
-fun List<CartDomainModel>.toUiModel(): List<Cart> {
-    return this.map {
-        Cart(
+fun List<CartResponse.Cart>.asDomainModel(): List<CartDomainModel> {
+    return map {
+        CartDomainModel(
             cartId = it.cartId,
             discount = it.discount,
             picture = it.picture,

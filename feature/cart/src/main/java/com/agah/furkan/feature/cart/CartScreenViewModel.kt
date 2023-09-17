@@ -5,8 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.core.preferences.UserPreference
 import com.agah.furkan.data.cart.CartRepository
-import com.agah.furkan.data.cart.remote.model.request.AddProductToCartBody
-import com.agah.furkan.data.cart.remote.model.request.RemoveProductFromCartBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -32,10 +30,8 @@ internal class CartScreenViewModel @Inject constructor(
 
         viewModelScope.launch {
             val result = cartRepository.removeProductFromCart(
-                RemoveProductFromCartBody(
-                    userId = userPreference.getUserId(),
-                    productId = productId
-                )
+                userId = userPreference.getUserId(),
+                productId = productId
             )
             val state = when (result) {
                 is Result.Success -> {
@@ -55,10 +51,8 @@ internal class CartScreenViewModel @Inject constructor(
 
         viewModelScope.launch {
             val result = cartRepository.addProductToCart(
-                AddProductToCartBody(
-                    userId = userPreference.getUserId(),
-                    productId = productId
-                )
+                userId = userPreference.getUserId(),
+                productId = productId
             )
             val state = when (result) {
                 is Result.Success -> {

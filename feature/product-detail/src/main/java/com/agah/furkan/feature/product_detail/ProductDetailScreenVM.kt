@@ -3,10 +3,9 @@ package com.agah.furkan.feature.product_detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.data.cart.CartRepository
-import com.agah.furkan.data.cart.remote.model.request.AddProductToCartBody
 import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.core.preferences.UserPreference
+import com.agah.furkan.data.cart.CartRepository
 import com.agah.furkan.data.product.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -59,10 +58,8 @@ internal class ProductDetailScreenVM @Inject constructor(
         viewModelScope.launch {
             _addProductToCartState.trySend(AddProductToCartUiState.Loading)
             val result = cartRepository.addProductToCart(
-                AddProductToCartBody(
-                    productId = productId.toLong(),
-                    userId = userPreference.getUserId()
-                )
+                productId = productId.toLong(),
+                userId = userPreference.getUserId()
             )
             val state = when (result) {
                 is Result.Success -> {
