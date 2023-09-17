@@ -43,7 +43,7 @@ internal class ProductDetailScreenVM @Inject constructor(
 
             val state = when (result) {
                 is Result.Success -> {
-                    ProductDetailUiState.Success(result.data.productDetail)
+                    ProductDetailUiState.Success(result.data.asUiModel())
                 }
 
                 is Result.Failure -> {

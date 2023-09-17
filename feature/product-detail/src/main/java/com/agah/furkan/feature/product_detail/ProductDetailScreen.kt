@@ -50,7 +50,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.util.launchAndCollectIn
-import com.agah.furkan.data.product.remote.model.response.ProductDetailResponse
 
 
 @Composable
@@ -155,7 +154,7 @@ private fun ProductDetailScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ProductImage(
-    product: ProductDetailResponse.ProductDetail,
+    product: ProductDetail,
     onBackButtonClicked: () -> Unit,
     onFavButtonClicked: () -> Unit,
     onShareButtonClicked: () -> Unit
@@ -227,7 +226,7 @@ private fun ProductImage(
 
 @Composable
 private fun ProductHeader(
-    product: ProductDetailResponse.ProductDetail,
+    product: ProductDetail,
     onAllReviewsClicked: (productId: Long) -> Unit
 ) {
     ConstraintLayout {
@@ -283,7 +282,7 @@ private fun ProductHeader(
 
 @Composable
 private fun ProductActionButtonContainer(
-    product: ProductDetailResponse.ProductDetail,
+    product: ProductDetail,
     onProductDetailClicked: (productId: Long) -> Unit,
     onProductDescriptionClicked: (productId: Long) -> Unit,
     onReviewsClicked: (productId: Long) -> Unit
@@ -303,8 +302,8 @@ private fun ProductActionButtonContainer(
 
 @Composable
 private fun BoxScope.ProductFooter(
-    product: ProductDetailResponse.ProductDetail,
-    onAddToCartClicked: (product: ProductDetailResponse.ProductDetail) -> Unit
+    product: ProductDetail,
+    onAddToCartClicked: (product: ProductDetail) -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier

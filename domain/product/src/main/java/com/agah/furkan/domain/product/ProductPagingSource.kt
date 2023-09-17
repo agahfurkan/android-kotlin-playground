@@ -31,13 +31,13 @@ class ProductPagingSource(
             )
 
             val nextPageIndex =
-                if (response is Result.Success && response.data.productList.isNotEmpty()) {
+                if (response is Result.Success && response.data.isNotEmpty()) {
                     pageIndex + 1
                 } else {
                     null
                 }
             LoadResult.Page(
-                data = (response as Result.Success).data.productList.map {
+                data = (response as Result.Success).data.map {
                     Product(
                         categoryId = it.categoryId,
                         discount = it.discount,

@@ -1,11 +1,12 @@
 package com.agah.furkan.data.product
 
 import com.agah.furkan.core.data.ErrorMapper
-import com.agah.furkan.core.data.suspendCall
 import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.data.suspendCall
+import com.agah.furkan.data.product.model.ProductDetailDomainModel
+import com.agah.furkan.data.product.model.ProductDomainModel
+import com.agah.furkan.data.product.model.asDomainModel
 import com.agah.furkan.data.product.remote.ProductService
-import com.agah.furkan.data.product.remote.model.response.ProductDetailResponse
-import com.agah.furkan.data.product.remote.model.response.ProductResponse
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -25,11 +26,11 @@ class ProductRepositoryImpl(
         categoryId: Long,
         pageIndex: Int,
         pageLength: Int
-    ): Result<ProductResponse> {
+    ): Result<List<ProductDomainModel>> {
         return suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
-            mapOnSuccess = { response -> response }
+            mapOnSuccess = { response -> response.productList.map { it.asDomainModel() } }
         ) {
             productService.getProductList(
                 categoryId = categoryId,
@@ -39,11 +40,11 @@ class ProductRepositoryImpl(
         }
     }
 
-    override suspend fun getProductDetail(productId: Long): Result<ProductDetailResponse> =
+    override suspend fun getProductDetail(productId: Long): Result<ProductDetailDomainModel> =
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
-            mapOnSuccess = { response -> response }
+            mapOnSuccess = { response -> response.productDetail.asDomainModel() }
         ) {
             productService.getProductDetail(productId = productId)
         }
