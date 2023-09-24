@@ -28,7 +28,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "com.agah.furkan.androidplayground.CustomTestRunner"
     }
     signingConfigs {
         if (keystoreProperties.getProperty("file") != null) {
