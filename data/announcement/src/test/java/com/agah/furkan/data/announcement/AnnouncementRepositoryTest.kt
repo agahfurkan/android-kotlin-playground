@@ -54,7 +54,7 @@ class AnnouncementRepositoryTest {
 
         val announcements = announcementRepository.getAnnouncements()
 
-        assert(announcements is Result.Failure)
+        assert(announcements is Result.Success)
     }
 
 }

@@ -131,10 +131,10 @@ android {
         implementation(project(":feature:product-detail-tabbed"))
         implementation(project(":feature:register"))
         implementation(project(":feature:search"))
-
+        implementation(platform(libs.androidx.compose.bom))
+        implementation(libs.compose.ui)
         implementation(libs.hilt.navigation.compose)
         implementation(libs.material3.compose)
-        implementation(libs.compose.ui)
         implementation(libs.accompanist.theme.adapter.material)
         implementation(libs.firebase.messaging.ktx)
         implementation(libs.androidx.hilt.work)
