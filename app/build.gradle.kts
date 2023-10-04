@@ -28,6 +28,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "com.agah.furkan.androidplayground.TestRunner"
     }
     signingConfigs {
         if (keystoreProperties.getProperty("file") != null) {
@@ -52,6 +53,8 @@ android {
         }
         getByName("debug") {
             isMinifyEnabled = false
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
         }
         create("benchmark") {
             initWith(buildTypes.getByName("release"))
@@ -138,6 +141,14 @@ android {
         implementation(libs.firebase.messaging.ktx)
         implementation(libs.androidx.hilt.work)
         kapt(libs.androidx.hilt.compiler)
+
+        androidTestImplementation(libs.junitx)
+        androidTestImplementation(libs.mockwebserver)
+        androidTestImplementation(libs.espresso.core)
+        androidTestImplementation(libs.androidx.core.ktx)
+        androidTestImplementation(libs.androidx.ui.test.junit4)
+        debugImplementation(libs.androidx.ui.test.manifest)
+        androidTestImplementation(libs.hilt.testing)
     }
 }
 

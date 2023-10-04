@@ -9,8 +9,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MyFirebaseMessagingService @Inject constructor(private val notificationManager: NotificationManager) :
-    FirebaseMessagingService() {
+class MyFirebaseMessagingService : FirebaseMessagingService() {
+    @Inject
+    lateinit var notificationManager: NotificationManager
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         val title = remoteMessage.notification?.title
