@@ -43,8 +43,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.seed
-import com.agah.furkan.core.util.discount
-import com.agah.furkan.core.util.launchAndCollectIn
+import com.agah.furkan.core.util.ext.discount
+import com.agah.furkan.core.util.ext.launchAndCollectIn
 import com.agah.furkan.ui.components.PlaceHolderImage
 
 @Composable

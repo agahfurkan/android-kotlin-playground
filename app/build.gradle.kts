@@ -73,12 +73,10 @@ android {
         create("dev") {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("String", "BASE_URL", "\"https://10.0.2.2:5000/api/\"")
             resValue("string", "app_name", "DEV-Android Playground")
         }
 
         create("prod") {
-            buildConfigField("String", "BASE_URL", "\"https://10.0.2.2:5000/api/\"")
             resValue("string", "app_name", "PROD-Android Playground")
         }
     }

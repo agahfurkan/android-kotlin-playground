@@ -22,12 +22,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.core.ui.theme.AppTheme
-import com.agah.furkan.core.util.launchAndCollectIn
-import com.agah.furkan.core.util.showToast
+import com.agah.furkan.core.util.ext.launchAndCollectIn
+import com.agah.furkan.core.util.ext.showToast
 import com.agah.furkan.domain.login.LoginUseCase
 
 @Composable
@@ -96,6 +98,9 @@ private fun LoginFormContent(
     onLoginButtonChanged: () -> Unit,
     onRegisterButtonChanged: () -> Unit
 ) {
+    val userNameHint=stringResource(id = R.string.username)
+    val passwordHint=stringResource(id = R.string.password)
+
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -111,16 +116,22 @@ private fun LoginFormContent(
                 .aspectRatio(1f)
         )
         OutlinedTextField(value = username,
-            label = { Text(text = stringResource(id = R.string.username)) },
+            label = { Text(text = userNameHint) },
             modifier = Modifier
+                .semantics {
+                    contentDescription = userNameHint
+                }
                 .fillMaxWidth()
                 .padding(top = 24.dp),
             onValueChange = {
                 onUsernameChanged(it)
             })
         OutlinedTextField(value = password,
-            label = { Text(text = stringResource(id = R.string.password)) },
+            label = { Text(text = passwordHint) },
             modifier = Modifier
+                .semantics {
+                    contentDescription = passwordHint
+                }
                 .fillMaxWidth()
                 .padding(top = 12.dp),
             onValueChange = {

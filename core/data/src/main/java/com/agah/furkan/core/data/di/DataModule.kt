@@ -21,6 +21,7 @@ import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSession
@@ -40,10 +41,10 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideRetrofitClient(client: OkHttpClient): Retrofit {
+    fun provideRetrofitClient(client: OkHttpClient, @Named("remoteUrl") url: String): Retrofit {
         return Retrofit.Builder()
             .client(client)
-            .baseUrl("https://10.0.2.2:5000/api/")// TODO: change this url
+            .baseUrl(url)
             .addCallAdapterFactory(CustomCallFactory())
             .addConverterFactory(MoshiConverterFactory.create())
             .build()

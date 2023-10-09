@@ -1,4 +1,4 @@
-package com.agah.furkan.core.util
+package com.agah.furkan.core.util.ext
 
 import android.content.Context
 import android.widget.Toast

@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.core.ui.theme.AppTheme
-import com.agah.furkan.core.util.launchAndCollectIn
-import com.agah.furkan.core.util.showToast
+import com.agah.furkan.core.util.ext.launchAndCollectIn
+import com.agah.furkan.core.util.ext.showToast
 
 @Composable
 fun RegisterRoute(onRegisterSuccess: () -> Unit) {

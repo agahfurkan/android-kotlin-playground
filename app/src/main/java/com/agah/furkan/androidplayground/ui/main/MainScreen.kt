@@ -35,7 +35,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.core.ui.theme.AppTheme
-import com.agah.furkan.core.util.launchAndCollectIn
+import com.agah.furkan.core.util.ext.launchAndCollectIn
 import com.agah.furkan.feature.cart.Cart
 import com.agah.furkan.feature.cart.navigation.cartScreen
 import com.agah.furkan.feature.category_list.navigation.categoryListScreen

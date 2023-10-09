@@ -1,4 +1,4 @@
-package com.agah.furkan.core.util
+package com.agah.furkan.core.util.ext
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
