@@ -33,6 +33,16 @@ class NavigationTest {
     val composeTestRule = createAndroidComposeRule<MainActivity>()
     val server = MockWebServer()
 
+    private val username by lazy {
+        composeTestRule.activity.getString(R.string.username)
+    }
+    private val password by lazy {
+        composeTestRule.activity.getString(R.string.password)
+    }
+    private val home by lazy {
+        composeTestRule.activity.getString(R.string.bottom_nav_home)
+    }
+
     @Before
     fun setup() {
         hiltRule.inject()
@@ -48,17 +58,30 @@ class NavigationTest {
 
     @OptIn(ExperimentalTestApi::class)
     @Test
-    fun loginScreen_LoginAction_mainScreenDisplayed() {
+    fun clickLoginButtonOnLoginScreen_navigateToMainScreen() {
         server.dispatcher = MockWebServerDispatcher().RequestDispatcher()
 
         composeTestRule.waitUntilDoesNotExist(hasTestTag("Splash Screen"), 4000)
-        composeTestRule.onNodeWithContentDescription("Username").performTextInput("test")
-        composeTestRule.onNodeWithContentDescription("Password").performTextInput("test")
+        composeTestRule.onNodeWithContentDescription(username).performTextInput("test")
+        composeTestRule.onNodeWithContentDescription(password).performTextInput("test")
         composeTestRule
             .onNodeWithText("Login")
             .performClick()
-        composeTestRule.waitUntilExactlyOneExists(hasText("Home"), 2000)
-        composeTestRule.onNodeWithText("Home").assertIsDisplayed()
+        composeTestRule.waitUntilExactlyOneExists(hasText(home), 2000)
+        composeTestRule.onNodeWithText(home).assertIsDisplayed()
+    }
+
+    @OptIn(ExperimentalTestApi::class)
+    @Test
+    fun clickRegisterButtonOnRegisterScreen_navigateToLoginScreen() {
+        server.dispatcher = MockWebServerDispatcher().RequestDispatcher()
+
+        composeTestRule.waitUntilDoesNotExist(hasTestTag("Splash Screen"), 4000)
+        composeTestRule
+            .onNodeWithText("Register")
+            .performClick()
+        composeTestRule.waitUntilExactlyOneExists(hasText("Register"), 2000)
+        composeTestRule.onNodeWithText("Register").assertIsDisplayed()
     }
 
     @After

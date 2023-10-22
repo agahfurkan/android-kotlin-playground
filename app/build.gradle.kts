@@ -30,6 +30,11 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "com.agah.furkan.androidplayground.TestRunner"
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
     signingConfigs {
         if (keystoreProperties.getProperty("file") != null) {
             create("release") {
@@ -147,6 +152,7 @@ android {
         androidTestImplementation(libs.androidx.ui.test.junit4)
         debugImplementation(libs.androidx.ui.test.manifest)
         androidTestImplementation(libs.hilt.testing)
+        testImplementation(libs.robolectric)
     }
 }
 

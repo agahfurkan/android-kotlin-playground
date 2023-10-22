@@ -162,7 +162,7 @@ private fun ProductImage(
     ConstraintLayout {
         val (imgColumn, backButton, favButton, shareButton) = createRefs()
         val pageCount = 10
-        val pagerState = rememberPagerState()
+        val pagerState = rememberPagerState { 10 }
 
         Column(modifier = Modifier.constrainAs(imgColumn) {
             top.linkTo(parent.top)
@@ -170,7 +170,6 @@ private fun ProductImage(
             end.linkTo(parent.end)
         }) {
             HorizontalPager(
-                pageCount = pageCount,
                 state = pagerState
             ) { page ->
                 Image(

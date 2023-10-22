@@ -70,7 +70,8 @@ private fun ProductTabbedDetailScreen(
     initialPage: Int = 0,
     onBackButtonClicked: () -> Unit
 ) {
-    val pagerState = rememberPagerState(initialPage = initialPage)
+    val pagerState =
+        rememberPagerState(initialPage = initialPage, initialPageOffsetFraction = 0f) { 3 }
     val coroutineScope = rememberCoroutineScope()
     val productDetail = productTabbedDetailVM.productDetail.collectAsState().value
     if (productDetail !is ProductDetailState.Success) {
@@ -130,7 +131,6 @@ private fun ProductTabbedDetailScreen(
                     }
                 }
                 HorizontalPager(
-                    pageCount = tabs.size,
                     state = pagerState
                 ) {
                     tabs[it].screen()

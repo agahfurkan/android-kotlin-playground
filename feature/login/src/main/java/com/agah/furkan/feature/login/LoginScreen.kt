@@ -98,8 +98,8 @@ private fun LoginFormContent(
     onLoginButtonChanged: () -> Unit,
     onRegisterButtonChanged: () -> Unit
 ) {
-    val userNameHint=stringResource(id = R.string.username)
-    val passwordHint=stringResource(id = R.string.password)
+    val userNameHint = stringResource(id = R.string.username)
+    val passwordHint = stringResource(id = R.string.password)
 
     Column(
         modifier = modifier
