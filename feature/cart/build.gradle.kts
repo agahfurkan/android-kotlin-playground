@@ -16,5 +16,8 @@ dependencies {
     implementation(project(":core:ui:components"))
 
     implementation(project(":data:cart"))
+
+    testImplementation(project(":core:test"))
+
     implementation(libs.material3.window.size)
 }

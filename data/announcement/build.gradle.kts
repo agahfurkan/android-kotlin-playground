@@ -9,8 +9,7 @@ android {
 
 dependencies {
     implementation(project(":core:data"))
+    testImplementation(project(":core:test"))
 
     kapt(libs.moshi.kotlin.codegen)
-    testImplementation(libs.junit)
-    testImplementation(libs.mockk)
 }

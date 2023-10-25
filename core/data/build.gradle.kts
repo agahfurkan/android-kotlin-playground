@@ -10,13 +10,11 @@ android {
 dependencies {
     implementation(project(":core:preferences"))
     implementation(project(":core:session"))
+    testImplementation(project(":core:test"))
 
     api(libs.retrofit)
     api(libs.moshi)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.okhttp3.logging)
     kapt(libs.moshi.kotlin.codegen)
-    testImplementation(libs.junit)
-    testImplementation(libs.mockk)
-    testImplementation(libs.truth)
 }
