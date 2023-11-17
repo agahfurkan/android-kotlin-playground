@@ -19,7 +19,7 @@ class AndroidLibraryComposeConventionPlugin : Plugin<Project> {
                     compose = true
                 }
                 composeOptions {
-                    kotlinCompilerExtensionVersion = "1.4.3"
+                    kotlinCompilerExtensionVersion = "1.5.4"
                 }
                 compileOptions {
                     sourceCompatibility = JavaVersion.VERSION_1_8
