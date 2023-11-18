@@ -15,6 +15,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -31,6 +33,7 @@ import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.util.ext.launchAndCollectIn
 import com.agah.furkan.core.util.ext.showToast
 import com.agah.furkan.domain.login.LoginUseCase
+import com.agah.furkan.ui.components.OTPDialog
 
 @Composable
 internal fun LoginRoute(
@@ -84,7 +87,6 @@ private fun LoginScreen(
         onLoginButtonChanged = viewModel::onLoginBtnClicked,
         onRegisterButtonChanged = viewModel::onRegisterButtonClicked
     )
-
 }
 
 @Composable
@@ -100,6 +102,14 @@ private fun LoginFormContent(
 ) {
     val userNameHint = stringResource(id = R.string.username)
     val passwordHint = stringResource(id = R.string.password)
+    val showOTPDialog = remember { mutableStateOf(false) }
+    if (showOTPDialog.value) {
+        OTPDialog(
+            showDialog = showOTPDialog,
+            onDismiss = {
+                showOTPDialog.value = false
+            })
+    }
 
     Column(
         modifier = modifier
@@ -115,7 +125,8 @@ private fun LoginFormContent(
                 .width(LocalConfiguration.current.screenWidthDp.dp / 2)
                 .aspectRatio(1f)
         )
-        OutlinedTextField(value = username,
+        OutlinedTextField(
+            value = username,
             label = { Text(text = userNameHint) },
             modifier = Modifier
                 .semantics {
@@ -125,8 +136,10 @@ private fun LoginFormContent(
                 .padding(top = 24.dp),
             onValueChange = {
                 onUsernameChanged(it)
-            })
-        OutlinedTextField(value = password,
+            }
+        )
+        OutlinedTextField(
+            value = password,
             label = { Text(text = passwordHint) },
             modifier = Modifier
                 .semantics {
@@ -136,23 +149,39 @@ private fun LoginFormContent(
                 .padding(top = 12.dp),
             onValueChange = {
                 onPasswordChanged(it)
-            })
-        Button(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 32.dp), onClick = {
-            onLoginButtonChanged()
-        }) {
+            }
+        )
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 32.dp),
+            onClick = {
+                onLoginButtonChanged()
+            }
+        ) {
             Text(stringResource(id = R.string.login))
         }
-        Button(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 12.dp), onClick = {
-            onRegisterButtonChanged()
-        }) {
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            onClick = {
+                onRegisterButtonChanged()
+            }
+        ) {
             Text(stringResource(id = R.string.register))
         }
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            onClick = {
+                showOTPDialog.value = true
+            }
+        ) {
+            Text(stringResource(id = R.string.show_otp))
+        }
     }
-
 }
 
 @Preview
@@ -165,6 +194,7 @@ private fun LoginFormContentPreview() {
             onUsernameChanged = {},
             onPasswordChanged = {},
             onLoginButtonChanged = {},
-            onRegisterButtonChanged = {})
+            onRegisterButtonChanged = {}
+        )
     }
 }
