@@ -23,7 +23,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -58,9 +58,8 @@ internal fun CartRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun CartScreen(
+internal fun CartScreen(
     viewModel: CartScreenViewModel = hiltViewModel(),
     cartList: Map<Long, List<Cart>>,
     refreshCart: () -> Unit,
@@ -74,11 +73,9 @@ private fun CartScreen(
                 }
 
                 is RemoveProductFromCartUiState.Error -> {
-
                 }
 
                 is RemoveProductFromCartUiState.Loading -> {
-
                 }
             }
         }
@@ -90,20 +87,42 @@ private fun CartScreen(
                 }
 
                 is AddProductToCartUiState.Error -> {
-
                 }
 
                 is AddProductToCartUiState.Loading -> {
-
                 }
             }
         }
     }
+    CartScreenContent(
+        cartList = cartList,
+        onCartItemRemoved = { cart ->
+            viewModel.removeProductFromCart(cart.productId)
+        },
+        removeProductFromCartClicked = { cart ->
+            viewModel.removeProductFromCart(cart.productId)
+        },
+        addAdditionalProductClicked = { cart ->
+            viewModel.addProductToCart(cart.productId)
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun CartScreenContent(
+    cartList: Map<Long, List<Cart>>,
+    onCartItemRemoved: (Cart) -> Unit,
+    removeProductFromCartClicked: (Cart) -> Unit,
+    addAdditionalProductClicked: (Cart) -> Unit
+) {
     AppTheme {
         Scaffold(topBar = {
             TopAppBar(
                 title = { },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = seed)
+                colors = topAppBarColors(
+                    containerColor = seed
+                )
             )
         }) { padding ->
             LazyColumn(contentPadding = padding, content = {
@@ -118,13 +137,13 @@ private fun CartScreen(
                         item = productItem,
                         totalSizeOfSameProduct = productList.size,
                         onCartItemRemoved = { cart ->
-                            viewModel.removeProductFromCart(cart.productId)
+                            onCartItemRemoved(cart)
                         },
                         removeProductFromCartClicked = { cart ->
-                            viewModel.removeProductFromCart(cart.productId)
+                            removeProductFromCartClicked(cart)
                         },
                         addAdditionalProductClicked = {
-                            viewModel.addProductToCart(productItem.productId)
+                            addAdditionalProductClicked(productItem)
                         }
                     )
                     Spacer(Modifier.height(8.dp))
@@ -148,11 +167,14 @@ private fun CartScreen(
                 }
 
                 items(20) {
-                    RecentlyAddedProductItem(item = RecentlyAddedProductItemModel(
-                        productName = "Margarito Valencia",
-                        price = 4.5,
-                        discount = 6.7
-                    ), onAddToCardButtonClicked = {})
+                    RecentlyAddedProductItem(
+                        item = RecentlyAddedProductItemModel(
+                            productName = "Margarito Valencia",
+                            price = 4.5,
+                            discount = 6.7
+                        ),
+                        onAddToCardButtonClicked = {}
+                    )
                     Spacer(Modifier.height(8.dp))
                 }
             })
@@ -238,7 +260,8 @@ private fun CartItem(
                     .width(24.dp),
                 onClick = {
                     removeProductFromCartClicked(item)
-                }) {
+                }
+            ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_minus),
                     contentDescription = ""
@@ -264,7 +287,8 @@ private fun CartItem(
                     .width(24.dp),
                 onClick = {
                     addAdditionalProductClicked(item)
-                }) {
+                }
+            ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus),
                     contentDescription = ""
@@ -281,7 +305,8 @@ private fun CartItem(
                 .width(24.dp),
             onClick = {
                 onCartItemRemoved(item)
-            }) {
+            }
+        ) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_remove),
                 contentDescription = ""
@@ -333,7 +358,8 @@ private fun OfferList() {
                         PlaceHolderImage(modifier = Modifier.align(Alignment.Center))
                     }
                 }
-            })
+            }
+        )
     }
 }
 
@@ -417,7 +443,29 @@ private fun RecentlyAddedProductItem(
             )
         }
     }
+}
 
+@Composable
+@Preview
+private fun CartScreenContentPreview() {
+    CartScreenContent(
+        cartList = mapOf(
+            1L to listOf(
+                Cart(
+                    cartId = 3755,
+                    discount = 8.5,
+                    picture = "neglegentur",
+                    price = 123.54,
+                    productDescription = "in",
+                    productId = 9594,
+                    productName = "Billie Giles"
+                )
+            )
+        ),
+        onCartItemRemoved = {},
+        removeProductFromCartClicked = {},
+        addAdditionalProductClicked = {}
+    )
 }
 
 @Composable
@@ -433,7 +481,11 @@ private fun CartItemPreview() {
                 productDescription = "in",
                 productId = 9594,
                 productName = "Billie Giles"
-            ), 1, {}, {}, {}
+            ),
+            1,
+            {},
+            {},
+            {}
         )
     }
 }
@@ -457,7 +509,6 @@ private fun RecentlyAddedProductItemPreview() {
                 discount = 2.3
             )
         ) {
-
         }
     }
 }
