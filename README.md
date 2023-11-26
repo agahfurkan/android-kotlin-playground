@@ -11,4 +11,8 @@
 1. **Firebase Configuration File**: To connect app to the Firebase services, you need to download the `google-services.json` configuration file and place the downloaded `google-services.json` file in the `app` directory of your project.
 2. **API**: This Project relies on the [Backend Playground](https://github.com/agahfurkan/backend-playground). The API provides data required for core functionality of this project.
 
+## Reports
+### Generate Jacoco Report For All Modules
+1. Execute ./gradlew coverAllVariants
+2. Execute ./gradlew allDebugCoverage
 
