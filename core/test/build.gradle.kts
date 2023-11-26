@@ -2,7 +2,6 @@ plugins {
     id("playground.android.library")
     id("playground.android.hilt")
 }
-apply("$rootDir/modules.gradle")
 android {
     namespace = "com.agah.furkan.core.test"
 }
