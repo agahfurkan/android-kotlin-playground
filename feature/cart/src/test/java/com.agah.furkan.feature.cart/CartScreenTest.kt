@@ -14,7 +14,7 @@ class CartScreenTest {
     @Test
     fun cartScreenSnapshot() {
         paparazzi.snapshot {
-            CartScreenContent(
+            CartScreen(
                 cartList = mapOf(
                     1L to listOf(
                         Cart(

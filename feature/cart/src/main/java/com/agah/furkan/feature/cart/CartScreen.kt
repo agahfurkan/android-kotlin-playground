@@ -49,20 +49,9 @@ import com.agah.furkan.ui.components.PlaceHolderImage
 
 @Composable
 internal fun CartRoute(
-    cartList: Map<Long, List<Cart>>,
-    refreshCart: () -> Unit
-) {
-    CartScreen(
-        cartList = cartList,
-        refreshCart = refreshCart
-    )
-}
-
-@Composable
-internal fun CartScreen(
     viewModel: CartScreenViewModel = hiltViewModel(),
     cartList: Map<Long, List<Cart>>,
-    refreshCart: () -> Unit,
+    refreshCart: () -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(key1 = Unit) {
@@ -94,23 +83,24 @@ internal fun CartScreen(
             }
         }
     }
-    CartScreenContent(
+
+    CartScreen(
         cartList = cartList,
         onCartItemRemoved = { cart ->
             viewModel.removeProductFromCart(cart.productId)
         },
-        removeProductFromCartClicked = { cart ->
-            viewModel.removeProductFromCart(cart.productId)
+        removeProductFromCartClicked = {
+            viewModel.removeProductFromCart(it.productId)
         },
-        addAdditionalProductClicked = { cart ->
-            viewModel.addProductToCart(cart.productId)
-        }
+        addAdditionalProductClicked = {
+            viewModel.addProductToCart(it.productId)
+        },
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun CartScreenContent(
+@OptIn(ExperimentalMaterial3Api::class)
+internal fun CartScreen(
     cartList: Map<Long, List<Cart>>,
     onCartItemRemoved: (Cart) -> Unit,
     removeProductFromCartClicked: (Cart) -> Unit,
@@ -448,7 +438,7 @@ private fun RecentlyAddedProductItem(
 @Composable
 @Preview
 private fun CartScreenContentPreview() {
-    CartScreenContent(
+    CartScreen(
         cartList = mapOf(
             1L to listOf(
                 Cart(
