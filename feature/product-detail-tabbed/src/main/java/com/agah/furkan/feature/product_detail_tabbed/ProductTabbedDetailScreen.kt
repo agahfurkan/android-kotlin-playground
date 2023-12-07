@@ -25,7 +25,7 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -54,10 +54,14 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun ProductDetailTabbedRoute(
+    productTabbedDetailVM: ProductTabbedDetailVM = hiltViewModel(),
     initialPage: Int = 0,
     onBackButtonClicked: () -> Unit
 ) {
+    val productDetail = productTabbedDetailVM.productDetail.collectAsState().value
+
     ProductTabbedDetailScreen(
+        productDetail = productDetail,
         initialPage = initialPage,
         onBackButtonClicked = onBackButtonClicked
     )
@@ -65,15 +69,15 @@ internal fun ProductDetailTabbedRoute(
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-private fun ProductTabbedDetailScreen(
-    productTabbedDetailVM: ProductTabbedDetailVM = hiltViewModel(),
+internal fun ProductTabbedDetailScreen(
+    productDetail: ProductDetailState,
     initialPage: Int = 0,
     onBackButtonClicked: () -> Unit
 ) {
     val pagerState =
         rememberPagerState(initialPage = initialPage, initialPageOffsetFraction = 0f) { 3 }
     val coroutineScope = rememberCoroutineScope()
-    val productDetail = productTabbedDetailVM.productDetail.collectAsState().value
+
     if (productDetail !is ProductDetailState.Success) {
         return
     }
@@ -82,17 +86,20 @@ private fun ProductTabbedDetailScreen(
             title = "Description",
             screen = {
                 ProductDetailDescriptionContent(description = productDetail.data.description)
-            }),
+            }
+        ),
         TabItem(
             title = "Details",
             screen = {
                 ProductDetailContent(productDetailSections = productDetail.data.sections)
-            }),
+            }
+        ),
         TabItem(
             title = "Reviews",
             screen = {
                 ProductDetailReviewContent(productDetailReviews = productDetail.data.reviews)
-            })
+            }
+        )
     )
 
     AppTheme {
@@ -104,7 +111,9 @@ private fun ProductTabbedDetailScreen(
                         color = Color.White
                     )
                 },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = seed),
+                colors = topAppBarColors(
+                    containerColor = seed
+                ),
                 navigationIcon = {
                     IconButton(onClick = { onBackButtonClicked() }) {
                         Icon(
@@ -234,7 +243,8 @@ private fun ProductDetailReviewHeader(productDetailReviews: List<ProductDetail.R
             modifier = Modifier.constrainAs(ratingsSection) {
                 end.linkTo(parent.end)
                 top.linkTo(parent.top)
-            }, verticalArrangement = Arrangement.spacedBy(5.dp)
+            },
+            verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             productDetailReviews.totalReviewsByRating().forEach {
                 Row {
@@ -253,7 +263,8 @@ private fun ProductDetailReviewHeader(productDetailReviews: List<ProductDetail.R
                         modifier = Modifier
                             .width(100.dp)
                             .height(4.dp)
-                            .align(Alignment.CenterVertically), progress = it.third,
+                            .align(Alignment.CenterVertically),
+                        progress = it.third,
                         color = orange
                     )
                     Spacer(modifier = Modifier.width(5.dp))
@@ -319,6 +330,55 @@ private fun ProductDetailSectionItemPreview() {
 
 @Composable
 @Preview
+private fun ProductDetailScreenPreview() {
+    ProductTabbedDetailScreen(productDetail = ProductDetailState.Success(
+        data = ProductDetail(
+            productId = "propriae",
+            productName = "Rodger Barr",
+            description = "dui",
+            sections = listOf(
+                ProductDetail.Section(
+                    sectionName = "Guadalupe Farley",
+                    sectionContent = listOf(
+                        ProductDetail.SectionDetail(
+                            name = "Jose Aguirre",
+                            value = "impetus"
+                        )
+                    )
+                ), ProductDetail.Section(
+                    sectionName = "Guadalupe Farley",
+                    sectionContent = listOf(
+                        ProductDetail.SectionDetail(
+                            name = "Jose Aguirre",
+                            value = "impetus"
+                        )
+                    )
+                )
+            ),
+            reviews = listOf(
+                ProductDetail.Review(
+                    userName = "Vicky Daniels",
+                    review = "dictum",
+                    rating = 5,
+                    date = "amet"
+                ), ProductDetail.Review(
+                    userName = "Vicky Daniels",
+                    review = "dictum",
+                    rating = 5,
+                    date = "amet"
+                ), ProductDetail.Review(
+                    userName = "Vicky Daniels",
+                    review = "dictum",
+                    rating = 5,
+                    date = "amet"
+                )
+            )
+        )
+    ), initialPage = 1593, onBackButtonClicked = {})
+}
+
+@Composable
+@Preview
 private fun ProductDetailReviewContentPreview() {
     ProductDetailReviewContent(
         productDetailReviews = listOf(
@@ -327,7 +387,8 @@ private fun ProductDetailReviewContentPreview() {
                 review = "ullamcorper",
                 rating = 1,
                 date = "praesent"
-            ), ProductDetail.Review(
+            ),
+            ProductDetail.Review(
                 userName = "Stan Winters",
                 review = "ullamcorper",
                 rating = 2,

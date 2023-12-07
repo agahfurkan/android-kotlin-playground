@@ -38,17 +38,8 @@ import com.agah.furkan.ui.components.OTPDialog
 @Composable
 internal fun LoginRoute(
     onLoginSuccess: () -> Unit,
-    onRegisterClicked: () -> Unit
-) {
-    LoginScreen(onLoginSuccess = onLoginSuccess, onRegisterClicked = onRegisterClicked)
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun LoginScreen(
+    onRegisterClicked: () -> Unit,
     viewModel: LoginScreenVM = hiltViewModel(),
-    onLoginSuccess: () -> Unit,
-    onRegisterClicked: () -> Unit
 ) {
     val lifeCycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
@@ -75,17 +66,33 @@ private fun LoginScreen(
             }
         }
     }
-    LoginFormContent(
+    LoginScreen(
         username = viewModel.username,
         password = viewModel.password,
-        onUsernameChanged = {
-            viewModel.username = it
-        },
-        onPasswordChanged = {
-            viewModel.password = it
-        },
-        onLoginButtonChanged = viewModel::onLoginBtnClicked,
-        onRegisterButtonChanged = viewModel::onRegisterButtonClicked
+        onLoginSuccess = onLoginSuccess,
+        onRegisterClicked = onRegisterClicked,
+        onUsernameChanged = { viewModel.username = it },
+        onPasswordChanged = { viewModel.password = it },
+
+    )
+}
+
+@Composable
+internal fun LoginScreen(
+    username: String,
+    password: String,
+    onLoginSuccess: () -> Unit,
+    onRegisterClicked: () -> Unit,
+    onUsernameChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+) {
+    LoginFormContent(
+        username = username,
+        password = password,
+        onUsernameChanged = onUsernameChanged,
+        onPasswordChanged = onPasswordChanged,
+        onLoginButtonChanged = onLoginSuccess,
+        onRegisterButtonChanged = onRegisterClicked
     )
 }
 
@@ -108,7 +115,8 @@ private fun LoginFormContent(
             showDialog = showOTPDialog,
             onDismiss = {
                 showOTPDialog.value = false
-            })
+            }
+        )
     }
 
     Column(

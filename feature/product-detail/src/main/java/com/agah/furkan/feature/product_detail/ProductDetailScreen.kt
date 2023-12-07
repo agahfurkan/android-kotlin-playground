@@ -51,42 +51,20 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.util.ext.launchAndCollectIn
 
-
 @Composable
-fun ProductDetailRoute(
+internal fun ProductDetailRoute(
     onBackButtonClicked: () -> Unit,
     onProductDetailClicked: (productId: Long) -> Unit,
     onProductDescriptionClicked: (productId: Long) -> Unit,
     onReviewsClicked: (productId: Long) -> Unit,
     onAllReviewsClicked: (productId: Long) -> Unit,
-    newProductAddedToCart: () -> Unit
+    newProductAddedToCart: () -> Unit,
+    viewModel: ProductDetailScreenVM = hiltViewModel()
 ) {
-    ProductDetailScreen(
-        onBackButtonClicked = onBackButtonClicked,
-        onProductDetailClicked = onProductDetailClicked,
-        onProductDescriptionClicked = onProductDescriptionClicked,
-        onReviewsClicked = onReviewsClicked,
-        onAllReviewsClicked = onAllReviewsClicked,
-        newProductAddedToCart = newProductAddedToCart
-    )
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-private fun ProductDetailScreen(
-    viewModel: ProductDetailScreenVM = hiltViewModel(),
-    onBackButtonClicked: () -> Unit,
-    onProductDetailClicked: (productId: Long) -> Unit,
-    onProductDescriptionClicked: (productId: Long) -> Unit,
-    onReviewsClicked: (productId: Long) -> Unit,
-    onAllReviewsClicked: (productId: Long) -> Unit,
-    newProductAddedToCart: () -> Unit
-) {
+    val lifeCycleOwner = LocalLifecycleOwner.current
     // TODO: refactor
     val productResult = viewModel.productDetail.collectAsState()
     val productState = productResult.value as? ProductDetailUiState.Success ?: return
-    val lifeCycleOwner = LocalLifecycleOwner.current
-
     LaunchedEffect(key1 = Unit) {
         viewModel.addProductToCartState.launchAndCollectIn(lifeCycleOwner) { state ->
             when (state) {
@@ -95,16 +73,38 @@ private fun ProductDetailScreen(
                 }
 
                 is AddProductToCartUiState.Error -> {
-
                 }
 
                 is AddProductToCartUiState.Loading -> {
-
                 }
             }
         }
     }
 
+    ProductDetailScreen(
+        onBackButtonClicked = onBackButtonClicked,
+        onProductDetailClicked = onProductDetailClicked,
+        onProductDescriptionClicked = onProductDescriptionClicked,
+        onReviewsClicked = onReviewsClicked,
+        onAllReviewsClicked = onAllReviewsClicked,
+        productState = productState,
+        onAddToCartClicked = {
+            viewModel.addProductToCart(it.productId)
+        }
+    )
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+internal fun ProductDetailScreen(
+    productState: ProductDetailUiState.Success,
+    onBackButtonClicked: () -> Unit,
+    onProductDetailClicked: (productId: Long) -> Unit,
+    onProductDescriptionClicked: (productId: Long) -> Unit,
+    onReviewsClicked: (productId: Long) -> Unit,
+    onAllReviewsClicked: (productId: Long) -> Unit,
+    onAddToCartClicked: (product: ProductDetail) -> Unit
+) {
     AppTheme {
         Surface {
             Box {
@@ -126,7 +126,8 @@ private fun ProductDetailScreen(
                             },
                             onShareButtonClicked = {
                                 // TODO: share
-                            })
+                            }
+                        )
                         ProductHeader(product = productState.productDetail, onAllReviewsClicked = {
                             onAllReviewsClicked(it)
                         })
@@ -140,11 +141,12 @@ private fun ProductDetailScreen(
                             },
                             onReviewsClicked = {
                                 onReviewsClicked(it)
-                            })
+                            }
+                        )
                     }
                 }
                 ProductFooter(product = productState.productDetail, onAddToCartClicked = {
-                    viewModel.addProductToCart(it.productId)
+                    onAddToCartClicked(it)
                 })
             }
         }
@@ -164,11 +166,13 @@ private fun ProductImage(
         val pageCount = 10
         val pagerState = rememberPagerState { 10 }
 
-        Column(modifier = Modifier.constrainAs(imgColumn) {
-            top.linkTo(parent.top)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-        }) {
+        Column(
+            modifier = Modifier.constrainAs(imgColumn) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }
+        ) {
             HorizontalPager(
                 state = pagerState
             ) { page ->
@@ -189,20 +193,26 @@ private fun ProductImage(
                 progress = (pagerState.currentPage / pageCount.toFloat()) + .1f
             )
         }
-        IconButton(modifier = Modifier.constrainAs(backButton) {
-            top.linkTo(parent.top)
-            start.linkTo(parent.start)
-        }, onClick = { onBackButtonClicked() }) {
+        IconButton(
+            modifier = Modifier.constrainAs(backButton) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+            },
+            onClick = { onBackButtonClicked() }
+        ) {
             Icon(
                 painter = rememberVectorPainter(ImageVector.vectorResource(id = R.drawable.ic_left_arrow_outline)),
                 contentDescription = "",
                 tint = Color.Black
             )
         }
-        IconButton(modifier = Modifier.constrainAs(favButton) {
-            top.linkTo(parent.top)
-            end.linkTo(parent.end)
-        }, onClick = { onFavButtonClicked() }) {
+        IconButton(
+            modifier = Modifier.constrainAs(favButton) {
+                top.linkTo(parent.top)
+                end.linkTo(parent.end)
+            },
+            onClick = { onFavButtonClicked() }
+        ) {
             Icon(
                 painter = rememberVectorPainter(ImageVector.vectorResource(id = R.drawable.ic_favorite)),
                 contentDescription = "",
@@ -210,10 +220,13 @@ private fun ProductImage(
             )
         }
 
-        IconButton(modifier = Modifier.constrainAs(shareButton) {
-            top.linkTo(favButton.bottom)
-            end.linkTo(parent.end)
-        }, onClick = { onShareButtonClicked() }) {
+        IconButton(
+            modifier = Modifier.constrainAs(shareButton) {
+                top.linkTo(favButton.bottom)
+                end.linkTo(parent.end)
+            },
+            onClick = { onShareButtonClicked() }
+        ) {
             Icon(
                 painter = rememberVectorPainter(ImageVector.vectorResource(id = R.drawable.ic_share)),
                 contentDescription = "",
@@ -355,7 +368,6 @@ private fun BoxScope.ProductFooter(
     }
 }
 
-
 @Composable
 private fun ProductDetailAction(
     modifier: Modifier = Modifier,
@@ -374,7 +386,8 @@ private fun ProductDetailAction(
                 top = 20.dp,
                 bottom = 20.dp,
                 start = 12.dp
-            ), text = actionText
+            ),
+            text = actionText
         )
         Spacer(modifier = Modifier.weight(1f))
         Image(
@@ -387,7 +400,8 @@ private fun ProductDetailAction(
                 image = ImageVector.vectorResource(
                     id = R.drawable.ic_arrow_right
                 )
-            ), contentDescription = ""
+            ),
+            contentDescription = ""
         )
     }
 }
@@ -396,6 +410,5 @@ private fun ProductDetailAction(
 @Preview(showBackground = true)
 private fun ProductDetailActionPreview() {
     ProductDetailAction(actionText = "ProductDetail Details") {
-
     }
 }

@@ -16,7 +16,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -41,20 +41,6 @@ import com.agah.furkan.ui.components.PlaceHolderImage
 
 @Composable
 internal fun ProductListRoute(
-    itemClicked: (productId: Long) -> Unit,
-    onBackButtonClicked: () -> Unit,
-    newProductAddedToCart: () -> Unit,
-) {
-    ProductListScreen(
-        itemClicked = itemClicked,
-        onBackButtonClicked = onBackButtonClicked,
-        newProductAddedToCart = newProductAddedToCart
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun ProductListScreen(
     viewModel: ProductListScreenVM = hiltViewModel(),
     itemClicked: (productId: Long) -> Unit,
     onBackButtonClicked: () -> Unit,
@@ -71,16 +57,30 @@ private fun ProductListScreen(
                 }
 
                 is AddProductToCartUiState.Error -> {
-
                 }
 
                 is AddProductToCartUiState.Loading -> {
-
                 }
             }
         }
     }
 
+    ProductListScreen(
+        productList = productList,
+        itemClicked = itemClicked,
+        onBackButtonClicked = onBackButtonClicked,
+        newProductAddedToCart = newProductAddedToCart
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun ProductListScreen(
+    productList: LazyPagingItems<Product>,
+    itemClicked: (productId: Long) -> Unit,
+    onBackButtonClicked: () -> Unit,
+    newProductAddedToCart: () -> Unit,
+) {
     AppTheme {
         Scaffold(topBar = {
             TopAppBar(
@@ -90,7 +90,9 @@ private fun ProductListScreen(
                         color = Color.White
                     )
                 },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = seed),
+                colors = topAppBarColors(
+                    containerColor = seed
+                ),
                 navigationIcon = {
                     IconButton(onClick = { onBackButtonClicked() }) {
                         Icon(
@@ -109,8 +111,8 @@ private fun ProductListScreen(
             ) {
                 ProductListContent(
                     productList = productList,
-                    addToCartClicked = viewModel::addProductToCart,
-                    itemClicked = itemClicked
+                    addToCartClicked = { newProductAddedToCart() },
+                    itemClicked = itemClicked,
                 )
             }
         }
@@ -121,7 +123,7 @@ private fun ProductListScreen(
 private fun ProductListContent(
     productList: LazyPagingItems<Product>,
     addToCartClicked: (productId: Int) -> Unit,
-    itemClicked: (productId: Long) -> Unit
+    itemClicked: (productId: Long) -> Unit,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -135,7 +137,8 @@ private fun ProductListContent(
                     itemClicked = itemClicked
                 )
             }
-        })
+        }
+    )
 }
 
 @Composable
@@ -182,7 +185,8 @@ private fun ProductListItem(
                 .align(Alignment.CenterHorizontally),
             onClick = {
                 addToCartClicked(product.productId.toInt())
-            }) {
+            }
+        ) {
             Text(stringResource(id = R.string.add_to_cart))
         }
     }
@@ -190,16 +194,31 @@ private fun ProductListItem(
 
 @Composable
 @Preview(showBackground = true)
+private fun ProductListScreenPreview() {
+    ProductListScreen(
+        productList = DummyDataGenerator.generateDummyData().collectAsLazyPagingItems(),
+        itemClicked = {},
+        onBackButtonClicked = {},
+        newProductAddedToCart = {}
+    )
+}
+
+@Composable
+@Preview(showBackground = true)
 private fun ProductListItemPreview() {
     AppTheme {
-        ProductListItem(product = Product(
-            categoryId = 6567,
-            discount = 0.1,
-            picture = "penatibus",
-            price = 2.3,
-            productDescription = "convallis",
-            productId = 2934,
-            productName = "Roger Jefferson"
-        ), addToCartClicked = {}, itemClicked = {})
+        ProductListItem(
+            product = Product(
+                categoryId = 6567,
+                discount = 0.1,
+                picture = "penatibus",
+                price = 2.3,
+                productDescription = "convallis",
+                productId = 2934,
+                productName = "Roger Jefferson"
+            ),
+            addToCartClicked = {},
+            itemClicked = {}
+        )
     }
 }

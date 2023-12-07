@@ -49,9 +49,9 @@ import com.agah.furkan.ui.components.PlaceHolderImage
 
 @Composable
 internal fun CartRoute(
-    viewModel: CartScreenViewModel = hiltViewModel(),
     cartList: Map<Long, List<Cart>>,
-    refreshCart: () -> Unit
+    refreshCart: () -> Unit,
+    viewModel: CartScreenViewModel = hiltViewModel(),
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(key1 = Unit) {

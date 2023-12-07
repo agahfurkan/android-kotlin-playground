@@ -35,7 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.divider
 import com.agah.furkan.core.ui.theme.gray
 import com.agah.furkan.core.ui.theme.seed
@@ -43,14 +42,23 @@ import com.agah.furkan.ui.components.PlaceHolderImage
 import com.agah.furkan.ui.components.WarningDialog
 
 @Composable
-internal fun ProfileRoute(onLogoutButtonClicked: () -> Unit) {
-    ProfileScreen(onLogoutButtonClicked = onLogoutButtonClicked)
+internal fun ProfileRoute(
+    viewModel: ProfileScreenViewModel = hiltViewModel(),
+    onLogoutButtonClicked: () -> Unit
+) {
+    ProfileScreen(onLogoutButtonClicked = {
+        viewModel.logout()
+        onLogoutButtonClicked()
+
+    }, onDownloadButtonClicked = {
+        viewModel.downloadPdf()
+    })
 }
 
 @Composable
-private fun ProfileScreen(
-    viewModel: ProfileScreenViewModel = hiltViewModel(),
-    onLogoutButtonClicked: () -> Unit
+internal fun ProfileScreen(
+    onLogoutButtonClicked: () -> Unit,
+    onDownloadButtonClicked: () -> Unit
 ) {
     val showLogoutDialog = remember {
         mutableStateOf(false)
@@ -62,19 +70,21 @@ private fun ProfileScreen(
         positiveButtonText = "Logout",
         negativeButtonText = "Cancel",
         onNegativeButtonClicked = {}) {
-        viewModel.logout()
         onLogoutButtonClicked()
     }
 
     ProfileScreenContent(onLogoutButtonClicked = {
         showLogoutDialog.value = true
     }, onDownloadPdfClicked = {
-        viewModel.downloadPdf()
+        onDownloadButtonClicked()
     })
 }
 
 @Composable
-internal fun ProfileScreenContent(onLogoutButtonClicked: () -> Unit, onDownloadPdfClicked: () -> Unit) {
+internal fun ProfileScreenContent(
+    onLogoutButtonClicked: () -> Unit,
+    onDownloadPdfClicked: () -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         ConstraintLayout(
             modifier = Modifier
@@ -180,8 +190,5 @@ internal fun ProfileScreenContent(onLogoutButtonClicked: () -> Unit, onDownloadP
 @Composable
 @Preview(showBackground = true)
 private fun ProfileScreenPreview() {
-    AppTheme {
-        ProfileScreenContent(onLogoutButtonClicked = {}, onDownloadPdfClicked = {})
-
-    }
+    ProfileScreen(onLogoutButtonClicked = {}, onDownloadButtonClicked = {})
 }

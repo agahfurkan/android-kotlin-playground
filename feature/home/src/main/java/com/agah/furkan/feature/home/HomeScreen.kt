@@ -32,7 +32,7 @@ internal fun HomeRoute(onSearchFocused: () -> Unit) {
 }
 
 @Composable
-private fun HomeScreen(onSearchFocused: () -> Unit) {
+internal fun HomeScreen(onSearchFocused: () -> Unit) {
     val focusManager = LocalFocusManager.current
     AppTheme {
         Surface {

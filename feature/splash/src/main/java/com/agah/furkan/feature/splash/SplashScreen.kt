@@ -15,23 +15,22 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
-internal fun SplashRoute(isTokenValid: (Boolean) -> Unit) {
-    SplashScreen(isTokenValid = isTokenValid)
-}
-
-@Composable
-private fun SplashScreen(
+internal fun SplashRoute(
     viewModel: SplashScreenVM = hiltViewModel(),
     isTokenValid: (Boolean) -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
-
     LaunchedEffect(key1 = Unit) {
         viewModel.isTokenValid.launchAndCollectIn(lifecycleOwner) {
             isTokenValid(it)
         }
     }
 
+    SplashScreen()
+}
+
+@Composable
+internal fun SplashScreen() {
     val lottieComposition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.splash_lottie))
     Box(modifier = Modifier.testTag("Splash Screen")) {
         LottieAnimation(

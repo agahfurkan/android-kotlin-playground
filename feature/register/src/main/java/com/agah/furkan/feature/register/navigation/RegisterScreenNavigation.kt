@@ -13,6 +13,6 @@ fun NavController.navigateToRegisterScreen() {
 
 fun NavGraphBuilder.registerScreen(onRegisterSuccess: () -> Unit) {
     composable(registerRoute) {
-        RegisterRoute(onRegisterSuccess)
+        RegisterRoute(onRegisterSuccess = onRegisterSuccess)
     }
 }
