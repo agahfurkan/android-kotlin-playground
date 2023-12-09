@@ -1,6 +1,7 @@
 plugins {
     id("playground.android.library.compose")
     id("playground.android.hilt")
+    alias(libs.plugins.paparazzi)
 }
 
 android {

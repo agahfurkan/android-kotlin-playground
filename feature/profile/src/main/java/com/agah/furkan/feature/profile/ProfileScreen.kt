@@ -49,7 +49,6 @@ internal fun ProfileRoute(
     ProfileScreen(onLogoutButtonClicked = {
         viewModel.logout()
         onLogoutButtonClicked()
-
     }, onDownloadButtonClicked = {
         viewModel.downloadPdf()
     })
@@ -64,12 +63,14 @@ internal fun ProfileScreen(
         mutableStateOf(false)
     }
 
-    WarningDialog(showLogoutDialog,
+    WarningDialog(
+        showLogoutDialog,
         title = "Warning",
         message = "Are you sure you want to logout ?",
         positiveButtonText = "Logout",
         negativeButtonText = "Cancel",
-        onNegativeButtonClicked = {}) {
+        onNegativeButtonClicked = {}
+    ) {
         onLogoutButtonClicked()
     }
 
@@ -112,22 +113,27 @@ internal fun ProfileScreenContent(
                         .align(Alignment.Center)
                 )
             }
-            Text(modifier = Modifier
-                .constrainAs(username) {
-                    top.linkTo(userImgContainer.bottom)
-                    start.linkTo(userImgContainer.start)
-                    end.linkTo(userImgContainer.end)
+            Text(
+                modifier = Modifier
+                    .constrainAs(username) {
+                        top.linkTo(userImgContainer.bottom)
+                        start.linkTo(userImgContainer.start)
+                        end.linkTo(userImgContainer.end)
+                    }
+                    .padding(top = 16.dp, bottom = 51.dp),
+                text = stringResource(id = R.string.username)
+            )
+            Column(
+                modifier = Modifier.constrainAs(buttonContainer) {
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
                 }
-                .padding(top = 16.dp, bottom = 51.dp),
-                text = stringResource(id = R.string.username))
-            Column(modifier = Modifier.constrainAs(buttonContainer) {
-                end.linkTo(parent.end)
-                top.linkTo(parent.top)
-            }) {
+            ) {
                 IconButton(
                     onClick = {
                         onLogoutButtonClicked()
-                    }) {
+                    }
+                ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_logout),
                         tint = Color.White,
@@ -137,7 +143,8 @@ internal fun ProfileScreenContent(
                 IconButton(
                     onClick = {
                         onDownloadPdfClicked()
-                    }) {
+                    }
+                ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.baseline_cloud_download_24),
                         tint = Color.White,
@@ -152,7 +159,8 @@ internal fun ProfileScreenContent(
                 },
                 onClick = {
                     // TODO: navigate to notification list feature
-                }) {
+                }
+            ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_bell_outline),
                     tint = Color.White,
@@ -162,9 +170,12 @@ internal fun ProfileScreenContent(
         }
         LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp), content = {
             items(10) {
-                Row(modifier = Modifier.clickable {
-                    // TODO: add dynamic navigation
-                }, verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier.clickable {
+                        // TODO: add dynamic navigation
+                    },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Image(
                         modifier = Modifier
                             .padding(start = 16.dp, top = 16.dp, bottom = 16.dp)
@@ -177,7 +188,9 @@ internal fun ProfileScreenContent(
                     Spacer(modifier = Modifier.weight(1f))
                     Image(
                         modifier = Modifier.padding(end = 16.dp),
-                        painter = rememberVectorPainter(image = ImageVector.vectorResource(id = R.drawable.ic_arrow_right)),
+                        painter = rememberVectorPainter(
+                            image = ImageVector.vectorResource(id = R.drawable.ic_arrow_right)
+                        ),
                         contentDescription = ""
                     )
                 }

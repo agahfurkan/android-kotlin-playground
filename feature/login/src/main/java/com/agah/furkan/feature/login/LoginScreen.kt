@@ -69,12 +69,12 @@ internal fun LoginRoute(
     LoginScreen(
         username = viewModel.username,
         password = viewModel.password,
-        onLoginSuccess = onLoginSuccess,
-        onRegisterClicked = onRegisterClicked,
+        onLoginSuccess = viewModel::onLoginBtnClicked,
+        onRegisterClicked = viewModel::onRegisterButtonClicked,
         onUsernameChanged = { viewModel.username = it },
         onPasswordChanged = { viewModel.password = it },
 
-    )
+        )
 }
 
 @Composable
@@ -91,8 +91,8 @@ internal fun LoginScreen(
         password = password,
         onUsernameChanged = onUsernameChanged,
         onPasswordChanged = onPasswordChanged,
-        onLoginButtonChanged = onLoginSuccess,
-        onRegisterButtonChanged = onRegisterClicked
+        onLoginButtonClicked = onLoginSuccess,
+        onRegisterButtonClicked = onRegisterClicked
     )
 }
 
@@ -104,8 +104,8 @@ private fun LoginFormContent(
     password: String,
     onUsernameChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
-    onLoginButtonChanged: () -> Unit,
-    onRegisterButtonChanged: () -> Unit
+    onLoginButtonClicked: () -> Unit,
+    onRegisterButtonClicked: () -> Unit
 ) {
     val userNameHint = stringResource(id = R.string.username)
     val passwordHint = stringResource(id = R.string.password)
@@ -164,7 +164,7 @@ private fun LoginFormContent(
                 .fillMaxWidth()
                 .padding(top = 32.dp),
             onClick = {
-                onLoginButtonChanged()
+                onLoginButtonClicked()
             }
         ) {
             Text(stringResource(id = R.string.login))
@@ -174,7 +174,7 @@ private fun LoginFormContent(
                 .fillMaxWidth()
                 .padding(top = 12.dp),
             onClick = {
-                onRegisterButtonChanged()
+                onRegisterButtonClicked()
             }
         ) {
             Text(stringResource(id = R.string.register))
@@ -201,8 +201,7 @@ private fun LoginFormContentPreview() {
             password = "eleifend",
             onUsernameChanged = {},
             onPasswordChanged = {},
-            onLoginButtonChanged = {},
-            onRegisterButtonChanged = {}
-        )
+            onLoginButtonClicked = {}
+        ) {}
     }
 }

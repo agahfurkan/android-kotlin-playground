@@ -62,3 +62,17 @@ sonar {
         )
     }
 }
+tasks.register("paparazziRecordAllFeatures") {
+    val featureModuleNames = project.rootProject.subprojects
+        .filter { project.file(it.projectDir).relativeTo(project.rootDir).path.startsWith("feature/") }
+        .map { project.file(it.projectDir).relativeTo(project.rootDir).path.replace("/", ":") }
+
+    dependsOn(featureModuleNames.map { moduleName -> tasks.getByPath(":$moduleName:recordPaparazziDebug") })
+}
+tasks.register("paparazziVerifyAllFeatures") {
+    val featureModuleNames = project.rootProject.subprojects
+        .filter { project.file(it.projectDir).relativeTo(project.rootDir).path.startsWith("feature/") }
+        .map { project.file(it.projectDir).relativeTo(project.rootDir).path.replace("/", ":") }
+
+    dependsOn(featureModuleNames.map { moduleName -> tasks.getByPath(":$moduleName:verifyPaparazziDebug") })
+}

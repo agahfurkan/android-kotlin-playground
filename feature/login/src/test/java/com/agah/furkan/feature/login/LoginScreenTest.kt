@@ -7,9 +7,7 @@ import org.junit.Test
 
 class LoginScreenTest {
     @get:Rule
-    val paparazzi = Paparazzi(
-        deviceConfig = DeviceConfig.PIXEL_5
-    )
+    val paparazzi = Paparazzi(deviceConfig = DeviceConfig.PIXEL_5)
 
     @Test
     fun LoginScreenTest() {

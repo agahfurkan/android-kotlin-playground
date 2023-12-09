@@ -8,7 +8,7 @@ import org.junit.Rule
 import org.junit.Test
 
 class CategoryListScreenTest {
-    @get: Rule
+    @get:Rule
     val paparazzi = Paparazzi(
         deviceConfig = DeviceConfig.PIXEL_5
     )
