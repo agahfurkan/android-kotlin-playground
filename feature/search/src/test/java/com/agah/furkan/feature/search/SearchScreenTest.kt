@@ -10,7 +10,7 @@ class SearchScreenTest {
     val paparazzi = Paparazzi(deviceConfig = DeviceConfig.PIXEL_5)
 
     @Test
-    fun SearchScreenTest() {
+    fun searchScreenTest() {
         paparazzi.snapshot {
             SearchScreen(onBackPress = {})
         }

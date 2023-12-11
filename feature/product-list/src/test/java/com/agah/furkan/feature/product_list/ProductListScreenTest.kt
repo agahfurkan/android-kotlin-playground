@@ -11,7 +11,7 @@ class ProductListScreenTest {
     val paparazzi = Paparazzi(deviceConfig = DeviceConfig.PIXEL_5)
 
     @Test
-    fun ProductListScreenTest() {
+    fun productListScreenTest() {
         paparazzi.snapshot {
             ProductListScreen(
                 productList = DummyDataGenerator.generateDummyData().collectAsLazyPagingItems(),

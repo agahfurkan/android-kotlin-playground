@@ -10,7 +10,7 @@ class RegisterScreenTest {
     val paparazzi = Paparazzi(deviceConfig = DeviceConfig.PIXEL_5)
 
     @Test
-    fun RegisterScreenTest() {
+    fun registerScreenTest() {
         paparazzi.snapshot {
             RegisterScreen(
                 username = "Dion Grant",

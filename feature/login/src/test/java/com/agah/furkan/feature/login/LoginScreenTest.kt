@@ -10,7 +10,7 @@ class LoginScreenTest {
     val paparazzi = Paparazzi(deviceConfig = DeviceConfig.PIXEL_5)
 
     @Test
-    fun LoginScreenTest() {
+    fun loginScreenTest() {
         paparazzi.snapshot {
             LoginScreen(
                 username = "Will Schroeder",

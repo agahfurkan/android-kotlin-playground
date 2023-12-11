@@ -12,7 +12,7 @@ class HomeScreenTest {
     )
 
     @Test
-    fun HomeScreenTest() {
+    fun homeScreenTest() {
         paparazzi.snapshot {
             HomeScreen {
 

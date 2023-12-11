@@ -10,7 +10,7 @@ class ProductDetailScreenTest {
     val paparazzi = Paparazzi(deviceConfig = DeviceConfig.PIXEL_5)
 
     @Test
-    fun ProductDetailScreenTest() {
+    fun productDetailScreenTest() {
         paparazzi.snapshot {
             ProductDetailScreen(productState = ProductDetailUiState.Success(
                 productDetail = ProductDetail(

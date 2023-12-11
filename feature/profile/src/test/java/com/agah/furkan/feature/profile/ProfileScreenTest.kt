@@ -10,7 +10,7 @@ class ProfileScreenTest {
     val paparazzi = Paparazzi(deviceConfig = DeviceConfig.PIXEL_5)
 
     @Test
-    fun ProfileScreenTest() {
+    fun profileScreenTest() {
         paparazzi.snapshot {
             ProfileScreen(onLogoutButtonClicked = {}, onDownloadButtonClicked = {})
         }

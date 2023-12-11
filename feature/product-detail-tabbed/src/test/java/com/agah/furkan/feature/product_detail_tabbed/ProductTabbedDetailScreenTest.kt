@@ -13,7 +13,7 @@ class ProductTabbedDetailScreenTest {
     )
 
     @Test
-    fun ProductTabbedDetailScreenTest() {
+    fun productTabbedDetailScreenTest() {
         paparazzi.snapshot {
             ProductTabbedDetailScreen(productDetail = ProductDetailState.Success(
                 data = ProductDetail(

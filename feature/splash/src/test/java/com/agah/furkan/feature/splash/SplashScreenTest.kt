@@ -10,7 +10,7 @@ class SplashScreenTest {
     val paparazzi = Paparazzi(deviceConfig = DeviceConfig.PIXEL_5)
 
     @Test
-    fun SplashScreenTest() {
+    fun splashScreenTest() {
         paparazzi.snapshot {
             SplashScreen()
         }
