@@ -111,6 +111,7 @@ android {
 
     dependencies {
         detektPlugins(libs.detekt.formatting)
+        implementation(project(":x"))
 
         implementation(project(":core:session"))
         implementation(project(":core:data"))

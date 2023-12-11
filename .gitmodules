@@ -1,3 +1,6 @@
 [submodule "core/ui/components"]
 	path = core/ui/components
 	url = https://agahfurkan@github.com/agahfurkan/android-playground-ui-components.git
+[submodule "x"]
+	path = x
+	url = https://agahfurkan@github.com/agahfurkan/android-kotlin-playground-x.git
