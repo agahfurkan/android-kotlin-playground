@@ -11,8 +11,12 @@ android {
         dataBinding = true
     }
 }
-
+tasks.withType(Test::class.java) {
+    jvmArgs = jvmArgs?.plus("-XX:+AllowRedefinitionToAddDeleteMethods")
+}
 dependencies {
+    testImplementation(project(":core:test"))
+
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
