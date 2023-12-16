@@ -62,6 +62,7 @@ internal fun SearchScreen(onBackPress: () -> Unit) {
                     }
                     SearchTextField(
                         modifier = Modifier.focusRequester(focusRequester),
+                        value = "",
                         onFocusChanged = {},
                         onValueChange = {})
                 }

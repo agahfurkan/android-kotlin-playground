@@ -65,7 +65,6 @@ internal fun HomeScreen(onSearchFocused: () -> Unit) {
                     }
                     items(100) {
                         BrandBannerItem()
-
                     }
                 })
             }
@@ -92,7 +91,7 @@ private fun SearchContent(onSearchFocused: (focusState: FocusState) -> Unit) {
             .background(seed)
     ) {
         Spacer(modifier = Modifier.weight(1f))
-        SearchTextField(onFocusChanged = {
+        SearchTextField(value = "", onFocusChanged = {
             onSearchFocused(it)
         }, onValueChange = {})
     }

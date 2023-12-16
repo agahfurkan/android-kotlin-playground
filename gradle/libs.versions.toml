@@ -9,19 +9,16 @@ hiltCompilerVersion = "1.0.0"
 hiltWorkVersion = "1.0.0"
 kotlinGradlePluginVersion = "1.9.20"
 ktlintGradleVersion = "11.5.1"
-ktxVersion = "1.9.0"
 mockwebserverVersion = "4.11.0"
 navigationSafeArgsGradlePluginVersion = "2.5.3"
 retrofitVersion = "2.5.0"
 retrofitMoshiConverterVersion = "2.9.0"
 moshiVersion = "1.15.0"
-navVersion = "2.5.3"
 robolectricVersion = "4.10.3"
 roomVersion = "2.4.3"
 interceptorVersion = "4.7.2"
 glideVersion = "4.12.0"
 hiltVersion = "2.47"
-lifecycleVersion = "2.4.0"
 jUnitXVersion = "1.1.2"
 testRunnerVersion = "1.3.0"
 truthVersion = "1.1.4"
@@ -40,6 +37,7 @@ constraintLayoutComposeVersion = "1.0.1"
 pagingComposeVersion = "1.0.0-alpha20"
 composeNavigationVersion = "2.5.3"
 androidxComposeBom = "2023.10.01"
+composeLifecycleVersion = "2.6.1"
 espresso-core = "3.5.1"
 uiautomator = "2.2.0"
 benchmark-macro-junit4 = "1.1.1"
@@ -108,6 +106,7 @@ compose-ui = { group = "androidx.compose.ui", name = "ui-tooling" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivityVersion" }
 accompanist-system-ui-controller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanistVersion" }
 accompanist-theme-adapter-material = { group = "com.google.accompanist", name = "accompanist-themeadapter-material", version.ref = "accompanistVersion" }
+lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "composeLifecycleVersion" }
 
 material3-compose = { group = "androidx.compose.material3", name = "material3", version.ref = "material3Version" }
 material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3Version" }
