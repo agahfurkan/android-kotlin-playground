@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.divider
 import com.agah.furkan.core.ui.theme.gray
 import com.agah.furkan.core.ui.theme.seed
@@ -170,30 +172,7 @@ internal fun ProfileScreenContent(
         }
         LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp), content = {
             items(10) {
-                Row(
-                    modifier = Modifier.clickable {
-                        // TODO: add dynamic navigation
-                    },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        modifier = Modifier
-                            .padding(start = 16.dp, top = 16.dp, bottom = 16.dp)
-                            .height(24.dp)
-                            .width(24.dp),
-                        painter = painterResource(id = R.drawable.placeholder_image),
-                        contentDescription = ""
-                    )
-                    Text(modifier = Modifier.padding(start = 8.dp), text = "12345")
-                    Spacer(modifier = Modifier.weight(1f))
-                    Image(
-                        modifier = Modifier.padding(end = 16.dp),
-                        painter = rememberVectorPainter(
-                            image = ImageVector.vectorResource(id = R.drawable.ic_arrow_right)
-                        ),
-                        contentDescription = ""
-                    )
-                }
+                ProfileActionButton()
                 Divider(modifier = Modifier.padding(horizontal = 16.dp), color = divider)
             }
         })
@@ -201,7 +180,47 @@ internal fun ProfileScreenContent(
 }
 
 @Composable
+internal fun ProfileActionButton() {
+    Row(
+        modifier = Modifier.clickable {
+            // TODO: add dynamic navigation
+        },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            modifier = Modifier
+                .padding(start = 16.dp, top = 16.dp, bottom = 16.dp)
+                .height(24.dp)
+                .width(24.dp),
+            painter = painterResource(id = R.drawable.placeholder_image),
+            contentDescription = ""
+        )
+        Text(modifier = Modifier.padding(start = 8.dp), text = "12345")
+        Spacer(modifier = Modifier.weight(1f))
+        Image(
+            modifier = Modifier.padding(end = 16.dp),
+            painter = rememberVectorPainter(
+                image = ImageVector.vectorResource(id = R.drawable.ic_arrow_right)
+            ),
+            contentDescription = ""
+        )
+    }
+}
+
+@Composable
 @Preview(showBackground = true)
 private fun ProfileScreenPreview() {
     ProfileScreen(onLogoutButtonClicked = {}, onDownloadButtonClicked = {})
+}
+
+@Composable
+@Preview
+private fun ProfileScreenActionButton() {
+    AppTheme {
+        Surface {
+            Row {
+                ProfileActionButton()
+            }
+        }
+    }
 }

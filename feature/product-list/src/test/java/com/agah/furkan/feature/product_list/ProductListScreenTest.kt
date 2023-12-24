@@ -1,23 +1,20 @@
 package com.agah.furkan.feature.product_list
 
 import androidx.paging.compose.collectAsLazyPagingItems
-import app.cash.paparazzi.DeviceConfig
-import app.cash.paparazzi.Paparazzi
-import org.junit.Rule
+import com.agah.furkan.core.test.PaparazziTest
 import org.junit.Test
 
-class ProductListScreenTest {
-    @get:Rule
-    val paparazzi = Paparazzi(deviceConfig = DeviceConfig.PIXEL_5)
+class ProductListScreenTest : PaparazziTest() {
 
     @Test
-    fun productListScreenTest() {
-        paparazzi.snapshot {
+    fun productListScreenSnapshotTest() {
+        paparazzi.snapshotWithTheme {
             ProductListScreen(
                 productList = DummyDataGenerator.generateDummyData().collectAsLazyPagingItems(),
                 itemClicked = {},
                 onBackButtonClicked = {},
-                newProductAddedToCart = {})
+                newProductAddedToCart = {}
+            )
         }
     }
 }

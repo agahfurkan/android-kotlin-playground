@@ -1,21 +1,15 @@
 package com.agah.furkan.feature.category_list
 
-import app.cash.paparazzi.DeviceConfig
-import app.cash.paparazzi.Paparazzi
+import com.agah.furkan.core.test.PaparazziTest
 import com.agah.furkan.feature.category_list.model.Category
 import com.agah.furkan.feature.category_list.model.CategoryListUiState
-import org.junit.Rule
 import org.junit.Test
 
-class CategoryListScreenTest {
-    @get:Rule
-    val paparazzi = Paparazzi(
-        deviceConfig = DeviceConfig.PIXEL_5
-    )
+class CategoryListScreenTest : PaparazziTest() {
 
     @Test
     fun cartScreenSnapshot() {
-        paparazzi.snapshot {
+        paparazzi.snapshotWithTheme {
             CategoryListScreen(
                 state = CategoryListUiState.Success(
                     listOf(

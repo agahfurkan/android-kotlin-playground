@@ -12,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -73,8 +74,7 @@ internal fun LoginRoute(
         onRegisterClicked = viewModel::onRegisterButtonClicked,
         onUsernameChanged = { viewModel.username = it },
         onPasswordChanged = { viewModel.password = it },
-
-        )
+    )
 }
 
 @Composable
@@ -192,16 +192,18 @@ private fun LoginFormContent(
     }
 }
 
-@Preview
 @Composable
+@Preview
 private fun LoginFormContentPreview() {
     AppTheme {
-        LoginFormContent(
-            username = "Dusty Fox",
-            password = "eleifend",
-            onUsernameChanged = {},
-            onPasswordChanged = {},
-            onLoginButtonClicked = {}
-        ) {}
+        Surface {
+            LoginFormContent(
+                username = "Dusty Fox",
+                password = "eleifend",
+                onUsernameChanged = {},
+                onPasswordChanged = {},
+                onLoginButtonClicked = {}
+            ) {}
+        }
     }
 }
