@@ -1,9 +1,7 @@
-import com.android.build.gradle.internal.tasks.factory.dependsOn
-
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id("org.sonarqube") version "4.2.1.3168"
-    alias (libs.plugins.paparazzi) apply false
+    alias(libs.plugins.paparazzi) apply false
 }
 apply("./project.gradle")
 buildscript {
@@ -62,17 +60,37 @@ sonar {
         )
     }
 }
+
 tasks.register("paparazziRecordAllFeatures") {
+    val additionalModules = listOf(":project-x")
     val featureModuleNames = project.rootProject.subprojects
-        .filter { project.file(it.projectDir).relativeTo(project.rootDir).path.startsWith("feature/") }
+        .filter {
+            project.file(it.projectDir).relativeTo(project.rootDir).path.startsWith("feature/")
+        }
         .map { project.file(it.projectDir).relativeTo(project.rootDir).path.replace("/", ":") }
 
-    dependsOn(featureModuleNames.map { moduleName -> tasks.getByPath(":$moduleName:recordPaparazziDebug") })
+    dependsOn(
+        (additionalModules + featureModuleNames).map { moduleName ->
+            tasks.getByPath(
+                ":$moduleName:recordPaparazziDebug"
+            )
+        }
+    )
 }
+
 tasks.register("paparazziVerifyAllFeatures") {
+    val additionalModules = listOf("project-x")
     val featureModuleNames = project.rootProject.subprojects
-        .filter { project.file(it.projectDir).relativeTo(project.rootDir).path.startsWith("feature/") }
+        .filter {
+            project.file(it.projectDir).relativeTo(project.rootDir).path.startsWith("feature/")
+        }
         .map { project.file(it.projectDir).relativeTo(project.rootDir).path.replace("/", ":") }
 
-    dependsOn(featureModuleNames.map { moduleName -> tasks.getByPath(":$moduleName:verifyPaparazziDebug") })
+    dependsOn(
+        (additionalModules + featureModuleNames).map { moduleName ->
+            tasks.getByPath(
+                ":$moduleName:verifyPaparazziDebug"
+            )
+        }
+    )
 }
