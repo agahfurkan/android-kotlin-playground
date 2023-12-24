@@ -10,10 +10,14 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
-tasks.withType(Test::class.java) {
-    jvmArgs = jvmArgs?.plus("-XX:+AllowRedefinitionToAddDeleteMethods")
-}
+
 dependencies {
     testImplementation(project(":core:test"))
     implementation(project(":core:view"))
