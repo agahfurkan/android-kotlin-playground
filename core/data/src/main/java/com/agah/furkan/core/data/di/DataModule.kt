@@ -1,6 +1,5 @@
 package com.agah.furkan.core.data.di
 
-import com.agah.furkan.core.session.SessionManager
 import com.agah.furkan.core.data.Constants
 import com.agah.furkan.core.data.ErrorMapper
 import com.agah.furkan.core.data.ErrorMapperImpl
@@ -8,10 +7,12 @@ import com.agah.furkan.core.data.retrofit.AuthInterceptor
 import com.agah.furkan.core.data.retrofit.CustomCallFactory
 import com.agah.furkan.core.data.retrofit.HeaderInterceptor
 import com.agah.furkan.core.preferences.UserPreference
+import com.agah.furkan.core.session.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.MainScope
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -97,7 +98,7 @@ object DataModule {
             trustManagers[0] as X509TrustManager
 
         return OkHttpClient.Builder()
-            .addInterceptor(HeaderInterceptor(userPreference))
+            .addInterceptor(HeaderInterceptor(userPreference, MainScope()))
             .addInterceptor(AuthInterceptor(sessionManager))
             .addInterceptor(interceptor)
             .readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS)

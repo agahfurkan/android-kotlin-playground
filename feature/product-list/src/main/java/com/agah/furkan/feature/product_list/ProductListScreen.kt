@@ -69,7 +69,9 @@ internal fun ProductListRoute(
         productList = productList,
         itemClicked = itemClicked,
         onBackButtonClicked = onBackButtonClicked,
-        newProductAddedToCart = newProductAddedToCart
+        addToCartClicked = {
+            viewModel.addProductToCart(it)
+        }
     )
 }
 
@@ -79,7 +81,7 @@ internal fun ProductListScreen(
     productList: LazyPagingItems<Product>,
     itemClicked: (productId: Long) -> Unit,
     onBackButtonClicked: () -> Unit,
-    newProductAddedToCart: () -> Unit,
+    addToCartClicked: (id: Int) -> Unit,
 ) {
     AppTheme {
         Scaffold(topBar = {
@@ -111,7 +113,7 @@ internal fun ProductListScreen(
             ) {
                 ProductListContent(
                     productList = productList,
-                    addToCartClicked = { newProductAddedToCart() },
+                    addToCartClicked = { addToCartClicked(it) },
                     itemClicked = itemClicked,
                 )
             }
@@ -199,7 +201,7 @@ private fun ProductListScreenPreview() {
         productList = DummyDataGenerator.generateDummyData().collectAsLazyPagingItems(),
         itemClicked = {},
         onBackButtonClicked = {},
-        newProductAddedToCart = {}
+        addToCartClicked = {}
     )
 }
 
