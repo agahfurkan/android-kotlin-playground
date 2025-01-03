@@ -54,12 +54,11 @@ internal fun CategoryListScreen(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-
     AppTheme {
         Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }, topBar = {
             TopAppBar(
                 title = { },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = seed)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = seed)
             )
         }) { padding ->
             Column(Modifier.padding(padding)) {
@@ -83,7 +82,6 @@ internal fun CategoryListScreen(
                 }
             }
         }
-
     }
 }
 
@@ -92,19 +90,22 @@ private fun CategoryListSuccessState(
     state: CategoryListUiState.Success,
     onCategoryClicked: (categoryId: Long) -> Unit
 ) {
-    LazyVerticalGrid(modifier = Modifier.padding(16.dp),
+    LazyVerticalGrid(
+        modifier = Modifier.padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         columns = GridCells.Fixed(3),
         content = {
             items(state.data.size) {
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        onCategoryClicked(
-                            state.data[it].categoryId
-                        )
-                    }) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            onCategoryClicked(
+                                state.data[it].categoryId
+                            )
+                        }
+                ) {
                     PlaceHolderImage()
                     Text(
                         modifier = Modifier.fillMaxWidth(),
@@ -113,7 +114,8 @@ private fun CategoryListSuccessState(
                     )
                 }
             }
-        })
+        }
+    )
 }
 
 @Composable
@@ -125,13 +127,44 @@ private fun Loading() {
 
 @Composable
 @Preview
+private fun CategoryListScreenPreview() {
+    CategoryListScreen(
+        state = CategoryListUiState.Success(
+            listOf(
+                Category(
+                    categoryId = 1,
+                    categoryName = "categoryName"
+                ),
+                Category(
+                    categoryId = 2,
+                    categoryName = "categoryName"
+                ),
+                Category(
+                    categoryId = 3,
+                    categoryName = "categoryName"
+                ),
+                Category(
+                    categoryId = 4,
+                    categoryName = "categoryName"
+                ),
+                Category(
+                    categoryId = 5,
+                    categoryName = "categoryName"
+                )
+            )
+        ),
+        onCategoryClicked = {}
+    )
+}
+
+@Composable
+@Preview
 private fun CategoryListSuccessStatePreview(
     @PreviewParameter(CategoryPreviewParameterProvider::class) categoryList: List<Category>
 ) {
     CategoryListSuccessState(
         CategoryListUiState.Success(data = categoryList)
     ) {
-
     }
 }
 

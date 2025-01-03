@@ -1,4 +1,6 @@
 [versions]
+coreKtxVersion = "1.5.0"
+datastoreVersion = "1.1.1"
 detektFormattingVersion = "1.23.1"
 firebaseAnalyticsKtxVersion = "21.3.0"
 firebaseConfigKtxVersion = "21.4.1"
@@ -6,19 +8,19 @@ googleServicesVersion = "4.3.15"
 gradleVersion = "8.7.3"
 hiltCompilerVersion = "1.0.0"
 hiltWorkVersion = "1.0.0"
-kotlinGradlePluginVersion = "1.8.10"
+kotlinGradlePluginVersion = "1.9.20"
 ktlintGradleVersion = "11.5.1"
-ktxVersion = "1.9.0"
+mockwebserverVersion = "4.11.0"
 navigationSafeArgsGradlePluginVersion = "2.5.3"
+protobufJavaliteVersion = "3.21.11"
 retrofitVersion = "2.5.0"
 retrofitMoshiConverterVersion = "2.9.0"
-moshiVersion = "1.14.0"
-navVersion = "2.5.3"
+moshiVersion = "1.15.0"
+robolectricVersion = "4.10.3"
 roomVersion = "2.4.3"
 interceptorVersion = "4.7.2"
 glideVersion = "4.12.0"
-hiltVersion = "2.44"
-lifecycleVersion = "2.4.0"
+hiltVersion = "2.47"
 jUnitXVersion = "1.1.2"
 testRunnerVersion = "1.3.0"
 truthVersion = "1.1.4"
@@ -36,24 +38,31 @@ hiltComposeVersion = "1.1.0-alpha01"
 constraintLayoutComposeVersion = "1.0.1"
 pagingComposeVersion = "1.0.0-alpha20"
 composeNavigationVersion = "2.5.3"
-androidxComposeBom = "2023.04.01"
+androidxComposeBom = "2023.10.01"
+composeLifecycleVersion = "2.6.1"
 espresso-core = "3.5.1"
 uiautomator = "2.2.0"
 benchmark-macro-junit4 = "1.1.1"
 profileInstallerVersion = "1.2.0"
 core-ktx = "1.9.0"
 junit = "4.13.2"
-appcompat = "1.6.1"
-material = "1.8.0"
 mockkVersion = "1.13.7"
+uiTestManifestVersion = "1.5.2"
+uiTestJunit4Version = "1.5.2"
 workRuntimeKtxVersion = "2.8.1"
 workRuntimeVersion = "2.8.1"
-
+paparazzi = "1.3.0"
+androidx-appcompat-appcompat = "1.6.1"
+com-google-android-material-material = "1.10.0"
 
 [libraries]
+androidx-core-ktx = { module = "androidx.test:core-ktx", version.ref = "coreKtxVersion" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastoreVersion" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompilerVersion" }
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltWorkVersion" }
 androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsGradlePluginVersion" }
+androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "uiTestManifestVersion" }
+androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "uiTestJunit4Version" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtxVersion" }
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntimeVersion" }
 constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayoutComposeVersion" }
@@ -66,6 +75,8 @@ gradle = { module = "com.android.tools.build:gradle", version.ref = "gradleVersi
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltVersion" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePluginVersion" }
 ktlint-gradle = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlintGradleVersion" }
+mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "mockwebserverVersion" }
+protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobufJavaliteVersion" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
 retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofitMoshiConverterVersion" }
 moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshiVersion" }
@@ -77,6 +88,7 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 hilt-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltVersion" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltComposeVersion" }
 
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectricVersion" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
@@ -96,14 +108,13 @@ compose-ui = { group = "androidx.compose.ui", name = "ui-tooling" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivityVersion" }
 accompanist-system-ui-controller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanistVersion" }
 accompanist-theme-adapter-material = { group = "com.google.accompanist", name = "accompanist-themeadapter-material", version.ref = "accompanistVersion" }
+lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "composeLifecycleVersion" }
 
 material3-compose = { group = "androidx.compose.material3", name = "material3", version.ref = "material3Version" }
 material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3Version" }
 benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
 profile-installer = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileInstallerVersion" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version = "23.2.1" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -113,11 +124,17 @@ junitx = { group = "androidx.test.ext", name = "junit", version.ref = "jUnitXVer
 test-runner = { group = "androidx.test", name = "runner", version.ref = "testRunnerVersion" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truthVersion" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
-
+mochito = { group = "org.mockito", name = "mockito-core", version = "5.6.0" }
+turbine = { group = "app.cash.turbine", name = "turbine", version = "1.0.0" }
+kotlinx-coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version = "1.7.1" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat-appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "com-google-android-material-material" }
+paparazzi = { module = "app.cash.paparazzi:paparazzi", version.ref = "paparazzi" }
 #build-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "gradle" }
 #hilt-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 
-#[plugins]
+[plugins]
+paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 #android-application = { id = "com.android.application", version.ref = "gradle" }
 #kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-gradle" }
 #hilt = { id = "com.google.dagger", version.ref = "hilt" }

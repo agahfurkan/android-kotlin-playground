@@ -19,11 +19,11 @@ class AndroidLibraryComposeConventionPlugin : Plugin<Project> {
                     compose = true
                 }
                 composeOptions {
-                    kotlinCompilerExtensionVersion = "1.4.3"
+                    kotlinCompilerExtensionVersion = "1.5.4"
                 }
                 compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_1_8
-                    targetCompatibility = JavaVersion.VERSION_1_8
+                    sourceCompatibility = JavaVersion.VERSION_17
+                    targetCompatibility = JavaVersion.VERSION_17
                 }
             }
 
@@ -35,6 +35,7 @@ class AndroidLibraryComposeConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("compose.runtime").get())
                 add("implementation", libs.findLibrary("compose.ui").get())
                 add("implementation", libs.findLibrary("hilt.navigation.compose").get())
+                add("implementation", libs.findLibrary("lifecycle-runtime-compose").get())
             }
         }
     }

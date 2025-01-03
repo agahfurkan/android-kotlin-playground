@@ -12,9 +12,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -22,28 +25,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.core.ui.theme.AppTheme
-import com.agah.furkan.core.util.launchAndCollectIn
-import com.agah.furkan.core.util.showToast
+import com.agah.furkan.core.util.ext.launchAndCollectIn
+import com.agah.furkan.core.util.ext.showToast
 import com.agah.furkan.domain.login.LoginUseCase
+import com.agah.furkan.ui.components.OTPDialog
 
 @Composable
 internal fun LoginRoute(
     onLoginSuccess: () -> Unit,
-    onRegisterClicked: () -> Unit
-) {
-    LoginScreen(onLoginSuccess = onLoginSuccess, onRegisterClicked = onRegisterClicked)
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun LoginScreen(
+    onRegisterClicked: () -> Unit,
     viewModel: LoginScreenVM = hiltViewModel(),
-    onLoginSuccess: () -> Unit,
-    onRegisterClicked: () -> Unit
 ) {
     val lifeCycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
@@ -70,19 +67,33 @@ private fun LoginScreen(
             }
         }
     }
-    LoginFormContent(
+    LoginScreen(
         username = viewModel.username,
         password = viewModel.password,
-        onUsernameChanged = {
-            viewModel.username = it
-        },
-        onPasswordChanged = {
-            viewModel.password = it
-        },
-        onLoginButtonChanged = viewModel::onLoginBtnClicked,
-        onRegisterButtonChanged = viewModel::onRegisterButtonClicked
+        onLoginSuccess = viewModel::onLoginBtnClicked,
+        onRegisterClicked = viewModel::onRegisterButtonClicked,
+        onUsernameChanged = { viewModel.username = it },
+        onPasswordChanged = { viewModel.password = it },
     )
+}
 
+@Composable
+internal fun LoginScreen(
+    username: String,
+    password: String,
+    onLoginSuccess: () -> Unit,
+    onRegisterClicked: () -> Unit,
+    onUsernameChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+) {
+    LoginFormContent(
+        username = username,
+        password = password,
+        onUsernameChanged = onUsernameChanged,
+        onPasswordChanged = onPasswordChanged,
+        onLoginButtonClicked = onLoginSuccess,
+        onRegisterButtonClicked = onRegisterClicked
+    )
 }
 
 @Composable
@@ -93,9 +104,21 @@ private fun LoginFormContent(
     password: String,
     onUsernameChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
-    onLoginButtonChanged: () -> Unit,
-    onRegisterButtonChanged: () -> Unit
+    onLoginButtonClicked: () -> Unit,
+    onRegisterButtonClicked: () -> Unit
 ) {
+    val userNameHint = stringResource(id = R.string.username)
+    val passwordHint = stringResource(id = R.string.password)
+    val showOTPDialog = remember { mutableStateOf(false) }
+    if (showOTPDialog.value) {
+        OTPDialog(
+            showDialog = showOTPDialog,
+            onDismiss = {
+                showOTPDialog.value = false
+            }
+        )
+    }
+
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -110,50 +133,77 @@ private fun LoginFormContent(
                 .width(LocalConfiguration.current.screenWidthDp.dp / 2)
                 .aspectRatio(1f)
         )
-        OutlinedTextField(value = username,
-            label = { Text(text = stringResource(id = R.string.username)) },
+        OutlinedTextField(
+            value = username,
+            label = { Text(text = userNameHint) },
             modifier = Modifier
+                .semantics {
+                    contentDescription = userNameHint
+                }
                 .fillMaxWidth()
                 .padding(top = 24.dp),
             onValueChange = {
                 onUsernameChanged(it)
-            })
-        OutlinedTextField(value = password,
-            label = { Text(text = stringResource(id = R.string.password)) },
+            }
+        )
+        OutlinedTextField(
+            value = password,
+            label = { Text(text = passwordHint) },
             modifier = Modifier
+                .semantics {
+                    contentDescription = passwordHint
+                }
                 .fillMaxWidth()
                 .padding(top = 12.dp),
             onValueChange = {
                 onPasswordChanged(it)
-            })
-        Button(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 32.dp), onClick = {
-            onLoginButtonChanged()
-        }) {
+            }
+        )
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 32.dp),
+            onClick = {
+                onLoginButtonClicked()
+            }
+        ) {
             Text(stringResource(id = R.string.login))
         }
-        Button(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 12.dp), onClick = {
-            onRegisterButtonChanged()
-        }) {
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            onClick = {
+                onRegisterButtonClicked()
+            }
+        ) {
             Text(stringResource(id = R.string.register))
         }
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            onClick = {
+                showOTPDialog.value = true
+            }
+        ) {
+            Text(stringResource(id = R.string.show_otp))
+        }
     }
-
 }
 
-@Preview
 @Composable
+@Preview
 private fun LoginFormContentPreview() {
     AppTheme {
-        LoginFormContent(
-            username = "Dusty Fox",
-            password = "eleifend",
-            onUsernameChanged = {},
-            onPasswordChanged = {},
-            onLoginButtonChanged = {},
-            onRegisterButtonChanged = {})
+        Surface {
+            LoginFormContent(
+                username = "Dusty Fox",
+                password = "eleifend",
+                onUsernameChanged = {},
+                onPasswordChanged = {},
+                onLoginButtonClicked = {}
+            ) {}
+        }
     }
 }

@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -43,38 +44,50 @@ import com.agah.furkan.ui.components.PlaceHolderImage
 import com.agah.furkan.ui.components.WarningDialog
 
 @Composable
-internal fun ProfileRoute(onLogoutButtonClicked: () -> Unit) {
-    ProfileScreen(onLogoutButtonClicked = onLogoutButtonClicked)
+internal fun ProfileRoute(
+    viewModel: ProfileScreenViewModel = hiltViewModel(),
+    onLogoutButtonClicked: () -> Unit
+) {
+    ProfileScreen(onLogoutButtonClicked = {
+        viewModel.logout()
+        onLogoutButtonClicked()
+    }, onDownloadButtonClicked = {
+        viewModel.downloadPdf()
+    })
 }
 
 @Composable
-private fun ProfileScreen(
-    viewModel: ProfileScreenViewModel = hiltViewModel(),
-    onLogoutButtonClicked: () -> Unit
+internal fun ProfileScreen(
+    onLogoutButtonClicked: () -> Unit,
+    onDownloadButtonClicked: () -> Unit
 ) {
     val showLogoutDialog = remember {
         mutableStateOf(false)
     }
 
-    WarningDialog(showLogoutDialog,
+    WarningDialog(
+        showLogoutDialog,
         title = "Warning",
         message = "Are you sure you want to logout ?",
         positiveButtonText = "Logout",
         negativeButtonText = "Cancel",
-        onNegativeButtonClicked = {}) {
-        viewModel.logout()
+        onNegativeButtonClicked = {}
+    ) {
         onLogoutButtonClicked()
     }
 
     ProfileScreenContent(onLogoutButtonClicked = {
         showLogoutDialog.value = true
     }, onDownloadPdfClicked = {
-        viewModel.downloadPdf()
+        onDownloadButtonClicked()
     })
 }
 
 @Composable
-internal fun ProfileScreenContent(onLogoutButtonClicked: () -> Unit, onDownloadPdfClicked: () -> Unit) {
+internal fun ProfileScreenContent(
+    onLogoutButtonClicked: () -> Unit,
+    onDownloadPdfClicked: () -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         ConstraintLayout(
             modifier = Modifier
@@ -102,22 +115,27 @@ internal fun ProfileScreenContent(onLogoutButtonClicked: () -> Unit, onDownloadP
                         .align(Alignment.Center)
                 )
             }
-            Text(modifier = Modifier
-                .constrainAs(username) {
-                    top.linkTo(userImgContainer.bottom)
-                    start.linkTo(userImgContainer.start)
-                    end.linkTo(userImgContainer.end)
+            Text(
+                modifier = Modifier
+                    .constrainAs(username) {
+                        top.linkTo(userImgContainer.bottom)
+                        start.linkTo(userImgContainer.start)
+                        end.linkTo(userImgContainer.end)
+                    }
+                    .padding(top = 16.dp, bottom = 51.dp),
+                text = stringResource(id = R.string.username)
+            )
+            Column(
+                modifier = Modifier.constrainAs(buttonContainer) {
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
                 }
-                .padding(top = 16.dp, bottom = 51.dp),
-                text = stringResource(id = R.string.username))
-            Column(modifier = Modifier.constrainAs(buttonContainer) {
-                end.linkTo(parent.end)
-                top.linkTo(parent.top)
-            }) {
+            ) {
                 IconButton(
                     onClick = {
                         onLogoutButtonClicked()
-                    }) {
+                    }
+                ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_logout),
                         tint = Color.White,
@@ -127,7 +145,8 @@ internal fun ProfileScreenContent(onLogoutButtonClicked: () -> Unit, onDownloadP
                 IconButton(
                     onClick = {
                         onDownloadPdfClicked()
-                    }) {
+                    }
+                ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.baseline_cloud_download_24),
                         tint = Color.White,
@@ -142,7 +161,8 @@ internal fun ProfileScreenContent(onLogoutButtonClicked: () -> Unit, onDownloadP
                 },
                 onClick = {
                     // TODO: navigate to notification list feature
-                }) {
+                }
+            ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_bell_outline),
                     tint = Color.White,
@@ -152,25 +172,7 @@ internal fun ProfileScreenContent(onLogoutButtonClicked: () -> Unit, onDownloadP
         }
         LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp), content = {
             items(10) {
-                Row(modifier = Modifier.clickable {
-                    // TODO: add dynamic navigation
-                }, verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        modifier = Modifier
-                            .padding(start = 16.dp, top = 16.dp, bottom = 16.dp)
-                            .height(24.dp)
-                            .width(24.dp),
-                        painter = painterResource(id = R.drawable.placeholder_image),
-                        contentDescription = ""
-                    )
-                    Text(modifier = Modifier.padding(start = 8.dp), text = "12345")
-                    Spacer(modifier = Modifier.weight(1f))
-                    Image(
-                        modifier = Modifier.padding(end = 16.dp),
-                        painter = rememberVectorPainter(image = ImageVector.vectorResource(id = R.drawable.ic_arrow_right)),
-                        contentDescription = ""
-                    )
-                }
+                ProfileActionButton()
                 Divider(modifier = Modifier.padding(horizontal = 16.dp), color = divider)
             }
         })
@@ -178,10 +180,47 @@ internal fun ProfileScreenContent(onLogoutButtonClicked: () -> Unit, onDownloadP
 }
 
 @Composable
+internal fun ProfileActionButton() {
+    Row(
+        modifier = Modifier.clickable {
+            // TODO: add dynamic navigation
+        },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            modifier = Modifier
+                .padding(start = 16.dp, top = 16.dp, bottom = 16.dp)
+                .height(24.dp)
+                .width(24.dp),
+            painter = painterResource(id = R.drawable.placeholder_image),
+            contentDescription = ""
+        )
+        Text(modifier = Modifier.padding(start = 8.dp), text = "12345")
+        Spacer(modifier = Modifier.weight(1f))
+        Image(
+            modifier = Modifier.padding(end = 16.dp),
+            painter = rememberVectorPainter(
+                image = ImageVector.vectorResource(id = R.drawable.ic_arrow_right)
+            ),
+            contentDescription = ""
+        )
+    }
+}
+
+@Composable
 @Preview(showBackground = true)
 private fun ProfileScreenPreview() {
-    AppTheme {
-        ProfileScreenContent(onLogoutButtonClicked = {}, onDownloadPdfClicked = {})
+    ProfileScreen(onLogoutButtonClicked = {}, onDownloadButtonClicked = {})
+}
 
+@Composable
+@Preview
+private fun ProfileScreenActionButton() {
+    AppTheme {
+        Surface {
+            Row {
+                ProfileActionButton()
+            }
+        }
     }
 }

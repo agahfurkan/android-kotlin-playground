@@ -7,6 +7,8 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.agah.furkan.core.preferences.UserPreference
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,7 +18,9 @@ internal class ProfileScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun logout() {
-        userPreference.clearAllData()
+        MainScope().launch {
+            userPreference.clearAllData()
+        }
     }
 
     fun downloadPdf() {

@@ -1,4 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id("org.sonarqube") version "4.2.1.3168"
+    alias(libs.plugins.paparazzi) apply false
+}
+apply("./project.gradle")
 buildscript {
     repositories {
         google()
@@ -32,4 +37,60 @@ tasks.register("clean", Delete::class) {
 tasks.register("installGitHooks", Copy::class) {
     from("$rootDir/config/pre-commit")
     into("$rootDir/.git/hooks")
+}
+sonar {
+    properties {
+        property("sonar.projectName", "android-playground")
+        property("sonar.projectKey", "android-playground")
+        property("sonar.sourceEncoding", "UTF-8")
+        property("sonar.language", "kotlin")
+        property("sonar.token", "sqp_00ef51f093579a1163a24e9f476048db6d306a77")
+        property("sonar.projectVersion", "1.0")
+        property("sonar.analysis.mode", "publish")
+        //    property("sonar.android.lint.report", "./build/outputs/lint-results-debug.xml")
+        property(
+            "sonar.exclusions",
+            "**/BuildConfig.class,**/R.java,**/R\$*.java,src/main/gen/**/*,src/main/assets/**/*"
+        )
+        property("sonar.tests", "src/test/java, src/androidTest/java")
+        property("sonar.java.coveragePlugin", "jacoco")
+        property(
+            "sonar.coverage.jacoco.xmlReportPaths",
+            "$rootDir/build/reports/jacoco/allDebugCoverage/allDebugCoverage.xml"
+        )
+    }
+}
+
+tasks.register("paparazziRecordAllFeatures") {
+    val additionalModules = listOf(":project-x")
+    val featureModuleNames = project.rootProject.subprojects
+        .filter {
+            project.file(it.projectDir).relativeTo(project.rootDir).path.startsWith("feature/")
+        }
+        .map { project.file(it.projectDir).relativeTo(project.rootDir).path.replace("/", ":") }
+
+    dependsOn(
+        (additionalModules + featureModuleNames).map { moduleName ->
+            tasks.getByPath(
+                ":$moduleName:recordPaparazziDebug"
+            )
+        }
+    )
+}
+
+tasks.register("paparazziVerifyAllFeatures") {
+    val additionalModules = listOf("project-x")
+    val featureModuleNames = project.rootProject.subprojects
+        .filter {
+            project.file(it.projectDir).relativeTo(project.rootDir).path.startsWith("feature/")
+        }
+        .map { project.file(it.projectDir).relativeTo(project.rootDir).path.replace("/", ":") }
+
+    dependsOn(
+        (additionalModules + featureModuleNames).map { moduleName ->
+            tasks.getByPath(
+                ":$moduleName:verifyPaparazziDebug"
+            )
+        }
+    )
 }

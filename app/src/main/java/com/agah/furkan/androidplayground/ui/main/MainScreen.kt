@@ -1,5 +1,6 @@
 package com.agah.furkan.androidplayground.ui.main
 
+import android.app.Activity
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -35,7 +36,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.agah.furkan.androidplayground.SharedViewModel
 import com.agah.furkan.core.ui.theme.AppTheme
-import com.agah.furkan.core.util.launchAndCollectIn
+import com.agah.furkan.core.util.ext.launchAndCollectIn
 import com.agah.furkan.feature.cart.Cart
 import com.agah.furkan.feature.cart.navigation.cartScreen
 import com.agah.furkan.feature.category_list.navigation.categoryListScreen
@@ -57,6 +58,7 @@ import com.agah.furkan.feature.search.navigation.searchScreen
 import com.agah.furkan.feature.splash.navigation.splashRoute
 import com.agah.furkan.feature.splash.navigation.splashScreen
 import com.agah.furkan.ui.components.WarningDialog
+import com.agah.furkan.x.MainActivity
 import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -125,7 +127,7 @@ fun BottomNavigationBar(
     cart: Map<Long, List<Cart>>,
 ) {
     val items = BottomNavItem.getBottomNavItems()
-
+    val activity = LocalContext.current as Activity
     AppTheme {
         NavigationBar {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -160,6 +162,10 @@ fun BottomNavigationBar(
                     alwaysShowLabel = item != BottomNavItem.SecondModule,
                     selected = currentRoute == item.route,
                     onClick = {
+                        if (item is BottomNavItem.SecondModule) {
+                            activity.startActivity(MainActivity.newIntent(activity))
+                            return@NavigationBarItem
+                        }
                         navController.navigate(item.route) {
                             navController.graph.startDestinationRoute?.let { screen_route ->
                                 popUpTo(screen_route) {

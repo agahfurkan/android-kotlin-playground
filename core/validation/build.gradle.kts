@@ -7,7 +7,5 @@ android {
     namespace = "com.agah.furkan.core.validation"
 }
 dependencies {
-    testImplementation(libs.junit)
-    testImplementation(libs.mockk)
-    testImplementation(libs.truth)
+    testImplementation(project(":core:test"))
 }

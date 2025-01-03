@@ -1,6 +1,7 @@
 plugins {
     id("playground.android.library.compose")
     id("playground.android.hilt")
+    alias(libs.plugins.paparazzi)
 }
 
 android {
@@ -14,7 +15,10 @@ dependencies {
     implementation(project(":core:preferences"))
     implementation(project(":core:data"))
     implementation(project(":core:ui:components"))
+    testImplementation(project(":core:test"))
 
     implementation(project(":data:cart"))
+
+
     implementation(libs.material3.window.size)
 }

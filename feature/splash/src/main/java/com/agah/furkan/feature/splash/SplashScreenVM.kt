@@ -33,7 +33,7 @@ internal class SplashScreenVM @Inject constructor(
                     delay(splashMinDelay)
                 },
                 async {
-                    if (userPreference.getToken() != null) {
+                    if (!userPreference.getToken().isNullOrEmpty()) {
                         val result = userRepository.validateToken(
                             ValidateTokenBody(
                                 token = userPreference.getToken().toString()
@@ -45,7 +45,7 @@ internal class SplashScreenVM @Inject constructor(
                     }
                 }
             ).awaitAll()
-            _isTokenValid.send(userPreference.getToken() != null)
+            _isTokenValid.send(!userPreference.getTokenSync().isNullOrEmpty())
         }
     }
 }

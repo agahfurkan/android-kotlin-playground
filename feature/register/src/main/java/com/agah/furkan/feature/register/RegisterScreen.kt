@@ -28,23 +28,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.core.ui.theme.AppTheme
-import com.agah.furkan.core.util.launchAndCollectIn
-import com.agah.furkan.core.util.showToast
+import com.agah.furkan.core.util.ext.launchAndCollectIn
+import com.agah.furkan.core.util.ext.showToast
 
 @Composable
-fun RegisterRoute(onRegisterSuccess: () -> Unit) {
-    RegisterScreen(onRegisterSuccess = onRegisterSuccess)
-}
-
-
-@Composable
-private fun RegisterScreen(
+internal fun RegisterRoute(
     viewModel: RegisterScreenVM = hiltViewModel(),
     onRegisterSuccess: () -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
-
     LaunchedEffect(Unit) {
         viewModel.registerUserResponse.launchAndCollectIn(lifecycleOwner) { state ->
             when (state) {
@@ -58,21 +51,40 @@ private fun RegisterScreen(
             }
         }
     }
+    val username = viewModel.username
+    val password = viewModel.password
 
-    RegisterFormContent(
-        username = viewModel.username,
-        password = viewModel.password,
+    RegisterScreen(
+        username = username,
+        password = password,
         onUsernameChanged = {
             viewModel.username = it
         },
         onPasswordChanged = {
             viewModel.password = it
-        }, onRegisterClick = viewModel::registerNewUser
+        },
+        onRegisterClick = viewModel::registerNewUser
     )
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
+internal fun RegisterScreen(
+    username: String,
+    password: String,
+    onUsernameChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onRegisterClick: () -> Unit
+) {
+    RegisterFormContent(
+        username = username,
+        password = password,
+        onUsernameChanged = onUsernameChanged,
+        onPasswordChanged = onPasswordChanged,
+        onRegisterClick = onRegisterClick
+    )
+}
+
+@Composable
 private fun RegisterFormContent(
     username: String,
     password: String,
@@ -96,27 +108,34 @@ private fun RegisterFormContent(
                         .width(LocalConfiguration.current.screenWidthDp.dp / 2)
                         .aspectRatio(1f)
                 )
-                OutlinedTextField(value = username,
+                OutlinedTextField(
+                    value = username,
                     label = { Text(text = stringResource(id = R.string.username)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 24.dp),
                     onValueChange = {
                         onUsernameChanged(it)
-                    })
-                OutlinedTextField(value = password,
+                    }
+                )
+                OutlinedTextField(
+                    value = password,
                     label = { Text(text = stringResource(id = R.string.password)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 12.dp),
                     onValueChange = {
                         onPasswordChanged(it)
-                    })
-                Button(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 32.dp), onClick = {
-                    onRegisterClick()
-                }) {
+                    }
+                )
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 32.dp),
+                    onClick = {
+                        onRegisterClick()
+                    }
+                ) {
                     Text(stringResource(id = R.string.register))
                 }
             }
@@ -132,5 +151,6 @@ private fun RegisterFormContentPreview() {
         password = "ocurreret",
         onUsernameChanged = {},
         onPasswordChanged = {},
-        onRegisterClick = {})
+        onRegisterClick = {}
+    )
 }

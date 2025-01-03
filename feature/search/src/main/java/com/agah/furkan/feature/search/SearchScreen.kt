@@ -32,7 +32,7 @@ fun SearchRoute(onBackPress: () -> Unit) {
 }
 
 @Composable
-private fun SearchScreen(onBackPress: () -> Unit) {
+internal fun SearchScreen(onBackPress: () -> Unit) {
     val focusRequester = remember { FocusRequester() }
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -62,6 +62,7 @@ private fun SearchScreen(onBackPress: () -> Unit) {
                     }
                     SearchTextField(
                         modifier = Modifier.focusRequester(focusRequester),
+                        value = "",
                         onFocusChanged = {},
                         onValueChange = {})
                 }

@@ -1,6 +1,7 @@
 plugins {
     id("playground.android.library.compose")
     id("playground.android.hilt")
+    alias(libs.plugins.paparazzi)
 }
 
 android {
@@ -14,6 +15,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:notification"))
     implementation(project(":core:ui:components"))
+    testImplementation(project(":core:test"))
 
     implementation(project(":data:pdf"))
 

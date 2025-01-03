@@ -1,6 +1,5 @@
 package com.agah.furkan.core.data.di
 
-import com.agah.furkan.core.session.SessionManager
 import com.agah.furkan.core.data.Constants
 import com.agah.furkan.core.data.ErrorMapper
 import com.agah.furkan.core.data.ErrorMapperImpl
@@ -8,10 +7,12 @@ import com.agah.furkan.core.data.retrofit.AuthInterceptor
 import com.agah.furkan.core.data.retrofit.CustomCallFactory
 import com.agah.furkan.core.data.retrofit.HeaderInterceptor
 import com.agah.furkan.core.preferences.UserPreference
+import com.agah.furkan.core.session.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.MainScope
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,6 +22,7 @@ import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSession
@@ -40,10 +42,10 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideRetrofitClient(client: OkHttpClient): Retrofit {
+    fun provideRetrofitClient(client: OkHttpClient, @Named("remoteUrl") url: String): Retrofit {
         return Retrofit.Builder()
             .client(client)
-            .baseUrl("https://10.0.2.2:5000/api/")// TODO: change this url
+            .baseUrl(url)
             .addCallAdapterFactory(CustomCallFactory())
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
@@ -96,7 +98,7 @@ object DataModule {
             trustManagers[0] as X509TrustManager
 
         return OkHttpClient.Builder()
-            .addInterceptor(HeaderInterceptor(userPreference))
+            .addInterceptor(HeaderInterceptor(userPreference, MainScope()))
             .addInterceptor(AuthInterceptor(sessionManager))
             .addInterceptor(interceptor)
             .readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS)

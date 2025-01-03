@@ -15,8 +15,10 @@ class LoginUseCase @Inject constructor(
     fun login(username: String, password: String): Flow<UiState> {
         return flow {
             emit(UiState.Loading)
-            when (val result =
-                userRepository.loginUser(UserLoginBody(password = password, username = username))) {
+            when (
+                val result =
+                    userRepository.loginUser(UserLoginBody(password = password, username = username))
+            ) {
                 is Result.Success -> {
                     userPreference.setToken(result.data.token!!)
                     userPreference.setUserId(result.data.userId!!)

@@ -1,6 +1,8 @@
 package com.agah.furkan.core.session
 
 import com.agah.furkan.core.preferences.UserPreference
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,7 +15,9 @@ class SessionManager @Inject constructor(private val userPreference: UserPrefere
     }
 
     fun onUnauthorizedResponseReceived() {
-        userPreference.clearAllData()
+        MainScope().launch {
+            userPreference.clearAllData()
+        }
         sessionListenerList.forEach { it.sessionEnded() }
     }
 

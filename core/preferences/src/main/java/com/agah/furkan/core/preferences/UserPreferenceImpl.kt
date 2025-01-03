@@ -1,51 +1,65 @@
 package com.agah.furkan.core.preferences
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-class UserPreferenceImpl @Inject constructor(applicationContext: Context) : UserPreference {
-    private var sharedPref: SharedPreferences? = null
+class UserPreferenceImpl @Inject constructor(private val applicationContext: Context) :
+    UserPreference {
 
-    init {
-        sharedPref = applicationContext.getSharedPreferences(
-            PREF_NAME,
-            Context.MODE_PRIVATE
-        )
+    private val Context.userPreferencesStore: DataStore<UserPreferences> by dataStore(
+        fileName = DATA_STORE_FILE_NAME,
+        serializer = UserPreferencesSerializer
+    )
+
+    private val store = applicationContext.userPreferencesStore
+
+    override fun getTokenSync(): String? {
+        return runBlocking {
+            store.data.firstOrNull()?.token
+        }
     }
 
-    override fun getToken(): String? {
-        return sharedPref?.getString(KEY_TOKEN, null)
+    override suspend fun getToken(): String? {
+        return store.data.firstOrNull()?.token
     }
 
-    override fun setToken(token: String) {
-        sharedPref?.edit()?.putString(KEY_TOKEN, token)?.apply()
+    override suspend fun setToken(token: String) {
+        store.updateData { preferences ->
+            preferences.toBuilder().setToken(token).build()
+        }
     }
 
-    override fun getUsername(): String {
-        return sharedPref?.getString(KEY_USERNAME, null) ?: ""
+    override suspend fun getUsername(): String {
+        return store.data.firstOrNull()?.username.orEmpty()
     }
 
-    override fun setUsername(username: String) {
-        sharedPref?.edit()?.putString(KEY_USERNAME, username)?.apply()
+    override suspend fun setUsername(username: String) {
+        store.updateData { preferences ->
+            preferences.toBuilder().setUsername(username).build()
+        }
     }
 
-    override fun getUserId(): Long {
-        return sharedPref?.getLong(KEY_USER_ID, 0L) ?: 0L
+    override suspend fun getUserId(): Long {
+        return store.data.firstOrNull()?.userId ?: 0L
     }
 
-    override fun setUserId(userId: Long) {
-        sharedPref?.edit()?.putLong(KEY_USER_ID, userId)?.apply()
+    override suspend fun setUserId(userId: Long) {
+        store.updateData { preferences ->
+            preferences.toBuilder().setUserId(userId).build()
+        }
     }
 
-    override fun clearAllData() {
-        sharedPref?.edit()?.clear()?.apply()
+    override suspend fun clearAllData() {
+        store.updateData { preferences ->
+            preferences.toBuilder().clear().build()
+        }
     }
 
     companion object {
-        private const val PREF_NAME = "userPref"
-        private const val KEY_TOKEN = "userToken"
-        private const val KEY_USERNAME = "username"
-        private const val KEY_USER_ID = "userid"
+        private const val DATA_STORE_FILE_NAME = "user_prefs.pb"
     }
 }

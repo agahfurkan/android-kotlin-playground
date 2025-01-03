@@ -28,6 +28,12 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "com.agah.furkan.androidplayground.TestRunner"
+    }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
     }
     signingConfigs {
         if (keystoreProperties.getProperty("file") != null) {
@@ -52,6 +58,8 @@ android {
         }
         getByName("debug") {
             isMinifyEnabled = false
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
         }
         create("benchmark") {
             initWith(buildTypes.getByName("release"))
@@ -70,27 +78,24 @@ android {
         create("dev") {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("String", "BASE_URL", "\"https://10.0.2.2:5000/api/\"")
             resValue("string", "app_name", "DEV-Android Playground")
         }
 
         create("prod") {
-            buildConfigField("String", "BASE_URL", "\"https://10.0.2.2:5000/api/\"")
             resValue("string", "app_name", "PROD-Android Playground")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
-        viewBinding = true
         dataBinding = true
         compose = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.4"
     }
     packagingOptions {
         resources {
@@ -98,13 +103,14 @@ android {
         }
     }
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "17"
     }
 
     namespace = "com.agah.furkan.androidplayground"
 
     dependencies {
         detektPlugins(libs.detekt.formatting)
+        implementation(project(":project-x"))
 
         implementation(project(":core:session"))
         implementation(project(":core:data"))
@@ -138,6 +144,15 @@ android {
         implementation(libs.firebase.messaging.ktx)
         implementation(libs.androidx.hilt.work)
         kapt(libs.androidx.hilt.compiler)
+
+        androidTestImplementation(libs.junitx)
+        androidTestImplementation(libs.mockwebserver)
+        androidTestImplementation(libs.espresso.core)
+        androidTestImplementation(libs.androidx.core.ktx)
+        androidTestImplementation(libs.androidx.ui.test.junit4)
+        debugImplementation(libs.androidx.ui.test.manifest)
+        androidTestImplementation(libs.hilt.testing)
+        testImplementation(libs.robolectric)
     }
 }
 
@@ -179,7 +194,7 @@ tasks.dokkaHtml.configure {
     pluginsMapConfiguration.set(mapOf("org.jetbrains.dokka.base.DokkaBase" to """{ "separateInheritedMembers": true}"""))
 }
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-    jvmTarget = "1.8"
+    jvmTarget = "17"
 }
 ktlint {
     version.set("0.48.2")
