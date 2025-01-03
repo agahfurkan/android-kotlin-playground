@@ -52,6 +52,8 @@ captures/
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/deploymentTargetDropDown.xml
 .idea/navEditor.xml
+.idea
+.idea/
 
 *.jks
 *.keystore
@@ -87,3 +89,6 @@ lint/reports/
 # Android Profiling
 *.hprof
 .idea
+
+
+.DS_Store

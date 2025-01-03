@@ -20,12 +20,12 @@ plugins {
 }
 android {
     ndkVersion = "24.0.8215888"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.agah.furkan.androidplayground"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
     }
