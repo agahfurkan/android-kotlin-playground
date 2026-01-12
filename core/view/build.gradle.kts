@@ -1,6 +1,5 @@
 plugins {
     id("playground.android.library")
-    id("kotlin-kapt")
 }
 
 android {

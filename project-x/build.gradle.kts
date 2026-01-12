@@ -8,7 +8,7 @@ android {
     namespace = "com.agah.furkan.x"
 
     buildFeatures {
-        dataBinding = true
+        viewBinding = true
     }
 
     testOptions {

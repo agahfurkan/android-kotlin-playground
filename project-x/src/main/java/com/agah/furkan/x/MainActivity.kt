@@ -6,10 +6,12 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.agah.furkan.core.ui.theme.AppTheme
+import com.agah.furkan.core.util.ext.dp
 import com.agah.furkan.core.util.ext.launchAndCollectIn
+import com.agah.furkan.core.view.recyclerview.decoration.ItemHorizontalSpaceDecoration
+import com.agah.furkan.core.view.recyclerview.decoration.ItemVerticalSpaceDecoration
 import com.agah.furkan.ui.components.SearchTextField
 import com.agah.furkan.x.databinding.ActivityMainBinding
 import com.agah.furkan.x.model.UiState
@@ -21,7 +23,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.rvStoreList.addItemDecoration(
+            ItemVerticalSpaceDecoration(
+                verticalSpaceHeight = 8.dp,
+                applyToFirstAndLastItem = true
+            )
+        )
+        binding.rvStoreList.addItemDecoration(ItemHorizontalSpaceDecoration(8.dp))
         binding.searchView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
