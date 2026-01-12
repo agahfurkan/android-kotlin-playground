@@ -17,7 +17,7 @@ dependencies {
     implementation(project(":core:ui:components"))
     testImplementation(project(":core:test"))
 
-    implementation(project(":data:cart"))
+    implementation(project(":domain:cart"))
     implementation(project(":domain:product"))
     implementation(libs.paging.compose)
 }

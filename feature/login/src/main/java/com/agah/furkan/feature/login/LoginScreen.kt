@@ -33,7 +33,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.util.ext.launchAndCollectIn
 import com.agah.furkan.core.util.ext.showToast
-import com.agah.furkan.domain.login.LoginUseCase
 import com.agah.furkan.ui.components.OTPDialog
 
 @Composable
@@ -48,15 +47,15 @@ internal fun LoginRoute(
     LaunchedEffect(key1 = Unit) {
         viewModel.loginState.launchAndCollectIn(lifeCycleOwner) { state ->
             when (state) {
-                is LoginUseCase.UiState.Success -> {
+                is LoginUiState.Success -> {
                     onLoginSuccess()
                 }
 
-                is LoginUseCase.UiState.Failure -> {
+                is LoginUiState.Failure -> {
                     context.showToast(state.failureMessage)
                 }
 
-                LoginUseCase.UiState.Loading -> {}
+                LoginUiState.Loading -> {}
             }
         }
         viewModel.uiEvent.launchAndCollectIn(lifeCycleOwner) { event ->

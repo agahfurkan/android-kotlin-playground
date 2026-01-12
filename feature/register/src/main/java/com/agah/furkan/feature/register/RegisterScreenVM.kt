@@ -6,8 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.data.user.UserRepository
-import com.agah.furkan.data.user.remote.model.request.UserRegisterBody
+import com.agah.furkan.domain.user.RegisterUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -15,7 +14,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class RegisterScreenVM @Inject constructor(private val userRepository: UserRepository) :
+internal class RegisterScreenVM @Inject constructor(
+    private val registerUserUseCase: RegisterUserUseCase
+) :
     ViewModel() {
 
     private val _registerUserResponse = Channel<Result<String>>(Channel.BUFFERED)
@@ -26,11 +27,9 @@ internal class RegisterScreenVM @Inject constructor(private val userRepository: 
 
     fun registerNewUser() {
         viewModelScope.launch {
-            val response = userRepository.registerNewUser(
-                UserRegisterBody(
-                    username = username,
-                    password = password
-                )
+            val response = registerUserUseCase(
+                username = username,
+                password = password
             )
             _registerUserResponse.send(response)
         }

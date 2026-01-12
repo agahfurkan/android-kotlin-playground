@@ -14,5 +14,5 @@ dependencies {
     implementation(project(":core:ui:components"))
     testImplementation(project(":core:test"))
 
-    implementation(project(":data:product"))
+    implementation(project(":domain:product"))
 }

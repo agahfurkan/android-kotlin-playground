@@ -2,10 +2,8 @@ package com.agah.furkan.feature.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.core.preferences.UserPreference
-import com.agah.furkan.data.user.UserRepository
-import com.agah.furkan.data.user.remote.model.request.ValidateTokenBody
+import com.agah.furkan.domain.user.TokenValidationResult
+import com.agah.furkan.domain.user.ValidateTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -17,8 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class SplashScreenVM @Inject constructor(
-    private val userRepository: UserRepository,
-    private val userPreference: UserPreference
+    private val validateTokenUseCase: ValidateTokenUseCase
 ) :
     ViewModel() {
     private val _isTokenValid = Channel<Boolean>(Channel.BUFFERED)
@@ -28,24 +25,16 @@ internal class SplashScreenVM @Inject constructor(
 
     init {
         viewModelScope.launch {
+            var tokenValidationResult: TokenValidationResult = TokenValidationResult.NoToken
             listOf(
                 async {
                     delay(splashMinDelay)
                 },
                 async {
-                    if (!userPreference.getToken().isNullOrEmpty()) {
-                        val result = userRepository.validateToken(
-                            ValidateTokenBody(
-                                token = userPreference.getToken().toString()
-                            )
-                        )
-                        if (result is Result.Failure) {
-                            userPreference.clearAllData()
-                        }
-                    }
+                    tokenValidationResult = validateTokenUseCase()
                 }
             ).awaitAll()
-            _isTokenValid.send(!userPreference.getTokenSync().isNullOrEmpty())
+            _isTokenValid.send(tokenValidationResult is TokenValidationResult.Valid)
         }
     }
 }

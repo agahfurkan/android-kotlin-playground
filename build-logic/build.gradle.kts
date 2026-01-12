@@ -4,8 +4,11 @@ plugins {
 
 dependencies {
     compileOnly(libs.gradle)
-    compileOnly(libs.kotlin.gradle.plugin)
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0")
+    implementation("org.jetbrains.kotlin:compose-compiler-gradle-plugin:2.0.0")
+    implementation("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:2.0.0-1.0.24")
 }
+
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
@@ -31,6 +34,7 @@ gradlePlugin {
         }
     }
 }
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
+
+kotlin {
+    jvmToolchain(17)
 }

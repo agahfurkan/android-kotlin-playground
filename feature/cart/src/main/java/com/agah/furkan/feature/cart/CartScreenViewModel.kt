@@ -3,8 +3,8 @@ package com.agah.furkan.feature.cart
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.core.preferences.UserPreference
-import com.agah.furkan.data.cart.CartRepository
+import com.agah.furkan.domain.cart.AddProductToCartUseCase
+import com.agah.furkan.domain.cart.RemoveProductFromCartUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -13,8 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CartScreenViewModel @Inject constructor(
-    private val cartRepository: CartRepository,
-    private val userPreference: UserPreference
+    private val addProductToCartUseCase: AddProductToCartUseCase,
+    private val removeProductFromCartUseCase: RemoveProductFromCartUseCase
 ) : ViewModel() {
 
     private val _removeProductState =
@@ -29,10 +29,7 @@ internal class CartScreenViewModel @Inject constructor(
         _removeProductState.trySend(RemoveProductFromCartUiState.Loading)
 
         viewModelScope.launch {
-            val result = cartRepository.removeProductFromCart(
-                userId = userPreference.getUserId(),
-                productId = productId
-            )
+            val result = removeProductFromCartUseCase(productId = productId)
             val state = when (result) {
                 is Result.Success -> {
                     RemoveProductFromCartUiState.Success
@@ -50,10 +47,7 @@ internal class CartScreenViewModel @Inject constructor(
         _addProductToCartState.trySend(AddProductToCartUiState.Loading)
 
         viewModelScope.launch {
-            val result = cartRepository.addProductToCart(
-                userId = userPreference.getUserId(),
-                productId = productId
-            )
+            val result = addProductToCartUseCase(productId = productId)
             val state = when (result) {
                 is Result.Success -> {
                     AddProductToCartUiState.Success

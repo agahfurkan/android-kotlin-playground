@@ -15,6 +15,7 @@ dependencies {
     implementation(project(":core:util"))
     implementation(project(":core:logging"))
     implementation(project(":core:session"))
+    implementation(project(":core:data"))
     testImplementation(project(":core:test"))
 
     implementation(project(":domain:login"))

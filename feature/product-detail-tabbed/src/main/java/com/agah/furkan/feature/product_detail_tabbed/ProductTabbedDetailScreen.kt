@@ -46,9 +46,9 @@ import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.ui.theme.darkGray
 import com.agah.furkan.core.ui.theme.orange
 import com.agah.furkan.core.ui.theme.seed
-import com.agah.furkan.data.product.ProductDetail
-import com.agah.furkan.data.product.averageRating
-import com.agah.furkan.data.product.totalReviewsByRating
+import com.agah.furkan.domain.product.ProductDetailFlow
+import com.agah.furkan.domain.product.averageRating
+import com.agah.furkan.domain.product.totalReviewsByRating
 import com.agah.furkan.ui.components.RatingBar
 import kotlinx.coroutines.launch
 
@@ -163,7 +163,7 @@ private fun ProductDetailDescriptionContent(description: String) {
 }
 
 @Composable
-private fun ProductDetailContent(productDetailSections: List<ProductDetail.Section>) {
+private fun ProductDetailContent(productDetailSections: List<ProductDetailFlow.Section>) {
     LazyColumn(Modifier.fillMaxSize()) {
         items(productDetailSections.size) { index ->
             ProductDetailSectionItem(productDetailSections[index])
@@ -172,7 +172,7 @@ private fun ProductDetailContent(productDetailSections: List<ProductDetail.Secti
 }
 
 @Composable
-private fun ProductDetailSectionItem(productDetailSection: ProductDetail.Section) {
+private fun ProductDetailSectionItem(productDetailSection: ProductDetailFlow.Section) {
     Column(Modifier.fillMaxWidth()) {
         Text(
             modifier = Modifier
@@ -196,7 +196,7 @@ private fun ProductDetailSectionItem(productDetailSection: ProductDetail.Section
 }
 
 @Composable
-private fun ProductDetailReviewContent(productDetailReviews: List<ProductDetail.Review>) {
+private fun ProductDetailReviewContent(productDetailReviews: List<ProductDetailFlow.Review>) {
     LazyColumn(Modifier.fillMaxSize()) {
         item {
             ProductDetailReviewHeader(productDetailReviews)
@@ -210,7 +210,7 @@ private fun ProductDetailReviewContent(productDetailReviews: List<ProductDetail.
 }
 
 @Composable
-private fun ProductDetailReviewHeader(productDetailReviews: List<ProductDetail.Review>) {
+private fun ProductDetailReviewHeader(productDetailReviews: List<ProductDetailFlow.Review>) {
     ConstraintLayout(
         Modifier
             .fillMaxWidth()
@@ -280,7 +280,7 @@ private fun ProductDetailReviewHeader(productDetailReviews: List<ProductDetail.R
 }
 
 @Composable
-private fun ProductDetailReviewItem(productDetailReview: ProductDetail.Review) {
+private fun ProductDetailReviewItem(productDetailReview: ProductDetailFlow.Review) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -312,14 +312,14 @@ private fun ProductDetailReviewItem(productDetailReview: ProductDetail.Review) {
 @Preview
 private fun ProductDetailSectionItemPreview() {
     ProductDetailSectionItem(
-        ProductDetail.Section(
+        ProductDetailFlow.Section(
             sectionName = "Nicolas Caldwell",
             sectionContent = listOf(
-                ProductDetail.SectionDetail(
+                ProductDetailFlow.SectionDetail(
                     name = "Otis Pierce",
                     value = "fermentum"
                 ),
-                ProductDetail.SectionDetail(
+                ProductDetailFlow.SectionDetail(
                     name = "Otis Pierce",
                     value = "fermentum"
                 )
@@ -331,50 +331,51 @@ private fun ProductDetailSectionItemPreview() {
 @Composable
 @Preview
 private fun ProductDetailScreenPreview() {
-    ProductTabbedDetailScreen(productDetail = ProductDetailState.Success(
-        data = ProductDetail(
-            productId = "propriae",
-            productName = "Rodger Barr",
-            description = "dui",
-            sections = listOf(
-                ProductDetail.Section(
-                    sectionName = "Guadalupe Farley",
-                    sectionContent = listOf(
-                        ProductDetail.SectionDetail(
-                            name = "Jose Aguirre",
-                            value = "impetus"
+    ProductTabbedDetailScreen(
+        productDetail = ProductDetailState.Success(
+            data = ProductDetailFlow(
+                productId = "propriae",
+                productName = "Rodger Barr",
+                description = "dui",
+                sections = listOf(
+                    ProductDetailFlow.Section(
+                        sectionName = "Guadalupe Farley",
+                        sectionContent = listOf(
+                            ProductDetailFlow.SectionDetail(
+                                name = "Jose Aguirre",
+                                value = "impetus"
+                            )
+                        )
+                    ), ProductDetailFlow.Section(
+                        sectionName = "Guadalupe Farley",
+                        sectionContent = listOf(
+                            ProductDetailFlow.SectionDetail(
+                                name = "Jose Aguirre",
+                                value = "impetus"
+                            )
                         )
                     )
-                ), ProductDetail.Section(
-                    sectionName = "Guadalupe Farley",
-                    sectionContent = listOf(
-                        ProductDetail.SectionDetail(
-                            name = "Jose Aguirre",
-                            value = "impetus"
-                        )
+                ),
+                reviews = listOf(
+                    ProductDetailFlow.Review(
+                        userName = "Vicky Daniels",
+                        review = "dictum",
+                        rating = 5,
+                        date = "amet"
+                    ), ProductDetailFlow.Review(
+                        userName = "Vicky Daniels",
+                        review = "dictum",
+                        rating = 5,
+                        date = "amet"
+                    ), ProductDetailFlow.Review(
+                        userName = "Vicky Daniels",
+                        review = "dictum",
+                        rating = 5,
+                        date = "amet"
                     )
-                )
-            ),
-            reviews = listOf(
-                ProductDetail.Review(
-                    userName = "Vicky Daniels",
-                    review = "dictum",
-                    rating = 5,
-                    date = "amet"
-                ), ProductDetail.Review(
-                    userName = "Vicky Daniels",
-                    review = "dictum",
-                    rating = 5,
-                    date = "amet"
-                ), ProductDetail.Review(
-                    userName = "Vicky Daniels",
-                    review = "dictum",
-                    rating = 5,
-                    date = "amet"
                 )
             )
-        )
-    ), initialPage = 1593, onBackButtonClicked = {})
+        ), initialPage = 1593, onBackButtonClicked = {})
 }
 
 @Composable
@@ -382,31 +383,31 @@ private fun ProductDetailScreenPreview() {
 private fun ProductDetailReviewContentPreview() {
     ProductDetailReviewContent(
         productDetailReviews = listOf(
-            ProductDetail.Review(
+            ProductDetailFlow.Review(
                 userName = "Stan Winters",
                 review = "ullamcorper",
                 rating = 1,
                 date = "praesent"
             ),
-            ProductDetail.Review(
+            ProductDetailFlow.Review(
                 userName = "Stan Winters",
                 review = "ullamcorper",
                 rating = 2,
                 date = "praesent"
             ),
-            ProductDetail.Review(
+            ProductDetailFlow.Review(
                 userName = "Stan Winters",
                 review = "ullamcorper",
                 rating = 3,
                 date = "praesent"
             ),
-            ProductDetail.Review(
+            ProductDetailFlow.Review(
                 userName = "Stan Winters",
                 review = "ullamcorper",
                 rating = 4,
                 date = "praesent"
             ),
-            ProductDetail.Review(
+            ProductDetailFlow.Review(
                 userName = "Stan Winters",
                 review = "ullamcorper",
                 rating = 5,

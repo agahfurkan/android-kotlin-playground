@@ -16,7 +16,7 @@ dependencies {
     implementation(project(":core:preferences"))
     testImplementation(project(":core:test"))
 
-    implementation(project(":data:user"))
+    implementation(project(":domain:user"))
 
     implementation(libs.lottie.compose)
     implementation(libs.accompanist.system.ui.controller)

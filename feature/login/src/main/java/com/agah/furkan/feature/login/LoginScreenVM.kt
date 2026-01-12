@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.agah.furkan.core.data.model.Result
 import com.agah.furkan.core.session.SessionManager
 import com.agah.furkan.domain.login.LoginUseCase
 import com.agah.furkan.core.logging.Logger
@@ -21,7 +22,7 @@ internal class LoginScreenVM @Inject constructor(
     private val sessionManager: SessionManager
 ) : ViewModel() {
 
-    private val _loginState = Channel<LoginUseCase.UiState>(Channel.BUFFERED)
+    private val _loginState = Channel<LoginUiState>(Channel.BUFFERED)
     val loginState = _loginState.receiveAsFlow()
 
     private val _uiEvent = Channel<LoginScreenEvent>(Channel.BUFFERED)
@@ -32,15 +33,16 @@ internal class LoginScreenVM @Inject constructor(
 
     private fun login(password: String, username: String) {
         viewModelScope.launch {
-            val state = loginUseCase.login(password, username)
-            state.collect {
-                if (it is LoginUseCase.UiState.Loading) {
-                    logger.i(state.toString())
-                }
-                if (it is LoginUseCase.UiState.Success) {
+            _loginState.send(LoginUiState.Loading)
+            logger.i("Attempting login for user: $username")
+            when (val result = loginUseCase(username = username, password = password)) {
+                is Result.Success -> {
                     sessionManager.onLoginSuccess()
+                    _loginState.send(LoginUiState.Success)
                 }
-                _loginState.send(it)
+                is Result.Failure -> {
+                    _loginState.send(LoginUiState.Failure(failureMessage = result.error.errorMessage))
+                }
             }
         }
     }
@@ -60,3 +62,10 @@ internal class LoginScreenVM @Inject constructor(
         }
     }
 }
+
+sealed class LoginUiState {
+    object Success : LoginUiState()
+    object Loading : LoginUiState()
+    data class Failure(val failureMessage: String) : LoginUiState()
+}
+

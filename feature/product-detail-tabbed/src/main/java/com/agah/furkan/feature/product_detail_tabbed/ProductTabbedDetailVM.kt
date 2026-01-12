@@ -3,7 +3,7 @@ package com.agah.furkan.feature.product_detail_tabbed
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.data.product.ProductDetailRepository
+import com.agah.furkan.domain.product.GetProductDetailsFlowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ProductTabbedDetailVM @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val productDetailRepository: ProductDetailRepository
+    private val getProductDetailsFlowUseCase: GetProductDetailsFlowUseCase
 ) : ViewModel() {
     private val productId = savedStateHandle.get<Long>("productId") ?: 0
     private val _productDetail = MutableStateFlow<ProductDetailState>(ProductDetailState.Loading)
@@ -25,7 +25,7 @@ internal class ProductTabbedDetailVM @Inject constructor(
 
     private fun fetchProductDetails() {
         viewModelScope.launch {
-            productDetailRepository.getProductDetails().collect {
+            getProductDetailsFlowUseCase().collect {
                 _productDetail.emit(ProductDetailState.Success(it))
             }
         }

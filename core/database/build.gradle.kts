@@ -1,6 +1,7 @@
 plugins {
     id("playground.android.library")
     id("playground.android.hilt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -10,5 +11,5 @@ android {
 dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
 }

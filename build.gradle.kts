@@ -2,6 +2,9 @@
 plugins {
     id("org.sonarqube") version "4.2.1.3168"
     alias(libs.plugins.paparazzi) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.ksp) apply false
 }
 apply("./project.gradle")
 buildscript {
@@ -14,7 +17,6 @@ buildscript {
     }
     dependencies {
         classpath(libs.gradle)
-        classpath(libs.kotlin.gradle.plugin)
         classpath(libs.androidx.navigation.safe.args.gradle.plugin)
         classpath(libs.ktlint.gradle)
         classpath(libs.hilt.android.gradle.plugin)

@@ -11,15 +11,13 @@ class AndroidLibraryComposeConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.library")
                 apply("org.jetbrains.kotlin.android")
+                apply("org.jetbrains.kotlin.plugin.compose")
             }
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
                 buildFeatures {
                     compose = true
-                }
-                composeOptions {
-                    kotlinCompilerExtensionVersion = "1.5.4"
                 }
                 compileOptions {
                     sourceCompatibility = JavaVersion.VERSION_17

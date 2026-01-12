@@ -10,6 +10,7 @@ apply("..//projectDependencyGraph.gradle")
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("androidx.navigation.safeargs.kotlin")
     id("org.jlleitschuh.gradle.ktlint")
     id("playground.android.hilt")
@@ -24,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId = "com.agah.furkan.androidplayground"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -94,16 +95,15 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
-    }
     packagingOptions {
         resources {
             excludes += setOf("META-INF/gradle/incremental.annotation.processors")
         }
     }
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
 
     namespace = "com.agah.furkan.androidplayground"
@@ -123,7 +123,7 @@ android {
         implementation(project(":core:notification"))
         implementation(project(":core:ui:components"))
 
-        implementation(project(":data:cart"))
+        implementation(project(":domain:cart"))
 
         implementation(project(":feature:cart"))
         implementation(project(":feature:home"))
@@ -143,7 +143,7 @@ android {
         implementation(libs.accompanist.theme.adapter.material)
         implementation(libs.firebase.messaging.ktx)
         implementation(libs.androidx.hilt.work)
-        kapt(libs.androidx.hilt.compiler)
+        ksp(libs.androidx.hilt.compiler)
 
         androidTestImplementation(libs.junitx)
         androidTestImplementation(libs.mockwebserver)

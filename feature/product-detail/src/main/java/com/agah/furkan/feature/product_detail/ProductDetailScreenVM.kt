@@ -4,9 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.core.preferences.UserPreference
-import com.agah.furkan.data.cart.CartRepository
-import com.agah.furkan.data.product.ProductRepository
+import com.agah.furkan.domain.cart.AddProductToCartUseCase
+import com.agah.furkan.domain.product.GetProductDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,9 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ProductDetailScreenVM @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val productRepository: ProductRepository,
-    private val cartRepository: CartRepository,
-    private val userPreference: UserPreference
+    private val getProductDetailUseCase: GetProductDetailUseCase,
+    private val addProductToCartUseCase: AddProductToCartUseCase
 ) :
     ViewModel() {
     private val productId = savedStateHandle.get<Long>("productId") ?: 0
@@ -39,7 +37,7 @@ internal class ProductDetailScreenVM @Inject constructor(
 
     fun getProductDetail(productId: Long) {
         viewModelScope.launch {
-            val result = productRepository.getProductDetail(productId)
+            val result = getProductDetailUseCase(productId)
 
             val state = when (result) {
                 is Result.Success -> {
@@ -57,10 +55,7 @@ internal class ProductDetailScreenVM @Inject constructor(
     fun addProductToCart(productId: Int) {
         viewModelScope.launch {
             _addProductToCartState.trySend(AddProductToCartUiState.Loading)
-            val result = cartRepository.addProductToCart(
-                productId = productId.toLong(),
-                userId = userPreference.getUserId()
-            )
+            val result = addProductToCartUseCase(productId = productId.toLong())
             val state = when (result) {
                 is Result.Success -> {
                     AddProductToCartUiState.Success

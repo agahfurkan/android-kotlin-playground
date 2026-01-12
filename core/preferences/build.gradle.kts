@@ -15,9 +15,6 @@ dependencies {
     implementation(libs.protobuf.javalite)
 }
 
-kapt {
-    correctErrorTypes = true
-}
 
 protobuf {
     protoc {

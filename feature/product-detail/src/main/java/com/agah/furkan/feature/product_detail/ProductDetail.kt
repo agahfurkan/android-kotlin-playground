@@ -1,6 +1,6 @@
 package com.agah.furkan.feature.product_detail
 
-import com.agah.furkan.data.product.model.ProductDetailDomainModel
+import com.agah.furkan.domain.product.ProductDetail as DomainProductDetail
 
 data class ProductDetail(
     val categoryId: Int,
@@ -12,7 +12,7 @@ data class ProductDetail(
     val productName: String
 )
 
-fun ProductDetailDomainModel.asUiModel() =
+fun DomainProductDetail.asUiModel() =
     ProductDetail(
         categoryId = categoryId,
         discount = discount,

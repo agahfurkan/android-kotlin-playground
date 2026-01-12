@@ -16,6 +16,6 @@ dependencies {
     implementation(project(":core:util"))
     testImplementation(project(":core:test"))
 
-    implementation(project(":data:cart"))
-    implementation(project(":data:product"))
+    implementation(project(":domain:cart"))
+    implementation(project(":domain:product"))
 }

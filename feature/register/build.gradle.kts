@@ -15,5 +15,5 @@ dependencies {
     implementation(project(":core:util"))
     testImplementation(project(":core:test"))
 
-    implementation(project(":data:user"))
+    implementation(project(":domain:user"))
 }

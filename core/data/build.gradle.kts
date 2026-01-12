@@ -1,6 +1,7 @@
 plugins {
     id("playground.android.library")
     id("playground.android.hilt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -16,5 +17,5 @@ dependencies {
     api(libs.moshi)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.okhttp3.logging)
-    kapt(libs.moshi.kotlin.codegen)
+    ksp(libs.moshi.kotlin.codegen)
 }

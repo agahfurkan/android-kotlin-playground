@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.core.preferences.UserPreference
-import com.agah.furkan.data.cart.CartRepository
+import com.agah.furkan.domain.cart.GetCartUseCase
 import com.agah.furkan.feature.cart.Cart
 import com.agah.furkan.feature.cart.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(
-    private val cartRepository: CartRepository,
-    private val userPreference: UserPreference,
+    private val getCartUseCase: GetCartUseCase
 ) : ViewModel() {
 
     private val _userCart = MutableStateFlow<Map<Long, List<Cart>>>(emptyMap())
@@ -40,8 +38,7 @@ class SharedViewModel @Inject constructor(
 
     private fun getUserCart(refresh: Boolean = false) {
         viewModelScope.launch {
-            val result =
-                cartRepository.getCart(refresh = refresh, userId = userPreference.getUserId())
+            val result = getCartUseCase(refresh = refresh)
             if (result is Result.Success) {
                 val groupedResult = result.data.toUiModel().sortedBy { it.productId }
                     .groupBy { it.productId }

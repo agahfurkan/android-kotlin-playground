@@ -1,6 +1,7 @@
 plugins {
     id("playground.android.library")
     id("playground.android.hilt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -10,5 +11,5 @@ android {
 dependencies {
     implementation(project(":core:data"))
 
-    kapt(libs.moshi.kotlin.codegen)
+    ksp(libs.moshi.kotlin.codegen)
 }

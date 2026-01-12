@@ -1,6 +1,6 @@
 package com.agah.furkan.feature.cart
 
-import com.agah.furkan.data.cart.model.CartDomainModel
+import com.agah.furkan.domain.cart.Cart as DomainCart
 
 data class Cart(
     val cartId: Long,
@@ -12,7 +12,7 @@ data class Cart(
     val productName: String
 )
 
-fun List<CartDomainModel>.toUiModel(): List<Cart> {
+fun List<DomainCart>.toUiModel(): List<Cart> {
     return this.map {
         Cart(
             cartId = it.cartId,
