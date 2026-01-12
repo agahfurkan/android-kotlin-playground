@@ -1,116 +1,350 @@
 task projectDependencyGraph {
-  doLast {
-    def dot = new File(rootProject.buildDir, 'reports/dependency-graph/project.dot')
-    dot.parentFile.mkdirs()
-    dot.delete()
+    outputs.file("${rootProject.buildDir}/reports/dependency-graph/project.dot.png")
 
-    dot << 'digraph {\n'
-    dot << "  graph [label=\"${rootProject.name}\\n \",labelloc=t,fontsize=30,ranksep=1.4];\n"
-    dot << '  node [style=filled, fillcolor="#bbbbbb"];\n'
-    dot << '  rankdir=TB;\n'
+    doLast {
+        def dot = new File(rootProject.buildDir, 'reports/dependency-graph/project.dot')
+        dot.parentFile.mkdirs()
+        dot.delete()
 
-    def rootProjects = []
-    def queue = [rootProject]
-    while (!queue.isEmpty()) {
-      def project = queue.remove(0)
-      rootProjects.add(project)
-      queue.addAll(project.childProjects.values())
-    }
+        dot << 'digraph {\n'
+        dot << "  graph [label=\"${rootProject.name}\\n \",labelloc=t,fontsize=30,ranksep=1.5,nodesep=0.8,splines=ortho,bgcolor=\"#ffffff\"];\n"
+        dot << '  node [style=filled,shape=box,fontname="Arial",fontsize=12,margin=0.2,height=0.5];\n'
+        dot << '  edge [fontname="Arial",fontsize=10];\n'
+        dot << '  rankdir=TB;\n'
 
-    def projects = new LinkedHashSet<Project>()
-    def dependencies = new LinkedHashMap<Tuple2<Project, Project>, List<String>>()
-    def multiplatformProjects = []
-    def jsProjects = []
-    def androidProjects = []
-    def javaProjects = []
-
-    queue = [rootProject]
-    while (!queue.isEmpty()) {
-      def project = queue.remove(0)
-      queue.addAll(project.childProjects.values())
-
-      if (project.plugins.hasPlugin('org.jetbrains.kotlin.multiplatform')) {
-        multiplatformProjects.add(project)
-      }
-      if (project.plugins.hasPlugin('org.jetbrains.kotlin.js')) {
-        jsProjects.add(project)
-      }
-      if (project.plugins.hasPlugin('com.android.library') || project.plugins.hasPlugin('com.android.application')) {
-        androidProjects.add(project)
-      }
-      if (project.plugins.hasPlugin('java-library') || project.plugins.hasPlugin('java')) {
-        javaProjects.add(project)
-      }
-
-      project.configurations.all { config ->
-        config.dependencies
-                .withType(ProjectDependency)
-                .collect { it.dependencyProject }
-                .each { dependency ->
-          projects.add(project)
-          projects.add(dependency)
-          rootProjects.remove(dependency)
-
-          def graphKey = new Tuple2<Project, Project>(project, dependency)
-          def traits = dependencies.computeIfAbsent(graphKey) { new ArrayList<String>() }
-
-          if (config.name.toLowerCase().endsWith('implementation')) {
-            traits.add('style=dotted')
-          }
+        def rootProjects = []
+        def queue = [rootProject]
+        while (!queue.isEmpty()) {
+            def project = queue.remove(0)
+            rootProjects.add(project)
+            queue.addAll(project.childProjects.values())
         }
-      }
+
+        def projects = new LinkedHashSet<Project>()
+        def dependencies = new LinkedHashMap<Tuple2<Project, Project>, List<String>>()
+        def multiplatformProjects = []
+        def jsProjects = []
+        def androidProjects = []
+        def javaProjects = []
+
+        def domainModules = []
+        def dataModules = []
+        def presentationModules = []
+        def coreModules = []
+        def featureModules = []
+        def otherModules = []
+
+        queue = [rootProject]
+        while (!queue.isEmpty()) {
+            def project = queue.remove(0)
+            queue.addAll(project.childProjects.values())
+
+            if (project.plugins.hasPlugin('org.jetbrains.kotlin.multiplatform')) {
+                multiplatformProjects.add(project)
+            }
+            if (project.plugins.hasPlugin('org.jetbrains.kotlin.js')) {
+                jsProjects.add(project)
+            }
+            if (project.plugins.hasPlugin('com.android.library') || project.plugins.hasPlugin('com.android.application')) {
+                androidProjects.add(project)
+            }
+            if (project.plugins.hasPlugin('java-library') || project.plugins.hasPlugin('java')) {
+                javaProjects.add(project)
+            }
+
+            project.configurations.all { config ->
+                config.dependencies
+                        .withType(ProjectDependency)
+                        .collect { it.dependencyProject }
+                        .each { dependency ->
+                            if (dependency != project) {
+                                projects.add(project)
+                                projects.add(dependency)
+                                rootProjects.remove(dependency)
+
+                                def graphKey = new Tuple2<Project, Project>(project, dependency)
+                                def traits = dependencies.computeIfAbsent(graphKey) { new ArrayList<String>() }
+
+                                if (config.name.toLowerCase().endsWith('implementation')) {
+                                    traits.add('style=dashed')
+                                } else {
+                                    traits.add('style=solid')
+                                }
+                            }
+                        }
+            }
+        }
+
+        projects.each { project ->
+            def pathSegments = project.path.tokenize(':')
+
+            // Skip root project
+            if (pathSegments.isEmpty()) {
+                otherModules.add(project)
+                return
+            }
+
+            // Use the first non-empty segment to determine module type
+            def primarySegment = pathSegments[0].toLowerCase()
+
+            if (primarySegment.contains('domain')) {
+                domainModules.add(project)
+            } else if (primarySegment.contains('data')) {
+                dataModules.add(project)
+            } else if (primarySegment.contains('presentation') || primarySegment.contains('ui')) {
+                presentationModules.add(project)
+            } else if (primarySegment.contains('core') || primarySegment.contains('common')) {
+                coreModules.add(project)
+            } else if (primarySegment.contains('feature')) {
+                featureModules.add(project)
+            } else {
+                // Fallback: check entire path if no primary segment matched
+                def fullPath = project.path.toLowerCase()
+                if (fullPath.contains(':domain:')) {
+                    domainModules.add(project)
+                } else if (fullPath.contains(':data:')) {
+                    dataModules.add(project)
+                } else if (fullPath.contains(':presentation:') || fullPath.contains(':ui:')) {
+                    presentationModules.add(project)
+                } else if (fullPath.contains(':feature:')) {
+                    featureModules.add(project)
+                } else {
+                    otherModules.add(project)
+                }
+            }
+        }
+
+        /*def cycles = detectCycles(dependencies)
+        if (!cycles.isEmpty()) {
+            println("\n⚠️  Circular dependencies detected:")
+            cycles.each { cycle ->
+                def uniqueNodes = cycle.toSet()
+                if (uniqueNodes.size() > 1) {
+                    println("  ${cycle.collect { it.path }.join(' -> ')}")
+                }
+            }
+            println()
+        }*/
+        dependencies = removeTransitiveDependencies(dependencies)
+        projects = projects.sort { it.path }
+
+// Add legend/subgraph
+        dot << '\n  subgraph cluster_legend {\n'
+        dot << '    label="Legend";\n'
+        dot << '    fontsize=14;\n'
+        dot << '    style=filled;\n'
+        dot << '    color=lightgrey;\n'
+        dot << '    node [shape=box,penwidth=1.5];\n'
+        dot << '    legend_domain [label="Domain",fillcolor="#e3f2fd",color="#1976d2"];\n'
+        dot << '    legend_data [label="Data",fillcolor="#f3e5f5",color="#7b1fa2"];\n'
+        dot << '    legend_presentation [label="Presentation",fillcolor="#e8f5e9",color="#388e3c"];\n'
+        dot << '    legend_core [label="Core",fillcolor="#fff3e0",color="#f57c00"];\n'
+        dot << '    legend_feature [label="Feature",fillcolor="#fce4ec",color="#c2185b"];\n'
+        dot << '    legend_other [label="Other",fillcolor="#eeeeee",color="#999999"];\n'
+        dot << '    legend_domain -> legend_data -> legend_presentation -> legend_core -> legend_feature -> legend_other [style=invis];\n'
+        dot << '  }\n\n'
+
+        dot << '  # Projects\n\n'
+        for (project in projects) {
+            def traits = []
+            def displayName = project.path.substring(1) // Remove leading ':'
+
+            if (rootProjects.contains(project)) {
+                traits.add('shape=doubleoctagon')
+                traits.add('penwidth=2')
+            } else {
+                traits.add('shape=box')
+                traits.add('penwidth=1.5')
+            }
+
+            // Color by module type (layer)
+            if (domainModules.contains(project)) {
+                traits.add('fillcolor="#e3f2fd"')  // Light blue
+                traits.add('color="#1976d2"')      // Dark blue border
+            } else if (dataModules.contains(project)) {
+                traits.add('fillcolor="#f3e5f5"')  // Light purple
+                traits.add('color="#7b1fa2"')      // Dark purple border
+            } else if (presentationModules.contains(project)) {
+                traits.add('fillcolor="#e8f5e9"')  // Light green
+                traits.add('color="#388e3c"')      // Dark green border
+            } else if (coreModules.contains(project)) {
+                traits.add('fillcolor="#fff3e0"')  // Light orange
+                traits.add('color="#f57c00"')      // Dark orange border
+            } else if (featureModules.contains(project)) {
+                traits.add('fillcolor="#fce4ec"')  // Light pink
+                traits.add('color="#c2185b"')      // Dark pink border
+            } else {
+                // Technology-based coloring as fallback
+                if (multiplatformProjects.contains(project)) {
+                    traits.add('fillcolor="#ffd2b3"')
+                    traits.add('color="#ff8c42"')
+                } else if (jsProjects.contains(project)) {
+                    traits.add('fillcolor="#ffffba"')
+                    traits.add('color="#f4d03f"')
+                } else if (androidProjects.contains(project)) {
+                    traits.add('fillcolor="#baffc9"')
+                    traits.add('color="#3ddc97"')
+                } else if (javaProjects.contains(project)) {
+                    traits.add('fillcolor="#ffb3ba"')
+                    traits.add('color="#ff6b6b"')
+                } else {
+                    traits.add('fillcolor="#eeeeee"')
+                    traits.add('color="#999999"')
+                }
+            }
+
+            dot << "  \"${project.path}\" [label=\"${displayName}\",${traits.join(", ")}];\n"
+        }
+
+        // Group modules by type
+        dot << '\n  # Module Groups\n\n'
+
+        def addRankGroup = { modules, groupName ->
+            if (!modules.isEmpty()) {
+                dot << "  // ${groupName}\n"
+                dot << '  {rank=same;'
+                modules.each { dot << " \"${it.path}\";" }
+                dot << '}\n'
+            }
+        }
+
+        addRankGroup(rootProjects, "Root Projects")
+        addRankGroup(domainModules, "Domain Layer")
+        addRankGroup(dataModules, "Data Layer")
+        addRankGroup(presentationModules, "Presentation Layer")
+        addRankGroup(coreModules, "Core/Common")
+        addRankGroup(featureModules, "Features")
+
+        dot << '\n  # Dependencies\n\n'
+        dependencies.forEach { key, traits ->
+            def reverseKey = new Tuple2<Project, Project>(key.second, key.first)
+
+            if (dependencies.containsKey(reverseKey)) {
+                traits.clear() // Clear existing traits for cycles
+                traits.add('color="#e74c3c"')
+                traits.add('penwidth=3.0')
+                traits.add('label="⚠ CYCLE"')
+                traits.add('fontcolor="#e74c3c"')
+            } else {
+                // Color edges by architectural flow
+                def sourceLayer = getModuleLayer(key.first, domainModules, dataModules, presentationModules, coreModules, featureModules)
+                def targetLayer = getModuleLayer(key.second, domainModules, dataModules, presentationModules, coreModules, featureModules)
+
+                // Determine if style should be dashed (implementation) or solid (api)
+                def isImplementation = traits.any { it.contains('style=dashed') }
+
+                if (sourceLayer == targetLayer) {
+                    traits.add('color="#95a5a6"')  // Same layer - grey
+                    // Keep the original implementation/api style, but make it dashed if not already
+                    if (!isImplementation) {
+                        traits.removeIf { it.contains('style=') }
+                        traits.add('style=dashed')
+                    }
+                } else {
+                    traits.add('color="#34495e"')  // Cross-layer - solid dark
+                    // Keep the original style (dashed for implementation, solid for api)
+                }
+
+                traits.add('penwidth=1.2')
+                traits.add('arrowsize=0.7')
+            }
+
+            dot << "  \"${key.first.path}\" -> \"${key.second.path}\""
+            if (!traits.isEmpty()) {
+                dot << " [${traits.join(", ")}]"
+            }
+            dot << '\n'
+        }
+
+        dot << '}\n'
+
+        def p = 'dot -Tpng -Gdpi=150 -O project.dot'.execute([], dot.parentFile)
+        p.waitFor()
+        if (p.exitValue() != 0) {
+            throw new RuntimeException(p.errorStream.text)
+        }
+
+        println("Project module dependency graph created at ${dot.absolutePath}.png")
+    }
+}
+
+def detectCycles(dependencies) {
+    def graph = [:]
+    dependencies.keySet().each { edge ->
+        graph.computeIfAbsent(edge.first, { [] }).add(edge.second)
     }
 
-    projects = projects.sort { it.path }
+    def cycles = []
+    def visited = new HashSet()
+    def recStack = new HashSet()
 
-    dot << '\n  # Projects\n\n'
-    for (project in projects) {
-      def traits = []
-
-      if (rootProjects.contains(project)) {
-        traits.add('shape=box')
-      }
-
-      if (multiplatformProjects.contains(project)) {
-        traits.add('fillcolor="#ffd2b3"')
-      } else if (jsProjects.contains(project)) {
-        traits.add('fillcolor="#ffffba"')
-      } else if (androidProjects.contains(project)) {
-        traits.add('fillcolor="#baffc9"')
-      } else if (javaProjects.contains(project)) {
-        traits.add('fillcolor="#ffb3ba"')
-      } else {
-        traits.add('fillcolor="#eeeeee"')
-      }
-
-      dot << "  \"${project.path}\" [${traits.join(", ")}];\n"
+    graph.keySet().each { node ->
+        if (!visited.contains(node)) {
+            findCycles(node, graph, visited, recStack, [], cycles)
+        }
     }
 
-    dot << '\n  {rank = same;'
-    for (project in projects) {
-      if (rootProjects.contains(project)) {
-        dot << " \"${project.path}\";"
-      }
+    return cycles
+}
+
+def findCycles(node, graph, visited, recStack, path, cycles) {
+    visited.add(node)
+    recStack.add(node)
+
+    def currentPath = new ArrayList(path)
+    currentPath.add(node)
+
+    def neighbors = graph[node] ?: []
+    for (neighbor in neighbors) {
+        if (!visited.contains(neighbor)) {
+            findCycles(neighbor, graph, visited, recStack, currentPath, cycles)
+        } else if (recStack.contains(neighbor)) {
+            // Found cycle - build the cycle path including the closing node
+            def cycleStart = currentPath.indexOf(neighbor)
+            if (cycleStart >= 0) {
+                def cycle = new ArrayList(currentPath.subList(cycleStart, currentPath.size()))
+                // Don't add neighbor again if it's already the last node
+                if (cycle.size() > 1 || cycle[0] != neighbor) {
+                    cycle.add(neighbor) // Close the cycle
+                    cycles.add(cycle)
+                }
+            }
+        }
     }
-    dot << '}\n'
 
-    dot << '\n  # Dependencies\n\n'
-    dependencies.forEach { key, traits ->
-      dot << "  \"${key.first.path}\" -> \"${key.second.path}\""
-      if (!traits.isEmpty()) {
-        dot << " [${traits.join(", ")}]"
-      }
-      dot << '\n'
+    recStack.remove(node)
+}
+
+def removeTransitiveDependencies(dependencies) {
+    def graph = [:]
+    dependencies.keySet().each { edge ->
+        graph.computeIfAbsent(edge.first, { [] }).add(edge.second)
     }
 
-    dot << '}\n'
+    def directDeps = new LinkedHashMap(dependencies)
 
-    def p = 'dot -Tpng -O project.dot'.execute([], dot.parentFile)
-    p.waitFor()
-    if (p.exitValue() != 0) {
-      throw new RuntimeException(p.errorStream.text)
+    // Remove transitive dependencies
+    graph.each { source, targets ->
+        targets.each { intermediate ->
+            def transitiveTargets = graph[intermediate] ?: []
+            transitiveTargets.each { transitiveTarget ->
+                def transitiveKey = new Tuple2(source, transitiveTarget)
+                if (directDeps.containsKey(transitiveKey)) {
+                    // This is a transitive dependency, remove it
+                    directDeps.remove(transitiveKey)
+                }
+            }
+        }
     }
 
-    println("Project module dependency graph created at ${dot.absolutePath}.png")
-  }
+    return directDeps
+}
+
+def getModuleLayer(project, domainModules, dataModules, presentationModules, coreModules, featureModules) {
+    if (domainModules.contains(project)) return 'domain'
+    if (dataModules.contains(project)) return 'data'
+    if (presentationModules.contains(project)) return 'presentation'
+    if (coreModules.contains(project)) return 'core'
+    if (featureModules.contains(project)) return 'feature'
+    return 'other'
 }
