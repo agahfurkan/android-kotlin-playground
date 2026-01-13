@@ -13,10 +13,9 @@ dependencies {
     implementation(project(":core:ui:theme"))
     implementation(project(":core:util"))
     implementation(project(":core:preferences"))
-    implementation(project(":core:data"))
     implementation(project(":core:ui:components"))
     testImplementation(project(":core:test"))
-
+    implementation(project(":core:domain"))
     implementation(project(":domain:cart"))
 
 

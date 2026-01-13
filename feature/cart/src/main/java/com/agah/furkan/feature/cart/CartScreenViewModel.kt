@@ -2,7 +2,7 @@ package com.agah.furkan.feature.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.domain.cart.AddProductToCartUseCase
 import com.agah.furkan.domain.cart.RemoveProductFromCartUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,12 +31,11 @@ internal class CartScreenViewModel @Inject constructor(
         viewModelScope.launch {
             val result = removeProductFromCartUseCase(productId = productId)
             val state = when (result) {
-                is Result.Success -> {
+                is DomainResult.Success -> {
                     RemoveProductFromCartUiState.Success
                 }
-
-                is Result.Failure -> {
-                    RemoveProductFromCartUiState.Error(result.error.errorMessage)
+                is DomainResult.Failure -> {
+                    RemoveProductFromCartUiState.Error(result.error.message)
                 }
             }
             _removeProductState.trySend(state)
@@ -49,12 +48,12 @@ internal class CartScreenViewModel @Inject constructor(
         viewModelScope.launch {
             val result = addProductToCartUseCase(productId = productId)
             val state = when (result) {
-                is Result.Success -> {
+                is DomainResult.Success -> {
                     AddProductToCartUiState.Success
                 }
 
-                is Result.Failure -> {
-                    AddProductToCartUiState.Error(result.error.errorMessage)
+                is DomainResult.Failure -> {
+                    AddProductToCartUiState.Error(result.error.message)
                 }
             }
             _addProductToCartState.trySend(state)

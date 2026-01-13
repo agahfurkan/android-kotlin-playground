@@ -2,8 +2,7 @@ package com.agah.furkan.domain.product
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.agah.furkan.core.data.model.Result
-import com.agah.furkan.data.product.ProductRepository
+import com.agah.furkan.core.domain.model.DomainResult
 
 const val PRODUCT_PAGE_SIZE = 50
 const val INITIAL_PAGE_INDEX = 0
@@ -31,23 +30,13 @@ class ProductPagingSource(
             )
 
             val nextPageIndex =
-                if (response is Result.Success && response.data.isNotEmpty()) {
+                if (response is DomainResult.Success && response.data.isNotEmpty()) {
                     pageIndex + 1
                 } else {
                     null
                 }
             LoadResult.Page(
-                data = (response as Result.Success).data.map {
-                    Product(
-                        categoryId = it.categoryId,
-                        discount = it.discount,
-                        picture = it.picture,
-                        price = it.price,
-                        productDescription = it.productDescription,
-                        productId = it.productId,
-                        productName = it.productName
-                    )
-                },
+                data = (response as DomainResult.Success).data,
                 prevKey = if (pageIndex == 0) null else pageIndex - 1,
                 nextKey = nextPageIndex
             )

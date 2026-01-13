@@ -1,7 +1,7 @@
 package com.agah.furkan.data.category
 
 import com.agah.furkan.core.data.ErrorMapper
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.core.data.suspendCall
 import com.agah.furkan.data.category.model.CategoryDomainModel
 import com.agah.furkan.data.category.model.asDomainModel
@@ -21,7 +21,7 @@ class CategoryRepositoryImpl(
         errorMapper: ErrorMapper
     ) : this(categoryService, errorMapper, Dispatchers.IO)
 
-    override suspend fun fetchMainProductCategories(): Result<List<CategoryDomainModel>> =
+    override suspend fun fetchMainProductCategories(): DomainResult<List<CategoryDomainModel>> =
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,

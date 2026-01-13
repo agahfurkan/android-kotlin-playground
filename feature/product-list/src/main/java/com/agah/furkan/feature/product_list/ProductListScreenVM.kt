@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.domain.cart.AddProductToCartUseCase
 import com.agah.furkan.feature.product_list.navigation.ARG_CATEGORY_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,12 +32,12 @@ internal class ProductListScreenVM @Inject constructor(
             _addProductToCartState.trySend(AddProductToCartUiState.Loading)
             val result = addProductToCartUseCase(productId = productId.toLong())
             val state = when (result) {
-                is Result.Success -> {
+                is DomainResult.Success -> {
                     AddProductToCartUiState.Success
                 }
 
-                is Result.Failure -> {
-                    AddProductToCartUiState.Error(result.error.errorMessage)
+                is DomainResult.Failure -> {
+                    AddProductToCartUiState.Error(result.error.message)
                 }
             }
             _addProductToCartState.trySend(state)

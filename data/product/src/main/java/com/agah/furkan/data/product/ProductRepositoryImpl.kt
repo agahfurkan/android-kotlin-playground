@@ -1,12 +1,14 @@
 package com.agah.furkan.data.product
 
 import com.agah.furkan.core.data.ErrorMapper
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.core.data.suspendCall
-import com.agah.furkan.data.product.model.ProductDetailDomainModel
-import com.agah.furkan.data.product.model.ProductDomainModel
-import com.agah.furkan.data.product.model.asDomainModel
 import com.agah.furkan.data.product.remote.ProductService
+import com.agah.furkan.data.product.remote.model.response.ProductDetailResponse
+import com.agah.furkan.data.product.remote.model.response.ProductResponse
+import com.agah.furkan.domain.product.Product
+import com.agah.furkan.domain.product.ProductDetail
+import com.agah.furkan.domain.product.ProductRepository
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -26,11 +28,11 @@ class ProductRepositoryImpl(
         categoryId: Long,
         pageIndex: Int,
         pageLength: Int
-    ): Result<List<ProductDomainModel>> {
+    ): DomainResult<List<Product>> {
         return suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
-            mapOnSuccess = { response -> response.productList.map { it.asDomainModel() } }
+            mapOnSuccess = { response -> response.productList.map { it.toDomain() } }
         ) {
             productService.getProductList(
                 categoryId = categoryId,
@@ -40,12 +42,32 @@ class ProductRepositoryImpl(
         }
     }
 
-    override suspend fun getProductDetail(productId: Long): Result<ProductDetailDomainModel> =
+    override suspend fun getProductDetail(productId: Long): DomainResult<ProductDetail> =
         suspendCall(
             coroutineContext = coroutineContext,
             errorMapper = errorMapper,
-            mapOnSuccess = { response -> response.productDetail.asDomainModel() }
+            mapOnSuccess = { response -> response.productDetail.toDomain() }
         ) {
             productService.getProductDetail(productId = productId)
         }
+
+    private fun ProductResponse.Product.toDomain() = Product(
+        categoryId = categoryId,
+        discount = discount,
+        picture = picture,
+        price = price,
+        productDescription = productDescription,
+        productId = productId,
+        productName = productName
+    )
+
+    private fun ProductDetailResponse.ProductDetail.toDomain() = ProductDetail(
+        categoryId = categoryId,
+        discount = discount,
+        picture = picture,
+        price = price,
+        productDescription = productDescription,
+        productId = productId,
+        productName = productName
+    )
 }

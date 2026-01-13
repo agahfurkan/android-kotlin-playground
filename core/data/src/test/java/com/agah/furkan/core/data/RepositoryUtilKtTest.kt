@@ -1,8 +1,7 @@
 package com.agah.furkan.core.data
 
 import com.agah.furkan.core.data.model.BaseResponse
-import com.agah.furkan.core.data.model.Error
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -35,7 +34,7 @@ class RepositoryUtilKtTest {
                     }
                 }
             )
-            assert(result is Result.Failure)
+            assert(result is DomainResult.Failure)
         }
 
     @Test
@@ -53,7 +52,7 @@ class RepositoryUtilKtTest {
                     }
                 }
             )
-            assert(result is Result.Success)
+            assert(result is DomainResult.Success)
         }
 
     @Test
@@ -69,7 +68,7 @@ class RepositoryUtilKtTest {
                     }
                 }
             )
-            assert(result is Result.Failure)
+            assert(result is DomainResult.Failure)
         }
 
     @Test
@@ -85,7 +84,7 @@ class RepositoryUtilKtTest {
                     }
                 }
             )
-            assert((result as Result.Failure).error is Error.NullResponseError)
+            assert((result as DomainResult.Failure).error is Error.NullResponseError)
         }
 
     @Test
@@ -104,7 +103,7 @@ class RepositoryUtilKtTest {
                     }
                 }
             )
-            assert((result as Result.Failure).error is Error.NetworkError)
+            assert((result as DomainResult.Failure).error is Error.NetworkError)
         }
 
     @Test
@@ -120,7 +119,7 @@ class RepositoryUtilKtTest {
                     }
                 }
             )
-            assert(result is Result.Failure)
+            assert(result is DomainResult.Failure)
         }
 
     @Test
@@ -136,6 +135,6 @@ class RepositoryUtilKtTest {
                     }
                 }
             )
-            assertThat((result as Result.Failure).error is Error.UnauthorizedError).isTrue()
+            assertThat((result as DomainResult.Failure).error is Error.UnauthorizedError).isTrue()
         }
 }

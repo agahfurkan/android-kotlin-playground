@@ -1,9 +1,7 @@
 package com.agah.furkan.domain.user
 
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.core.preferences.UserPreference
-import com.agah.furkan.data.user.UserRepository
-import com.agah.furkan.data.user.remote.model.request.ValidateTokenBody
 import javax.inject.Inject
 
 
@@ -18,20 +16,19 @@ class ValidateTokenUseCase @Inject constructor(
     private val userPreference: UserPreference
 ) {
     suspend operator fun invoke(): TokenValidationResult {
-        val result = when (userRepository.validateToken(
-            ValidateTokenBody(
-                userPreference.getToken().orEmpty()
+        return when (userRepository.validateToken(
+            ValidateTokenRequest(
+                token = userPreference.getToken().orEmpty()
             )
         )) {
-            is Result.Success<*> -> {
+            is DomainResult.Success -> {
                 TokenValidationResult.Valid
             }
 
-            is Result.Failure<*> -> {
+            is DomainResult.Failure -> {
                 userPreference.clearAllData()
                 TokenValidationResult.Invalid
             }
         }
-        return result
     }
 }

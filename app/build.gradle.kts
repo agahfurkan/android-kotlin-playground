@@ -124,6 +124,13 @@ android {
         implementation(project(":core:ui:components"))
 
         implementation(project(":domain:cart"))
+        implementation(project(":domain:user"))
+        implementation(project(":domain:login"))
+        implementation(project(":domain:product"))
+
+        implementation(project(":data:cart"))
+        implementation(project(":data:user"))
+        implementation(project(":data:product"))
 
         implementation(project(":feature:cart"))
         implementation(project(":feature:home"))

@@ -1,7 +1,7 @@
 package com.agah.furkan.core.data
 
-import com.agah.furkan.core.data.model.Error
+import com.agah.furkan.core.domain.model.DomainError
 
 interface ErrorMapper {
-    fun mapError(throwable: Throwable?): Error
+    fun mapError(throwable: Throwable?): DomainError
 }

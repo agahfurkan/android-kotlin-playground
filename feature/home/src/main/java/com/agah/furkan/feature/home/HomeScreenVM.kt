@@ -2,7 +2,7 @@ package com.agah.furkan.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.data.announcement.AnnouncementRepository
 import com.agah.furkan.feature.home.state.GetAnnouncementUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,12 +25,12 @@ class HomeScreenVM @Inject constructor(private val announcementRepository: Annou
             val result = announcementRepository.getAnnouncements()
             
             val state = when (result) {
-                is Result.Success -> {
+                is DomainResult.Success -> {
                     GetAnnouncementUiState.Success(result.data)
                 }
 
-                is Result.Failure -> {
-                    GetAnnouncementUiState.Failure(result.error.errorMessage)
+                is DomainResult.Failure -> {
+                    GetAnnouncementUiState.Failure(result.error.message)
                 }
             }
             _announcementList.emit(state)

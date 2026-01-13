@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.core.session.SessionManager
 import com.agah.furkan.domain.login.LoginUseCase
 import com.agah.furkan.core.logging.Logger
@@ -36,12 +36,12 @@ internal class LoginScreenVM @Inject constructor(
             _loginState.send(LoginUiState.Loading)
             logger.i("Attempting login for user: $username")
             when (val result = loginUseCase(username = username, password = password)) {
-                is Result.Success -> {
+                is DomainResult.Success -> {
                     sessionManager.onLoginSuccess()
                     _loginState.send(LoginUiState.Success)
                 }
-                is Result.Failure -> {
-                    _loginState.send(LoginUiState.Failure(failureMessage = result.error.errorMessage))
+                is DomainResult.Failure -> {
+                    _loginState.send(LoginUiState.Failure(failureMessage = result.error.message))
                 }
             }
         }

@@ -9,6 +9,7 @@ android {
 }
 
 dependencies {
+    api(project(":core:domain"))
     implementation(project(":core:preferences"))
     implementation(project(":core:session"))
     testImplementation(project(":core:test"))

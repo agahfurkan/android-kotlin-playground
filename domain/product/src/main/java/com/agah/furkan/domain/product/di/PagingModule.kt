@@ -1,7 +1,7 @@
 package com.agah.furkan.domain.product.di
 
 import com.agah.furkan.domain.product.ProductListPagingSource
-import com.agah.furkan.data.product.ProductRepository
+import com.agah.furkan.domain.product.ProductRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

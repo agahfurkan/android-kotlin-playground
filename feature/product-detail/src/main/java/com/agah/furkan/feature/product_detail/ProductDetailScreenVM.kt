@@ -3,7 +3,7 @@ package com.agah.furkan.feature.product_detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.domain.cart.AddProductToCartUseCase
 import com.agah.furkan.domain.product.GetProductDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,12 +40,12 @@ internal class ProductDetailScreenVM @Inject constructor(
             val result = getProductDetailUseCase(productId)
 
             val state = when (result) {
-                is Result.Success -> {
+                is DomainResult.Success -> {
                     ProductDetailUiState.Success(result.data.asUiModel())
                 }
 
-                is Result.Failure -> {
-                    ProductDetailUiState.Error(result.error.errorMessage)
+                is DomainResult.Failure -> {
+                    ProductDetailUiState.Error(result.error.message)
                 }
             }
             _productDetail.emit(state)
@@ -57,12 +57,12 @@ internal class ProductDetailScreenVM @Inject constructor(
             _addProductToCartState.trySend(AddProductToCartUiState.Loading)
             val result = addProductToCartUseCase(productId = productId.toLong())
             val state = when (result) {
-                is Result.Success -> {
+                is DomainResult.Success -> {
                     AddProductToCartUiState.Success
                 }
 
-                is Result.Failure -> {
-                    AddProductToCartUiState.Error(result.error.errorMessage)
+                is DomainResult.Failure -> {
+                    AddProductToCartUiState.Error(result.error.message)
                 }
             }
             _addProductToCartState.trySend(state)

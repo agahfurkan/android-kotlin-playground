@@ -1,7 +1,7 @@
 package com.agah.furkan.data.announcement
 
 import com.agah.furkan.core.data.ErrorMapper
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.data.announcement.remote.response.AnnouncementResponse
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -40,8 +40,8 @@ class AnnouncementRepositoryTest {
         )
 
         val announcements = announcementRepository.getAnnouncements()
-        assert(announcements is Result.Success)
-        assert((announcements as Result.Success).data.isNotEmpty())
+        assert(announcements is DomainResult.Success)
+        assert((announcements as DomainResult.Success).data.isNotEmpty())
     }
 
     @Test
@@ -54,7 +54,7 @@ class AnnouncementRepositoryTest {
 
         val announcements = announcementRepository.getAnnouncements()
 
-        assert(announcements is Result.Success)
+        assert(announcements is DomainResult.Success)
     }
 
 }

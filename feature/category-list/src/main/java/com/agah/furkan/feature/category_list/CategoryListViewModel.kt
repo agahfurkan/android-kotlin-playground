@@ -2,7 +2,7 @@ package com.agah.furkan.feature.category_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.data.category.CategoryRepository
 import com.agah.furkan.feature.category_list.model.CategoryListUiState
 import com.agah.furkan.feature.category_list.model.asUiModel
@@ -26,12 +26,12 @@ internal class CategoryListViewModel @Inject constructor(private val categoryRep
         viewModelScope.launch {
             val result = categoryRepository.fetchMainProductCategories()
             val state = when (result) {
-                is Result.Success -> {
+                is DomainResult.Success -> {
                     CategoryListUiState.Success(result.data.map { it.asUiModel() })
                 }
 
-                is Result.Failure -> {
-                    CategoryListUiState.Error(result.error.errorMessage)
+                is DomainResult.Failure -> {
+                    CategoryListUiState.Error(result.error.message)
                 }
             }
             _categoryList.emit(state)

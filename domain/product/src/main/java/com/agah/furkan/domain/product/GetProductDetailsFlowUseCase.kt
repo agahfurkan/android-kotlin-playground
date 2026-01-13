@@ -1,43 +1,13 @@
 package com.agah.furkan.domain.product
 
-import com.agah.furkan.data.product.ProductDetailRepository
-import com.agah.furkan.data.product.ProductDetail as DataProductDetail
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetProductDetailsFlowUseCase @Inject constructor(
     private val productDetailRepository: ProductDetailRepository
 ) {
     operator fun invoke(): Flow<ProductDetailFlow> {
-        return productDetailRepository.getProductDetails().map { it.toDomain() }
-    }
-
-    private fun DataProductDetail.toDomain(): ProductDetailFlow {
-        return ProductDetailFlow(
-            productId = productId,
-            productName = productName,
-            description = description,
-            sections = sections.map { section ->
-                ProductDetailFlow.Section(
-                    sectionName = section.sectionName,
-                    sectionContent = section.sectionContent.map { detail ->
-                        ProductDetailFlow.SectionDetail(
-                            name = detail.name,
-                            value = detail.value
-                        )
-                    }
-                )
-            },
-            reviews = reviews.map { review ->
-                ProductDetailFlow.Review(
-                    userName = review.userName,
-                    review = review.review,
-                    rating = review.rating,
-                    date = review.date
-                )
-            }
-        )
+        return productDetailRepository.getProductDetails()
     }
 }
 

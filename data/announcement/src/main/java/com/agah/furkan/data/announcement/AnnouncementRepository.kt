@@ -1,7 +1,7 @@
 package com.agah.furkan.data.announcement
 
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 
 interface AnnouncementRepository {
-    suspend fun getAnnouncements(): Result<List<Announcement>>
+    suspend fun getAnnouncements(): DomainResult<List<Announcement>>
 }

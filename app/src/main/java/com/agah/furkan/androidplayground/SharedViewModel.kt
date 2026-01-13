@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.domain.cart.GetCartUseCase
 import com.agah.furkan.feature.cart.Cart
 import com.agah.furkan.feature.cart.toUiModel
@@ -39,7 +39,7 @@ class SharedViewModel @Inject constructor(
     private fun getUserCart(refresh: Boolean = false) {
         viewModelScope.launch {
             val result = getCartUseCase(refresh = refresh)
-            if (result is Result.Success) {
+            if (result is DomainResult.Success) {
                 val groupedResult = result.data.toUiModel().sortedBy { it.productId }
                     .groupBy { it.productId }
                 _userCart.emit(groupedResult)

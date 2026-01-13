@@ -1,7 +1,7 @@
 package com.agah.furkan.data.user.di
 
-import com.agah.furkan.data.user.UserRepository
 import com.agah.furkan.data.user.UserRepositoryImpl
+import com.agah.furkan.domain.user.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

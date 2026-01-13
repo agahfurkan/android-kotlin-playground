@@ -9,7 +9,5 @@ android {
 
 dependencies {
     implementation(project(":core:preferences"))
-    implementation(project(":core:data"))
-
-    implementation(project(":data:user"))
+    implementation(project(":core:domain"))
 }

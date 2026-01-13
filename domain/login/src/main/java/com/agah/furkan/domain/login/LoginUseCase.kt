@@ -1,24 +1,24 @@
 package com.agah.furkan.domain.login
 
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.core.preferences.UserPreference
-import com.agah.furkan.data.user.UserRepository
-import com.agah.furkan.data.user.remote.model.request.UserLoginBody
+import com.agah.furkan.domain.user.LoginRequest
+import com.agah.furkan.domain.user.UserRepository
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
     private val userRepository: UserRepository,
     private val userPreference: UserPreference
 ) {
-    suspend operator fun invoke(username: String, password: String): Result<LoginResult> {
+    suspend operator fun invoke(username: String, password: String): DomainResult<LoginResult> {
         return when (
             val result =
-                userRepository.loginUser(UserLoginBody(password = password, username = username))
+                userRepository.loginUser(LoginRequest(password = password, username = username))
         ) {
-            is Result.Success -> {
+            is DomainResult.Success -> {
                 userPreference.setToken(result.data.token!!)
                 userPreference.setUserId(result.data.userId!!)
-                Result.Success(
+                DomainResult.Success(
                     LoginResult(
                         token = result.data.token!!,
                         userId = result.data.userId!!,
@@ -27,8 +27,8 @@ class LoginUseCase @Inject constructor(
                 )
             }
 
-            is Result.Failure -> {
-                Result.Failure(result.error)
+            is DomainResult.Failure -> {
+                DomainResult.Failure(result.error)
             }
         }
     }

@@ -1,9 +1,9 @@
 package com.agah.furkan.data.product.di
 
 import com.agah.furkan.data.product.FakeProductDetailRepository
-import com.agah.furkan.data.product.ProductDetailRepository
-import com.agah.furkan.data.product.ProductRepository
 import com.agah.furkan.data.product.ProductRepositoryImpl
+import com.agah.furkan.domain.product.ProductDetailRepository
+import com.agah.furkan.domain.product.ProductRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -1,7 +1,7 @@
 package com.agah.furkan.data.announcement
 
 import com.agah.furkan.core.data.ErrorMapper
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.core.data.suspendCall
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class AnnouncementRepositoryImpl(
         errorMapper: ErrorMapper
     ) : this(announcementService, errorMapper, Dispatchers.IO)
 
-    override suspend fun getAnnouncements(): Result<List<Announcement>> {
+    override suspend fun getAnnouncements(): DomainResult<List<Announcement>> {
         return suspendCall(coroutineContext = coroutineContext,
             errorMapper = errorMapper,
             mapOnSuccess = { response -> response }) {

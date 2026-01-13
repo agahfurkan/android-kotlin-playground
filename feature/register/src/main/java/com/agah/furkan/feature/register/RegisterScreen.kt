@@ -26,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.core.ui.theme.AppTheme
 import com.agah.furkan.core.util.ext.launchAndCollectIn
 import com.agah.furkan.core.util.ext.showToast
@@ -41,12 +41,12 @@ internal fun RegisterRoute(
     LaunchedEffect(Unit) {
         viewModel.registerUserResponse.launchAndCollectIn(lifecycleOwner) { state ->
             when (state) {
-                is Result.Success -> {
+                is DomainResult.Success -> {
                     onRegisterSuccess()
                 }
 
-                is Result.Failure -> {
-                    context.showToast(state.error.errorMessage)
+                is DomainResult.Failure -> {
+                    context.showToast(state.error.message)
                 }
             }
         }

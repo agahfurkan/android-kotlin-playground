@@ -4,6 +4,7 @@ pluginManagement {
 
 include (":app")
 rootProject.name = "Android Playground"
+include(":core:domain")
 include(":core:data")
 include(":data:cart")
 include(":core:preferences")

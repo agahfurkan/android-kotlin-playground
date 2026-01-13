@@ -1,7 +1,7 @@
 package com.agah.furkan.data.pdf
 
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 
 interface PdfRepository {
-    suspend fun getPdfList(): Result<List<PdfModel>>
+    suspend fun getPdfList(): DomainResult<List<PdfModel>>
 }

@@ -29,8 +29,8 @@ class PdfDownloadWorker @AssistedInject constructor(
         notificationManager.cancelNotification(NotificationId.PROGRESS)
 
         return when (result) {
-            is com.agah.furkan.core.data.model.Result.Success -> Result.success()
-            is com.agah.furkan.core.data.model.Result.Failure -> Result.failure()
+            is com.agah.furkan.core.domain.model.DomainResult.Success -> Result.success()
+            is com.agah.furkan.core.domain.model.DomainResult.Failure -> Result.failure()
         }
     }
 }

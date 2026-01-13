@@ -1,6 +1,6 @@
 package com.agah.furkan.core.data
 
-import com.agah.furkan.core.data.model.Error
+import com.agah.furkan.core.domain.model.DomainError
 import com.google.common.truth.Truth.assertThat
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
@@ -20,14 +20,14 @@ class ErrorMapperImplTest {
     fun `if exception is unauthorized, errormapper should return UnauthorizedError`() {
         val error =
             errorMapper.mapError(HttpException(Response.error<Any>(401, "".toResponseBody())))
-        assertThat(error is Error.UnauthorizedError).isTrue()
+        assertThat(error is DomainError.Unauthorized).isTrue()
     }
 
     @Test
-    fun `if exception is not unauthorized, errormapper should return CommonErrror`() {
+    fun `if exception is server error, errormapper should return ServerError`() {
         val error =
             errorMapper.mapError(HttpException(Response.error<Any>(500, "".toResponseBody())))
-        assertThat(error is Error.CommonError).isTrue()
+        assertThat(error is DomainError.Server).isTrue()
     }
 
 }

@@ -1,11 +1,11 @@
 package com.agah.furkan.feature.cart
 
 import app.cash.turbine.test
-import com.agah.furkan.core.data.model.Error
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainError
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.core.preferences.UserPreference
 import com.agah.furkan.core.test.MainCoroutineRule
-import com.agah.furkan.data.cart.CartRepository
+import com.agah.furkan.domain.cart.CartRepository
 import com.google.common.truth.Truth
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -32,7 +32,7 @@ class CartScreenViewModelTest {
     fun `given success response, when removeProductFromCart called, then return success state`() =
         runTest {
             Mockito.`when`(cartRepository.removeProductFromCart(1, 1)).thenReturn(
-                Result.Success("success")
+                DomainResult.Success("success")
             )
             Mockito.`when`(userPreference.getUserId()).thenReturn(1)
 
@@ -49,8 +49,8 @@ class CartScreenViewModelTest {
     fun `given failure response, when removeProductFromCart called, then return error state`() =
         runTest {
             Mockito.`when`(cartRepository.removeProductFromCart(1, 1)).thenReturn(
-                Result.Failure(
-                    Error.CommonError(
+                DomainResult.Failure(
+                    DomainError.Unknown(
                         "error"
                     )
                 )
@@ -74,7 +74,7 @@ class CartScreenViewModelTest {
     fun `given success response, when addProductToCart called, then return success state`() =
         runTest {
             Mockito.`when`(cartRepository.addProductToCart(1, 1)).thenReturn(
-                Result.Success("success")
+                DomainResult.Success("success")
             )
             Mockito.`when`(userPreference.getUserId()).thenReturn(1)
 
@@ -91,8 +91,8 @@ class CartScreenViewModelTest {
     fun `given failure response, when addProductToCart called, then return error state`() =
         runTest {
             Mockito.`when`(cartRepository.addProductToCart(1, 1)).thenReturn(
-                Result.Failure(
-                    Error.CommonError(
+                DomainResult.Failure(
+                    DomainError.Unknown(
                         "error"
                     )
                 )

@@ -1,16 +1,17 @@
 package com.agah.furkan.data.product
 
-
+import com.agah.furkan.domain.product.ProductDetailFlow
+import com.agah.furkan.domain.product.ProductDetailRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import kotlin.random.Random
 
 class FakeProductDetailRepository @Inject constructor() : ProductDetailRepository {
-    override fun getProductDetails(): Flow<ProductDetail> {
-        return flow<ProductDetail> {
+    override fun getProductDetails(): Flow<ProductDetailFlow> {
+        return flow<ProductDetailFlow> {
             emit(
-                ProductDetail(
+                ProductDetailFlow(
                     productId = "quaerendum",
                     productName = "Winfred Vasquez",
                     description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" +
@@ -25,34 +26,34 @@ class FakeProductDetailRepository @Inject constructor() : ProductDetailRepositor
                             "adipiscing elit, sed do eiusmod tempor incididunt ut labore et " +
                             "dolore magna aliqua.",
                     sections = listOf(
-                        ProductDetail.Section(
+                        ProductDetailFlow.Section(
                             sectionName = "Liza Olsen",
                             sectionContent = listOf(
-                                ProductDetail.SectionDetail(name = "Diana Ford", value = "idque"),
-                                ProductDetail.SectionDetail(name = "Marlin Henson", value = "quod")
+                                ProductDetailFlow.SectionDetail(name = "Diana Ford", value = "idque"),
+                                ProductDetailFlow.SectionDetail(name = "Marlin Henson", value = "quod")
                             )
                         ),
-                        ProductDetail.Section(
+                        ProductDetailFlow.Section(
                             sectionName = "Liza Olsen",
                             sectionContent = listOf(
-                                ProductDetail.SectionDetail(
+                                ProductDetailFlow.SectionDetail(
                                     name = "Diana Ford",
                                     value = "idque"
                                 ),
-                                ProductDetail.SectionDetail(
+                                ProductDetailFlow.SectionDetail(
                                     name = "Shawna Wiggins",
                                     value = "euismod"
                                 ),
-                                ProductDetail.SectionDetail(
+                                ProductDetailFlow.SectionDetail(
                                     name = "Janie Marshall",
                                     value = "comprehensam"
                                 )
                             )
                         ),
-                        ProductDetail.Section(
+                        ProductDetailFlow.Section(
                             sectionName = "Liza Olsen",
                             sectionContent = listOf(
-                                ProductDetail.SectionDetail(
+                                ProductDetailFlow.SectionDetail(
                                     name = "Diana Ford",
                                     value = "idque"
                                 )
@@ -67,11 +68,11 @@ class FakeProductDetailRepository @Inject constructor() : ProductDetailRepositor
 }
 
 
-fun generateFakeReviewList(): List<ProductDetail.Review> {
-    val reviewList = mutableListOf<ProductDetail.Review>()
+fun generateFakeReviewList(): List<ProductDetailFlow.Review> {
+    val reviewList = mutableListOf<ProductDetailFlow.Review>()
     for (i in 0..9) {
         reviewList.add(
-            ProductDetail.Review(
+            ProductDetailFlow.Review(
                 userName = "Tracie Richmond",
                 review = "accommodare",
                 rating = Random.nextInt(1, 6),

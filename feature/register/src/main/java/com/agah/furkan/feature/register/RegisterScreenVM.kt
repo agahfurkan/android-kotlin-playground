@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.agah.furkan.core.data.model.Result
+import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.domain.user.RegisterUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -19,7 +19,7 @@ internal class RegisterScreenVM @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _registerUserResponse = Channel<Result<String>>(Channel.BUFFERED)
+    private val _registerUserResponse = Channel<DomainResult<String>>(Channel.BUFFERED)
     val registerUserResponse = _registerUserResponse.receiveAsFlow()
 
     var username by mutableStateOf("")
