@@ -15,6 +15,6 @@ dependencies {
     implementation(project(":core:ui:components"))
     testImplementation(project(":core:test"))
 
-    implementation(project(":data:category"))
+    implementation(project(":domain:category"))
     implementation(platform(libs.androidx.compose.bom))
 }

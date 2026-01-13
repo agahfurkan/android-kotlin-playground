@@ -1,7 +1,7 @@
 package com.agah.furkan.feature.category_list
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.agah.furkan.data.category.remote.model.response.CategoryResponse.Category
+import com.agah.furkan.feature.category_list.model.Category
 
 internal class CategoryPreviewParameterProvider : PreviewParameterProvider<List<Category>> {
     override val values: Sequence<List<Category>>

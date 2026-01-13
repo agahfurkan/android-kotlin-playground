@@ -3,7 +3,7 @@ package com.agah.furkan.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.core.domain.model.DomainResult
-import com.agah.furkan.data.announcement.AnnouncementRepository
+import com.agah.furkan.domain.announcement.AnnouncementRepository
 import com.agah.furkan.feature.home.state.GetAnnouncementUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

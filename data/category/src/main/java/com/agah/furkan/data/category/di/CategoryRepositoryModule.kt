@@ -1,7 +1,7 @@
 package com.agah.furkan.data.category.di
 
-import com.agah.furkan.data.category.CategoryRepository
 import com.agah.furkan.data.category.CategoryRepositoryImpl
+import com.agah.furkan.domain.category.CategoryRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

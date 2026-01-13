@@ -3,6 +3,7 @@ package com.agah.furkan.data.announcement
 import com.agah.furkan.core.data.ErrorMapper
 import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.data.announcement.remote.response.AnnouncementResponse
+import com.agah.furkan.domain.announcement.AnnouncementRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking

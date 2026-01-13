@@ -17,7 +17,7 @@ dependencies {
     implementation(project(":core:ui:components"))
     testImplementation(project(":core:test"))
 
-    implementation(project(":data:pdf"))
+    implementation(project(":domain:pdf"))
 
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.work.runtime)

@@ -1,7 +1,7 @@
 package com.agah.furkan.data.pdf.di
 
-import com.agah.furkan.data.pdf.PdfRepository
 import com.agah.furkan.data.pdf.PdfRepositoryImpl
+import com.agah.furkan.domain.pdf.PdfRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

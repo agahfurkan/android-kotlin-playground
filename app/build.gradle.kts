@@ -127,10 +127,16 @@ android {
         implementation(project(":domain:user"))
         implementation(project(":domain:login"))
         implementation(project(":domain:product"))
+        implementation(project(":domain:announcement"))
+        implementation(project(":domain:category"))
+        implementation(project(":domain:pdf"))
 
         implementation(project(":data:cart"))
         implementation(project(":data:user"))
         implementation(project(":data:product"))
+        implementation(project(":data:announcement"))
+        implementation(project(":data:category"))
+        implementation(project(":data:pdf"))
 
         implementation(project(":feature:cart"))
         implementation(project(":feature:home"))

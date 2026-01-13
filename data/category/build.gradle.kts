@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation(project(":core:data"))
+    implementation(project(":domain:category"))
 
     ksp(libs.moshi.kotlin.codegen)
 }

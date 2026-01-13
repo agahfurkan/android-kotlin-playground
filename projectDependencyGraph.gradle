@@ -7,8 +7,8 @@ task projectDependencyGraph {
         dot.delete()
 
         dot << 'digraph {\n'
-        dot << "  graph [label=\"${rootProject.name}\\n \",labelloc=t,fontsize=30,ranksep=1.5,nodesep=0.8,splines=ortho,bgcolor=\"#ffffff\"];\n"
-        dot << '  node [style=filled,shape=box,fontname="Arial",fontsize=12,margin=0.2,height=0.5];\n'
+        dot << "  graph [label=\"${rootProject.name}\\n \",labelloc=t,fontsize=30,ranksep=1.5,nodesep=0.6,splines=ortho,bgcolor=\"#ffffff\"];\n"
+        dot << '  node [style=filled,shape=box,fontname="Arial",fontsize=11,margin="0.15,0.1",height=0.4,width=1.5];\n'
         dot << '  edge [fontname="Arial",fontsize=10];\n'
         dot << '  rankdir=TB;\n'
 
@@ -196,24 +196,43 @@ task projectDependencyGraph {
             dot << "  \"${project.path}\" [label=\"${displayName}\",${traits.join(", ")}];\n"
         }
 
-        // Group modules by type
-        dot << '\n  # Module Groups\n\n'
+        // Group modules by type using rank=same for horizontal alignment
+        dot << '\n  # Module Groups (Horizontal Alignment by Layer)\n\n'
 
-        def addRankGroup = { modules, groupName ->
-            if (!modules.isEmpty()) {
-                dot << "  // ${groupName}\n"
-                dot << '  {rank=same;'
-                modules.each { dot << " \"${it.path}\";" }
-                dot << '}\n'
+        // Create hidden anchor nodes for layer ordering
+        def layerNames = ['feature', 'domain', 'data', 'presentation', 'core', 'other']
+        def layerModulesMap = [
+            'feature': featureModules,
+            'domain': domainModules,
+            'data': dataModules,
+            'presentation': presentationModules,
+            'core': coreModules,
+            'other': otherModules
+        ]
+
+        // Add hidden anchor nodes
+        dot << '  // Hidden anchor nodes for layer ordering\n'
+        layerNames.each { layer ->
+            if (!layerModulesMap[layer].isEmpty()) {
+                dot << "  \"_anchor_${layer}\" [style=invis,width=0,height=0,label=\"\"];\n"
             }
         }
 
-        addRankGroup(rootProjects, "Root Projects")
-        addRankGroup(domainModules, "Domain Layer")
-        addRankGroup(dataModules, "Data Layer")
-        addRankGroup(presentationModules, "Presentation Layer")
-        addRankGroup(coreModules, "Core/Common")
-        addRankGroup(featureModules, "Features")
+        // Connect anchors in a vertical chain
+        dot << '\n  // Anchor chain for vertical ordering\n'
+        def nonEmptyLayers = layerNames.findAll { !layerModulesMap[it].isEmpty() }
+        for (int i = 0; i < nonEmptyLayers.size() - 1; i++) {
+            dot << "  \"_anchor_${nonEmptyLayers[i]}\" -> \"_anchor_${nonEmptyLayers[i + 1]}\" [style=invis,weight=1000];\n"
+        }
+
+        // Add rank=same constraints for each layer including the anchor
+        dot << '\n  // Rank constraints for horizontal alignment\n'
+        nonEmptyLayers.each { layer ->
+            def modules = layerModulesMap[layer]
+            dot << "  { rank=same; \"_anchor_${layer}\""
+            modules.each { dot << "; \"${it.path}\"" }
+            dot << " }\n"
+        }
 
         dot << '\n  # Dependencies\n\n'
         dependencies.forEach { key, traits ->

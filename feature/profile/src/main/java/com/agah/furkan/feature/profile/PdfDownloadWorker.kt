@@ -6,7 +6,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.agah.furkan.core.notification.NotificationId
 import com.agah.furkan.core.notification.NotificationManager
-import com.agah.furkan.data.pdf.PdfRepository
+import com.agah.furkan.domain.pdf.PdfRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 

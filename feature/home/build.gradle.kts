@@ -15,6 +15,6 @@ dependencies {
     implementation(project(":core:ui:components"))
     testImplementation(project(":core:test"))
 
-    implementation(project(":data:announcement"))
+    implementation(project(":domain:announcement"))
     implementation(libs.accompanist.system.ui.controller)
 }

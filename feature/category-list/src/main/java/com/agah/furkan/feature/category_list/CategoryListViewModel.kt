@@ -3,7 +3,7 @@ package com.agah.furkan.feature.category_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.agah.furkan.core.domain.model.DomainResult
-import com.agah.furkan.data.category.CategoryRepository
+import com.agah.furkan.domain.category.CategoryRepository
 import com.agah.furkan.feature.category_list.model.CategoryListUiState
 import com.agah.furkan.feature.category_list.model.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel

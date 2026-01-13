@@ -3,6 +3,8 @@ package com.agah.furkan.data.announcement
 import com.agah.furkan.core.data.ErrorMapper
 import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.core.data.suspendCall
+import com.agah.furkan.domain.announcement.Announcement
+import com.agah.furkan.domain.announcement.AnnouncementRepository
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
