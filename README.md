@@ -2,7 +2,7 @@
 [![CircleCI](https://circleci.com/gh/agahfurkan/android-kotlin-playground/tree/master.svg?style=svg)](https://circleci.com/gh/agahfurkan/android-kotlin-playground/tree/master)
 
 ### Project Module Dependency Graph
-![project dot](https://github.com/agahfurkan/android-kotlin-playground/assets/9489217/a1bafc9b-cbd8-4cd5-9a2c-95f0e6d48df6)
+![Dependency Graph](assets/dependency_graph.png)
 
 <img src="https://github.com/agahfurkan/android-kotlin-playground/assets/9489217/bbc76198-aa88-4a72-8a95-dc5ac69a6ff3" width="216" height="400"/>
 
