@@ -6,7 +6,7 @@ android {
     namespace = "com.agah.furkan.core.view"
 
     buildFeatures {
-        dataBinding = true
+        viewBinding = true
     }
 }
 dependencies {
