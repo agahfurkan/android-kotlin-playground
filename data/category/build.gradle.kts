@@ -11,6 +11,6 @@ android {
 dependencies {
     implementation(project(":core:data"))
     implementation(project(":domain:category"))
-
+    implementation("com.agah.furkan.playgrounddatamodule:shared")
     ksp(libs.moshi.kotlin.codegen)
 }

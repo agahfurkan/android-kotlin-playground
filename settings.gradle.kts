@@ -3,7 +3,7 @@ pluginManagement {
 }
 
 include (":app")
-rootProject.name = "Android Playground"
+rootProject.name = "AndroidPlayground"
 include(":core:domain")
 include(":core:data")
 include(":data:cart")
@@ -45,3 +45,4 @@ include(":core:ui:components")
 include(":core:test")
 include(":project-x")
 include(":core:view")
+includeBuild("kmpDataModule")

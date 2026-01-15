@@ -77,3 +77,4 @@ lint/reports/
 
 
 .DS_Store
+.kotlin/*
