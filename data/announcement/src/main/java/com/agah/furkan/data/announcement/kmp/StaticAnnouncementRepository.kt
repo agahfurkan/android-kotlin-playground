@@ -3,6 +3,8 @@ package com.agah.furkan.data.announcement.kmp
 import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.domain.announcement.Announcement
 import com.agah.furkan.domain.announcement.AnnouncementRepository
+import com.agah.furkan.playgrounddatamodule.KmpAnnouncement
+import com.agah.furkan.playgrounddatamodule.StaticAnnouncementData
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 

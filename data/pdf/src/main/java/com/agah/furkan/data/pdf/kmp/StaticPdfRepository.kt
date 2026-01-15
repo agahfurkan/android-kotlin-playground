@@ -3,6 +3,8 @@ package com.agah.furkan.data.pdf.kmp
 import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.domain.pdf.Pdf
 import com.agah.furkan.domain.pdf.PdfRepository
+import com.agah.furkan.playgrounddatamodule.KmpPdf
+import com.agah.furkan.playgrounddatamodule.StaticPdfData
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 

@@ -3,6 +3,8 @@ package com.agah.furkan.data.category.kmp
 import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.domain.category.Category
 import com.agah.furkan.domain.category.CategoryRepository
+import com.agah.furkan.playgrounddatamodule.KmpCategory
+import com.agah.furkan.playgrounddatamodule.StaticCategoryData
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 

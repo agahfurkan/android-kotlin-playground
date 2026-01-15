@@ -10,4 +10,5 @@ android {
 dependencies {
     implementation(project(":core:data"))
     implementation(project(":domain:pdf"))
+    implementation("com.agah.furkan.playgrounddatamodule:shared:1.0")
 }

@@ -3,6 +3,8 @@ package com.agah.furkan.data.cart.kmp
 import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.domain.cart.Cart
 import com.agah.furkan.domain.cart.CartRepository
+import com.agah.furkan.playgrounddatamodule.KmpCart
+import com.agah.furkan.playgrounddatamodule.StaticCartData
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 

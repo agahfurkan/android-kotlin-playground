@@ -4,6 +4,9 @@ import com.agah.furkan.core.domain.model.DomainResult
 import com.agah.furkan.domain.product.Product
 import com.agah.furkan.domain.product.ProductDetail
 import com.agah.furkan.domain.product.ProductRepository
+import com.agah.furkan.playgrounddatamodule.KmpProduct
+import com.agah.furkan.playgrounddatamodule.KmpProductDetail
+import com.agah.furkan.playgrounddatamodule.StaticProductData
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
