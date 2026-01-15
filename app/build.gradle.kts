@@ -82,6 +82,12 @@ android {
             resValue("string", "app_name", "DEV-Android Playground")
         }
 
+        create("demo") {
+            applicationIdSuffix = ".demo"
+            versionNameSuffix = "-demo"
+            resValue("string", "app_name", "DEMO-Android Playground")
+        }
+
         create("prod") {
             resValue("string", "app_name", "PROD-Android Playground")
         }
@@ -93,6 +99,7 @@ android {
     buildFeatures {
         dataBinding = true
         compose = true
+        buildConfig = true
     }
 
     packagingOptions {
